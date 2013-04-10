@@ -21,14 +21,13 @@ set(${PROJECT_NAME}_SOURCES
 	core.cpp
 	daemon_adaptor.cpp
 	native_adaptor.cpp
-	dbus_proxy.cpp
 	client_proxy.cpp
 	log_target.cpp
 	pipe_utils.cpp
 	string_utils.cpp
 	base_action.cpp
 	method_action.cpp
-	dbus_action.cpp
+	client_action.cpp
 	command_action.cpp
 	meta_types.cpp
 )
@@ -39,14 +38,13 @@ set(${PROJECT_NAME}_CPP_HEADERS
 	string_utils.h
 	base_action.h
 	method_action.h
-	dbus_action.h
+	client_action.h
 	command_action.h
 	meta_types.h
 )
 
 set(${PROJECT_NAME}_QT_HEADERS
 	core.h
-	dbus_proxy.h
 	client_proxy.h
 	daemon_adaptor.h
 	native_adaptor.h
@@ -62,28 +60,25 @@ set(${PROJECT_NAME}_TRANSLATIONS
 )
 
 set(${PROJECT_NAME}_DBUS_ADAPTERS
-	org.razorqt.global_action.daemon.xml
-	org.razorqt.global_action.native.xml
+	org.razorqt.global_key_shortcuts.daemon.xml
+	org.razorqt.global_key_shortcuts.native.xml
 )
 
-set_source_files_properties(org.razorqt.global_action.daemon.xml PROPERTIES PARENT daemon_adaptor.h)
-set_source_files_properties(org.razorqt.global_action.daemon.xml PROPERTIES PARENT_CLASSNAME DaemonAdaptor)
-set_source_files_properties(org.razorqt.global_action.daemon.xml PROPERTIES BASENAME org.razorqt.global_action.daemon)
-set_source_files_properties(org.razorqt.global_action.daemon.xml PROPERTIES CLASSNAME OrgRazorqtGlobalActionDaemonAdaptor)
+set_source_files_properties(org.razorqt.global_key_shortcuts.daemon.xml PROPERTIES PARENT daemon_adaptor.h)
+set_source_files_properties(org.razorqt.global_key_shortcuts.daemon.xml PROPERTIES PARENT_CLASSNAME DaemonAdaptor)
+set_source_files_properties(org.razorqt.global_key_shortcuts.daemon.xml PROPERTIES BASENAME org.razorqt.global_key_shortcuts.daemon)
+set_source_files_properties(org.razorqt.global_key_shortcuts.daemon.xml PROPERTIES CLASSNAME OrgRazorqtGlobalActionDaemonAdaptor)
 
-set_source_files_properties(org.razorqt.global_action.native.xml PROPERTIES PARENT native_adaptor.h)
-set_source_files_properties(org.razorqt.global_action.native.xml PROPERTIES PARENT_CLASSNAME NativeAdaptor)
-set_source_files_properties(org.razorqt.global_action.native.xml PROPERTIES BASENAME org.razorqt.global_action.native)
-set_source_files_properties(org.razorqt.global_action.native.xml PROPERTIES CLASSNAME OrgRazorqtGlobalActionNativeAdaptor)
+set_source_files_properties(org.razorqt.global_key_shortcuts.native.xml PROPERTIES PARENT native_adaptor.h)
+set_source_files_properties(org.razorqt.global_key_shortcuts.native.xml PROPERTIES PARENT_CLASSNAME NativeAdaptor)
+set_source_files_properties(org.razorqt.global_key_shortcuts.native.xml PROPERTIES BASENAME org.razorqt.global_key_shortcuts.native)
+set_source_files_properties(org.razorqt.global_key_shortcuts.native.xml PROPERTIES CLASSNAME OrgRazorqtGlobalActionNativeAdaptor)
 
 set(${PROJECT_NAME}_DBUS_PROXYS
-	org.freedesktop.DBus.xml
-	org.razorqt.global_action.client.xml
+	org.razorqt.global_key_shortcuts.client.xml
 )
 
-set_source_files_properties(org.freedesktop.DBus.xml PROPERTIES BASENAME org.freedesktop.DBus)
-
-set_source_files_properties(org.razorqt.global_action.client.xml PROPERTIES BASENAME org.razorqt.global_action.client)
+set_source_files_properties(org.razorqt.global_key_shortcuts.client.xml PROPERTIES BASENAME org.razorqt.global_key_shortcuts.client)
 
 
 

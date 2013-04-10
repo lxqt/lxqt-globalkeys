@@ -53,10 +53,10 @@ set(${PROJECT_NAME}_DBUS_ADAPTERS
 )
 
 set(${PROJECT_NAME}_DBUS_PROXYS
-	../src/org.razorqt.global_action.daemon.xml
+	../src/org.razorqt.global_key_shortcuts.daemon.xml
 )
-set_source_files_properties(../src/org.razorqt.global_action.daemon.xml PROPERTIES BASENAME org.razorqt.global_action.daemon)
-set_source_files_properties(../src/org.razorqt.global_action.daemon.xml PROPERTIES INCLUDE ../src/meta_types.h)
+set_source_files_properties(../src/org.razorqt.global_key_shortcuts.daemon.xml PROPERTIES BASENAME org.razorqt.global_key_shortcuts.daemon)
+set_source_files_properties(../src/org.razorqt.global_key_shortcuts.daemon.xml PROPERTIES INCLUDE ../src/meta_types.h)
 
 
 
