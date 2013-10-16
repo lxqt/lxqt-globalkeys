@@ -18,15 +18,15 @@ include(cmake/FindInstallConfigPath.cmake)
 
 set(LXQT_GLOBALKEYS_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include/lxqt-globalkeys)
 configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/lxqt-globalkeys-config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/lxqt-globalkeys-config.cmake
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/lxqt_globalkeys-config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/lxqt_globalkeys-config.cmake
     @ONLY
 )
 
 set(LXQT_GLOBALKEYS_UI_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include/lxqt-globalkeys-ui)
 configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/lxqt-globalkeys-ui-config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/lxqt-globalkeys-ui-config.cmake
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/lxqt_globalkeys_ui-config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/lxqt_globalkeys_ui-config.cmake
     @ONLY
 )
 #************************************************
@@ -38,8 +38,8 @@ add_subdirectory(config)
 add_subdirectory(client)
 add_subdirectory(ui)
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lxqt-globalkeys-config.cmake DESTINATION share/cmake/lxqt)
-install(FILES cmake/lxqt-globalkeys_use.cmake DESTINATION share/cmake/lxqt)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lxqt_globalkeys-config.cmake DESTINATION share/cmake/lxqt_globalkeys)
+install(FILES cmake/lxqt_globalkeys_use.cmake DESTINATION share/cmake/lxqt_globalkeys)
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lxqt-globalkeys-ui-config.cmake DESTINATION share/cmake/lxqt)
-install(FILES cmake/lxqt-globalkeys-ui_use.cmake DESTINATION share/cmake/lxqt)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lxqt_globalkeys_ui-config.cmake DESTINATION share/cmake/lxqt_globalkeys_ui)
+install(FILES cmake/lxqt_globalkeys_ui_use.cmake DESTINATION share/cmake/lxqt_globalkeys_ui)
