@@ -27,14 +27,14 @@
 
 #include "native_adaptor.h"
 
-#include "org.razorqt.global_key_shortcuts.native.h"
+#include "org.lxqt.global_key_shortcuts.native.h"
 
 
 NativeAdaptor::NativeAdaptor(QObject *parent)
     : QObject(parent)
     , QDBusContext()
 {
-    new OrgRazorqtGlobalActionNativeAdaptor(this);
+    new OrgLxqtGlobalActionNativeAdaptor(this);
 }
 
 QString NativeAdaptor::addClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, qulonglong &id)

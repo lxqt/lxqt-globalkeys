@@ -27,16 +27,16 @@
 
 #include "actions.h"
 
-#include "org.razorqt.global_key_shortcuts.daemon.h"
+#include "org.lxqt.global_key_shortcuts.daemon.h"
 
 Actions::Actions(QObject *parent)
     : QObject(parent)
-    , mServiceWatcher(new QDBusServiceWatcher("org.razorqt.global_key_shortcuts", QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, this))
+    , mServiceWatcher(new QDBusServiceWatcher("org.lxqt.global_key_shortcuts", QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, this))
     , mMultipleActionsBehaviour(MULTIPLE_ACTIONS_BEHAVIOUR_FIRST)
 {
     connect(mServiceWatcher, SIGNAL(serviceUnregistered(QString)), this, SLOT(on_daemonDisappeared(QString)));
     connect(mServiceWatcher, SIGNAL(serviceRegistered(QString)), this, SLOT(on_daemonAppeared(QString)));
-    mDaemonProxy = new org::razorqt::global_key_shortcuts::daemon("org.razorqt.global_key_shortcuts", "/daemon", QDBusConnection::sessionBus(), this);
+    mDaemonProxy = new org::lxqt::global_key_shortcuts::daemon("org.lxqt.global_key_shortcuts", "/daemon", QDBusConnection::sessionBus(), this);
 
     connect(mDaemonProxy, SIGNAL(actionAdded(qulonglong)), this, SLOT(on_actionAdded(qulonglong)));
     connect(mDaemonProxy, SIGNAL(actionEnabled(qulonglong, bool)), this, SLOT(on_actionEnabled(qulonglong, bool)));

@@ -37,17 +37,17 @@
 #include <QPair>
 #include <QDBusObjectPath>
 
-#include "../src/meta_types.h"
+#include "../daemon/meta_types.h"
 
 
-class OrgRazorqtGlobal_key_shortcutsDaemonInterface;
+class OrgLxqtGlobal_key_shortcutsDaemonInterface;
 namespace org
 {
-namespace razorqt
+namespace lxqt
 {
 namespace global_key_shortcuts
 {
-typedef ::OrgRazorqtGlobal_key_shortcutsDaemonInterface daemon;
+typedef ::OrgLxqtGlobal_key_shortcutsDaemonInterface daemon;
 }
 }
 }
@@ -158,7 +158,7 @@ private:
     void do_actionRemoved(qulonglong id);
 
 private:
-    org::razorqt::global_key_shortcuts::daemon *mDaemonProxy;
+    org::lxqt::global_key_shortcuts::daemon *mDaemonProxy;
     QDBusServiceWatcher *mServiceWatcher;
 
     typedef QMap<qulonglong, GeneralActionInfo> GeneralActionInfos;

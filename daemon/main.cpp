@@ -42,7 +42,7 @@
 #include <stdlib.h>
 
 
-#define DEFAULT_CONFIG ".config/razor/globalkeyshortcuts.conf"
+#define DEFAULT_CONFIG ".config/lxqt/globalkeyshortcuts.conf"
 
 
 int main(int argc, char *argv[])
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
     {
         printf("Global key shortcuts daemon\n"
                "\n"
-               "Version: " RAZOR_VERSION "\n"
+               "Version: " LXQT_VERSION "\n"
                "License: GNU Lesser General Public License version 2.1 or later\n"
                "Copyright: (c) 2013 Razor team\n"
                "\n"

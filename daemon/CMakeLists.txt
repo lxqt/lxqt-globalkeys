@@ -1,20 +1,15 @@
-set(PROJECT_NAME razor-globalkeyshortcuts)
+set(PROJECT_NAME lxqt-globalkeyshortcutsd)
 project(${PROJECT_NAME})
-
-cmake_minimum_required(VERSION 2.6)
 
 if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Release)
 endif()
 
-
 find_package(X11)
 
 include_directories(${X11_INCLUDE_DIR})
 
-
 find_package(Qt4 COMPONENTS QtCore QtDBus)
-
 include(${QT_USE_FILE})
 
 if(QTVERSION VERSION_LESS "4.8.2")
@@ -76,30 +71,30 @@ set(${PROJECT_NAME}_TRANSLATIONS
 )
 
 set(${PROJECT_NAME}_DBUS_ADAPTORS
-	org.razorqt.global_key_shortcuts.daemon.xml
-	org.razorqt.global_key_shortcuts.native.xml
+	org.lxqt.global_key_shortcuts.daemon.xml
+	org.lxqt.global_key_shortcuts.native.xml
 )
 
-set_source_files_properties(org.razorqt.global_key_shortcuts.daemon.xml PROPERTIES
+set_source_files_properties(org.lxqt.global_key_shortcuts.daemon.xml PROPERTIES
 	INCLUDE daemon_adaptor.h
 	PARENT_CLASSNAME DaemonAdaptor
-	BASENAME org.razorqt.global_key_shortcuts.daemon
-	CLASSNAME OrgRazorqtGlobalActionDaemonAdaptor
+	BASENAME org.lxqt.global_key_shortcuts.daemon
+	CLASSNAME OrgLxqtGlobalActionDaemonAdaptor
 )
 
-set_source_files_properties(org.razorqt.global_key_shortcuts.native.xml PROPERTIES
+set_source_files_properties(org.lxqt.global_key_shortcuts.native.xml PROPERTIES
 	INCLUDE native_adaptor.h
 	PARENT_CLASSNAME NativeAdaptor
-	BASENAME org.razorqt.global_key_shortcuts.native
-	CLASSNAME OrgRazorqtGlobalActionNativeAdaptor
+	BASENAME org.lxqt.global_key_shortcuts.native
+	CLASSNAME OrgLxqtGlobalActionNativeAdaptor
 )
 
 set(${PROJECT_NAME}_DBUS_INTERFACES
-	org.razorqt.global_key_shortcuts.client.xml
+	org.lxqt.global_key_shortcuts.client.xml
 )
 
-set_source_files_properties(org.razorqt.global_key_shortcuts.client.xml PROPERTIES
-	BASENAME org.razorqt.global_key_shortcuts.client
+set_source_files_properties(org.lxqt.global_key_shortcuts.client.xml PROPERTIES
+	BASENAME org.lxqt.global_key_shortcuts.client
 )
 
 

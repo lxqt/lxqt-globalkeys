@@ -27,14 +27,14 @@
 
 #include "daemon_adaptor.h"
 
-#include "org.razorqt.global_key_shortcuts.daemon.h"
+#include "org.lxqt.global_key_shortcuts.daemon.h"
 
 
 DaemonAdaptor::DaemonAdaptor(QObject *parent)
     : QObject(parent)
     , QDBusContext()
 {
-    new OrgRazorqtGlobalActionDaemonAdaptor(this);
+    new OrgLxqtGlobalActionDaemonAdaptor(this);
 }
 
 QString DaemonAdaptor::addMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description, qulonglong &id)

@@ -1,4 +1,4 @@
-set(PROJECT_NAME razor-config-globalkeyshortcuts)
+set(PROJECT_NAME lxqt-config-globalkeyshortcuts)
 project(${PROJECT_NAME})
 
 cmake_minimum_required(VERSION 2.6)
@@ -18,17 +18,15 @@ else()
 	set(QT_DBUS_PREFIX "org.qtproject")
 endif()
 
-
-
 include_directories(
 	"${PROJECT_SOURCE_DIR}"
 	"${CMAKE_CURRENT_BINARY_DIR}"
-	"${CMAKE_SOURCE_DIR}/libraries/"
+	"${LXQT_INCLUDE_DIRS}"
 )
 
 
 
-set(${PROJECT_NAME}_PATH_TO_DAEMON "../src")
+set(${PROJECT_NAME}_PATH_TO_DAEMON "${CMAKE_SOURCE_DIR}/daemon")
 
 set(${PROJECT_NAME}_SOURCES
 	main.cpp
@@ -69,10 +67,10 @@ set(${PROJECT_NAME}_DBUS_ADAPTORS
 )
 
 set(${PROJECT_NAME}_DBUS_INTERFACES
-	${${PROJECT_NAME}_PATH_TO_DAEMON}/org.razorqt.global_key_shortcuts.daemon.xml
+	${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.daemon.xml
 )
-set_source_files_properties(${${PROJECT_NAME}_PATH_TO_DAEMON}/org.razorqt.global_key_shortcuts.daemon.xml PROPERTIES
-	BASENAME org.razorqt.global_key_shortcuts.daemon
+set_source_files_properties(${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.daemon.xml PROPERTIES
+	BASENAME org.lxqt.global_key_shortcuts.daemon
 	INCLUDE ${${PROJECT_NAME}_PATH_TO_DAEMON}/meta_types.h
 )
 
@@ -175,7 +173,7 @@ set(${PROJECT_NAME}_ALL_FILES
 
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_ALL_FILES})
-target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} razorqt)
+target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} ${LXQT_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 install(FILES ${${PROJECT_NAME}_DESKTOP_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
