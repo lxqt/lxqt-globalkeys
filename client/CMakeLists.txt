@@ -1,4 +1,4 @@
-set(PROJECT_NAME lxqt-globalkeyshortcuts)
+set(PROJECT_NAME lxqt-globalkeys)
 project(${PROJECT_NAME})
 
 find_package(Qt4 COMPONENTS QtCore QtDBus)
@@ -31,7 +31,7 @@ set(${PROJECT_NAME}_SOURCES
 )
 
 set(${PROJECT_NAME}_MAIN_HEADER
-	lxqt-globalkeyshortcuts.h
+	lxqt-globalkeys.h
 )
 
 set(${PROJECT_NAME}_PUBLIC_CPP_HEADERS

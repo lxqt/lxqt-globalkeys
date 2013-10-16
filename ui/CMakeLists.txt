@@ -1,4 +1,4 @@
-set(PROJECT_NAME lxqt-globalkeyshortcuts-ui)
+set(PROJECT_NAME lxqt-globalkeys-ui)
 project(${PROJECT_NAME})
 
 find_package(Qt4 COMPONENTS QtCore QtDBus)
@@ -164,7 +164,7 @@ set(${PROJECT_NAME}_ALL_FILES
 
 
 add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_ALL_FILES})
-target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} lxqt-globalkeyshortcuts)
+target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} lxqt-globalkeys)
 set_target_properties(${PROJECT_NAME}
 	PROPERTIES
 	VERSION ${LXQT_VERSION}

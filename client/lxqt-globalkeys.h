@@ -28,7 +28,7 @@
 #ifndef GLOBAL_KEY_SHORTCUT_CLIENT__INCLUDED
 #define GLOBAL_KEY_SHORTCUT_CLIENT__INCLUDED
 
-#include <razor-global-key-shortcuts-client/action.h>
-#include <razor-global-key-shortcuts-client/client.h>
+#include <lxqt-globalkeys/action.h>
+#include <lxqt-globalkeys/client.h>
 
 #endif // GLOBAL_KEY_SHORTCUT_CLIENT__INCLUDED

@@ -1,4 +1,4 @@
-set(PROJECT_NAME lxqt-globalkeyshortcutsd)
+set(PROJECT_NAME lxqt-globalkeysd)
 project(${PROJECT_NAME})
 
 if(NOT CMAKE_BUILD_TYPE)

@@ -27,7 +27,7 @@
 
 #include "shortcut_selector.h"
 
-#include "../client/lxqt-globalkeyshortcuts.h"
+#include "../client/lxqt-globalkeys.h"
 
 #include <QTimer>
 #include <QAction>
