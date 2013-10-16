@@ -409,15 +409,15 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     {
         error_t c_error;
 
-        openlog("razorqt-global-action-daemon", LOG_PID, LOG_USER);
+        openlog("lxqt-global-action-daemon", LOG_PID, LOG_USER);
 
         ::signal(SIGTERM, ::unixSignalHandler);
         ::signal(SIGINT, ::unixSignalHandler);
 
 
-        if (!QDBusConnection::sessionBus().registerService("org.razorqt.global_key_shortcuts"))
+        if (!QDBusConnection::sessionBus().registerService("org.lxqt.global_key_shortcuts"))
         {
-            throw std::runtime_error(std::string("Cannot register service 'org.razorqt.global_key_shortcuts'"));
+            throw std::runtime_error(std::string("Cannot register service 'org.lxqt.global_key_shortcuts'"));
         }
 
 
