@@ -13,8 +13,8 @@
 <context>
     <name>ShortcutConfigWindow</name>
     <message>
-        <source>Razor Shortcut Editor</source>
-        <translation>Razor lasterbide-editorea</translation>
+        <source>LxQt Shortcut Editor</source>
+        <translation>LxQt lasterbide-editorea</translation>
     </message>
     <message>
         <source>Description</source>

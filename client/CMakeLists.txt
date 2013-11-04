@@ -195,4 +195,4 @@ install(FILES ${${PROJECT_NAME}_MAIN_HEADER} DESTINATION include/ COMPONENT deve
 install(FILES ${${PROJECT_NAME}_PUBLIC_HEADERS} DESTINATION include/${PROJECT_NAME} COMPONENT development)
 
 include(create_pkgconfig_file)
-create_pkgconfig_file(${PROJECT_NAME} "Razor-qt global key shortcuts client library")
+create_pkgconfig_file(${PROJECT_NAME} "LxQt-qt global key shortcuts client library")

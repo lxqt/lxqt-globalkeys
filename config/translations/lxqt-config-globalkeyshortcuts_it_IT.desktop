@@ -1,20 +1,20 @@
 [Desktop Entry]
 X-SuSE-translate=true
-OnlyShowIn=Razor;
+OnlyShowIn=LxQt;
 Type=Application
-Exec=razor-config-globalkeyshortcuts
+Exec=lxqt-config-globalkeyshortcuts
 Terminal=false
-Categories=Settings;DesktopSettings;Qt;Razor;
+Categories=Settings;DesktopSettings;Qt;LxQt;
 Icon=preferences-desktop-keyboard
-Name=Razor Shortcut Configuration
-Comment=Configure global shortcut of Razor desktop
-GenericName=Razor Global Shortcut Configuration
+Name=LxQt Shortcut Configuration
+Comment=Configure global shortcut of LxQt desktop
+GenericName=LxQt Global Shortcut Configuration
 
 #TRANSLATIONS_DIR=translations
 
 
 # Translations
-Name[it_IT]=Configurazione delle scorciatoie di Razor
+Name[it_IT]=Configurazione delle scorciatoie di LxQt
 Icon[it_IT]=preferences-desktop-keyboard
-Comment[it_IT]=Configura le scorciatoie globali del desktop Razor
-GenericName[it_IT]=Configurazione delle scorciatoie globali di Razor
+Comment[it_IT]=Configura le scorciatoie globali del desktop LxQt
+GenericName[it_IT]=Configurazione delle scorciatoie globali di LxQt

@@ -13,8 +13,8 @@
 <context>
     <name>ShortcutConfigWindow</name>
     <message>
-        <source>Razor Shortcut Editor</source>
-        <translation>ตัวแก้ไขปุ่มลัด Razor</translation>
+        <source>LxQt Shortcut Editor</source>
+        <translation>ตัวแก้ไขปุ่มลัด LxQt</translation>
     </message>
     <message>
         <source>Description</source>

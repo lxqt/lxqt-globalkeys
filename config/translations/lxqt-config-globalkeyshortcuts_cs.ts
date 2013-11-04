@@ -13,7 +13,7 @@
 <context>
     <name>ShortcutConfigWindow</name>
     <message>
-        <source>Razor Shortcut Editor</source>
+        <source>LxQt Shortcut Editor</source>
         <translation>Editor zkratek</translation>
     </message>
     <message>

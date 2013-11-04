@@ -15,7 +15,7 @@
 <context>
     <name>ShortcutConfigWindow</name>
     <message>
-        <source>Razor Shortcut Editor</source>
+        <source>LxQt Shortcut Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

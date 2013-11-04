@@ -140,13 +140,13 @@ endif()
 #endif()
 
 # Translations **********************************
-include(RazorTranslate)
-razor_translate_ts(${PROJECT_NAME}_QM_FILES
+include(LxQtTranslate)
+lxqt_translate_ts(${PROJECT_NAME}_QM_FILES
 	SOURCES
 	${${PROJECT_NAME}_TRANSLATABLE}
 )
 
-razor_translate_desktop(${PROJECT_NAME}_DESKTOP_FILES
+lxqt_translate_desktop(${PROJECT_NAME}_DESKTOP_FILES
 	SOURCES
 	${PROJECT_NAME}.desktop.in
 )
