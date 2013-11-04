@@ -8,6 +8,9 @@ if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Release)
 endif()
 
+# Set default library installation path
+set(LIB_INSTALL_DIR lib CACHE PATH "Installation directory for libraries")
+
 find_package(LXQT REQUIRED)
 include(${LXQT_USE_FILE})
 
