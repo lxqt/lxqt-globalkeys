@@ -175,4 +175,4 @@ install(TARGETS ${PROJECT_NAME} DESTINATION lib${LIB_SUFFIX} COMPONENT runtime)
 install(FILES ${${PROJECT_NAME}_PUBLIC_HEADERS} DESTINATION include/${PROJECT_NAME} COMPONENT development)
 
 include(create_pkgconfig_file)
-create_pkgconfig_file(${PROJECT_NAME} "LxQt-qt global key shortcuts GUI support library")
+create_pkgconfig_file(${PROJECT_NAME} "LXDE-Qt global key shortcuts GUI support library")
