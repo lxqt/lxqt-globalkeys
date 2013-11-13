@@ -34,7 +34,7 @@ configure_file(
 #************************************************
 # End of build config.cmake
 #************************************************
-
+set(LXQT_GLOBALKEYS_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(daemon)
 add_subdirectory(config)
 add_subdirectory(client)

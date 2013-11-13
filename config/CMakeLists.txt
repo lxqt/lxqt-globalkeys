@@ -26,7 +26,7 @@ include_directories(
 
 
 
-set(${PROJECT_NAME}_PATH_TO_DAEMON "${CMAKE_SOURCE_DIR}/daemon")
+set(${PROJECT_NAME}_PATH_TO_DAEMON "${LXQT_GLOBALKEYS_SOURCE_DIR}/daemon")
 
 set(${PROJECT_NAME}_SOURCES
 	main.cpp
