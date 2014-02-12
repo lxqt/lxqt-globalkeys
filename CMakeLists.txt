@@ -9,7 +9,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set default library installation path
-set(LIB_INSTALL_DIR lib CACHE PATH "Installation directory for libraries")
+set(LIB_INSTALL_DIR "lib${LIB_SUFFIX}" CACHE PATH "Installation directory for libraries")
 
 find_package(LXQT REQUIRED)
 include(${LXQT_USE_FILE})
