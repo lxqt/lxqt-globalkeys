@@ -1,6 +1,6 @@
 [Desktop Entry]
 X-SuSE-translate=true
-OnlyShowIn=LxQt;
+OnlyShowIn=LxQt;Razor;
 Type=Application
 Exec=lxqt-config-globalkeyshortcuts
 Terminal=false
@@ -15,6 +15,5 @@ GenericName=LxQt Global Shortcut Configuration
 
 # Translations
 Name[ru_RU]=Настройка Сочетание Клавиш LxQt
-Icon[ru_RU]=preferences-desktop-keyboard
 Comment[ru_RU]=Настроить глобальное сочетание клавиш рабочего стола LxQt
 GenericName[ru_RU]=Настройка Глобального Сочетание Клавиш LxQt

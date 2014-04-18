@@ -1,6 +1,6 @@
 [Desktop Entry]
 X-SuSE-translate=true
-OnlyShowIn=LxQt;
+OnlyShowIn=LxQt;Razor;
 Type=Application
 Exec=lxqt-config-globalkeyshortcuts
 Terminal=false
@@ -15,6 +15,5 @@ GenericName=LxQt Global Shortcut Configuration
 
 # Translations
 Name[cs_CZ]=Nastavení klávesových zkratek
-Icon[cs_CZ]=Nastavení zkratek pro prostředí
 Comment[cs_CZ]=Nastavit celkové klávesové zkratky pro prostředí LxQt
 GenericName[cs_CZ]=Nastavení celkových klávesových zkratek

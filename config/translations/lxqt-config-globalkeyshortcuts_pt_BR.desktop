@@ -1,6 +1,6 @@
 [Desktop Entry]
 X-SuSE-translate=true
-OnlyShowIn=LxQt;
+OnlyShowIn=LxQt;Razor;
 Type=Application
 Exec=lxqt-config-globalkeyshortcuts
 Terminal=false
@@ -15,6 +15,5 @@ GenericName=LxQt Global Shortcut Configuration
 
 # Translations
 Name[pt_BR]=Configuração Do Atalho
-Icon[pt_BR]=preferências-desktop-teclado
 Comment[pt_BR]=Configurar atalhos globais do desktop LxQt
 GenericName[pt_BR]=Configurações Dos Atalhos Globais
