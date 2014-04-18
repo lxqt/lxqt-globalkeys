@@ -1,6 +1,6 @@
 [Desktop Entry]
 X-SuSE-translate=true
-OnlyShowIn=LxQt;
+OnlyShowIn=LxQt;Razor;
 Type=Application
 Exec=lxqt-config-globalkeyshortcuts
 Terminal=false
@@ -15,6 +15,5 @@ GenericName=LxQt Global Shortcut Configuration
 
 # Translations
 Name[da_DK]=Konfiguration af LxQt Tastaturgenveje
-Icon[da_DK]=indstillinger-skrivebord-tastatur
 Comment[da_DK]=Konfigurer globale tastaturgenveje for LxQt-skrivebordet
 GenericName[da_DK]=Konfiguration af LxQt Globale Tastaturgenveje

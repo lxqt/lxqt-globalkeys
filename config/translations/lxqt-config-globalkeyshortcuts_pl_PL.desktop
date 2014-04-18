@@ -1,6 +1,6 @@
 [Desktop Entry]
 X-SuSE-translate=true
-OnlyShowIn=LxQt;
+OnlyShowIn=LxQt;Razor;
 Type=Application
 Exec=lxqt-config-globalkeyshortcuts
 Terminal=false
@@ -15,6 +15,5 @@ GenericName=LxQt Global Shortcut Configuration
 
 # Translations
 Name[pl_PL]=Konfiguracja skrótów pulpitu LxQt
-Icon[pl_PL]=ustawienia-pulpit-klawiatura
 Comment[pl_PL]=Określ globalny skrót pulpitu LxQt
 GenericName[pl_PL]=Konfiguracja globalnych skrótów pulpitu LxQt
