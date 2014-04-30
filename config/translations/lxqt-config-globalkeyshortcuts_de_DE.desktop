@@ -1,20 +1,4 @@
-[Desktop Entry]
-X-SuSE-translate=true
-OnlyShowIn=LxQt;
-Type=Application
-Exec=lxqt-config-globalkeyshortcuts
-Terminal=false
-Categories=Settings;DesktopSettings;Qt;LxQt;
-Icon=preferences-desktop-keyboard
-Name=LxQt Shortcut Configuration
-Comment=Configure global shortcut of LxQt desktop
-GenericName=LxQt Global Shortcut Configuration
-
-#TRANSLATIONS_DIR=translations
-
-
 # Translations
 Name[de_DE]=LxQt Hotkey Konfiguration
-Icon[de_DE]=einstellungen-desktop-tastatur
 Comment[de_DE]=Globalen Hotkey für LxQt Desktop definieren
 GenericName[de_DE]=LxQt Globale Hotkey Konfiguration

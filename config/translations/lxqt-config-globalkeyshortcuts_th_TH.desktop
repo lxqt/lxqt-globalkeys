@@ -1,20 +1,4 @@
-[Desktop Entry]
-X-SuSE-translate=true
-OnlyShowIn=LxQt;
-Type=Application
-Exec=lxqt-config-globalkeyshortcuts
-Terminal=false
-Categories=Settings;DesktopSettings;Qt;LxQt;
-Icon=preferences-desktop-keyboard
-Name=LxQt Shortcut Configuration
-Comment=Configure global shortcut of LxQt desktop
-GenericName=LxQt Global Shortcut Configuration
-
-#TRANSLATIONS_DIR=translations
-
-
 # Translations
 Name[th_TH]=การตั้งค่าปุ่มลัด LxQt
-Icon[th_TH]=การปรับแต่ง-เดสก์ท็อป-แป้นพิมพ์
 Comment[th_TH]=ตั้งค่าปุ่มลัดหลักของ LxQt เดกส์ท็อป
 GenericName[th_TH]=การตั้งค่าปุ่มลัดหลัก LxQt
