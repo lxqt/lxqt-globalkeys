@@ -28,10 +28,13 @@
 #ifndef GLOBAL_ACTION_DAEMON__PIPE_UTILS__INCLUDED
 #define GLOBAL_ACTION_DAEMON__PIPE_UTILS__INCLUDED
 
-
 #include <stddef.h>
 #include <errno.h>
 
+#ifndef __error_t_defined
+// FIXME: error_t seems to be GNU specific?
+typedef int error_t;
+#endif
 
 void initBothPipeEnds(int fd[2]);
 

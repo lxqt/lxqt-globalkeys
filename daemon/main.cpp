@@ -40,7 +40,7 @@
 #include <stdio.h>
 #include <syslog.h>
 #include <stdlib.h>
-
+#include <libgen.h> // for basename()
 
 #define DEFAULT_CONFIG ".config/lxqt/globalkeyshortcuts.conf"
 
