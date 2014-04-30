@@ -1,20 +1,4 @@
-[Desktop Entry]
-X-SuSE-translate=true
-OnlyShowIn=LxQt;
-Type=Application
-Exec=lxqt-config-globalkeyshortcuts
-Terminal=false
-Categories=Settings;DesktopSettings;Qt;LxQt;
-Icon=preferences-desktop-keyboard
-Name=LxQt Shortcut Configuration
-Comment=Configure global shortcut of LxQt desktop
-GenericName=LxQt Global Shortcut Configuration
-
-#TRANSLATIONS_DIR=translations
-
-
 # Translations
 Name[da_DK]=Konfiguration af LxQt Tastaturgenveje
-Icon[da_DK]=indstillinger-skrivebord-tastatur
 Comment[da_DK]=Konfigurer globale tastaturgenveje for LxQt-skrivebordet
 GenericName[da_DK]=Konfiguration af LxQt Globale Tastaturgenveje

@@ -1,20 +1,4 @@
-[Desktop Entry]
-X-SuSE-translate=true
-OnlyShowIn=LxQt;
-Type=Application
-Exec=lxqt-config-globalkeyshortcuts
-Terminal=false
-Categories=Settings;DesktopSettings;Qt;LxQt;
-Icon=preferences-desktop-keyboard
-Name=LxQt Shortcut Configuration
-Comment=Configure global shortcut of LxQt desktop
-GenericName=LxQt Global Shortcut Configuration
-
-#TRANSLATIONS_DIR=translations
-
-
 # Translations
 Name[pt]=Configuração dos atalhos do LxQt
-Icon[pt]=preferences-desktop-keyboard
 Comment[pt]=Configurar os atalhos globais do LXDE-Qt
 GenericName[pt]=Configuração dos atalhos globais do LXDE-Qt

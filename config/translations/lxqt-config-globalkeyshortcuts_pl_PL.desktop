@@ -1,20 +1,4 @@
-[Desktop Entry]
-X-SuSE-translate=true
-OnlyShowIn=LxQt;
-Type=Application
-Exec=lxqt-config-globalkeyshortcuts
-Terminal=false
-Categories=Settings;DesktopSettings;Qt;LxQt;
-Icon=preferences-desktop-keyboard
-Name=LxQt Shortcut Configuration
-Comment=Configure global shortcut of LxQt desktop
-GenericName=LxQt Global Shortcut Configuration
-
-#TRANSLATIONS_DIR=translations
-
-
 # Translations
 Name[pl_PL]=Konfiguracja skrótów pulpitu LxQt
-Icon[pl_PL]=ustawienia-pulpit-klawiatura
 Comment[pl_PL]=Określ globalny skrót pulpitu LxQt
 GenericName[pl_PL]=Konfiguracja globalnych skrótów pulpitu LxQt
