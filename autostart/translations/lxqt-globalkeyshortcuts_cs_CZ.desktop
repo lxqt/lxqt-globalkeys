@@ -1,13 +1,2 @@
-[Desktop Entry]
-Type=Application
-Name=Global Keyboard Shortcuts
-TryExec=lxqt-globalkeyshortcuts
-Exec=lxqt-globalkeyshortcuts
-OnlyShowIn=LxQt;
-X-LxQt-Module=true
-
-#TRANSLATIONS_DIR=translations
-
-
 # Translations
 Name[cs_CZ]=Celkové klávesové zkratky
