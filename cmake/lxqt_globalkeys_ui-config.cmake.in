@@ -7,6 +7,8 @@
 #
 #  LXQT_GLOBALKEYS_UI_INCLUDE_DIRS  - The lxqt-globalkeys-ui include directory
 #
+#  LXQT_GLOBALKEYS_LIBRARY_DIRS  - The lxqt-globalkeys include directory
+#
 #  LXQT_GLOBALKEYS_UI_LIBRARIES     - The libraries needed to use lxqt-globalkeys-ui
 #
 #  LXQT_GLOBALKEYS_UI_USE_FILE      - The variable LXQT_GLOBALKEYS_UI_USE_FILE is set which is the path
@@ -28,6 +30,7 @@ set(LXQT_GLOBALKEYS_UI_LIBRARY       lxqt-globalkeys-ui)
 
 set(LXQT_GLOBALKEYS_UI_LIBRARIES     ${LXQT_GLOBALKEYS_UI_LIBRARY})
 set(LXQT_GLOBALKEYS_UI_INCLUDE_DIRS  ${LXQT_GLOBALKEYS_UI_INCLUDE_DIR})
+set(LXQT_GLOBALKEYS_UI_LIBRARY_DIRS  @CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@)
 
 set(LXQT_GLOBALKEYS_UI_USE_FILE      ${CMAKE_CURRENT_LIST_DIR}/lxqt_globalkeys_ui_use.cmake)
 set(LXQT_GLOBALKEYS_UI_FOUND 1)
