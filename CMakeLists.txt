@@ -11,7 +11,21 @@ endif()
 # Set default library installation path
 set(LIB_INSTALL_DIR "lib${LIB_SUFFIX}" CACHE PATH "Installation directory for libraries")
 
-find_package(LXQT REQUIRED)
+# Support Qt5
+option(USE_QT5 "Build with Qt5." $ENV{USE_QT5})
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+if(USE_QT5)
+    find_package(Qt5Widgets REQUIRED)
+    find_package(Qt5DBus REQUIRED)
+    find_package(Qt5LinguistTools REQUIRED QUIET)
+    find_package(lxqt-qt5 REQUIRED QUIET)
+else()
+    set(QT_USE_QTDBUS 1)
+    find_package(Qt4 REQUIRED)
+    include(${QT_USE_FILE})
+    find_package(LXQT REQUIRED)
+endif()
 include(${LXQT_USE_FILE})
 
 #************************************************
