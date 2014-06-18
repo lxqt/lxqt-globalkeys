@@ -6,8 +6,8 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 if(USE_QT5)
-    set(QTX_INCLUDE_DIRS ${Qt5Widgets_INCLUDE_DIRS} ${Qt5DBus_INCLUDE_DIRS})
-    set(QTX_LIBRARIES ${Qt5Widgets_LIBRARIES} ${Qt5DBus_LIBRARIES})
+    set(QTX_INCLUDE_DIRS "")
+    set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
 else()
     set(QTX_INCLUDE_DIRS ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR} ${QT_QTDBUS_DIR})
     set(QTX_LIBRARIES ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTDBUS_LIBRARY})
@@ -22,7 +22,7 @@ endif()
 include_directories(
 	${PROJECT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}
-        ${QTX_INCLUDE_DIRS}
+	${QTX_INCLUDE_DIRS}
 	${LXQT_INCLUDE_DIRS}
 )
 
@@ -54,15 +54,6 @@ set(${PROJECT_NAME}_CPP_HEADERS
 	${${PROJECT_NAME}_PATH_TO_DAEMON}/meta_types.h
 )
 
-set(${PROJECT_NAME}_QT_HEADERS
-	main_window.h
-	actions.h
-	default_model.h
-	shortcut_selector.h
-	edit_action_dialog.h
-	shortcut_delegate.h
-)
-
 set(${PROJECT_NAME}_DBUS_ADAPTORS
 )
 
@@ -74,10 +65,8 @@ set_source_files_properties(${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_ke
 	INCLUDE ${${PROJECT_NAME}_PATH_TO_DAEMON}/meta_types.h
 )
 
-
 set(${PROJECT_NAME}_HEADERS
 	${${PROJECT_NAME}_CPP_HEADERS}
-	${${PROJECT_NAME}_QT_HEADERS}
 )
 
 set(${PROJECT_NAME}_TRANSLATABLE
@@ -85,8 +74,6 @@ set(${PROJECT_NAME}_TRANSLATABLE
 	${${PROJECT_NAME}_HEADERS}
 	${${PROJECT_NAME}_FORMS}
 )
-
-
 
 foreach(DBUS_ADAPTOR ${${PROJECT_NAME}_DBUS_ADAPTORS})
 	get_filename_component(DBUS_ADAPTOR_FILENAME ${DBUS_ADAPTOR} NAME)
@@ -146,11 +133,9 @@ foreach(DBUS_INTERFACE ${${PROJECT_NAME}_DBUS_INTERFACES})
 endforeach()
 
 if(USE_QT5)
-        qt5_wrap_cpp(${PROJECT_NAME}_MOC_FILES ${${PROJECT_NAME}_QT_HEADERS})
         qt5_add_resources(${PROJECT_NAME}_RESOURCE_FILES ${${PROJECT_NAME}_RESOURCES})
         qt5_wrap_ui(${PROJECT_NAME}_FORM_FILES ${${PROJECT_NAME}_FORMS})
 else()
-        qt4_wrap_cpp(${PROJECT_NAME}_MOC_FILES ${${PROJECT_NAME}_QT_HEADERS})
         qt4_add_resources(${PROJECT_NAME}_RESOURCE_FILES ${${PROJECT_NAME}_RESOURCES})
         qt4_wrap_ui(${PROJECT_NAME}_FORM_FILES ${${PROJECT_NAME}_FORMS})
 endif()
@@ -169,7 +154,6 @@ lxqt_translate_desktop(${PROJECT_NAME}_DESKTOP_FILES
 #************************************************
 
 set(${PROJECT_NAME}_GENERATED_FILES
-	${${PROJECT_NAME}_MOC_FILES}
 	${${PROJECT_NAME}_FORM_FILES}
 	${${PROJECT_NAME}_RESOURCE_FILES}
 	${${PROJECT_NAME}_QM_FILES}
@@ -183,8 +167,6 @@ set(${PROJECT_NAME}_ALL_FILES
 	${${PROJECT_NAME}_HEADERS}
 	${${PROJECT_NAME}_GENERATED_FILES}
 )
-
-
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_ALL_FILES})
 target_link_libraries(${PROJECT_NAME} ${QTX_LIBRARIES} ${LXQT_LIBRARIES})

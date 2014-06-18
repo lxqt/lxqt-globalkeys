@@ -6,8 +6,8 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 if(USE_QT5)
-    set(QTX_INCLUDE_DIRS ${Qt5Widgets_INCLUDE_DIRS} ${Qt5DBus_INCLUDE_DIRS})
-    set(QTX_LIBRARIES ${Qt5Widgets_LIBRARIES} ${Qt5DBus_LIBRARIES})
+    set(QTX_INCLUDE_DIRS "")
+    set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
 else()
     set(QTX_INCLUDE_DIRS ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR} ${QT_QTDBUS_DIR})
     set(QTX_LIBRARIES ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTDBUS_LIBRARY})
@@ -24,7 +24,7 @@ endif()
 
 include_directories(
 	${PROJECT_SOURCE_DIR}
-        ${QTX_INCLUDE_DIRS}
+	${QTX_INCLUDE_DIRS}
 	${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -53,13 +53,6 @@ set(${PROJECT_NAME}_CPP_HEADERS
 	client_action.h
 	command_action.h
 	meta_types.h
-)
-
-set(${PROJECT_NAME}_QT_HEADERS
-	core.h
-	client_proxy.h
-	daemon_adaptor.h
-	native_adaptor.h
 )
 
 set(${PROJECT_NAME}_FORMS
@@ -98,11 +91,8 @@ set_source_files_properties(org.lxqt.global_key_shortcuts.client.xml PROPERTIES
 	BASENAME org.lxqt.global_key_shortcuts.client
 )
 
-
-
 set(${PROJECT_NAME}_HEADERS
 	${${PROJECT_NAME}_CPP_HEADERS}
-	${${PROJECT_NAME}_QT_HEADERS}
 )
 
 set(${PROJECT_NAME}_TRANSLATABLE
@@ -169,17 +159,14 @@ foreach(DBUS_INTERFACE ${${PROJECT_NAME}_DBUS_INTERFACES})
 endforeach()
 
 if(USE_QT5)
-        qt5_wrap_cpp(${PROJECT_NAME}_MOC_FILES ${${PROJECT_NAME}_QT_HEADERS})
         qt5_add_resources(${PROJECT_NAME}_RESOURCE_FILES ${${PROJECT_NAME}_RESOURCES})
         qt5_wrap_ui(${PROJECT_NAME}_FORM_FILES ${${PROJECT_NAME}_FORMS})
 else()
-        qt4_wrap_cpp(${PROJECT_NAME}_MOC_FILES ${${PROJECT_NAME}_QT_HEADERS})
         qt4_add_resources(${PROJECT_NAME}_RESOURCE_FILES ${${PROJECT_NAME}_RESOURCES})
         qt4_wrap_ui(${PROJECT_NAME}_FORM_FILES ${${PROJECT_NAME}_FORMS})
 endif()
 
 set(${PROJECT_NAME}_GENERATED_FILES
-	${${PROJECT_NAME}_MOC_FILES}
 	${${PROJECT_NAME}_FORM_FILES}
 	${${PROJECT_NAME}_RESOURCE_FILES}
 	${${PROJECT_NAME}_QM_FILES}
