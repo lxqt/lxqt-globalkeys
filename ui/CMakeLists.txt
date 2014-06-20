@@ -1,4 +1,4 @@
-set(PROJECT_NAME lxqt-globalkeys-ui)
+set(PROJECT_NAME ${LXQT_GLOBALKEYS_UI_LIBRARY_NAME})
 project(${PROJECT_NAME})
 
 if(QTVERSION VERSION_LESS "4.8.2")
@@ -32,6 +32,7 @@ set(${PROJECT_NAME}_MAIN_HEADER
 )
 
 set(${PROJECT_NAME}_PUBLIC_CPP_HEADERS
+    shortcut_selector.h
 )
 
 set(${PROJECT_NAME}_PRIVATE_CPP_HEADERS

@@ -1,4 +1,4 @@
-set(PROJECT_NAME lxqt-globalkeys)
+set(PROJECT_NAME ${LXQT_GLOBALKEYS_LIBRARY_NAME})
 project(${PROJECT_NAME})
 
 if(QTVERSION VERSION_LESS "4.8.2")
@@ -21,7 +21,6 @@ include_directories(
 	${CMAKE_CURRENT_BINARY_DIR}
 )
 
-
 set(${PROJECT_NAME}_PATH_TO_DAEMON "${LXQT_GLOBALKEYS_SOURCE_DIR}/daemon")
 
 add_definitions(-DSHARED_EXPORT=Q_DECL_EXPORT)
@@ -36,9 +35,13 @@ set(${PROJECT_NAME}_MAIN_HEADER
 )
 
 set(${PROJECT_NAME}_PUBLIC_CPP_HEADERS
+	client.h
+	action.h
 )
 
 set(${PROJECT_NAME}_PRIVATE_CPP_HEADERS
+	client_p.h
+	action_p.h
 )
 
 set(${PROJECT_NAME}_FORMS
@@ -92,8 +95,6 @@ set(${PROJECT_NAME}_TRANSLATABLE
 	${${PROJECT_NAME}_HEADERS}
 	${${PROJECT_NAME}_FORMS}
 )
-
-
 
 foreach(DBUS_ADAPTOR ${${PROJECT_NAME}_DBUS_ADAPTORS})
 	get_filename_component(DBUS_ADAPTOR_FILENAME ${DBUS_ADAPTOR} NAME)

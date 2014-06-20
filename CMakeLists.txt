@@ -22,13 +22,20 @@ if(USE_QT5)
     find_package(Qt5DBus REQUIRED)
     find_package(Qt5LinguistTools REQUIRED QUIET)
     find_package(lxqt-qt5 REQUIRED QUIET)
+    set(QT_VERSION_SUFFIX "-qt5")
+    message(STATUS "Building with Qt${Qt5Core_VERSION_STRING}")
 else()
     set(QT_USE_QTDBUS 1)
     find_package(Qt4 REQUIRED)
     include(${QT_USE_FILE})
     find_package(LXQT REQUIRED)
+    set(QT_VERSION_SUFFIX "")
+    message(STATUS "Building with Qt${QTVERSION}")
 endif()
 include(${LXQT_USE_FILE})
+
+set(LXQT_GLOBALKEYS_LIBRARY_NAME lxqt-globalkeys${QT_VERSION_SUFFIX})
+set(LXQT_GLOBALKEYS_UI_LIBRARY_NAME lxqt-globalkeys-ui${QT_VERSION_SUFFIX})
 
 #************************************************
 # Build config.cmake files
@@ -37,17 +44,25 @@ include(${LXQT_USE_FILE})
 #set(LXQT_TRANSLATIONS_DIR ${LXQT_SHARE_DIR}/translations)
 include(cmake/FindInstallConfigPath.cmake)
 
-set(LXQT_GLOBALKEYS_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include/lxqt-globalkeys)
+if(USE_QT5)
+    set(LXQT_GLOBALKEYS_CMAKE_NAME ${LXQT_GLOBALKEYS_LIBRARY_NAME})
+    set(LXQT_GLOBALKEYS_UI_CMAKE_NAME ${LXQT_GLOBALKEYS_UI_LIBRARY_NAME})
+else() # keep old cmake module names for Qt4
+    set(LXQT_GLOBALKEYS_CMAKE_NAME lxqt_globalkeys)
+    set(LXQT_GLOBALKEYS_UI_CMAKE_NAME lxqt_globalkeys_ui)
+endif()
+
+set(LXQT_GLOBALKEYS_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include/${LXQT_GLOBALKEYS_LIBRARY_NAME})
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/lxqt_globalkeys-config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/lxqt_globalkeys-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config.cmake
     @ONLY
 )
 
-set(LXQT_GLOBALKEYS_UI_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include/lxqt-globalkeys-ui)
+set(LXQT_GLOBALKEYS_UI_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include/${LXQT_GLOBALKEYS_UI_LIBRARY_NAME})
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/lxqt_globalkeys_ui-config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/lxqt_globalkeys_ui-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config.cmake
     @ONLY
 )
 #************************************************
@@ -59,11 +74,11 @@ add_subdirectory(config)
 add_subdirectory(client)
 add_subdirectory(ui)
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lxqt_globalkeys-config.cmake DESTINATION share/cmake/lxqt_globalkeys)
-install(FILES cmake/lxqt_globalkeys_use.cmake DESTINATION share/cmake/lxqt_globalkeys)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config.cmake DESTINATION share/cmake/${LXQT_GLOBALKEYS_CMAKE_NAME})
+install(FILES cmake/lxqt_globalkeys_use.cmake DESTINATION share/cmake/${LXQT_GLOBALKEYS_CMAKE_NAME})
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lxqt_globalkeys_ui-config.cmake DESTINATION share/cmake/lxqt_globalkeys_ui)
-install(FILES cmake/lxqt_globalkeys_ui_use.cmake DESTINATION share/cmake/lxqt_globalkeys_ui)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config.cmake DESTINATION share/cmake/${LXQT_GLOBALKEYS_UI_CMAKE_NAME})
+install(FILES cmake/lxqt_globalkeys_ui_use.cmake DESTINATION share/cmake/${LXQT_GLOBALKEYS_UI_CMAKE_NAME})
 
 # building tarball with CPack -------------------------------------------------
 include (InstallRequiredSystemLibraries)
