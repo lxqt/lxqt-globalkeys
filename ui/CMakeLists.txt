@@ -15,6 +15,8 @@ else()
     set(QTX_LIBRARIES ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTDBUS_LIBRARY})
 endif()
 
+set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeysUi")
+
 include_directories(
 	${PROJECT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}
@@ -31,8 +33,16 @@ set(${PROJECT_NAME}_SOURCES
 set(${PROJECT_NAME}_MAIN_HEADER
 )
 
+#
+# WARNING: Changing stuff here implies changing this:
+#install(FILES ${${PROJECT_NAME}_PUBLIC_HEADERS} DESTINATION include/${PROJECT_NAME} COMPONENT development RENAME "shortcutselector.h")
+#
 set(${PROJECT_NAME}_PUBLIC_CPP_HEADERS
     shortcut_selector.h
+)
+
+set(${PROJECT_NAME}_PUBLIC_CLASSES
+    ShortcutSelector
 )
 
 set(${PROJECT_NAME}_PRIVATE_CPP_HEADERS
@@ -164,8 +174,17 @@ set_target_properties(${PROJECT_NAME}
 	SOVERSION ${LXQT_MAJOR_VERSION}
 )
 
+include(create_portable_headers)
+create_portable_headers(${PROJECT_NAME}_PORTABLE_HEADERS
+    NAMESPACE "${${PROJECT_NAME}_HEADER_NAMESPACE}/"
+    FILENAMES ${${PROJECT_NAME}_PUBLIC_CLASSES}
+)
+
 install(TARGETS ${PROJECT_NAME} DESTINATION ${LIB_INSTALL_DIR} COMPONENT runtime)
 install(FILES ${${PROJECT_NAME}_PUBLIC_HEADERS} DESTINATION include/${PROJECT_NAME} COMPONENT development)
+install(FILES ${${PROJECT_NAME}_PUBLIC_HEADERS} DESTINATION include/${PROJECT_NAME} COMPONENT development RENAME "shortcutselector.h")
+install(FILES ${${PROJECT_NAME}_PORTABLE_HEADERS} DESTINATION include/${PROJECT_NAME}/${${PROJECT_NAME}_HEADER_NAMESPACE} COMPONENT development)
+
 
 include(create_pkgconfig_file)
 create_pkgconfig_file(${PROJECT_NAME} "LXDE-Qt global key shortcuts GUI support library")

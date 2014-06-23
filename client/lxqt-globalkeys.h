@@ -28,7 +28,7 @@
 #ifndef GLOBAL_KEY_SHORTCUT_CLIENT__INCLUDED
 #define GLOBAL_KEY_SHORTCUT_CLIENT__INCLUDED
 
-#include <lxqt-globalkeys/action.h>
-#include <lxqt-globalkeys/client.h>
+#include <LXQtGlobalKeys/Action>
+#include <LXQtGlobalKeys/Client>
 
 #endif // GLOBAL_KEY_SHORTCUT_CLIENT__INCLUDED
