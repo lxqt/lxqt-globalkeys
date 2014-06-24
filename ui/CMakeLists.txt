@@ -10,11 +10,12 @@ endif()
 if(USE_QT5)
     set(QTX_INCLUDE_DIRS "")
     set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
+    set(LXQT_GLOBALKEYS_LIBRARY lxqt-globalkeys-qt5)
 else()
     set(QTX_INCLUDE_DIRS ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR} ${QT_QTDBUS_DIR})
     set(QTX_LIBRARIES ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTDBUS_LIBRARY})
+    set(LXQT_GLOBALKEYS_LIBRARY lxqt-globalkeys)
 endif()
-
 set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeysUi")
 
 include_directories(
@@ -167,7 +168,7 @@ set(${PROJECT_NAME}_ALL_FILES
 )
 
 add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_ALL_FILES})
-target_link_libraries(${PROJECT_NAME} ${QTX_LIBRARIES} lxqt-globalkeys)
+target_link_libraries(${PROJECT_NAME} ${QTX_LIBRARIES} ${LXQT_GLOBALKEYS_LIBRARY})
 set_target_properties(${PROJECT_NAME}
 	PROPERTIES
 	VERSION ${LXQT_VERSION}
