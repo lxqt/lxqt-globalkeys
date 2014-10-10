@@ -19,6 +19,8 @@ else()
 	set(QT_DBUS_PREFIX "org.qtproject")
 endif()
 
+add_definitions(-DPROJECT_NAME=\"${PROJECT_NAME}\")
+
 include_directories(
 	${PROJECT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}
@@ -145,6 +147,8 @@ include(LxQtTranslate)
 lxqt_translate_ts(${PROJECT_NAME}_QM_FILES
 	SOURCES
 	${${PROJECT_NAME}_TRANSLATABLE}
+    INSTALLATION_DIR
+    ${LXQT_TRANSLATIONS_DIR}/${PROJECT_NAME}
 )
 
 lxqt_translate_desktop(${PROJECT_NAME}_DESKTOP_FILES
