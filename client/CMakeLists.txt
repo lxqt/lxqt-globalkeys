@@ -1,26 +1,17 @@
 set(PROJECT_NAME ${LXQT_GLOBALKEYS_LIBRARY_NAME})
 project(${PROJECT_NAME})
 
-if(QTVERSION VERSION_LESS "4.8.2")
-	set(QT_DBUS_PREFIX "com.trolltech")
-else()
-	set(QT_DBUS_PREFIX "org.qtproject")
-endif()
+set(QT_DBUS_PREFIX "org.qtproject")
 
-if(USE_QT5)
-    set(QTX_INCLUDE_DIRS "")
-    set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
-else()
-    set(QTX_INCLUDE_DIRS ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR} ${QT_QTDBUS_DIR})
-    set(QTX_LIBRARIES ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTDBUS_LIBRARY})
-endif()
+set(QTX_INCLUDE_DIRS "")
+set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
 
 set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeys")
 
 include_directories(
-	${PROJECT_SOURCE_DIR}
-	${QTX_INCLUDE_DIRS}
-	${CMAKE_CURRENT_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${QTX_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 set(${PROJECT_NAME}_PATH_TO_DAEMON "${LXQT_GLOBALKEYS_SOURCE_DIR}/daemon")
@@ -28,8 +19,8 @@ set(${PROJECT_NAME}_PATH_TO_DAEMON "${LXQT_GLOBALKEYS_SOURCE_DIR}/daemon")
 add_definitions(-DSHARED_EXPORT=Q_DECL_EXPORT)
 
 set(${PROJECT_NAME}_SOURCES
-	client.cpp
-	action.cpp
+    client.cpp
+    action.cpp
 )
 
 #
@@ -37,14 +28,13 @@ set(${PROJECT_NAME}_SOURCES
 #           install(FILES ${${PROJECT_NAME}_MAIN_HEADER} DESTINATION include/${PROJECT_NAME} COMPONENT development RENAME "lxqtglobalkeys.h")
 #
 set(${PROJECT_NAME}_MAIN_HEADER
-	lxqt-globalkeys.h
+    lxqt-globalkeys.h
 )
 
 set(${PROJECT_NAME}_PUBLIC_CPP_HEADERS
-	client.h
-	action.h
+    client.h
+    action.h
 )
-
 
 set(${PROJECT_NAME}_PUBLIC_CLASSES
     Client
@@ -53,8 +43,8 @@ set(${PROJECT_NAME}_PUBLIC_CLASSES
 )
 
 set(${PROJECT_NAME}_PRIVATE_CPP_HEADERS
-	client_p.h
-	action_p.h
+    client_p.h
+    action_p.h
 )
 
 set(${PROJECT_NAME}_FORMS
@@ -67,133 +57,112 @@ set(${PROJECT_NAME}_TRANSLATIONS
 )
 
 set(${PROJECT_NAME}_DBUS_ADAPTORS
-	${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.client.xml
+    ${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.client.xml
 )
 
 set_source_files_properties(${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.client.xml PROPERTIES
-	INCLUDE action_p.h
-	PARENT_CLASSNAME GlobalKeyShortcut::ActionImpl
-	BASENAME org.lxqt.global_key_shortcuts.client
-	CLASSNAME OrgLxqtActionClientAdaptor
+    INCLUDE action_p.h
+    PARENT_CLASSNAME GlobalKeyShortcut::ActionImpl
+    BASENAME org.lxqt.global_key_shortcuts.client
+    CLASSNAME OrgLxqtActionClientAdaptor
 )
 
 set(${PROJECT_NAME}_DBUS_INTERFACES
-	${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.native.xml
+    ${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.native.xml
 )
 
 set_source_files_properties(${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.native.xml PROPERTIES
-	BASENAME org.lxqt.global_key_shortcuts.native
+    BASENAME org.lxqt.global_key_shortcuts.native
 )
 
 set(${PROJECT_NAME}_PUBLIC_HEADERS
-	${${PROJECT_NAME}_PUBLIC_CPP_HEADERS}
+    ${${PROJECT_NAME}_PUBLIC_CPP_HEADERS}
 )
 
 set(${PROJECT_NAME}_PRIVATE_HEADERS
-	${${PROJECT_NAME}_PRIVATE_CPP_HEADERS}
+    ${${PROJECT_NAME}_PRIVATE_CPP_HEADERS}
 )
 
 set(${PROJECT_NAME}_CPP_HEADERS
-	${${PROJECT_NAME}_PUBLIC_CPP_HEADERS}
-	${${PROJECT_NAME}_PRIVATE_CPP_HEADERS}
+    ${${PROJECT_NAME}_PUBLIC_CPP_HEADERS}
+    ${${PROJECT_NAME}_PRIVATE_CPP_HEADERS}
 )
 
 set(${PROJECT_NAME}_HEADERS
-	${${PROJECT_NAME}_PUBLIC_HEADERS}
-	${${PROJECT_NAME}_PRIVATE_HEADERS}
+    ${${PROJECT_NAME}_PUBLIC_HEADERS}
+    ${${PROJECT_NAME}_PRIVATE_HEADERS}
 )
 
 set(${PROJECT_NAME}_TRANSLATABLE
-	${${PROJECT_NAME}_SOURCES}
-	${${PROJECT_NAME}_HEADERS}
-	${${PROJECT_NAME}_FORMS}
+    ${${PROJECT_NAME}_SOURCES}
+    ${${PROJECT_NAME}_HEADERS}
+    ${${PROJECT_NAME}_FORMS}
 )
 
 foreach(DBUS_ADAPTOR ${${PROJECT_NAME}_DBUS_ADAPTORS})
-	get_filename_component(DBUS_ADAPTOR_FILENAME ${DBUS_ADAPTOR} NAME)
-	configure_file(
-		${DBUS_ADAPTOR}
-		${CMAKE_CURRENT_BINARY_DIR}/${DBUS_ADAPTOR_FILENAME}
-		@ONLY
-	)
-	get_source_file_property(DBUS_ADAPTOR_INCLUDE ${DBUS_ADAPTOR} INCLUDE)
-	get_source_file_property(DBUS_ADAPTOR_PARENT_CLASSNAME ${DBUS_ADAPTOR} PARENT_CLASSNAME)
-	get_source_file_property(DBUS_ADAPTOR_BASENAME ${DBUS_ADAPTOR} BASENAME)
-	get_source_file_property(DBUS_ADAPTOR_CLASSNAME ${DBUS_ADAPTOR} CLASSNAME)
-        if(USE_QT5)
-                if(DBUS_ADAPTOR_BASENAME)
-                        if(DBUS_ADAPTOR_CLASSNAME)
-                                qt5_add_dbus_adaptor(${PROJECT_NAME}_DBUS_ADAPTOR_FILES ${CMAKE_CURRENT_BINARY_DIR}/${DBUS_ADAPTOR_FILENAME} ${DBUS_ADAPTOR_INCLUDE} ${DBUS_ADAPTOR_PARENT_CLASSNAME} ${DBUS_ADAPTOR_BASENAME} ${DBUS_ADAPTOR_CLASSNAME})
-                        else()
-                                qt5_add_dbus_adaptor(${PROJECT_NAME}_DBUS_ADAPTOR_FILES ${CMAKE_CURRENT_BINARY_DIR}/${DBUS_ADAPTOR_FILENAME} ${DBUS_ADAPTOR_INCLUDE} ${DBUS_ADAPTOR_PARENT_CLASSNAME} ${DBUS_ADAPTOR_BASENAME})
-                        endif()
-                else()
-                        qt5_add_dbus_adaptor(${PROJECT_NAME}_DBUS_ADAPTOR_FILES ${CMAKE_CURRENT_BINARY_DIR}/${DBUS_ADAPTOR_FILENAME} ${DBUS_ADAPTOR_INCLUDE} ${DBUS_ADAPTOR_PARENT_CLASSNAME})
-                endif()
-        else(USE_QT5)
-                if(DBUS_ADAPTOR_BASENAME)
-                        if(DBUS_ADAPTOR_CLASSNAME)
-                                qt4_add_dbus_adaptor(${PROJECT_NAME}_DBUS_ADAPTOR_FILES ${CMAKE_CURRENT_BINARY_DIR}/${DBUS_ADAPTOR_FILENAME} ${DBUS_ADAPTOR_INCLUDE} ${DBUS_ADAPTOR_PARENT_CLASSNAME} ${DBUS_ADAPTOR_BASENAME} ${DBUS_ADAPTOR_CLASSNAME})
-                        else()
-                                qt4_add_dbus_adaptor(${PROJECT_NAME}_DBUS_ADAPTOR_FILES ${CMAKE_CURRENT_BINARY_DIR}/${DBUS_ADAPTOR_FILENAME} ${DBUS_ADAPTOR_INCLUDE} ${DBUS_ADAPTOR_PARENT_CLASSNAME} ${DBUS_ADAPTOR_BASENAME})
-                        endif()
-                else()
-                        qt4_add_dbus_adaptor(${PROJECT_NAME}_DBUS_ADAPTOR_FILES ${CMAKE_CURRENT_BINARY_DIR}/${DBUS_ADAPTOR_FILENAME} ${DBUS_ADAPTOR_INCLUDE} ${DBUS_ADAPTOR_PARENT_CLASSNAME})
-                endif()
-        endif(USE_QT5)
+    get_filename_component(DBUS_ADAPTOR_FILENAME ${DBUS_ADAPTOR} NAME)
+    configure_file(
+        ${DBUS_ADAPTOR}
+        "${CMAKE_CURRENT_BINARY_DIR}/${DBUS_ADAPTOR_FILENAME}"
+        @ONLY
+    )
+    get_source_file_property(DBUS_ADAPTOR_INCLUDE ${DBUS_ADAPTOR} INCLUDE)
+    get_source_file_property(DBUS_ADAPTOR_PARENT_CLASSNAME ${DBUS_ADAPTOR} PARENT_CLASSNAME)
+    get_source_file_property(DBUS_ADAPTOR_BASENAME ${DBUS_ADAPTOR} BASENAME)
+    get_source_file_property(DBUS_ADAPTOR_CLASSNAME ${DBUS_ADAPTOR} CLASSNAME)
+    if(DBUS_ADAPTOR_BASENAME)
+        if(DBUS_ADAPTOR_CLASSNAME)
+            qt5_add_dbus_adaptor(${PROJECT_NAME}_DBUS_ADAPTOR_FILES "${CMAKE_CURRENT_BINARY_DIR}/${DBUS_ADAPTOR_FILENAME}" ${DBUS_ADAPTOR_INCLUDE} ${DBUS_ADAPTOR_PARENT_CLASSNAME} ${DBUS_ADAPTOR_BASENAME} ${DBUS_ADAPTOR_CLASSNAME})
+        else()
+            qt5_add_dbus_adaptor(${PROJECT_NAME}_DBUS_ADAPTOR_FILES "${CMAKE_CURRENT_BINARY_DIR}/${DBUS_ADAPTOR_FILENAME}" ${DBUS_ADAPTOR_INCLUDE} ${DBUS_ADAPTOR_PARENT_CLASSNAME} ${DBUS_ADAPTOR_BASENAME})
+        endif()
+    else()
+        qt5_add_dbus_adaptor(${PROJECT_NAME}_DBUS_ADAPTOR_FILES "${CMAKE_CURRENT_BINARY_DIR}/${DBUS_ADAPTOR_FILENAME}" ${DBUS_ADAPTOR_INCLUDE} ${DBUS_ADAPTOR_PARENT_CLASSNAME})
+    endif()
 endforeach()
 
 foreach(DBUS_INTERFACE ${${PROJECT_NAME}_DBUS_INTERFACES})
-	get_filename_component(DBUS_INTERFACE_FILENAME ${DBUS_INTERFACE} NAME)
-	configure_file(
-		${DBUS_INTERFACE}
-		${CMAKE_CURRENT_BINARY_DIR}/${DBUS_INTERFACE_FILENAME}
-		@ONLY
-	)
-	get_source_file_property(DBUS_INTERFACE_BASENAME ${DBUS_INTERFACE} BASENAME)
-	get_source_file_property(DBUS_INTERFACE_INCLUDE ${DBUS_INTERFACE} INCLUDE)
-	get_source_file_property(DBUS_INTERFACE_CLASSNAME ${DBUS_INTERFACE} CLASSNAME)
-	get_source_file_property(DBUS_INTERFACE_NO_NAMESPACE ${DBUS_INTERFACE} NO_NAMESPACE)
-	set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/${DBUS_INTERFACE_FILENAME} PROPERTIES
-		INCLUDE ${DBUS_INTERFACE_INCLUDE}
-		CLASSNAME ${DBUS_INTERFACE_CLASSNAME}
-		NO_NAMESPACE ${DBUS_INTERFACE_NO_NAMESPACE}
-	)
-        if(USE_QT5)
-                qt5_add_dbus_interface(${PROJECT_NAME}_DBUS_INTERFACE_FILES ${CMAKE_CURRENT_BINARY_DIR}/${DBUS_INTERFACE_FILENAME} ${DBUS_INTERFACE_BASENAME})
-        else()
-                qt4_add_dbus_interface(${PROJECT_NAME}_DBUS_INTERFACE_FILES ${CMAKE_CURRENT_BINARY_DIR}/${DBUS_INTERFACE_FILENAME} ${DBUS_INTERFACE_BASENAME})
-        endif()
+    get_filename_component(DBUS_INTERFACE_FILENAME ${DBUS_INTERFACE} NAME)
+    configure_file(
+        ${DBUS_INTERFACE}
+        "${CMAKE_CURRENT_BINARY_DIR}/${DBUS_INTERFACE_FILENAME}"
+        @ONLY
+    )
+    get_source_file_property(DBUS_INTERFACE_BASENAME ${DBUS_INTERFACE} BASENAME)
+    get_source_file_property(DBUS_INTERFACE_INCLUDE ${DBUS_INTERFACE} INCLUDE)
+    get_source_file_property(DBUS_INTERFACE_CLASSNAME ${DBUS_INTERFACE} CLASSNAME)
+    get_source_file_property(DBUS_INTERFACE_NO_NAMESPACE ${DBUS_INTERFACE} NO_NAMESPACE)
+    set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/${DBUS_INTERFACE_FILENAME} PROPERTIES
+        INCLUDE ${DBUS_INTERFACE_INCLUDE}
+        CLASSNAME ${DBUS_INTERFACE_CLASSNAME}
+        NO_NAMESPACE ${DBUS_INTERFACE_NO_NAMESPACE}
+    )
+    qt5_add_dbus_interface(${PROJECT_NAME}_DBUS_INTERFACE_FILES ${CMAKE_CURRENT_BINARY_DIR}/${DBUS_INTERFACE_FILENAME} ${DBUS_INTERFACE_BASENAME})
 endforeach()
 
-if(USE_QT5)
-        qt5_add_resources(${PROJECT_NAME}_RESOURCE_FILES ${${PROJECT_NAME}_RESOURCES})
-        qt5_wrap_ui(${PROJECT_NAME}_FORM_FILES ${${PROJECT_NAME}_FORMS})
-else()
-        qt4_add_resources(${PROJECT_NAME}_RESOURCE_FILES ${${PROJECT_NAME}_RESOURCES})
-        qt4_wrap_ui(${PROJECT_NAME}_FORM_FILES ${${PROJECT_NAME}_FORMS})
-endif()
+qt5_add_resources(${PROJECT_NAME}_RESOURCE_FILES ${${PROJECT_NAME}_RESOURCES})
+qt5_wrap_ui(${PROJECT_NAME}_FORM_FILES ${${PROJECT_NAME}_FORMS})
 
 set(${PROJECT_NAME}_GENERATED_FILES
-	${${PROJECT_NAME}_FORM_FILES}
-	${${PROJECT_NAME}_RESOURCE_FILES}
-	${${PROJECT_NAME}_QM_FILES}
-	${${PROJECT_NAME}_DBUS_INTERFACE_FILES}
-	${${PROJECT_NAME}_DBUS_ADAPTOR_FILES}
+    ${${PROJECT_NAME}_FORM_FILES}
+    ${${PROJECT_NAME}_RESOURCE_FILES}
+    ${${PROJECT_NAME}_QM_FILES}
+    ${${PROJECT_NAME}_DBUS_INTERFACE_FILES}
+    ${${PROJECT_NAME}_DBUS_ADAPTOR_FILES}
 )
 
 set(${PROJECT_NAME}_ALL_FILES
-	${${PROJECT_NAME}_SOURCES}
-	${${PROJECT_NAME}_HEADERS}
-	${${PROJECT_NAME}_GENERATED_FILES}
+    ${${PROJECT_NAME}_SOURCES}
+    ${${PROJECT_NAME}_HEADERS}
+    ${${PROJECT_NAME}_GENERATED_FILES}
 )
 
 add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_ALL_FILES})
 target_link_libraries(${PROJECT_NAME} ${QTX_LIBRARIES})
 set_target_properties(${PROJECT_NAME}
-	PROPERTIES
-	VERSION ${LXQT_VERSION}
-	SOVERSION ${LXQT_MAJOR_VERSION}
+    PROPERTIES
+    VERSION ${LXQT_VERSION}
+    SOVERSION ${LXQT_MAJOR_VERSION}
 )
 
 include(create_portable_headers)
@@ -209,4 +178,4 @@ install(FILES ${${PROJECT_NAME}_PORTABLE_HEADERS} DESTINATION include/${PROJECT_
 install(FILES ${${PROJECT_NAME}_PUBLIC_HEADERS} DESTINATION include/${PROJECT_NAME} COMPONENT development)
 
 include(create_pkgconfig_file)
-create_pkgconfig_file(${PROJECT_NAME} "LXDE-Qt global key shortcuts client library")
+create_pkgconfig_file(${PROJECT_NAME} "LXQt global key shortcuts client library")
