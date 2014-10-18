@@ -52,9 +52,6 @@ class TypeRegistrator
 public:
     TypeRegistrator()
     {
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-        qDBusRegisterMetaType<QList<qulonglong> >();
-#endif
         qDBusRegisterMetaType<GeneralActionInfo>();
         qDBusRegisterMetaType<QMap_qulonglong_GeneralActionInfo>();
     }

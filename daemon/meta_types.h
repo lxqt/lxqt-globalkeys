@@ -75,19 +75,13 @@ typedef struct CommandActionInfo : CommonActionInfo
 } CommandActionInfo;
 
 
-
 typedef QMap<qulonglong, GeneralActionInfo> QMap_qulonglong_GeneralActionInfo;
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-Q_DECLARE_METATYPE(QList<qulonglong>)
-#endif
 Q_DECLARE_METATYPE(GeneralActionInfo)
 Q_DECLARE_METATYPE(QMap_qulonglong_GeneralActionInfo)
-
 
 
 QDBusArgument &operator << (QDBusArgument &argument, const GeneralActionInfo &generalActionInfo);
 const QDBusArgument &operator >> (const QDBusArgument &argument, GeneralActionInfo &generalActionInfo);
 
 #endif // GLOBAL_ACTION_MANAGER__META_TYPES__INCLUDED
-

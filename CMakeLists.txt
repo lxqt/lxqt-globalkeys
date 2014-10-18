@@ -6,13 +6,12 @@ project(lxqt-globalkeys)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
+     set(CMAKE_BUILD_TYPE Release)
 endif()
 
 # Set default library installation path
 set(LIB_INSTALL_DIR "lib${LIB_SUFFIX}" CACHE PATH "Installation directory for libraries")
 
-# Support Qt5
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_AUTOMOC ON)
@@ -20,12 +19,10 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5DBus REQUIRED)
 find_package(Qt5LinguistTools REQUIRED QUIET)
 find_package(lxqt-qt5 REQUIRED QUIET)
-set(QT_VERSION_SUFFIX "-qt5")
-message(STATUS "Building with Qt${Qt5Core_VERSION_STRING}")
 include(${LXQT_USE_FILE})
 
-set(LXQT_GLOBALKEYS_LIBRARY_NAME lxqt-globalkeys${QT_VERSION_SUFFIX})
-set(LXQT_GLOBALKEYS_UI_LIBRARY_NAME lxqt-globalkeys-ui${QT_VERSION_SUFFIX})
+set(LXQT_GLOBALKEYS_LIBRARY_NAME lxqt-globalkeys-qt5)
+set(LXQT_GLOBALKEYS_UI_LIBRARY_NAME lxqt-globalkeys-ui-qt5)
 
 #************************************************
 # Build config.cmake files
