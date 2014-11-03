@@ -10,8 +10,6 @@ set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
 
 set(QT_DBUS_PREFIX "org.qtproject")
 
-add_definitions(-DPROJECT_NAME=\"${PROJECT_NAME}\")
-
 include_directories(
     "${PROJECT_SOURCE_DIR}"
     "${CMAKE_CURRENT_BINARY_DIR}"
@@ -113,14 +111,15 @@ qt5_add_resources(${PROJECT_NAME}_RESOURCE_FILES ${${PROJECT_NAME}_RESOURCES})
 qt5_wrap_ui(${PROJECT_NAME}_FORM_FILES ${${PROJECT_NAME}_FORMS})
 
 # Translations **********************************
-include(LxQtTranslate)
 lxqt_translate_ts(${PROJECT_NAME}_QM_FILES
+    UPDATE_TRANSLATIONS ${UPDATE_TRANSLATIONS}
     SOURCES
     ${${PROJECT_NAME}_TRANSLATABLE}
-    INSTALLATION_DIR
+    INSTALL_DIR
     ${LXQT_TRANSLATIONS_DIR}/${PROJECT_NAME}
 )
 
+lxqt_app_translation_loader(${PROJECT_NAME}_QM_LOADER ${PROJECT_NAME})
 lxqt_translate_desktop(${PROJECT_NAME}_DESKTOP_FILES
     SOURCES
     ${PROJECT_NAME}.desktop.in
@@ -134,6 +133,7 @@ set(${PROJECT_NAME}_GENERATED_FILES
     ${${PROJECT_NAME}_DBUS_INTERFACE_FILES}
     ${${PROJECT_NAME}_DBUS_ADAPTOR_FILES}
     ${${PROJECT_NAME}_DESKTOP_FILES}
+    ${${PROJECT_NAME}_QM_LOADER}
 )
 
 set(${PROJECT_NAME}_ALL_FILES

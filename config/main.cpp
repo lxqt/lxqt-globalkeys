@@ -26,14 +26,12 @@
  * END_COMMON_COPYRIGHT_HEADER */
 
 #include <LXQt/Application>
-#include <LXQt/Translator>
 
 #include "main_window.h"
 
 int main(int argc, char *argv[])
 {
     LxQt::Application a(argc, argv);
-    LxQt::Translator::translateApplication(QLatin1String(PROJECT_NAME));
 
     MainWindow w;
     w.show();

@@ -5,6 +5,8 @@ project(lxqt-globalkeys)
 # additional cmake files
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+option(UPDATE_TRANSLATIONS "Update source translation translations/*.ts files" OFF)
+
 if(NOT CMAKE_BUILD_TYPE)
      set(CMAKE_BUILD_TYPE Release)
 endif()
@@ -20,6 +22,8 @@ find_package(Qt5DBus REQUIRED)
 find_package(Qt5LinguistTools REQUIRED QUIET)
 find_package(lxqt-qt5 REQUIRED QUIET)
 include(${LXQT_USE_FILE})
+
+include(LXQtTranslate)
 
 set(LXQT_GLOBALKEYS_LIBRARY_NAME lxqt-globalkeys-qt5)
 set(LXQT_GLOBALKEYS_UI_LIBRARY_NAME lxqt-globalkeys-ui-qt5)
