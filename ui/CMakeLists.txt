@@ -3,15 +3,12 @@ project(${PROJECT_NAME})
 
 set(QT_DBUS_PREFIX "org.qtproject")
 
-set(QTX_INCLUDE_DIRS "")
-set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
 set(LXQT_GLOBALKEYS_LIBRARY lxqt-globalkeys-qt5)
 set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeysUi")
 
 include_directories(
     "${PROJECT_SOURCE_DIR}"
     "${CMAKE_CURRENT_BINARY_DIR}"
-    ${QTX_INCLUDE_DIRS}
     ${LXQT_INCLUDE_DIRS}
 )
 
@@ -137,7 +134,11 @@ set(${PROJECT_NAME}_ALL_FILES
 )
 
 add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_ALL_FILES})
-target_link_libraries(${PROJECT_NAME} ${QTX_LIBRARIES} ${LXQT_GLOBALKEYS_LIBRARY})
+target_link_libraries(${PROJECT_NAME}
+    Qt5::Widgets
+    Qt5::DBus
+    ${LXQT_GLOBALKEYS_LIBRARY}
+)
 set_target_properties(${PROJECT_NAME}
     PROPERTIES
     VERSION ${LXQT_VERSION}

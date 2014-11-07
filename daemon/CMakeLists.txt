@@ -5,9 +5,6 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(QTX_INCLUDE_DIRS "")
-set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
-
 find_package(X11)
 include_directories(${X11_INCLUDE_DIR})
 
@@ -15,7 +12,6 @@ set(QT_DBUS_PREFIX "org.qtproject")
 
 include_directories(
     ${PROJECT_SOURCE_DIR}
-    ${QTX_INCLUDE_DIRS}
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -151,6 +147,6 @@ set(${PROJECT_NAME}_ALL_FILES
 )
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_ALL_FILES})
-target_link_libraries(${PROJECT_NAME} ${X11_LIBRARIES} ${QTX_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${X11_LIBRARIES} Qt5::Widgets Qt5::DBus)
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)

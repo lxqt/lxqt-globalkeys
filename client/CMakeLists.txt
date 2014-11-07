@@ -3,14 +3,10 @@ project(${PROJECT_NAME})
 
 set(QT_DBUS_PREFIX "org.qtproject")
 
-set(QTX_INCLUDE_DIRS "")
-set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
-
 set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeys")
 
 include_directories(
     ${PROJECT_SOURCE_DIR}
-    ${QTX_INCLUDE_DIRS}
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -158,7 +154,7 @@ set(${PROJECT_NAME}_ALL_FILES
 )
 
 add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_ALL_FILES})
-target_link_libraries(${PROJECT_NAME} ${QTX_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::DBus)
 set_target_properties(${PROJECT_NAME}
     PROPERTIES
     VERSION ${LXQT_VERSION}
