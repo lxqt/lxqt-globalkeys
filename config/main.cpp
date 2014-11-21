@@ -25,15 +25,16 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#include <LXQt/Application>
+#include <LXQt/SingleApplication>
 
 #include "main_window.h"
 
 int main(int argc, char *argv[])
 {
-    LxQt::Application a(argc, argv);
+    LxQt::SingleApplication a(argc, argv);
 
     MainWindow w;
+    a.setActivationWindow(&w);
     w.show();
 
     return a.exec();

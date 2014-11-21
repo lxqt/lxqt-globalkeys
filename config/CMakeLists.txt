@@ -5,6 +5,8 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
+find_package(KF5WindowSystem REQUIRED QUIET)
+
 set(QTX_INCLUDE_DIRS "")
 set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
 
@@ -143,7 +145,7 @@ set(${PROJECT_NAME}_ALL_FILES
 )
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_ALL_FILES})
-target_link_libraries(${PROJECT_NAME} ${QTX_LIBRARIES} ${LXQT_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} KF5::WindowSystem ${QTX_LIBRARIES} ${LXQT_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 install(FILES ${${PROJECT_NAME}_DESKTOP_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
