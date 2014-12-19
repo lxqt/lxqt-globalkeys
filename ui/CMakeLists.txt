@@ -3,7 +3,7 @@ project(${PROJECT_NAME})
 
 set(QT_DBUS_PREFIX "org.qtproject")
 
-set(LXQT_GLOBALKEYS_LIBRARY lxqt-globalkeys-qt5)
+set(LXQT_GLOBALKEYS_LIBRARY lxqt-globalkeys)
 set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeysUi")
 
 include_directories(
