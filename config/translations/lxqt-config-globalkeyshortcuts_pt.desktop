@@ -1,4 +1,4 @@
 # Translations
-Name[pt]=Configuração dos atalhos do LxQt
-Comment[pt]=Configurar os atalhos globais do LXDE-Qt
-GenericName[pt]=Configuração dos atalhos globais do LXDE-Qt
+Name[pt]=Teclas de atalho
+GenericName[pt]=Definições das teclas de atalho
+Comment[pt]=Configurar as teclas de atalho do LxQt
