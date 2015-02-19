@@ -55,12 +55,18 @@ ActionImpl::~ActionImpl()
 
 QString ActionImpl::changeShortcut(const QString &shortcut)
 {
+    if (mRegistrationPending)
+        return mShortcut;
+
     mShortcut = mClient->changeClientActionShortcut(mPath, shortcut);
     return mShortcut;
 }
 
 bool ActionImpl::changeDescription(const QString &description)
 {
+    if (mRegistrationPending)
+        return false;
+
     bool result = mClient->modifyClientAction(mPath, description);
     if (result)
     {
@@ -97,6 +103,16 @@ void ActionImpl::setValid(bool valid)
 bool ActionImpl::isValid() const
 {
     return mValid;
+}
+
+void ActionImpl::setRegistrationPending(bool registrationPending)
+{
+    mRegistrationPending = registrationPending;
+}
+
+bool ActionImpl::isRegistrationPending() const
+{
+    return mRegistrationPending;
 }
 
 void ActionImpl::activated()

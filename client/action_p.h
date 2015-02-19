@@ -60,6 +60,9 @@ public:
     void setValid(bool valid);
     bool isValid() const;
 
+    void setRegistrationPending(bool registrationPending);
+    bool isRegistrationPending() const;
+
 public slots:
     void activated();
     void shortcutChanged(const QString &oldShortcut, const QString &newShortcut);
@@ -76,6 +79,7 @@ private:
     QString mShortcut;
     QString mDescription;
     bool mValid;
+    bool mRegistrationPending;
 };
 
 }

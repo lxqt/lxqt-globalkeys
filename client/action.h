@@ -62,6 +62,7 @@ public:
     QString description() const;
 
     bool isValid() const;
+    bool isRegistrationPending() const;
 
 signals:
     void activated();

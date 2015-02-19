@@ -82,14 +82,11 @@ void ClientImpl::daemonAppeared(const QString &)
     {
         ActionImpl *globalActionImpl = I.value()->impl;
 
-        QDBusPendingReply<QString, qulonglong> reply = mProxy->addClientAction(globalActionImpl->shortcut(), QDBusObjectPath(globalActionImpl->path()), globalActionImpl->description());
-        reply.waitForFinished();
-        globalActionImpl->setValid(!reply.isError() && reply.argumentAt<1>());
-
-        if (globalActionImpl->isValid())
-        {
-            globalActionImpl->setShortcut(reply.argumentAt<0>());
-        }
+        QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(mProxy->addClientAction(globalActionImpl->shortcut(), QDBusObjectPath(globalActionImpl->path()), globalActionImpl->description()));
+        connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher *)), this, SLOT(registrationFinished(QDBusPendingCallWatcher *)));
+        mPendingRegistrationsActions[watcher] = globalActionImpl;
+        mPendingRegistrationsWatchers[globalActionImpl] = watcher;
+        globalActionImpl->setRegistrationPending(true);
     }
     mDaemonPresent = true;
     emit emitDaemonAppeared();
@@ -99,6 +96,29 @@ void ClientImpl::daemonAppeared(const QString &)
 bool ClientImpl::isDaemonPresent() const
 {
     return mDaemonPresent;
+}
+
+void ClientImpl::registrationFinished(QDBusPendingCallWatcher *watcher)
+{
+    QMap<QDBusPendingCallWatcher*, ActionImpl*>::Iterator I = mPendingRegistrationsActions.find(watcher);
+    if (I != mPendingRegistrationsActions.end())
+    {
+        ActionImpl *globalActionImpl = I.value();
+
+        globalActionImpl->setRegistrationPending(false);
+
+        QDBusPendingReply<QString, qulonglong> reply = *watcher;
+        globalActionImpl->setValid(!reply.isError() && reply.argumentAt<1>());
+
+        if (globalActionImpl->isValid())
+        {
+            globalActionImpl->setShortcut(reply.argumentAt<0>());
+        }
+
+        mPendingRegistrationsWatchers.remove(globalActionImpl);
+        mPendingRegistrationsActions.erase(I);
+        watcher->deleteLater();
+    }
 }
 
 Action *ClientImpl::addClientAction(const QString &shortcut, const QString &path, const QString &description, QObject *parent)
@@ -125,13 +145,11 @@ Action *ClientImpl::addClientAction(const QString &shortcut, const QString &path
 
     if (mDaemonPresent)
     {
-        QDBusPendingReply<QString, qulonglong> reply = mProxy->addClientAction(shortcut, QDBusObjectPath(path), description);
-        reply.waitForFinished();
-        globalActionImpl->setValid(!reply.isError() && reply.argumentAt<1>());
-        if (globalActionImpl->isValid())
-        {
-            globalActionImpl->setShortcut(reply.argumentAt<0>());
-        }
+        QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(mProxy->addClientAction(shortcut, QDBusObjectPath(path), description));
+        connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher *)), this, SLOT(registrationFinished(QDBusPendingCallWatcher *)));
+        mPendingRegistrationsActions[watcher] = globalActionImpl;
+        mPendingRegistrationsWatchers[globalActionImpl] = watcher;
+        globalActionImpl->setRegistrationPending(true);
     }
     else
     {
@@ -204,6 +222,21 @@ bool ClientImpl::removeClientAction(const QString &path)
 
 void ClientImpl::removeAction(ActionImpl *actionImpl)
 {
+    if (actionImpl->isRegistrationPending())
+    {
+        QMap<ActionImpl*, QDBusPendingCallWatcher*>::Iterator I = mPendingRegistrationsWatchers.find(actionImpl);
+        if (I != mPendingRegistrationsWatchers.end())
+        {
+            QDBusPendingCallWatcher *watcher = I.value();
+
+            watcher->disconnect();
+
+            mPendingRegistrationsActions.remove(watcher);
+            mPendingRegistrationsWatchers.erase(I);
+            watcher->deleteLater();
+        }
+    }
+
     QString path = actionImpl->path();
     if (!mActions.contains(path))
     {

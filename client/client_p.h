@@ -81,6 +81,7 @@ public slots:
     void grabShortcutFinished(QDBusPendingCallWatcher *call);
     void daemonDisappeared(const QString &);
     void daemonAppeared(const QString &);
+    void registrationFinished(QDBusPendingCallWatcher *call);
 
 signals:
     void emitShortcutGrabbed(const QString &);
@@ -98,6 +99,9 @@ private:
     QMap<QString, Action*> mActions;
     QDBusServiceWatcher *mServiceWatcher;
     bool mDaemonPresent;
+
+    QMap<QDBusPendingCallWatcher*, ActionImpl*> mPendingRegistrationsActions;
+    QMap<ActionImpl*, QDBusPendingCallWatcher*> mPendingRegistrationsWatchers;
 };
 
 }
