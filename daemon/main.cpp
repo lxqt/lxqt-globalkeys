@@ -231,10 +231,10 @@ int main(int argc, char *argv[])
     }
 
     const char* home = getenv("HOME");
-    int ignoreIt = chdir(*home ? home : "/");
+    int ignoreIt = chdir((home && *home) ? home : "/");
     (void)ignoreIt;
 
-    if (configFiles.empty() && *home)
+    if (configFiles.empty() && home && *home)
     {
         configFiles.push_back(QString::fromLocal8Bit(home) + "/" DEFAULT_CONFIG);
     }
