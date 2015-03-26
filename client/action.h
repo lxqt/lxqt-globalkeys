@@ -65,6 +65,7 @@ public:
     bool isRegistrationPending() const;
 
 signals:
+    void registrationFinished();
     void activated();
     void shortcutChanged(const QString &oldShortcut, const QString &newShortcut);
 

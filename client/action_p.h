@@ -68,6 +68,7 @@ public slots:
     void shortcutChanged(const QString &oldShortcut, const QString &newShortcut);
 
 signals:
+    void emitRegistrationFinished();
     void emitActivated();
     void emitShortcutChanged(const QString &oldShortcut, const QString &newShortcut);
 

@@ -105,8 +105,6 @@ void ClientImpl::registrationFinished(QDBusPendingCallWatcher *watcher)
     {
         ActionImpl *globalActionImpl = I.value();
 
-        globalActionImpl->setRegistrationPending(false);
-
         QDBusPendingReply<QString, qulonglong> reply = *watcher;
         globalActionImpl->setValid(!reply.isError() && reply.argumentAt<1>());
 
@@ -118,6 +116,8 @@ void ClientImpl::registrationFinished(QDBusPendingCallWatcher *watcher)
         mPendingRegistrationsWatchers.remove(globalActionImpl);
         mPendingRegistrationsActions.erase(I);
         watcher->deleteLater();
+
+        globalActionImpl->setRegistrationPending(false);
     }
 }
 
