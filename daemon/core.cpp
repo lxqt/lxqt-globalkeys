@@ -581,7 +581,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                         }
                         if (id)
                         {
-                            mShortcutAndActionById[id].second->setEnabled(enabled);
+                            enableActionNonGuarded(id, enabled);
                         }
 
                         settings.endGroup();
@@ -1682,7 +1682,8 @@ void Core::serviceDisappeared(const QString &sender)
                 {
                     const QString &shortcut = shortcutAndActionById.value().first;
 
-                    dynamic_cast<ClientAction *>(shortcutAndActionById.value().second)->disappeared();
+                    ClientAction * action = dynamic_cast<ClientAction *>(shortcutAndActionById.value().second);
+                    action->disappeared();
                     mDaemonAdaptor->emit_clientActionSenderChanged(id, QString());
 
                     X11Shortcut X11shortcut = mX11ByShortcut[shortcut];
@@ -1695,7 +1696,7 @@ void Core::serviceDisappeared(const QString &sender)
                         {
                             mIdsByShortcut.erase(idsByShortcut);
 
-                            if (!remoteXUngrabKey(X11shortcut))
+                            if (action->isEnabled() && !remoteXUngrabKey(X11shortcut))
                             {
                                 log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
                             }
@@ -2389,7 +2390,7 @@ void Core::enableClientAction(bool &result, const QDBusObjectPath &path, bool en
 
     qulonglong id = idByNativeClient.value();
 
-    mShortcutAndActionById[id].second->setEnabled(enabled);
+    enableActionNonGuarded(id, enabled);
 
     saveConfig();
 
@@ -2430,23 +2431,46 @@ void Core::isClientActionEnabled(bool &enabled, const QDBusObjectPath &path, con
 
 void Core::enableAction(bool &result, qulonglong id, bool enabled)
 {
+    QMutexLocker lock(&mDataMutex);
+    result = enableActionNonGuarded(id, enabled);
+}
+
+bool Core::enableActionNonGuarded(qulonglong id, bool enabled)
+{
     log(LOG_INFO, "enableAction id:%llu enabled:%s", id, enabled ? "true" : " false");
 
-    QMutexLocker lock(&mDataMutex);
 
     ShortcutAndActionById::iterator shortcutAndActionById = mShortcutAndActionById.find(id);
     if (shortcutAndActionById == mShortcutAndActionById.end())
     {
         log(LOG_WARNING, "No action registered with id #%llu", id);
-        result = false;
-        return;
+        return false;
     }
 
-    shortcutAndActionById.value().second->setEnabled(enabled);
+    BaseAction * action = shortcutAndActionById.value().second;
+    QString const & shortcut = shortcutAndActionById.value().first;
+    if (action->isEnabled() != enabled)
+    {
+        shortcutAndActionById.value().second->setEnabled(enabled);
+        //TODO: (un)grab only after multiple usage check!?!
+        if (enabled)
+        {
+            if (!remoteXGrabKey(mX11ByShortcut[shortcut]))
+            {
+                log(LOG_WARNING, "Cannot grab shortcut '%s'", qPrintable(shortcut));
+            }
+        } else
+        {
+            if (!remoteXUngrabKey(mX11ByShortcut[shortcut]))
+            {
+                log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+            }
+        }
 
-    saveConfig();
+        saveConfig();
+    }
 
-    result = true;
+    return true;
 }
 
 void Core::isActionEnabled(bool &enabled, qulonglong id)
@@ -2537,6 +2561,7 @@ void Core::changeClientActionShortcut(QPair<QString, qulonglong> &result, const 
     ShortcutAndActionById::iterator shortcutAndActionById = mShortcutAndActionById.find(id);
 
     QString oldShortcut = shortcutAndActionById.value().first;
+    BaseAction const * const action = shortcutAndActionById.value().second;
 
     if (oldShortcut != newShortcut)
     {
@@ -2555,7 +2580,7 @@ void Core::changeClientActionShortcut(QPair<QString, qulonglong> &result, const 
             {
                 mIdsByShortcut.erase(idsByShortcut);
 
-                if (!remoteXUngrabKey(mX11ByShortcut[oldShortcut]))
+                if (action->isEnabled() && !remoteXUngrabKey(mX11ByShortcut[oldShortcut]))
                 {
                     log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
                 }
@@ -2614,6 +2639,7 @@ void Core::changeShortcut(QString &result, const qulonglong &id, const QString &
             return;
         }
 
+        BaseAction const * const action = shortcutAndActionById.value().second;
         IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(oldShortcut);
         if (idsByShortcut != mIdsByShortcut.end())
         {
@@ -2622,7 +2648,7 @@ void Core::changeShortcut(QString &result, const qulonglong &id, const QString &
             {
                 mIdsByShortcut.erase(idsByShortcut);
 
-                if (!remoteXUngrabKey(mX11ByShortcut[oldShortcut]))
+                if (action->isEnabled() && !remoteXUngrabKey(mX11ByShortcut[oldShortcut]))
                 {
                     log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
                 }
@@ -2715,7 +2741,9 @@ void Core::removeClientAction(bool &result, const QDBusObjectPath &path, const Q
 
     X11Shortcut X11shortcut = mX11ByShortcut[shortcut];
 
-    delete shortcutAndActionById.value().second;
+    BaseAction * action = shortcutAndActionById.value().second;
+    const bool enabled = action->isEnabled();
+    delete action;
     mShortcutAndActionById.erase(shortcutAndActionById);
     mIdByClientPath.remove(path);
 
@@ -2727,7 +2755,7 @@ void Core::removeClientAction(bool &result, const QDBusObjectPath &path, const Q
         {
             mIdsByShortcut.erase(idsByShortcut);
 
-            if (!remoteXUngrabKey(X11shortcut))
+            if (enabled && !remoteXUngrabKey(X11shortcut))
             {
                 log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
             }
@@ -2791,6 +2819,7 @@ void Core::removeAction(bool &result, const qulonglong &id)
     QString shortcut = shortcutAndActionById.value().first;
 
     X11Shortcut X11shortcut = mX11ByShortcut[shortcut];
+    const bool enabled = action->isEnabled();
 
     delete action;
     mShortcutAndActionById.erase(shortcutAndActionById);
@@ -2803,7 +2832,7 @@ void Core::removeAction(bool &result, const qulonglong &id)
         {
             mIdsByShortcut.erase(idsByShortcut);
 
-            if (!remoteXUngrabKey(X11shortcut))
+            if (enabled && !remoteXUngrabKey(X11shortcut))
             {
                 log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
             }
@@ -2849,7 +2878,8 @@ void Core::deactivateClientAction(bool &result, const QDBusObjectPath &path, con
     ShortcutAndActionById::iterator shortcutAndActionById = mShortcutAndActionById.find(id);
     QString shortcut = shortcutAndActionById.value().first;
 
-    dynamic_cast<ClientAction*>(shortcutAndActionById.value().second)->disappeared();
+    ClientAction * const action = dynamic_cast<ClientAction*>(shortcutAndActionById.value().second);
+    action->disappeared();
 
     IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
     if (idsByShortcut != mIdsByShortcut.end())
@@ -2859,7 +2889,7 @@ void Core::deactivateClientAction(bool &result, const QDBusObjectPath &path, con
         {
             mIdsByShortcut.erase(idsByShortcut);
 
-            if (!remoteXUngrabKey(mX11ByShortcut[shortcut]))
+            if (action->isEnabled() && !remoteXUngrabKey(mX11ByShortcut[shortcut]))
             {
                 log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
             }
