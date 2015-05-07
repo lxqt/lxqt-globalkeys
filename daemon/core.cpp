@@ -1688,17 +1688,32 @@ void Core::serviceDisappeared(const QString &sender)
 
                     X11Shortcut X11shortcut = mX11ByShortcut[shortcut];
 
-                    IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
-                    if (idsByShortcut != mIdsByShortcut.end())
+                    if (action->isEnabled())
                     {
-                        idsByShortcut.value().remove(id);
-                        if (idsByShortcut.value().isEmpty())
+                        IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
+                        if (idsByShortcut != mIdsByShortcut.end())
                         {
-                            mIdsByShortcut.erase(idsByShortcut);
-
-                            if (action->isEnabled() && !remoteXUngrabKey(X11shortcut))
+                            idsByShortcut.value().remove(id);
+                            if (idsByShortcut.value().isEmpty())
                             {
-                                log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                                mIdsByShortcut.erase(idsByShortcut);
+
+                                if (!remoteXUngrabKey(X11shortcut))
+                                {
+                                    log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        IdsByShortcut::iterator idsByShortcut = mDisabledIdsByShortcut.find(shortcut);
+                        if (idsByShortcut != mDisabledIdsByShortcut.end())
+                        {
+                            idsByShortcut.value().remove(id);
+                            if (idsByShortcut.value().isEmpty())
+                            {
+                                mDisabledIdsByShortcut.erase(idsByShortcut);
                             }
                         }
                     }
@@ -2452,19 +2467,47 @@ bool Core::enableActionNonGuarded(qulonglong id, bool enabled)
     if (action->isEnabled() != enabled)
     {
         shortcutAndActionById.value().second->setEnabled(enabled);
-        //TODO: (un)grab only after multiple usage check!?!
         if (enabled)
         {
-            if (!remoteXGrabKey(mX11ByShortcut[shortcut]))
+            IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
+            if (idsByShortcut != mIdsByShortcut.end())
             {
-                log(LOG_WARNING, "Cannot grab shortcut '%s'", qPrintable(shortcut));
+                if (idsByShortcut.value().isEmpty())
+                {
+                    if (!remoteXGrabKey(mX11ByShortcut[shortcut]))
+                    {
+                        log(LOG_WARNING, "Cannot grab shortcut '%s'", qPrintable(shortcut));
+                    }
+                }
             }
-        } else
+            idsByShortcut = mDisabledIdsByShortcut.find(shortcut);
+            if (idsByShortcut != mDisabledIdsByShortcut.end())
+            {
+                idsByShortcut.value().remove(id);
+                if (idsByShortcut.value().isEmpty())
+                {
+                    mDisabledIdsByShortcut.erase(idsByShortcut);
+                }
+            }
+            mIdsByShortcut[shortcut].insert(id);
+        }
+        else
         {
-            if (!remoteXUngrabKey(mX11ByShortcut[shortcut]))
+            IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
+            if (idsByShortcut != mIdsByShortcut.end())
             {
-                log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                idsByShortcut.value().remove(id);
+                if (idsByShortcut.value().isEmpty())
+                {
+                    mIdsByShortcut.erase(idsByShortcut);
+
+                    if (!remoteXUngrabKey(mX11ByShortcut[shortcut]))
+                    {
+                        log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                    }
+                }
             }
+            mDisabledIdsByShortcut[shortcut].insert(id);
         }
 
         saveConfig();
@@ -2561,33 +2604,51 @@ void Core::changeClientActionShortcut(QPair<QString, qulonglong> &result, const 
     ShortcutAndActionById::iterator shortcutAndActionById = mShortcutAndActionById.find(id);
 
     QString oldShortcut = shortcutAndActionById.value().first;
-    BaseAction const * const action = shortcutAndActionById.value().second;
 
     if (oldShortcut != newShortcut)
     {
-        newShortcut = grabOrReuseKey(X11shortcut, newShortcut);
-        if (newShortcut.isEmpty())
-        {
-            result = qMakePair(QString(), id);
-            return;
-        }
+        BaseAction const * const action = shortcutAndActionById.value().second;
 
-        IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(oldShortcut);
-        if (idsByShortcut != mIdsByShortcut.end())
+        if (action->isEnabled())
         {
-            idsByShortcut.value().remove(id);
-            if (idsByShortcut.value().isEmpty())
+            newShortcut = grabOrReuseKey(X11shortcut, newShortcut);
+            if (newShortcut.isEmpty())
             {
-                mIdsByShortcut.erase(idsByShortcut);
+                result = qMakePair(QString(), id);
+                return;
+            }
 
-                if (action->isEnabled() && !remoteXUngrabKey(mX11ByShortcut[oldShortcut]))
+            IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(oldShortcut);
+            if (idsByShortcut != mIdsByShortcut.end())
+            {
+                idsByShortcut.value().remove(id);
+                if (idsByShortcut.value().isEmpty())
                 {
-                    log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                    mIdsByShortcut.erase(idsByShortcut);
+
+                    if (!remoteXUngrabKey(mX11ByShortcut[oldShortcut]))
+                    {
+                        log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                    }
                 }
             }
-        }
 
-        mIdsByShortcut[newShortcut].insert(id);
+            mIdsByShortcut[newShortcut].insert(id);
+        }
+        else
+        {
+            IdsByShortcut::iterator idsByShortcut = mDisabledIdsByShortcut.find(oldShortcut);
+            if (idsByShortcut != mDisabledIdsByShortcut.end())
+            {
+                idsByShortcut.value().remove(id);
+                if (idsByShortcut.value().isEmpty())
+                {
+                    mDisabledIdsByShortcut.erase(idsByShortcut);
+                }
+            }
+
+            mDisabledIdsByShortcut[newShortcut].insert(id);
+        }
         shortcutAndActionById.value().first = newShortcut;
     }
 
@@ -2632,30 +2693,48 @@ void Core::changeShortcut(QString &result, const qulonglong &id, const QString &
 
     if (oldShortcut != newShortcut)
     {
-        newShortcut = grabOrReuseKey(X11shortcut, newShortcut);
-        if (newShortcut.isEmpty())
-        {
-            result = QString();
-            return;
-        }
-
         BaseAction const * const action = shortcutAndActionById.value().second;
-        IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(oldShortcut);
-        if (idsByShortcut != mIdsByShortcut.end())
-        {
-            idsByShortcut.value().remove(id);
-            if (idsByShortcut.value().isEmpty())
-            {
-                mIdsByShortcut.erase(idsByShortcut);
 
-                if (action->isEnabled() && !remoteXUngrabKey(mX11ByShortcut[oldShortcut]))
+        if (action->isEnabled())
+        {
+            newShortcut = grabOrReuseKey(X11shortcut, newShortcut);
+            if (newShortcut.isEmpty())
+            {
+                result = QString();
+                return;
+            }
+
+            IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(oldShortcut);
+            if (idsByShortcut != mIdsByShortcut.end())
+            {
+                idsByShortcut.value().remove(id);
+                if (idsByShortcut.value().isEmpty())
                 {
-                    log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                    mIdsByShortcut.erase(idsByShortcut);
+
+                    if (!remoteXUngrabKey(mX11ByShortcut[oldShortcut]))
+                    {
+                        log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                    }
                 }
             }
-        }
 
-        mIdsByShortcut[newShortcut].insert(id);
+            mIdsByShortcut[newShortcut].insert(id);
+        }
+        else
+        {
+            IdsByShortcut::iterator idsByShortcut = mDisabledIdsByShortcut.find(oldShortcut);
+            if (idsByShortcut != mDisabledIdsByShortcut.end())
+            {
+                idsByShortcut.value().remove(id);
+                if (idsByShortcut.value().isEmpty())
+                {
+                    mDisabledIdsByShortcut.erase(idsByShortcut);
+                }
+            }
+
+            mDisabledIdsByShortcut[newShortcut].insert(id);
+        }
         shortcutAndActionById.value().first = newShortcut;
 
         if (!strcmp(shortcutAndActionById.value().second->type(), ClientAction::id()))
@@ -2747,17 +2826,32 @@ void Core::removeClientAction(bool &result, const QDBusObjectPath &path, const Q
     mShortcutAndActionById.erase(shortcutAndActionById);
     mIdByClientPath.remove(path);
 
-    IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
-    if (idsByShortcut != mIdsByShortcut.end())
+    if (enabled)
     {
-        idsByShortcut.value().remove(id);
-        if (idsByShortcut.value().isEmpty())
+        IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
+        if (idsByShortcut != mIdsByShortcut.end())
         {
-            mIdsByShortcut.erase(idsByShortcut);
-
-            if (enabled && !remoteXUngrabKey(X11shortcut))
+            idsByShortcut.value().remove(id);
+            if (idsByShortcut.value().isEmpty())
             {
-                log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                mIdsByShortcut.erase(idsByShortcut);
+
+                if (!remoteXUngrabKey(X11shortcut))
+                {
+                    log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                }
+            }
+        }
+    }
+    else
+    {
+        IdsByShortcut::iterator idsByShortcut = mDisabledIdsByShortcut.find(shortcut);
+        if (idsByShortcut != mDisabledIdsByShortcut.end())
+        {
+            idsByShortcut.value().remove(id);
+            if (idsByShortcut.value().isEmpty())
+            {
+                mDisabledIdsByShortcut.erase(idsByShortcut);
             }
         }
     }
@@ -2820,21 +2914,35 @@ void Core::removeAction(bool &result, const qulonglong &id)
 
     X11Shortcut X11shortcut = mX11ByShortcut[shortcut];
     const bool enabled = action->isEnabled();
-
     delete action;
     mShortcutAndActionById.erase(shortcutAndActionById);
 
-    IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
-    if (idsByShortcut != mIdsByShortcut.end())
+    if (enabled)
     {
-        idsByShortcut.value().remove(id);
-        if (idsByShortcut.value().isEmpty())
+        IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
+        if (idsByShortcut != mIdsByShortcut.end())
         {
-            mIdsByShortcut.erase(idsByShortcut);
-
-            if (enabled && !remoteXUngrabKey(X11shortcut))
+            idsByShortcut.value().remove(id);
+            if (idsByShortcut.value().isEmpty())
             {
-                log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                mIdsByShortcut.erase(idsByShortcut);
+
+                if (enabled && !remoteXUngrabKey(X11shortcut))
+                {
+                    log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                }
+            }
+        }
+    }
+    else
+    {
+        IdsByShortcut::iterator idsByShortcut = mDisabledIdsByShortcut.find(shortcut);
+        if (idsByShortcut != mDisabledIdsByShortcut.end())
+        {
+            idsByShortcut.value().remove(id);
+            if (idsByShortcut.value().isEmpty())
+            {
+                mDisabledIdsByShortcut.erase(idsByShortcut);
             }
         }
     }
@@ -2881,17 +2989,32 @@ void Core::deactivateClientAction(bool &result, const QDBusObjectPath &path, con
     ClientAction * const action = dynamic_cast<ClientAction*>(shortcutAndActionById.value().second);
     action->disappeared();
 
-    IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
-    if (idsByShortcut != mIdsByShortcut.end())
+    if (action->isEnabled())
     {
-        idsByShortcut.value().remove(id);
-        if (idsByShortcut.value().isEmpty())
+        IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
+        if (idsByShortcut != mIdsByShortcut.end())
         {
-            mIdsByShortcut.erase(idsByShortcut);
-
-            if (action->isEnabled() && !remoteXUngrabKey(mX11ByShortcut[shortcut]))
+            idsByShortcut.value().remove(id);
+            if (idsByShortcut.value().isEmpty())
             {
-                log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                mIdsByShortcut.erase(idsByShortcut);
+
+                if (!remoteXUngrabKey(mX11ByShortcut[shortcut]))
+                {
+                    log(LOG_WARNING, "Cannot ungrab shortcut '%s'", qPrintable(shortcut));
+                }
+            }
+        }
+    }
+    else
+    {
+        IdsByShortcut::iterator idsByShortcut = mDisabledIdsByShortcut.find(shortcut);
+        if (idsByShortcut != mDisabledIdsByShortcut.end())
+        {
+            idsByShortcut.value().remove(id);
+            if (idsByShortcut.value().isEmpty())
+            {
+                mDisabledIdsByShortcut.erase(idsByShortcut);
             }
         }
     }

@@ -219,6 +219,7 @@ private:
     X11ByShortcut mX11ByShortcut;
     ShortcutByX11 mShortcutByX11;
     IdsByShortcut mIdsByShortcut;
+    IdsByShortcut mDisabledIdsByShortcut;
     ShortcutAndActionById mShortcutAndActionById;
     IdByClientPath mIdByClientPath;
     SenderByClientPath mSenderByClientPath; // add: path->sender
