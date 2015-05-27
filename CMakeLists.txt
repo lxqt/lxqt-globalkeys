@@ -35,9 +35,6 @@ set(LXQT_INSTALL_CMAKE_DIR     ${CMAKE_INSTALL_FULL_LIBDIR}/cmake)
 #************************************************
 # Build config.cmake files
 #************************************************
-#set(LXQT_SHARE_DIR ${CMAKE_INSTALL_PREFIX}/share/lxqt)
-#set(LXQT_TRANSLATIONS_DIR ${LXQT_SHARE_DIR}/translations)
-
 set(LXQT_GLOBALKEYS_CMAKE_NAME ${LXQT_GLOBALKEYS_LIBRARY_NAME})
 set(LXQT_GLOBALKEYS_UI_CMAKE_NAME ${LXQT_GLOBALKEYS_UI_LIBRARY_NAME})
 
