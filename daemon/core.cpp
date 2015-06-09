@@ -828,7 +828,7 @@ int Core::x11ErrorHandler(Display */*display*/, XErrorEvent *errorEvent)
 
 bool Core::waitForX11Error(int level, uint timeout)
 {
-    pollfd *fds = new pollfd[1];
+    pollfd fds[1];
     fds[0].fd = mX11ErrorPipe[STDIN_FILENO];
     fds[0].events = POLLIN | POLLERR | POLLHUP;
     if (poll(fds, 1, timeout) < 0)
@@ -1367,7 +1367,7 @@ void Core::run()
 
             default:
             {
-                pollfd *fds = new pollfd[1];
+                pollfd fds[1];
                 fds[0].fd = mX11RequestPipe[STDIN_FILENO];
                 fds[0].events = POLLIN | POLLERR | POLLHUP;
                 if (poll(fds, 1, 0) >= 0)
