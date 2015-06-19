@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 project(lxqt-globalkeys)
 
@@ -21,7 +21,7 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5DBus REQUIRED)
 find_package(Qt5LinguistTools REQUIRED QUIET)
 find_package(lxqt REQUIRED QUIET)
-include(${LXQT_USE_FILE})
+
 
 include(LXQtTranslate)
 

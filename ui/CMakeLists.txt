@@ -9,7 +9,6 @@ set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeysUi")
 include_directories(
     "${PROJECT_SOURCE_DIR}"
     "${CMAKE_CURRENT_BINARY_DIR}"
-    ${LXQT_INCLUDE_DIRS}
 )
 
 add_definitions(-DSHARED_EXPORT=Q_DECL_EXPORT)
