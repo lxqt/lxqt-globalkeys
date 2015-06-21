@@ -54,15 +54,42 @@ configure_package_config_file(
 #************************************************
 # End of build config.cmake
 #************************************************
+
+#************************************************
+# Generate config-version.cmake files
+#************************************************
+write_basic_package_version_file(
+    "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config-version.cmake"
+    VERSION ${LXQT_VERSION}
+    COMPATIBILITY AnyNewerVersion
+)
+
+write_basic_package_version_file(
+    "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config-version.cmake"
+    VERSION ${LXQT_VERSION}
+    COMPATIBILITY AnyNewerVersion
+)
+#************************************************
+# End of generate config-version.cmake files
+#************************************************
+
 set(LXQT_GLOBALKEYS_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 add_subdirectory(daemon)
 add_subdirectory(config)
 add_subdirectory(client)
 add_subdirectory(ui)
 
-install(FILES ${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config.cmake DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME})
+install(FILES
+    ${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config.cmake
+    "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config-version.cmake"
+    DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}
+)
 
-install(FILES ${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config.cmake DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME})
+install(FILES
+    ${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config.cmake
+    "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config-version.cmake"
+    DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}
+)
 
 # building tarball with CPack -------------------------------------------------
 include(InstallRequiredSystemLibraries)
