@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 
 project(lxqt-globalkeys)
 
@@ -25,8 +25,8 @@ find_package(lxqt REQUIRED QUIET)
 
 include(LXQtTranslate)
 
-# Standard directories for installation
-include(GNUInstallDirs)
+include(GNUInstallDirs) # Standard directories for installation
+include(CMakePackageConfigHelpers)
 
 set(LXQT_GLOBALKEYS_LIBRARY_NAME lxqt-globalkeys)
 set(LXQT_GLOBALKEYS_UI_LIBRARY_NAME lxqt-globalkeys-ui)
@@ -39,17 +39,17 @@ set(LXQT_GLOBALKEYS_CMAKE_NAME ${LXQT_GLOBALKEYS_LIBRARY_NAME})
 set(LXQT_GLOBALKEYS_UI_CMAKE_NAME ${LXQT_GLOBALKEYS_UI_LIBRARY_NAME})
 
 set(LXQT_GLOBALKEYS_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/include/${LXQT_GLOBALKEYS_LIBRARY_NAME}")
-configure_file(
+configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake/lxqt_globalkeys-config.cmake.in"
     "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config.cmake"
-    @ONLY
+    INSTALL_DESTINATION "${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}"
 )
 
 set(LXQT_GLOBALKEYS_UI_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include/${LXQT_GLOBALKEYS_UI_LIBRARY_NAME})
-configure_file(
+configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake/lxqt_globalkeys_ui-config.cmake.in"
     "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config.cmake"
-    @ONLY
+    INSTALL_DESTINATION "${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}"
 )
 #************************************************
 # End of build config.cmake
@@ -61,10 +61,8 @@ add_subdirectory(client)
 add_subdirectory(ui)
 
 install(FILES ${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config.cmake DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME})
-install(FILES cmake/lxqt_globalkeys_use.cmake DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME})
 
 install(FILES ${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config.cmake DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME})
-install(FILES cmake/lxqt_globalkeys_ui_use.cmake DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME})
 
 # building tarball with CPack -------------------------------------------------
 include(InstallRequiredSystemLibraries)
