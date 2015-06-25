@@ -167,7 +167,10 @@ set_target_properties(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
     INTERFACE "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${LXQT_GLOBALKEYS_LIBRARY_NAME}>"
 )
-
+target_include_directories(${PROJECT_NAME}
+    INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/include>"
+    INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/include/${PROJECT_NAME}>"
+)
 export(TARGETS ${PROJECT_NAME} FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-targets.cmake")
 
 include(create_portable_headers)
@@ -176,6 +179,30 @@ create_portable_headers(${PROJECT_NAME}_PORTABLE_HEADERS
     NAMESPACE "${${PROJECT_NAME}_NAMESPACE}/"
     FILENAMES ${${PROJECT_NAME}_PUBLIC_CLASSES}
 )
+
+# Copy public headers for intree building
+foreach(h ${${PROJECT_NAME}_PUBLIC_HEADERS})
+    get_filename_component(bh ${h} NAME)
+    configure_file(${h} "${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/include/${PROJECT_NAME}/${bh}" COPYONLY)
+endforeach()
+
+foreach(h ${${PROJECT_NAME}_PORTABLE_HEADERS})
+    get_filename_component(bh ${h} NAME)
+    configure_file(${h} "${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/include/${PROJECT_NAME}/${${PROJECT_NAME}_HEADER_NAMESPACE}/${bh}" COPYONLY)
+endforeach()
+
+configure_file(
+    "${${PROJECT_NAME}_MAIN_HEADER}"
+    "${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/include/${PROJECT_NAME}/${${PROJECT_NAME}_MAIN_HEADER}"
+    COPYONLY
+)
+
+configure_file(
+    "${${PROJECT_NAME}_MAIN_HEADER}"
+    "${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/include/${PROJECT_NAME}/lxqtglobalkeys.h"
+    COPYONLY
+)
+
 install(TARGETS ${PROJECT_NAME} DESTINATION ${LIB_INSTALL_DIR} EXPORT ${PROJECT_NAME}-targets COMPONENT runtime)
 install(EXPORT ${PROJECT_NAME}-targets DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME} COMPONENT development)
 install(FILES ${${PROJECT_NAME}_MAIN_HEADER} DESTINATION include/${PROJECT_NAME} COMPONENT development)
