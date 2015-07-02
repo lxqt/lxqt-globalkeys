@@ -25,7 +25,7 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#include <QCoreApplication>
+#include <LXQt/Application>
 
 #include <QString>
 #include <QStringList>
@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
         configFiles.push_back(QString::fromLocal8Bit(home) + "/" DEFAULT_CONFIG);
     }
 
-    QCoreApplication app(argc, argv);
+    LxQt::Application app(argc, argv);
 
     Core core(runAsDaemon || useSyslog, minLogLevelSet, minLogLevel, configFiles, multipleActionsBehaviourSet, multipleActionsBehaviour);
 

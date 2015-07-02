@@ -25,7 +25,7 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#include <QCoreApplication>
+#include <LXQt/Application>
 
 #include <QSettings>
 #include <QTimer>
@@ -68,14 +68,6 @@ enum
 
 static Core *s_Core = 0;
 
-
-void unixSignalHandler(int signalNumber)
-{
-    if (s_Core)
-    {
-        s_Core->unixSignalHandler(signalNumber);
-    }
-}
 
 int x11ErrorHandler(Display *display, XErrorEvent *errorEvent)
 {
@@ -411,8 +403,8 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
         openlog("lxqt-global-action-daemon", LOG_PID, LOG_USER);
 
-        ::signal(SIGTERM, ::unixSignalHandler);
-        ::signal(SIGINT, ::unixSignalHandler);
+        connect(lxqtApp, &LxQt::Application::unixSignal, this, &Core::unixSignalHandler);
+        lxqtApp->listenToUnixSignals(QList<int>() << SIGTERM << SIGINT);
 
 
         if (!QDBusConnection::sessionBus().registerService("org.lxqt.global_key_shortcuts"))
