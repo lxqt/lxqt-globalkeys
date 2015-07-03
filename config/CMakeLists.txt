@@ -16,7 +16,6 @@ include_directories(
     "${PROJECT_SOURCE_DIR}"
     "${CMAKE_CURRENT_BINARY_DIR}"
     ${QTX_INCLUDE_DIRS}
-    ${LXQT_INCLUDE_DIRS}
 )
 
 set(${PROJECT_NAME}_PATH_TO_DAEMON "${LXQT_GLOBALKEYS_SOURCE_DIR}/daemon")
@@ -145,7 +144,7 @@ set(${PROJECT_NAME}_ALL_FILES
 )
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_ALL_FILES})
-target_link_libraries(${PROJECT_NAME} KF5::WindowSystem ${QTX_LIBRARIES} ${LXQT_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} KF5::WindowSystem ${QTX_LIBRARIES} lxqt)
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 install(FILES ${${PROJECT_NAME}_DESKTOP_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
