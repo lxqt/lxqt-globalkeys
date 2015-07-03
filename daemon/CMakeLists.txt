@@ -147,6 +147,6 @@ set(${PROJECT_NAME}_ALL_FILES
 )
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_ALL_FILES})
-target_link_libraries(${PROJECT_NAME} ${X11_LIBRARIES} ${LXQT_LIBRARIES} Qt5::Widgets Qt5::DBus)
+target_link_libraries(${PROJECT_NAME} ${X11_LIBRARIES} lxqt Qt5::Widgets Qt5::DBus)
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
