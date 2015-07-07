@@ -27,6 +27,7 @@
 
 #include <LXQt/Application>
 
+#include <QScopedArrayPointer>
 #include <QSettings>
 #include <QTimer>
 #include <QDBusConnectionInterface>
@@ -1392,17 +1393,16 @@ void Core::run()
                             }
                             if (length)
                             {
-                                char *str = new char[length + 1];
+                                QScopedArrayPointer<char> str(new char[length + 1]);
                                 str[length] = '\0';
-                                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], str, length))
+                                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], str.data(), length))
                                 {
                                     log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
                                     close(mX11ResponsePipe[STDIN_FILENO]);
                                     mX11EventLoopActive = false;
                                     break;
                                 }
-                                KeySym keySym = XStringToKeysym(str);
-                                delete[] str;
+                                KeySym keySym = XStringToKeysym(str.data());
                                 lockX11Error();
                                 keyCode = XKeysymToKeycode(mDisplay, keySym);
                                 x11Error = checkX11Error();
@@ -1806,17 +1806,15 @@ QString Core::remoteKeycodeToString(KeyCode keyCode)
     }
     if (length)
     {
-        char *str = new char[length + 1];
+        QScopedArrayPointer<char> str(new char[length + 1]);
         str[length] = '\0';
-        if (error_t error = readAll(mX11ResponsePipe[STDIN_FILENO], str, length))
+        if (error_t error = readAll(mX11ResponsePipe[STDIN_FILENO], str.data(), length))
         {
             log(LOG_CRIT, "Cannot read from X11 response pipe: %s", strerror(error));
             qApp->quit();
             return QString();
         }
-        result = str;
-
-        delete[] str;
+        result = str.data();
     }
 
     return result;
@@ -3319,17 +3317,15 @@ void Core::shortcutGrabbed()
         }
         if (length)
         {
-            char *str = new char[length + 1];
+            QScopedArrayPointer<char> str(new char[length + 1]);
             str[length] = '\0';
-            if (error_t error = readAll(mX11ResponsePipe[STDIN_FILENO], str, length))
+            if (error_t error = readAll(mX11ResponsePipe[STDIN_FILENO], str.data(), length))
             {
                 log(LOG_CRIT, "Cannot read from X11 response pipe: %s", strerror(error));
                 qApp->quit();
                 return;
             }
-            shortcut = str;
-
-            delete[] str;
+            shortcut = str.data();
         }
     }
 
