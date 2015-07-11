@@ -11,8 +11,6 @@ if(NOT CMAKE_BUILD_TYPE)
      set(CMAKE_BUILD_TYPE Release)
 endif()
 
-# Set default library installation path
-set(LIB_INSTALL_DIR "lib${LIB_SUFFIX}" CACHE PATH "Installation directory for libraries")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -24,13 +22,14 @@ find_package(lxqt REQUIRED QUIET)
 
 
 include(LXQtTranslate)
+include(LXQtCreatePkgConfigFile)
 
 include(GNUInstallDirs) # Standard directories for installation
 include(CMakePackageConfigHelpers)
 
 set(LXQT_GLOBALKEYS_LIBRARY_NAME lxqt-globalkeys)
 set(LXQT_GLOBALKEYS_UI_LIBRARY_NAME lxqt-globalkeys-ui)
-set(LXQT_INSTALL_CMAKE_DIR     ${CMAKE_INSTALL_FULL_LIBDIR}/cmake)
+set(LXQT_INSTALL_CMAKE_DIR     "${CMAKE_INSTALL_DATAROOTDIR}/cmake")
 
 #************************************************
 # Build config.cmake files
