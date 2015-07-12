@@ -12,12 +12,6 @@ set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
 
 set(QT_DBUS_PREFIX "org.qtproject")
 
-include_directories(
-    "${PROJECT_SOURCE_DIR}"
-    "${CMAKE_CURRENT_BINARY_DIR}"
-    ${QTX_INCLUDE_DIRS}
-)
-
 set(${PROJECT_NAME}_PATH_TO_DAEMON "${LXQT_GLOBALKEYS_SOURCE_DIR}/daemon")
 
 set(${PROJECT_NAME}_SOURCES

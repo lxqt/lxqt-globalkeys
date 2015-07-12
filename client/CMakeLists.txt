@@ -5,11 +5,6 @@ set(QT_DBUS_PREFIX "org.qtproject")
 
 set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeys")
 
-include_directories(
-    ${PROJECT_SOURCE_DIR}
-    ${CMAKE_CURRENT_BINARY_DIR}
-)
-
 set(${PROJECT_NAME}_PATH_TO_DAEMON "${LXQT_GLOBALKEYS_SOURCE_DIR}/daemon")
 
 add_definitions(-DSHARED_EXPORT=Q_DECL_EXPORT)

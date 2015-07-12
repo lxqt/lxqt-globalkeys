@@ -6,11 +6,6 @@ set(QT_DBUS_PREFIX "org.qtproject")
 set(LXQT_GLOBALKEYS_LIBRARY lxqt-globalkeys)
 set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeysUi")
 
-include_directories(
-    "${PROJECT_SOURCE_DIR}"
-    "${CMAKE_CURRENT_BINARY_DIR}"
-)
-
 add_definitions(-DSHARED_EXPORT=Q_DECL_EXPORT)
 
 set(${PROJECT_NAME}_SOURCES

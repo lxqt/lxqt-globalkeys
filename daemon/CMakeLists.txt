@@ -10,11 +10,6 @@ include_directories(${X11_INCLUDE_DIR})
 
 set(QT_DBUS_PREFIX "org.qtproject")
 
-include_directories(
-    ${PROJECT_SOURCE_DIR}
-    ${CMAKE_CURRENT_BINARY_DIR}
-)
-
 set(${PROJECT_NAME}_SOURCES
     main.cpp
     core.cpp
