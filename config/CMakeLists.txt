@@ -103,7 +103,6 @@ foreach(DBUS_INTERFACE ${${PROJECT_NAME}_DBUS_INTERFACES})
 endforeach()
 
 qt5_add_resources(${PROJECT_NAME}_RESOURCE_FILES ${${PROJECT_NAME}_RESOURCES})
-qt5_wrap_ui(${PROJECT_NAME}_FORM_FILES ${${PROJECT_NAME}_FORMS})
 
 # Translations **********************************
 lxqt_translate_ts(${PROJECT_NAME}_QM_FILES
