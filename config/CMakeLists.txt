@@ -7,9 +7,6 @@ endif()
 
 find_package(KF5WindowSystem REQUIRED QUIET)
 
-set(QTX_INCLUDE_DIRS "")
-set(QTX_LIBRARIES Qt5::Widgets Qt5::DBus)
-
 set(QT_DBUS_PREFIX "org.qtproject")
 
 set(${PROJECT_NAME}_PATH_TO_DAEMON "${LXQT_GLOBALKEYS_SOURCE_DIR}/daemon")
@@ -137,7 +134,7 @@ set(${PROJECT_NAME}_ALL_FILES
 )
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_ALL_FILES})
-target_link_libraries(${PROJECT_NAME} KF5::WindowSystem ${QTX_LIBRARIES} lxqt)
+target_link_libraries(${PROJECT_NAME} KF5::WindowSystem lxqt)
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(FILES ${${PROJECT_NAME}_DESKTOP_FILES} DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
