@@ -15,7 +15,7 @@ set(${PROJECT_NAME}_MAIN_HEADER
 
 #
 # WARNING: Changing stuff here implies changing this:
-#install(FILES ${${PROJECT_NAME}_PUBLIC_HEADERS} DESTINATION include/${PROJECT_NAME} COMPONENT development RENAME "shortcutselector.h")
+#install(FILES ${${PROJECT_NAME}_PUBLIC_HEADERS} DESTINATION include/${PROJECT_NAME} COMPONENT Devel RENAME "shortcutselector.h")
 #
 set(${PROJECT_NAME}_PUBLIC_CPP_HEADERS
     shortcut_selector.h
@@ -179,32 +179,32 @@ install(TARGETS
     ${PROJECT_NAME}
     DESTINATION "${CMAKE_INSTALL_LIBDIR}"
     EXPORT ${PROJECT_NAME}-targets
-    COMPONENT runtime
+    COMPONENT Runtime
 )
 
 install(EXPORT
     ${PROJECT_NAME}-targets
     DESTINATION "${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}"
-    COMPONENT development
+    COMPONENT Devel
 )
 
 install(FILES
     ${${PROJECT_NAME}_PUBLIC_HEADERS}
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
-    COMPONENT development
+    COMPONENT Devel
 )
 
 install(FILES
     ${${PROJECT_NAME}_PUBLIC_HEADERS}
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
-    COMPONENT development
+    COMPONENT Devel
     RENAME "shortcutselector.h"
 )
 
 install(FILES
     ${${PROJECT_NAME}_PORTABLE_HEADERS}
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${${PROJECT_NAME}_HEADER_NAMESPACE}"
-    COMPONENT development
+    COMPONENT Devel
 )
 
 

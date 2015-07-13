@@ -14,7 +14,7 @@ set(${PROJECT_NAME}_SOURCES
 
 #
 # WARNING: Changing stuff here implies changing this:
-#           install(FILES ${${PROJECT_NAME}_MAIN_HEADER} DESTINATION include/${PROJECT_NAME} COMPONENT development RENAME "lxqtglobalkeys.h")
+#           install(FILES ${${PROJECT_NAME}_MAIN_HEADER} DESTINATION include/${PROJECT_NAME} COMPONENT Devel RENAME "lxqtglobalkeys.h")
 #
 set(${PROJECT_NAME}_MAIN_HEADER
     lxqt-globalkeys.h
@@ -206,38 +206,38 @@ install(TARGETS
     ${PROJECT_NAME}
     DESTINATION "${CMAKE_INSTALL_LIBDIR}"
     EXPORT ${PROJECT_NAME}-targets
-    COMPONENT runtime
+    COMPONENT Runtime
 )
 
 install(EXPORT
     ${PROJECT_NAME}-targets
     DESTINATION "${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}"
-    COMPONENT development
+    COMPONENT Devel
 )
 
 install(FILES
     ${${PROJECT_NAME}_MAIN_HEADER}
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
-    COMPONENT development
+    COMPONENT Devel
 )
 
 install(FILES
     ${${PROJECT_NAME}_MAIN_HEADER}
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
-    COMPONENT development
+    COMPONENT Devel
     RENAME "lxqtglobalkeys.h"
 )
 
 install(FILES
     ${${PROJECT_NAME}_PORTABLE_HEADERS}
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${${PROJECT_NAME}_HEADER_NAMESPACE}"
-    COMPONENT development
+    COMPONENT Devel
 )
 
 install(FILES
     ${${PROJECT_NAME}_PUBLIC_HEADERS}
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
-    COMPONENT development
+    COMPONENT Devel
 )
 
 lxqt_create_pkgconfig_file(
