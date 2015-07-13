@@ -6,8 +6,6 @@ set(QT_DBUS_PREFIX "org.qtproject")
 set(LXQT_GLOBALKEYS_LIBRARY lxqt-globalkeys)
 set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeysUi")
 
-add_definitions(-DSHARED_EXPORT=Q_DECL_EXPORT)
-
 set(${PROJECT_NAME}_SOURCES
     shortcut_selector.cpp
 )
@@ -147,6 +145,10 @@ target_include_directories(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
     INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/include>"
     INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/include/${PROJECT_NAME}>"
+)
+
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE "SHARED_EXPORT=Q_DECL_EXPORT"
 )
 
 export(TARGETS ${PROJECT_NAME} APPEND FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-targets.cmake")

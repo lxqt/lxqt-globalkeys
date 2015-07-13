@@ -7,8 +7,6 @@ set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeys")
 
 set(${PROJECT_NAME}_PATH_TO_DAEMON "${LXQT_GLOBALKEYS_SOURCE_DIR}/daemon")
 
-add_definitions(-DSHARED_EXPORT=Q_DECL_EXPORT)
-
 set(${PROJECT_NAME}_SOURCES
     client.cpp
     action.cpp
@@ -167,6 +165,11 @@ target_include_directories(${PROJECT_NAME}
     INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/include>"
     INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/include/${PROJECT_NAME}>"
 )
+
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE "SHARED_EXPORT=Q_DECL_EXPORT"
+)
+
 export(TARGETS ${PROJECT_NAME} FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-targets.cmake")
 
 include(create_portable_headers)
