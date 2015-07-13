@@ -79,15 +79,15 @@ add_subdirectory(client)
 add_subdirectory(ui)
 
 install(FILES
-    ${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config.cmake
+    "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config.cmake"
     "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config-version.cmake"
-    DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}
+    DESTINATION "${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}"
 )
 
 install(FILES
-    ${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config.cmake
+    "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config.cmake"
     "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config-version.cmake"
-    DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}
+    DESTINATION "${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}"
 )
 
 # building tarball with CPack -------------------------------------------------
