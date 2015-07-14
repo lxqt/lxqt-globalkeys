@@ -5,14 +5,7 @@ set(QT_DBUS_PREFIX "org.qtproject")
 
 set(${PROJECT_NAME}_HEADER_NAMESPACE "LXQtGlobalKeys")
 
-include_directories(
-    ${PROJECT_SOURCE_DIR}
-    ${CMAKE_CURRENT_BINARY_DIR}
-)
-
 set(${PROJECT_NAME}_PATH_TO_DAEMON "${LXQT_GLOBALKEYS_SOURCE_DIR}/daemon")
-
-add_definitions(-DSHARED_EXPORT=Q_DECL_EXPORT)
 
 set(${PROJECT_NAME}_SOURCES
     client.cpp
@@ -21,7 +14,7 @@ set(${PROJECT_NAME}_SOURCES
 
 #
 # WARNING: Changing stuff here implies changing this:
-#           install(FILES ${${PROJECT_NAME}_MAIN_HEADER} DESTINATION include/${PROJECT_NAME} COMPONENT development RENAME "lxqtglobalkeys.h")
+#           install(FILES ${${PROJECT_NAME}_MAIN_HEADER} DESTINATION include/${PROJECT_NAME} COMPONENT Devel RENAME "lxqtglobalkeys.h")
 #
 set(${PROJECT_NAME}_MAIN_HEADER
     lxqt-globalkeys.h
@@ -53,10 +46,10 @@ set(${PROJECT_NAME}_TRANSLATIONS
 )
 
 set(${PROJECT_NAME}_DBUS_ADAPTORS
-    ${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.client.xml
+    "${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.client.xml"
 )
 
-set_source_files_properties(${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.client.xml PROPERTIES
+set_source_files_properties("${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.client.xml" PROPERTIES
     INCLUDE action_p.h
     PARENT_CLASSNAME GlobalKeyShortcut::ActionImpl
     BASENAME org.lxqt.global_key_shortcuts.client
@@ -64,10 +57,10 @@ set_source_files_properties(${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_ke
 )
 
 set(${PROJECT_NAME}_DBUS_INTERFACES
-    ${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.native.xml
+    "${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.native.xml"
 )
 
-set_source_files_properties(${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.native.xml PROPERTIES
+set_source_files_properties("${${PROJECT_NAME}_PATH_TO_DAEMON}/org.lxqt.global_key_shortcuts.native.xml" PROPERTIES
     BASENAME org.lxqt.global_key_shortcuts.native
 )
 
@@ -128,16 +121,15 @@ foreach(DBUS_INTERFACE ${${PROJECT_NAME}_DBUS_INTERFACES})
     get_source_file_property(DBUS_INTERFACE_INCLUDE ${DBUS_INTERFACE} INCLUDE)
     get_source_file_property(DBUS_INTERFACE_CLASSNAME ${DBUS_INTERFACE} CLASSNAME)
     get_source_file_property(DBUS_INTERFACE_NO_NAMESPACE ${DBUS_INTERFACE} NO_NAMESPACE)
-    set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/${DBUS_INTERFACE_FILENAME} PROPERTIES
+    set_source_files_properties("${CMAKE_CURRENT_BINARY_DIR}/${DBUS_INTERFACE_FILENAME}" PROPERTIES
         INCLUDE ${DBUS_INTERFACE_INCLUDE}
         CLASSNAME ${DBUS_INTERFACE_CLASSNAME}
         NO_NAMESPACE ${DBUS_INTERFACE_NO_NAMESPACE}
     )
-    qt5_add_dbus_interface(${PROJECT_NAME}_DBUS_INTERFACE_FILES ${CMAKE_CURRENT_BINARY_DIR}/${DBUS_INTERFACE_FILENAME} ${DBUS_INTERFACE_BASENAME})
+    qt5_add_dbus_interface(${PROJECT_NAME}_DBUS_INTERFACE_FILES "${CMAKE_CURRENT_BINARY_DIR}/${DBUS_INTERFACE_FILENAME}" ${DBUS_INTERFACE_BASENAME})
 endforeach()
 
 qt5_add_resources(${PROJECT_NAME}_RESOURCE_FILES ${${PROJECT_NAME}_RESOURCES})
-qt5_wrap_ui(${PROJECT_NAME}_FORM_FILES ${${PROJECT_NAME}_FORMS})
 
 set(${PROJECT_NAME}_GENERATED_FILES
     ${${PROJECT_NAME}_FORM_FILES}
@@ -173,6 +165,11 @@ target_include_directories(${PROJECT_NAME}
     INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/include>"
     INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/include/${PROJECT_NAME}>"
 )
+
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE "SHARED_EXPORT=Q_DECL_EXPORT"
+)
+
 export(TARGETS ${PROJECT_NAME} FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-targets.cmake")
 
 include(create_portable_headers)
@@ -205,12 +202,43 @@ configure_file(
     COPYONLY
 )
 
-install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR} EXPORT ${PROJECT_NAME}-targets COMPONENT runtime)
-install(EXPORT ${PROJECT_NAME}-targets DESTINATION ${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME} COMPONENT development)
-install(FILES ${${PROJECT_NAME}_MAIN_HEADER} DESTINATION include/${PROJECT_NAME} COMPONENT development)
-install(FILES ${${PROJECT_NAME}_MAIN_HEADER} DESTINATION include/${PROJECT_NAME} COMPONENT development RENAME "lxqtglobalkeys.h")
-install(FILES ${${PROJECT_NAME}_PORTABLE_HEADERS} DESTINATION include/${PROJECT_NAME}/${${PROJECT_NAME}_HEADER_NAMESPACE} COMPONENT development)
-install(FILES ${${PROJECT_NAME}_PUBLIC_HEADERS} DESTINATION include/${PROJECT_NAME} COMPONENT development)
+install(TARGETS
+    ${PROJECT_NAME}
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    EXPORT ${PROJECT_NAME}-targets
+    COMPONENT Runtime
+)
+
+install(EXPORT
+    ${PROJECT_NAME}-targets
+    DESTINATION "${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}"
+    COMPONENT Devel
+)
+
+install(FILES
+    ${${PROJECT_NAME}_MAIN_HEADER}
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+    COMPONENT Devel
+)
+
+install(FILES
+    ${${PROJECT_NAME}_MAIN_HEADER}
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+    COMPONENT Devel
+    RENAME "lxqtglobalkeys.h"
+)
+
+install(FILES
+    ${${PROJECT_NAME}_PORTABLE_HEADERS}
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${${PROJECT_NAME}_HEADER_NAMESPACE}"
+    COMPONENT Devel
+)
+
+install(FILES
+    ${${PROJECT_NAME}_PUBLIC_HEADERS}
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+    COMPONENT Devel
+)
 
 lxqt_create_pkgconfig_file(
     PACKAGE_NAME ${PROJECT_NAME}
