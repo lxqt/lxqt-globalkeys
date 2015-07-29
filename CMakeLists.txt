@@ -25,6 +25,7 @@ find_package(lxqt REQUIRED QUIET)
 
 include(LXQtTranslate)
 include(LXQtCreatePkgConfigFile)
+include(LXQtCompilerSettings)
 
 include(GNUInstallDirs) # Standard directories for installation
 include(CMakePackageConfigHelpers)
