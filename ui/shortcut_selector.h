@@ -40,7 +40,11 @@ namespace GlobalKeyShortcut
 class Client;
 }
 
-class ShortcutSelector : public QToolButton
+#ifndef SHARED_EXPORT
+#define SHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+class SHARED_EXPORT ShortcutSelector : public QToolButton
 {
     Q_OBJECT
 public:
