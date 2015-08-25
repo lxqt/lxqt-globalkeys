@@ -31,7 +31,7 @@
 
 int main(int argc, char *argv[])
 {
-    LxQt::SingleApplication a(argc, argv);
+    LXQt::SingleApplication a(argc, argv);
 
     MainWindow w;
     a.setActivationWindow(&w);

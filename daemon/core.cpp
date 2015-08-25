@@ -404,7 +404,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
         openlog("lxqt-global-action-daemon", LOG_PID, LOG_USER);
 
-        connect(lxqtApp, &LxQt::Application::unixSignal, this, &Core::unixSignalHandler);
+        connect(lxqtApp, &LXQt::Application::unixSignal, this, &Core::unixSignalHandler);
         lxqtApp->listenToUnixSignals(QList<int>() << SIGTERM << SIGINT);
 
 

@@ -13,8 +13,8 @@
 <context>
     <name>ShortcutConfigWindow</name>
     <message>
-        <source>LxQt Shortcut Editor</source>
-        <translation>LxQt快捷鍵編輯器</translation>
+        <source>LXQt Shortcut Editor</source>
+        <translation>LXQt快捷鍵編輯器</translation>
     </message>
     <message>
         <source>Description</source>

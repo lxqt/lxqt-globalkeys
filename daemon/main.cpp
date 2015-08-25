@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
         configFiles.push_back(QString::fromLocal8Bit(home) + "/" DEFAULT_CONFIG);
     }
 
-    LxQt::Application app(argc, argv);
+    LXQt::Application app(argc, argv);
 
     Core core(runAsDaemon || useSyslog, minLogLevelSet, minLogLevel, configFiles, multipleActionsBehaviourSet, multipleActionsBehaviour);
 

@@ -15,7 +15,7 @@
 <context>
     <name>ShortcutConfigWindow</name>
     <message>
-        <source>LxQt Shortcut Editor</source>
+        <source>LXQt Shortcut Editor</source>
         <translation>LXQt forróbillentyű szerkesztés</translation>
     </message>
     <message>
