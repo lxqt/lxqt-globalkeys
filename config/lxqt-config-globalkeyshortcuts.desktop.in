@@ -6,6 +6,6 @@ Comment=Configure shortcut keys in LXQt
 Exec=lxqt-config-globalkeyshortcuts
 Icon=preferences-desktop-keyboard
 Categories=Settings;DesktopSettings;Qt;LXQt;
-OnlyShowIn=LXQt;LXDE;
+OnlyShowIn=LXQt;
 
 #TRANSLATIONS_DIR=translations
