@@ -19,7 +19,6 @@ set(${PROJECT_NAME}_SOURCES
     shortcut_selector.cpp
     ${${PROJECT_NAME}_PATH_TO_DAEMON}/meta_types.cpp
     edit_action_dialog.cpp
-    shortcut_delegate.cpp
 )
 
 set(${PROJECT_NAME}_FORMS

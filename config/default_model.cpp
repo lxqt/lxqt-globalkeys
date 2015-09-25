@@ -91,12 +91,6 @@ QVariant DefaultModel::data(const QModelIndex &index, int role) const
         break;
 
     case Qt::EditRole:
-        if ((index.row() >= 0) && (index.row() < rowCount()) && (index.column() >= 0) && (index.column() < columnCount()))
-            switch (index.column())
-            {
-            case 1:
-                return mContent[mContent.keys()[index.row()]].shortcut;
-            }
         break;
 
     case Qt::FontRole:
@@ -179,25 +173,11 @@ Qt::ItemFlags DefaultModel::flags(const QModelIndex &index) const
     {
         result |= Qt::ItemIsUserCheckable;
     }
-    if (index.column() == 1)
-    {
-        result |= Qt::ItemIsEditable;
-    }
     return result;
 }
 
 bool DefaultModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    switch (role)
-    {
-    case Qt::EditRole:
-        if ((index.row() >= 0) && (index.row() < rowCount()) && index.column() == 1)
-        {
-            mActions->changeShortcut(mContent.keys()[index.row()], value.toString());
-            return true;
-        }
-        break;
-    }
     return false;
 }
 
