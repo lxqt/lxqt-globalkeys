@@ -179,10 +179,8 @@ void MainWindow::editAction(const QModelIndex &index)
 {
     qulonglong id = 0;
 
-    if (!index.isValid())
-        return;
-
-    id = mDefaultModel->id(mSortFilterProxyModel->mapToSource(index));
+    if (index.isValid())
+        id = mDefaultModel->id(mSortFilterProxyModel->mapToSource(index));
 
     if (!mEditActionDialog)
         mEditActionDialog = new EditActionDialog(mActions, this);
