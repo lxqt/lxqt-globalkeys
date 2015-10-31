@@ -19,27 +19,27 @@
         <translation>Client</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="147"/>
+        <location filename="../default_model.cpp" line="141"/>
         <source>Id</source>
         <translation>Kennung</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="150"/>
+        <location filename="../default_model.cpp" line="144"/>
         <source>Shortcut</source>
         <translation>Kurzbefehl</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="153"/>
+        <location filename="../default_model.cpp" line="147"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="156"/>
+        <location filename="../default_model.cpp" line="150"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="159"/>
+        <location filename="../default_model.cpp" line="153"/>
         <source>Info</source>
         <translation>Information</translation>
     </message>
