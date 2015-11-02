@@ -86,7 +86,7 @@ void Actions::init()
         {
             QString shortcut;
             QString description;
-            bool enabled;
+            bool enabled = false;
             QDBusObjectPath path;
             if (getClientActionInfoById(I.key(), shortcut, description, enabled, path))
             {
@@ -104,7 +104,7 @@ void Actions::init()
         {
             QString shortcut;
             QString description;
-            bool enabled;
+            bool enabled = false;
             QString service;
             QDBusObjectPath path;
             QString interface;
@@ -126,7 +126,7 @@ void Actions::init()
         {
             QString shortcut;
             QString description;
-            bool enabled;
+            bool enabled = false;
             QString command;
             QStringList arguments;
             if (getCommandActionInfoById(I.key(), shortcut, description, enabled, command, arguments))
@@ -223,7 +223,7 @@ void Actions::do_actionAdded(qulonglong id)
 {
     QString shortcut;
     QString description;
-    bool enabled;
+    bool enabled = false;
     QString type;
     QString info;
     if (getActionById(id, shortcut, description, enabled, type, info))
