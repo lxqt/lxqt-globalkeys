@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="it_IT">
+<TS version="2.1" language="it">
 <context>
     <name>CommandFinder</name>
     <message>
@@ -52,7 +52,7 @@
     <message>
         <location filename="../default_model.cpp" line="153"/>
         <source>Info</source>
-        <translation>Informazioni</translation>
+        <translation>Informazione</translation>
     </message>
 </context>
 <context>
@@ -75,7 +75,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation>&amp;Abilitata</translation>
+        <translation>&amp;Attivata</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
@@ -85,7 +85,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation>Messaggio &amp;DBus</translation>
+        <translation>&amp;Messaggio DBus</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
@@ -128,7 +128,7 @@
     <message>
         <location filename="../main_window.ui" line="52"/>
         <source>Add ...</source>
-        <translation>Aggiungi...</translation>
+        <translation>Aggiungi ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="62"/>
@@ -138,7 +138,7 @@
     <message>
         <location filename="../main_window.ui" line="72"/>
         <source>Modify ...</source>
-        <translation>Modifica...</translation>
+        <translation>Modifica ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="89"/>
@@ -153,22 +153,22 @@
     <message>
         <location filename="../main_window.ui" line="123"/>
         <source>First</source>
-        <translation>Prima</translation>
+        <translation>Primo</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="128"/>
         <source>Last</source>
-        <translation>Ultima</translation>
+        <translation>Ultimo</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="133"/>
         <source>None</source>
-        <translation>Nessuna</translation>
+        <translation>Nessuno</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="138"/>
         <source>All</source>
-        <translation>Tutte</translation>
+        <translation>Tutti</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="176"/>
