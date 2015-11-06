@@ -95,7 +95,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation>&amp;Comando</translation>
+        <translation>&amp;Comando:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
