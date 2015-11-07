@@ -1,58 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="hu_HU">
-<context>
-    <name>CommandFinder</name>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Find a command</source>
-        <translation type="vanished">Parancs keresés</translation>
-    </message>
-</context>
+<TS version="2.1" language="hu">
 <context>
     <name>DefaultModel</name>
     <message>
         <location filename="../default_model.cpp" line="49"/>
         <source>Command</source>
-        <translation type="unfinished">Parancs</translation>
+        <translation>Parancs</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="50"/>
         <source>DBus call</source>
-        <translation type="unfinished"></translation>
+        <translation>DBus hívás</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="51"/>
         <source>Client</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliens</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="141"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="144"/>
         <source>Shortcut</source>
-        <translation type="unfinished">Forróbillentyű</translation>
+        <translation>Gyorsbillentyű</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="147"/>
         <source>Description</source>
-        <translation type="unfinished">Leírás</translation>
+        <translation>Leírás</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="150"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Típus</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="153"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Infó</translation>
     </message>
 </context>
 <context>
@@ -60,62 +49,62 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Akció szerkesztés</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gyor&amp;sbillentyű:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
         <source>&amp;Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Leírás:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Engedélyezve</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Paran&amp;cs</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;DBUS üzenet</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Típus:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pa&amp;rancs:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sz&amp;olgáltatás:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ú&amp;tvonal:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eszköz:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
         <source>&amp;Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Metódus:</translation>
     </message>
 </context>
 <context>
@@ -123,135 +112,57 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Általános akció kezelés</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="52"/>
         <source>Add ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Hozzáad ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="62"/>
         <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Töröl</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="72"/>
         <source>Modify ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Módosít ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="89"/>
         <source>Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>Vált</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation type="unfinished"></translation>
+        <translation>Többes viselkedés:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="123"/>
         <source>First</source>
-        <translation type="unfinished"></translation>
+        <translation>Első</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="128"/>
         <source>Last</source>
-        <translation type="unfinished"></translation>
+        <translation>Utolsó</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="133"/>
         <source>None</source>
-        <translation type="unfinished">Nincs</translation>
+        <translation>Semmi</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="138"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Mind</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="176"/>
         <source>Close</source>
-        <translation type="unfinished">Bezár</translation>
-    </message>
-</context>
-<context>
-    <name>ShortcutConfigWindow</name>
-    <message>
-        <source>LXQt Shortcut Editor</source>
-        <translation type="vanished">LXQt forróbillentyű szerkesztés</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation type="vanished">Leírás</translation>
-    </message>
-    <message>
-        <source>Shortcut</source>
-        <translation type="vanished">Forróbillentyű</translation>
-    </message>
-    <message>
-        <source>Command</source>
-        <translation type="vanished">Parancs</translation>
-    </message>
-    <message>
-        <source>Add New</source>
-        <translation type="vanished">Új</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Törlés</translation>
-    </message>
-    <message>
-        <source>Add Group</source>
-        <translation type="vanished">Csoport</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="vanished">Visszavon</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Bezár</translation>
-    </message>
-</context>
-<context>
-    <name>ShortcutEditor</name>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Nincs</translation>
-    </message>
-    <message>
-        <source>Add Shortcut</source>
-        <translation type="vanished">Forróbillentyű adás</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Törlés</translation>
-    </message>
-    <message>
-        <source>New Group</source>
-        <translation type="vanished">Új csoport</translation>
-    </message>
-    <message>
-        <source>Reset Changes</source>
-        <translation type="vanished">Visszavonás</translation>
-    </message>
-    <message>
-        <source>Question</source>
-        <translation type="vanished">Kérdés</translation>
-    </message>
-    <message>
-        <source>Delete group: %1? (everything inside will be removed altogether)</source>
-        <translation type="vanished">A %1 csoport törlése? (Minden kapcsolata is törlődik)</translation>
-    </message>
-    <message>
-        <source>Delete %1?</source>
-        <translation type="vanished">%1 törlése?</translation>
-    </message>
-    <message>
-        <source>Binding for %1 already exists. Replace old one?</source>
-        <translation type="vanished">A %1 már foglalt. Felváltsuk az újjal?</translation>
+        <translation>Bezár</translation>
     </message>
 </context>
 </TS>
