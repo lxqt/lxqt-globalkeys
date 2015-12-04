@@ -21,7 +21,7 @@
     <message>
         <location filename="../default_model.cpp" line="141"/>
         <source>Id</source>
-        <translation>id</translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="144"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../main_window.ui" line="52"/>
         <source>Add ...</source>
-        <translation>Добавить…</translation>
+        <translation>Добавить...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="62"/>
@@ -127,7 +127,7 @@
     <message>
         <location filename="../main_window.ui" line="72"/>
         <source>Modify ...</source>
-        <translation>Изменить…</translation>
+        <translation>Изменить...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="89"/>
