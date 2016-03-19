@@ -29,6 +29,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <QFile>
 
 #include "meta_types.h"
 #include "core.h"
@@ -236,6 +237,8 @@ int main(int argc, char *argv[])
 
     if (configFiles.empty() && home && *home)
     {
+        if( ! QFile::exists(QString::fromLocal8Bit(home) + "/" DEFAULT_CONFIG) ) //Load default settings
+            configFiles.push_back("/etc/xdg/lxqt/globalkeyshortcuts.conf");
         configFiles.push_back(QString::fromLocal8Bit(home) + "/" DEFAULT_CONFIG);
     }
 
