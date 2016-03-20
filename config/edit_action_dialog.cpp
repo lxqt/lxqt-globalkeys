@@ -209,14 +209,20 @@ bool EditActionDialog::load(qulonglong id)
         shortcut_SS->setText(QString());
         description_LE->clear();
         enabled_CB->setChecked(true);
-        command_RB->setChecked(false);
-        dbus_method_RB->setChecked(false);
         action_SW->setCurrentWidget(command_P);
         command_PTE->clear();
         service_LE->clear();
         path_LE->clear();
         interface_LE->clear();
         method_LE->clear();
+
+        // To disable all radio boxes, once one has been selected, we need to turn exclusivity off temporarily
+        command_RB->setAutoExclusive(false);
+        dbus_method_RB->setAutoExclusive(false);
+        command_RB->setChecked(false);
+        dbus_method_RB->setChecked(false);
+        command_RB->setAutoExclusive(true);
+        dbus_method_RB->setAutoExclusive(true);
 
         description_LE->setEnabled(true);
         command_RB->setEnabled(true);
