@@ -212,6 +212,11 @@ private:
 
     mutable QMutex mDataMutex;
 
+    mutable QMutex mActionPendingMutex;
+    bool mActionPending;
+    bool getmActionPending();
+    void setmActionPending(bool value);
+
     qulonglong mLastId;
 
     bool mGrabbingShortcut;

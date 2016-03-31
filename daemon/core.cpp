@@ -519,6 +519,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
                 foreach(QString section, settings.childGroups())
                 {
+		    setmActionPending(true);
                     if (section != "General")
                     {
                         settings.beginGroup(section);
@@ -580,6 +581,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                         settings.endGroup();
                     }
                 }
+		setmActionPending(false);
             }
         }
         log(LOG_DEBUG, "Config file: %s", qPrintable(mConfigFile));
@@ -1131,6 +1133,7 @@ void Core::run()
         XEvent event;
         while (mX11EventLoopActive)
         {
+	    log(LOG_DEBUG, "Next X11 event");
             XNextEvent(mDisplay, &event);
             if (!mX11EventLoopActive)
             {
@@ -1141,11 +1144,14 @@ void Core::run()
             {
             case KeyPress:
             {
+		if(getmActionPending())
+		     break;
+		
                 QMutexLocker lock(&mDataMutex);
 
                 if (mGrabbingShortcut)
                 {
-//                    log(LOG_DEBUG, "KeyPress %08x %08x", event.xkey.state, event.xkey.keycode);
+                    log(LOG_DEBUG, "KeyPress %08x %08x", event.xkey.state, event.xkey.keycode);
 
                     bool ignoreKey = false;
                     bool cancel = false;
@@ -1821,35 +1827,43 @@ QString Core::remoteKeycodeToString(KeyCode keyCode)
 }
 
 bool Core::remoteXGrabKey(const X11Shortcut &X11shortcut)
-{
+{	
+    setmActionPending(true);
     size_t X11Operation = X11_OP_XGrabKey;
     if (error_t error = writeAll(mX11RequestPipe[STDOUT_FILENO], &X11Operation, sizeof(X11Operation)))
     {
         log(LOG_CRIT, "Cannot write to X11 request pipe: %s", strerror(error));
         qApp->quit();
+	setmActionPending(false);
         return false;
     }
     if (error_t error = writeAll(mX11RequestPipe[STDOUT_FILENO], &X11shortcut.first, sizeof(X11shortcut.first)))
     {
         log(LOG_CRIT, "Cannot write to X11 request pipe: %s", strerror(error));
         qApp->quit();
+	setmActionPending(false);
         return false;
     }
     if (error_t error = writeAll(mX11RequestPipe[STDOUT_FILENO], &X11shortcut.second, sizeof(X11shortcut.second)))
     {
         log(LOG_CRIT, "Cannot write to X11 request pipe: %s", strerror(error));
         qApp->quit();
+	setmActionPending(false);
         return false;
     }
+    //sleep(1);
+    log(LOG_DEBUG, "remoteXGrabKey activated");
     wakeX11Thread();
 
     char signal;
     if (error_t error = readAll(mX11ResponsePipe[STDIN_FILENO], &signal, sizeof(signal)))
     {
-        log(LOG_CRIT, "Cannot read from X11 response pipe: %s", strerror(error));
+        log(LOG_CRIT, "remoteXGrabKey: Cannot read from X11 response pipe: %s", strerror(error));
         qApp->quit();
+	setmActionPending(false);
         return false;
     }
+    setmActionPending(false);
     if (signal)
     {
         return false;
@@ -1860,25 +1874,30 @@ bool Core::remoteXGrabKey(const X11Shortcut &X11shortcut)
 
 bool Core::remoteXUngrabKey(const X11Shortcut &X11shortcut)
 {
+    setmActionPending(true);
     size_t X11Operation = X11_OP_XUngrabKey;
     if (error_t error = writeAll(mX11RequestPipe[STDOUT_FILENO], &X11Operation, sizeof(X11Operation)))
     {
         log(LOG_CRIT, "Cannot write to X11 request pipe: %s", strerror(error));
         qApp->quit();
+	setmActionPending(false);
         return false;
     }
     if (error_t error = writeAll(mX11RequestPipe[STDOUT_FILENO], &X11shortcut.first, sizeof(X11shortcut.first)))
     {
         log(LOG_CRIT, "Cannot write to X11 request pipe: %s", strerror(error));
         qApp->quit();
+	setmActionPending(false);
         return false;
     }
     if (error_t error = writeAll(mX11RequestPipe[STDOUT_FILENO], &X11shortcut.second, sizeof(X11shortcut.second)))
     {
         log(LOG_CRIT, "Cannot write to X11 request pipe: %s", strerror(error));
         qApp->quit();
+	setmActionPending(false);
         return false;
     }
+    log(LOG_DEBUG, "remoteXUngrabKey activated");
     wakeX11Thread();
 
     char signal;
@@ -1886,8 +1905,10 @@ bool Core::remoteXUngrabKey(const X11Shortcut &X11shortcut)
     {
         log(LOG_CRIT, "Cannot read from X11 response pipe: %s", strerror(error));
         qApp->quit();
+	setmActionPending(false);
         return false;
     }
+    setmActionPending(false);
     if (signal)
     {
         return false;
@@ -3435,4 +3456,20 @@ void Core::cancelShortcutGrab()
     mShortcutGrabRequest << shortcut << failed << cancelled << timedout;
     QDBusConnection::sessionBus().send(mShortcutGrabRequest);
     mShortcutGrabRequested = false;
+}
+
+bool Core::getmActionPending()
+{
+    bool result;
+    mActionPendingMutex.lock();
+    result = mActionPending;
+    mActionPendingMutex.unlock();
+    return result;
+}
+
+void Core::setmActionPending(bool value)
+{
+    mActionPendingMutex.lock();
+    mActionPending = value;
+    mActionPendingMutex.unlock();
 }
