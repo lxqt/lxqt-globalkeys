@@ -63,7 +63,7 @@
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
-        <source>E&amp;nabled</source>
+        <source>&amp;Enabled</source>
         <translation>&amp;Activé</translation>
     </message>
     <message>
