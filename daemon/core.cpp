@@ -69,6 +69,18 @@ enum
 
 static Core *s_Core = 0;
 
+static const QLatin1String ExecKey("Exec");
+static const QLatin1String EnabledKey("Enabled");
+static const QLatin1String CommentKey("Comment");
+static const QLatin1String serviceKey("service");
+static const QLatin1String pathKey("path");
+static const QLatin1String interfaceKey("interface");
+static const QLatin1String methodKey("method");
+
+static const QLatin1String firstStr("first");
+static const QLatin1String lastStr("last");
+static const QLatin1String allStr("all");
+static const QLatin1String noneStr("none");
 
 int x11ErrorHandler(Display *display, XErrorEvent *errorEvent)
 {
@@ -396,7 +408,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     initBothPipeEnds(mX11RequestPipe);
     initBothPipeEnds(mX11ResponsePipe);
 
-    mConfigFile = QString(getenv("HOME")) + "/.config/global_key_shortcutss.ini";
+    mConfigFile = QString(getenv("HOME")) + QStringLiteral("/.config/global_key_shortcutss.ini");
 
     try
     {
@@ -461,26 +473,26 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
                 if (!minLogLevelSet)
                 {
-                    iniValue = settings.value(/* General/ */"LogLevel").toString();
+                    iniValue = settings.value(/* General/ */QStringLiteral("LogLevel")).toString();
                     if (!iniValue.isEmpty())
                     {
-                        if (iniValue == "error")
+                        if (iniValue == QLatin1String("error"))
                         {
                             mMinLogLevel = LOG_ERR;
                         }
-                        else if (iniValue == "warning")
+                        else if (iniValue == QLatin1String("warning"))
                         {
                             mMinLogLevel = LOG_WARNING;
                         }
-                        else if (iniValue == "notice")
+                        else if (iniValue == QLatin1String("notice"))
                         {
                             mMinLogLevel = LOG_NOTICE;
                         }
-                        else if (iniValue == "info")
+                        else if (iniValue == QLatin1String("info"))
                         {
                             mMinLogLevel = LOG_INFO;
                         }
-                        else if (iniValue == "debug")
+                        else if (iniValue == QLatin1String("debug"))
                         {
                             mMinLogLevel = LOG_DEBUG;
                         }
@@ -489,42 +501,42 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
                 if (!multipleActionsBehaviourSet)
                 {
-                    iniValue = settings.value(/* General/ */"MultipleActionsBehaviour").toString();
+                    iniValue = settings.value(/* General/ */QStringLiteral("MultipleActionsBehaviour")).toString();
                     if (!iniValue.isEmpty())
                     {
-                        if (iniValue == "first")
+                        if (iniValue == firstStr)
                         {
                             mMultipleActionsBehaviour = MULTIPLE_ACTIONS_BEHAVIOUR_FIRST;
                         }
-                        else if (iniValue == "last")
+                        else if (iniValue == lastStr)
                         {
                             mMultipleActionsBehaviour = MULTIPLE_ACTIONS_BEHAVIOUR_LAST;
                         }
-                        else if (iniValue == "all")
+                        else if (iniValue == allStr)
                         {
                             mMultipleActionsBehaviour = MULTIPLE_ACTIONS_BEHAVIOUR_ALL;
                         }
-                        else if (iniValue == "none")
+                        else if (iniValue == noneStr)
                         {
                             mMultipleActionsBehaviour = MULTIPLE_ACTIONS_BEHAVIOUR_NONE;
                         }
                     }
                 }
 
-                mAllowGrabLocks = settings.value(/* General/ */"AllowGrabLocks", mAllowGrabLocks).toBool();
-                mAllowGrabBaseSpecial = settings.value(/* General/ */"AllowGrabBaseSpecial", mAllowGrabBaseSpecial).toBool();
-                mAllowGrabMiscSpecial = settings.value(/* General/ */"AllowGrabMiscSpecial", mAllowGrabMiscSpecial).toBool();
-                mAllowGrabBaseKeypad = settings.value(/* General/ */"AllowGrabBaseKeypad", mAllowGrabBaseKeypad).toBool();
-                mAllowGrabMiscKeypad = settings.value(/* General/ */"AllowGrabMiscKeypad", mAllowGrabMiscKeypad).toBool();
+                mAllowGrabLocks = settings.value(/* General/ */QStringLiteral("AllowGrabLocks"), mAllowGrabLocks).toBool();
+                mAllowGrabBaseSpecial = settings.value(/* General/ */QStringLiteral("AllowGrabBaseSpecial"), mAllowGrabBaseSpecial).toBool();
+                mAllowGrabMiscSpecial = settings.value(/* General/ */QStringLiteral("AllowGrabMiscSpecial"), mAllowGrabMiscSpecial).toBool();
+                mAllowGrabBaseKeypad = settings.value(/* General/ */QStringLiteral("AllowGrabBaseKeypad"), mAllowGrabBaseKeypad).toBool();
+                mAllowGrabMiscKeypad = settings.value(/* General/ */QStringLiteral("AllowGrabMiscKeypad"), mAllowGrabMiscKeypad).toBool();
 
-                foreach(QString section, settings.childGroups())
+                foreach(const QString &section, settings.childGroups())
                 {
-                    if (section != "General")
+                    if (section != QLatin1String("General"))
                     {
                         settings.beginGroup(section);
 
                         QString shortcut = section;
-                        int pos = shortcut.indexOf('.');
+                        int pos = shortcut.indexOf(QLatin1Char('.'));
                         if (pos != -1)
                         {
                             shortcut = shortcut.left(pos);
@@ -532,32 +544,32 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
                         qulonglong id = 0ull;
 
-                        bool enabled = settings.value("Enabled", true).toBool();
+                        bool enabled = settings.value(EnabledKey, true).toBool();
 
-                        QString description = settings.value("Comment").toString();
+                        QString description = settings.value(CommentKey).toString();
 
-                        if (settings.contains("Exec"))
+                        if (settings.contains(ExecKey))
                         {
-                            QStringList values = settings.value("Exec").toStringList();
+                            QStringList values = settings.value(ExecKey).toStringList();
                             id = registerCommandAction(shortcut, values[0], values.mid(1), description);
                         }
                         else
                         {
-                            iniValue = settings.value("path").toString();
+                            iniValue = settings.value(pathKey).toString();
                             if (!iniValue.isEmpty())
                             {
                                 QString path = iniValue;
 
-                                if (settings.contains("interface"))
+                                if (settings.contains(interfaceKey))
                                 {
-                                    QString interface = settings.value("interface").toString();
+                                    QString interface = settings.value(interfaceKey).toString();
 
-                                    iniValue = settings.value("service").toString();
+                                    iniValue = settings.value(serviceKey).toString();
                                     if (!iniValue.isEmpty())
                                     {
                                         QString service = iniValue;
 
-                                        iniValue = settings.value("method").toString();
+                                        iniValue = settings.value(methodKey).toString();
                                         if (!iniValue.isEmpty())
                                         {
                                             QString method = iniValue;
@@ -619,13 +631,13 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
 
         mDaemonAdaptor = new DaemonAdaptor(this);
-        if (!QDBusConnection::sessionBus().registerObject("/daemon", mDaemonAdaptor))
+        if (!QDBusConnection::sessionBus().registerObject(QStringLiteral("/daemon"), mDaemonAdaptor))
         {
             throw std::runtime_error(std::string("Cannot create daemon adaptor"));
         }
 
         mNativeAdaptor = new NativeAdaptor(this);
-        if (!QDBusConnection::sessionBus().registerObject("/native", mNativeAdaptor))
+        if (!QDBusConnection::sessionBus().registerObject(QStringLiteral("/native"), mNativeAdaptor))
         {
             throw std::runtime_error(std::string("Cannot create daemon native client adaptor"));
         }
@@ -720,19 +732,19 @@ void Core::saveConfig()
     switch (mMultipleActionsBehaviour)
     {
     case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
-        settings.setValue(/* General/ */"MultipleActionsBehaviour", "first");
+        settings.setValue(/* General/ */"MultipleActionsBehaviour", firstStr);
         break;
 
     case MULTIPLE_ACTIONS_BEHAVIOUR_LAST:
-        settings.setValue(/* General/ */"MultipleActionsBehaviour", "last");
+        settings.setValue(/* General/ */"MultipleActionsBehaviour", lastStr);
         break;
 
     case MULTIPLE_ACTIONS_BEHAVIOUR_ALL:
-        settings.setValue(/* General/ */"MultipleActionsBehaviour", "all");
+        settings.setValue(/* General/ */"MultipleActionsBehaviour", allStr);
         break;
 
     case MULTIPLE_ACTIONS_BEHAVIOUR_NONE:
-        settings.setValue(/* General/ */"MultipleActionsBehaviour", "none");
+        settings.setValue(/* General/ */"MultipleActionsBehaviour", noneStr);
         break;
 
     default:
@@ -753,26 +765,26 @@ void Core::saveConfig()
 
         settings.beginGroup(section);
 
-        settings.setValue("Enabled", action->isEnabled());
-        settings.setValue("Comment", action->description());
+        settings.setValue(EnabledKey, action->isEnabled());
+        settings.setValue(CommentKey, action->description());
 
         if (!strcmp(action->type(), CommandAction::id()))
         {
             const CommandAction *commandAction = dynamic_cast<const CommandAction *>(action);
-            settings.setValue("Exec", QVariant(QStringList() << commandAction->command() += commandAction->args()));
+            settings.setValue(ExecKey, QVariant(QStringList() << commandAction->command() += commandAction->args()));
         }
         else if (!strcmp(action->type(), MethodAction::id()))
         {
             const MethodAction *methodAction = dynamic_cast<const MethodAction *>(action);
-            settings.setValue("service",   methodAction->service());
-            settings.setValue("path",      methodAction->path().path());
-            settings.setValue("interface", methodAction->interface());
-            settings.setValue("method",    methodAction->method());
+            settings.setValue(serviceKey,   methodAction->service());
+            settings.setValue(pathKey,      methodAction->path().path());
+            settings.setValue(interfaceKey, methodAction->interface());
+            settings.setValue(methodKey,    methodAction->method());
         }
         else if (!strcmp(action->type(), ClientAction::id()))
         {
             const ClientAction *clientAction = dynamic_cast<const ClientAction *>(action);
-            settings.setValue("path",  clientAction->path().path());
+            settings.setValue(pathKey,  clientAction->path().path());
         }
 
         settings.endGroup();
