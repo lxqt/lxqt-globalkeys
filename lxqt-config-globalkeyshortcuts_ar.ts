@@ -6,42 +6,42 @@
     <message>
         <location filename="../../../default_model.cpp" line="49"/>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>أمر</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="50"/>
         <source>DBus call</source>
-        <translation type="unfinished"></translation>
+        <translation>نداء DBus</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="51"/>
         <source>Client</source>
-        <translation type="unfinished"></translation>
+        <translation>العميل</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="141"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation>المعرّف</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="144"/>
         <source>Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>الاختصار</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="147"/>
         <source>Description</source>
-        <translation type="unfinished">الوصف</translation>
+        <translation>الوصف</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="150"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>النّوع</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="153"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>معلومات</translation>
     </message>
 </context>
 <context>
@@ -49,62 +49,62 @@
     <message>
         <location filename="../../../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation type="unfinished"></translation>
+        <translation>حرّر الإجراء</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation type="unfinished"></translation>
+        <translation>الا&amp;ختصار:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="74"/>
         <source>&amp;Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>الو&amp;صف:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>م&amp;فعّل</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation type="unfinished"></translation>
+        <translation>أ&amp;مر</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation type="unfinished"></translation>
+        <translation>ر&amp;سالة DBus</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="118"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>النّوع:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation type="unfinished"></translation>
+        <translation>الأ&amp;مر:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation type="unfinished"></translation>
+        <translation>ال&amp;خدمة:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>الم&amp;سار:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation type="unfinished"></translation>
+        <translation>الوا&amp;جهة:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="245"/>
         <source>&amp;Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>ال&amp;طّريقة:</translation>
     </message>
 </context>
 <context>
@@ -112,83 +112,57 @@
     <message>
         <location filename="../../../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>مدير الإجراءات العموميّة</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="52"/>
         <source>Add ...</source>
-        <translation type="unfinished"></translation>
+        <translation>أضف...</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="62"/>
         <source>Remove</source>
-        <translation type="unfinished">إزالة</translation>
+        <translation>أزل</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="72"/>
         <source>Modify ...</source>
-        <translation type="unfinished"></translation>
+        <translation>عدّل...</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="89"/>
         <source>Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>أبدِل</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation type="unfinished"></translation>
+        <translation>السّلوك عند وجود عدّة إجراءات:</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="123"/>
         <source>First</source>
-        <translation type="unfinished"></translation>
+        <translation>الأوّل</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="128"/>
         <source>Last</source>
-        <translation type="unfinished"></translation>
+        <translation>الأخير</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="133"/>
         <source>None</source>
-        <translation type="unfinished">ﻻشيء</translation>
+        <translation>لا شيء</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="138"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>الكلّ</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="176"/>
         <source>Close</source>
-        <translation type="unfinished">إغلاق</translation>
-    </message>
-</context>
-<context>
-    <name>ShortcutConfigWindow</name>
-    <message>
-        <source>Description</source>
-        <translation type="vanished">الوصف</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">إزالة</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">إغلاق</translation>
-    </message>
-</context>
-<context>
-    <name>ShortcutEditor</name>
-    <message>
-        <source>None</source>
-        <translation type="vanished">ﻻشيء</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">إزالة</translation>
+        <translation>أغلق</translation>
     </message>
 </context>
 </TS>
