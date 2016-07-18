@@ -37,7 +37,6 @@
 #include <QMutex>
 #include <QList>
 #include <QPair>
-#include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusObjectPath>
 
@@ -58,6 +57,7 @@ class DaemonAdaptor;
 class NativeAdaptor;
 class DBusProxy;
 class BaseAction;
+class QDBusServiceWatcher;
 
 template<class Key>
 class QOrderedSet : public QMap<Key, Key>
@@ -102,7 +102,6 @@ private:
     typedef QMap<QString, ClientPaths> ClientPathsBySender;
 
 private slots:
-    void serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
     void serviceDisappeared(const QString &sender);
 
     void addClientAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
@@ -206,7 +205,7 @@ private:
 
     mutable QMutex mX11ErrorMutex;
 
-    QDBusConnection *mSessionConnection;
+    QDBusServiceWatcher *mServiceWatcher;
     DaemonAdaptor *mDaemonAdaptor;
     NativeAdaptor *mNativeAdaptor;
 

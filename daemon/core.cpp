@@ -31,6 +31,7 @@
 #include <QSettings>
 #include <QTimer>
 #include <QDBusConnectionInterface>
+#include <QDBusServiceWatcher>
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -381,6 +382,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     , mMinLogLevel(minLogLevel)
     , mDisplay(0)
     , mInterClientCommunicationWindow(0)
+    , mServiceWatcher{new QDBusServiceWatcher{this}}
     , mDaemonAdaptor(0)
     , mNativeAdaptor(0)
     , mLastId(0ull)
@@ -629,6 +631,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
         saveConfig();
 
 
+        mServiceWatcher->setConnection(QDBusConnection::sessionBus());
 
         mDaemonAdaptor = new DaemonAdaptor(this);
         if (!QDBusConnection::sessionBus().registerObject(QStringLiteral("/daemon"), mDaemonAdaptor))
@@ -642,7 +645,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
             throw std::runtime_error(std::string("Cannot create daemon native client adaptor"));
         }
 
-        connect(QDBusConnection::sessionBus().interface(), SIGNAL(serviceOwnerChanged(QString, QString, QString)), this, SLOT(serviceOwnerChanged(QString, QString, QString)));
+        connect(mServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &Core::serviceDisappeared);
 
         connect(mDaemonAdaptor, SIGNAL(onAddMethodAction(QPair<QString, qulonglong>&, QString, QString, QDBusObjectPath, QString, QString, QString)), this, SLOT(addMethodAction(QPair<QString, qulonglong>&, QString, QString, QDBusObjectPath, QString, QString, QString)));
         connect(mDaemonAdaptor, SIGNAL(onAddCommandAction(QPair<QString, qulonglong>&, QString, QString, QStringList, QString)), this, SLOT(addCommandAction(QPair<QString, qulonglong>&, QString, QString, QStringList, QString)));
@@ -1652,14 +1655,6 @@ void Core::run()
     checkX11Error(0);
 }
 
-void Core::serviceOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner)
-{
-    if (!oldOwner.isEmpty() && newOwner.isEmpty())
-    {
-        serviceDisappeared(oldOwner);
-    }
-}
-
 void Core::serviceDisappeared(const QString &sender)
 {
     log(LOG_DEBUG, "serviceDisappeared '%s'", qPrintable(sender));
@@ -1726,6 +1721,7 @@ void Core::serviceDisappeared(const QString &sender)
             mSenderByClientPath.remove(path);
         }
         mClientPathsBySender.erase(clientPathsBySender);
+        mServiceWatcher->removeWatchedService(clientPathsBySender.key());
     }
 }
 
@@ -2142,7 +2138,13 @@ void Core::addClientAction(QPair<QString, qulonglong> &result, const QString &sh
 
     mSenderByClientPath[path] = sender;
 
-    mClientPathsBySender[sender].insert(path);
+    auto it = mClientPathsBySender.find(sender);
+    if (mClientPathsBySender.end() == it)
+    {
+        mServiceWatcher->addWatchedService(sender);
+        it = mClientPathsBySender.insert(sender, {});
+    }
+    it->insert(path);
 
     result = addOrRegisterClientAction(useShortcut, path, description, sender);
 
@@ -2862,7 +2864,10 @@ void Core::removeClientAction(bool &result, const QDBusObjectPath &path, const Q
 
     mClientPathsBySender[sender].remove(path);
     if (mClientPathsBySender[sender].isEmpty())
+    {
         mClientPathsBySender.remove(sender);
+        mServiceWatcher->removeWatchedService(sender);
+    }
 
     saveConfig();
 
@@ -3025,7 +3030,10 @@ void Core::deactivateClientAction(bool &result, const QDBusObjectPath &path, con
 
     mClientPathsBySender[sender].remove(path);
     if (mClientPathsBySender[sender].isEmpty())
+    {
         mClientPathsBySender.remove(sender);
+        mServiceWatcher->removeWatchedService(sender);
+    }
 
     result = true;
 
