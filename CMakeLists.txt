@@ -27,6 +27,7 @@ find_package(lxqt REQUIRED QUIET)
 
 include(LXQtTranslate)
 include(LXQtCreatePkgConfigFile)
+include(LXQtCreatePortableHeaders)
 include(LXQtCompilerSettings NO_POLICY_SCOPE)
 
 include(GNUInstallDirs) # Standard directories for installation
