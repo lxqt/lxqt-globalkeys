@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pt">
+<TS version="2.1" language="pt">
 <context>
     <name>CommandFinder</name>
     <message>
@@ -219,7 +219,7 @@
     <name>ShortcutEditor</name>
     <message>
         <source>None</source>
-        <translation>Nada</translation>
+        <translation>Nenhum</translation>
     </message>
     <message>
         <source>Add Shortcut</source>
