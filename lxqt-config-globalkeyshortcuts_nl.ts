@@ -6,42 +6,42 @@
     <message>
         <location filename="../../../default_model.cpp" line="49"/>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdracht</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="50"/>
         <source>DBus call</source>
-        <translation type="unfinished"></translation>
+        <translation>DBus-aanroeping</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="51"/>
         <source>Client</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliënt</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="141"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="144"/>
         <source>Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Sneltoets</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="147"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschrijving</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="150"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Soort</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="153"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
 </context>
 <context>
@@ -49,62 +49,62 @@
     <message>
         <location filename="../../../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Actie bewerken</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sneltoets:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="74"/>
         <source>&amp;Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Beschrijving:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ingeschakeld</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Opdracht</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;DBus-bericht</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="118"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Soort:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation type="unfinished"></translation>
+        <translation>Op&amp;dracht:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dienst:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pad:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gebruikersschil:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="245"/>
         <source>&amp;Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Methode:</translation>
     </message>
 </context>
 <context>
@@ -112,79 +112,57 @@
     <message>
         <location filename="../../../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Globale actiebeheerder</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="52"/>
         <source>Add ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Toevoegen ...</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="62"/>
         <source>Remove</source>
-        <translation type="unfinished">Verwijderen</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="72"/>
         <source>Modify ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzigen ...</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="89"/>
         <source>Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>Omwisselen</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gedrag bij meerdere acties:</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="123"/>
         <source>First</source>
-        <translation type="unfinished"></translation>
+        <translation>Eerste</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="128"/>
         <source>Last</source>
-        <translation type="unfinished"></translation>
+        <translation>Laatste</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="133"/>
         <source>None</source>
-        <translation type="unfinished">Geen</translation>
+        <translation>Geen</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="138"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="176"/>
         <source>Close</source>
-        <translation type="unfinished">Sluiten</translation>
-    </message>
-</context>
-<context>
-    <name>ShortcutConfigWindow</name>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Verwijderen</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Sluiten</translation>
-    </message>
-</context>
-<context>
-    <name>ShortcutEditor</name>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Geen</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Verwijderen</translation>
+        <translation>Sluiten</translation>
     </message>
 </context>
 </TS>
