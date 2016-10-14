@@ -11,6 +11,7 @@ if(NOT CMAKE_BUILD_TYPE)
      set(CMAKE_BUILD_TYPE Release)
 endif()
 
+set(LXQTBT_MINIMUM_VERSION "0.1.0")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -20,11 +21,13 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5DBus REQUIRED)
 find_package(Qt5LinguistTools REQUIRED QUIET)
+find_package(lxqt-build-tools ${LXQTBT_MINIMUM_VERSION} REQUIRED)
 find_package(lxqt REQUIRED QUIET)
 
 
 include(LXQtTranslate)
 include(LXQtCreatePkgConfigFile)
+include(LXQtCreatePortableHeaders)
 include(LXQtCompilerSettings NO_POLICY_SCOPE)
 
 include(GNUInstallDirs) # Standard directories for installation

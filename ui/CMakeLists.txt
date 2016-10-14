@@ -153,10 +153,9 @@ target_compile_definitions(${PROJECT_NAME}
 
 export(TARGETS ${PROJECT_NAME} APPEND FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-targets.cmake")
 
-include(create_portable_headers)
-create_portable_headers(${PROJECT_NAME}_PORTABLE_HEADERS
-    NAMESPACE "${${PROJECT_NAME}_HEADER_NAMESPACE}/"
-    FILENAMES ${${PROJECT_NAME}_PUBLIC_CLASSES}
+lxqt_create_portable_headers(${PROJECT_NAME}_PORTABLE_HEADERS
+    PATH_PREFIX ".."
+    HEADER_NAMES ${${PROJECT_NAME}_PUBLIC_CLASSES}
 )
 
 # Copy public headers for intree building
