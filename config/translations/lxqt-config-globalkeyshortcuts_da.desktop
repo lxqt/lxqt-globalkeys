@@ -1,4 +1,3 @@
-# Translations
-Name[da]=Konfiguration af LXQt Tastaturgenveje
-Comment[da]=Konfigurer globale tastaturgenveje for LXQt-skrivebordet
-GenericName[da]=Konfiguration af LXQt Globale Tastaturgenveje
+Name[da]=Genvejstaster
+GenericName[da]=Indstillinger for tastaturgenveje
+Comment[da]=Konfigurér genvejstaster i LXQt
