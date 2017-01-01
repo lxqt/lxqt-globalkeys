@@ -1,7 +1,17 @@
 
-lxqt-globalkeys-0.11.0 / 2016-09-24
+lxqt-globalkeys-0.11.1 / 2017-01-01
 ===================================
 
+  * Added *da.desktop
+  * Use the lxqt-build-tools/lxqt_create_portable_headers
+  * Use the new lxqt-build-tools package
+  * Create lxqt-config-globalkeyshortcuts_fr.desktop
+  * Remove cpack (#41)
+
+0.11.0 / 2016-09-24
+===================
+
+  * Release 0.11.0: Add changelog
   * Add README.md
   * Add Catalan translation
   * daemon: Use QDBusServiceWatcher
