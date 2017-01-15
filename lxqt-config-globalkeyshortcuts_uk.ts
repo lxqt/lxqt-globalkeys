@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="uk">
+<TS version="2.1" language="uk">
 <context>
     <name>CommandFinder</name>
     <message>
@@ -148,17 +148,17 @@
     <message>
         <location filename="../../../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation type="unfinished">Поведінка багатьох дій:</translation>
+        <translation>Поведінка багатьох дій:</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="123"/>
         <source>First</source>
-        <translation type="unfinished">Перше</translation>
+        <translation>Перша</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="128"/>
         <source>Last</source>
-        <translation type="unfinished">Останнє</translation>
+        <translation>Остання</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="133"/>
