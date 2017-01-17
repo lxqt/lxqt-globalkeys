@@ -760,8 +760,8 @@ void Core::saveConfig()
     settings.setValue(/* General/ */"AllowGrabBaseKeypad",  mAllowGrabBaseKeypad);
     settings.setValue(/* General/ */"AllowGrabMiscKeypad",  mAllowGrabMiscKeypad);
 
-    ShortcutAndActionById::const_iterator lastShortcutAndActionById = mShortcutAndActionById.end();
-    for (ShortcutAndActionById::const_iterator shortcutAndActionById = mShortcutAndActionById.begin(); shortcutAndActionById != lastShortcutAndActionById; ++shortcutAndActionById)
+    ShortcutAndActionById::const_iterator lastShortcutAndActionById = mShortcutAndActionById.constEnd();
+    for (ShortcutAndActionById::const_iterator shortcutAndActionById = mShortcutAndActionById.constBegin(); shortcutAndActionById != lastShortcutAndActionById; ++shortcutAndActionById)
     {
         const BaseAction *action = shortcutAndActionById.value().second;
         QString section = shortcutAndActionById.value().first + "." + QString::number(shortcutAndActionById.key());
@@ -2033,8 +2033,8 @@ QString Core::checkShortcut(const QString &shortcut, X11Shortcut &X11shortcut)
 
     try
     {
-        ShortcutByX11::const_iterator shortcutByX11 = mShortcutByX11.find(X11shortcut);
-        if (shortcutByX11 != mShortcutByX11.end())
+        ShortcutByX11::const_iterator shortcutByX11 = mShortcutByX11.constFind(X11shortcut);
+        if (shortcutByX11 != mShortcutByX11.constEnd())
         {
             usedShortcut = shortcutByX11.value();
         }
@@ -2055,8 +2055,8 @@ QString Core::checkShortcut(const QString &shortcut, X11Shortcut &X11shortcut)
         log(LOG_INFO, "Using shortcut '%s' instead of '%s'", qPrintable(usedShortcut), qPrintable(shortcut));
     }
 
-    X11ByShortcut::const_iterator x11ByShortcut = mX11ByShortcut.find(usedShortcut);
-    if (x11ByShortcut == mX11ByShortcut.end())
+    X11ByShortcut::const_iterator x11ByShortcut = mX11ByShortcut.constFind(usedShortcut);
+    if (x11ByShortcut == mX11ByShortcut.constEnd())
     {
         mX11ByShortcut[usedShortcut] = X11shortcut;
     }
@@ -2129,7 +2129,7 @@ void Core::addClientAction(QPair<QString, qulonglong> &result, const QString &sh
     QString useShortcut = shortcut;
     if (shortcut.isEmpty())
     {
-        IdByClientPath::ConstIterator idByClientPath = mIdByClientPath.find(path);
+        IdByClientPath::ConstIterator idByClientPath = mIdByClientPath.constFind(path);
         if (idByClientPath != mIdByClientPath.constEnd())
         {
             useShortcut = mShortcutAndActionById[idByClientPath.value()].first;;
