@@ -5,5 +5,3 @@ TryExec=lxqt-globalkeysd
 Exec=lxqt-globalkeysd
 OnlyShowIn=LXQt;
 X-LXQt-Module=true
-
-#TRANSLATIONS_DIR=translations
