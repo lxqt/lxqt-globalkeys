@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Global Keyboard Shortcuts
+TryExec=lxqt-globalkeysd
+Exec=lxqt-globalkeysd
+OnlyShowIn=LXQt;
+X-LXQt-Module=true
