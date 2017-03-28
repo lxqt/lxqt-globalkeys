@@ -93,3 +93,8 @@ install(FILES
     "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config-version.cmake"
     DESTINATION "${LXQT_INSTALL_CMAKE_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}"
 )
+
+# merged from lxqt-common
+add_subdirectory(autostart)
+add_subdirectory(xdg)
+
