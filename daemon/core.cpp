@@ -1316,59 +1316,64 @@ void Core::run()
                 }
                 else
                 {
-                    QString shortcut = mShortcutByX11[qMakePair(static_cast<KeyCode>(event.xkey.keycode), event.xkey.state & allShifts)];
-                    log(LOG_DEBUG, "KeyPress %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
-
-                    IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
-                    if (idsByShortcut != mIdsByShortcut.end())
+                    X11Shortcut shortcutKey = qMakePair(static_cast<KeyCode>(event.xkey.keycode), event.xkey.state & allShifts);
+                    ShortcutByX11::const_iterator shortcutIt = mShortcutByX11.constFind(shortcutKey);
+                    if(shortcutIt != mShortcutByX11.constEnd())
                     {
-                        Ids &ids = idsByShortcut.value();
-                        switch (mMultipleActionsBehaviour)
-                        {
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
-                        {
-                            Ids::iterator lastIds = ids.end();
-                            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
-                                if (mShortcutAndActionById[*idi].second->call())
-                                {
-                                    break;
-                                }
-                        }
-                        break;
+                        const QString& shortcut = shortcutIt.value();
+                        log(LOG_DEBUG, "KeyPress %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
 
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_LAST:
+                        IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
+                        if (idsByShortcut != mIdsByShortcut.end())
                         {
-                            Ids::iterator firstIds = ids.begin();
-                            for (Ids::iterator idi = ids.end(); idi != firstIds;)
+                            Ids &ids = idsByShortcut.value();
+                            switch (mMultipleActionsBehaviour)
                             {
-                                --idi;
-                                if (mShortcutAndActionById[*idi].second->call())
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_NONE:
-                            if (ids.size() == 1)
+                            case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
                             {
-                                mShortcutAndActionById[*(ids.begin())].second->call();
+                                Ids::iterator lastIds = ids.end();
+                                for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
+                                    if (mShortcutAndActionById[*idi].second->call())
+                                    {
+                                        break;
+                                    }
                             }
                             break;
 
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_ALL:
-                        {
-                            Ids::iterator lastIds = ids.end();
-                            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
+                            case MULTIPLE_ACTIONS_BEHAVIOUR_LAST:
                             {
-                                mShortcutAndActionById[*idi].second->call();
+                                Ids::iterator firstIds = ids.begin();
+                                for (Ids::iterator idi = ids.end(); idi != firstIds;)
+                                {
+                                    --idi;
+                                    if (mShortcutAndActionById[*idi].second->call())
+                                    {
+                                        break;
+                                    }
+                                }
                             }
-                        }
-                        break;
+                            break;
 
-                        default:
-                            ;
+                            case MULTIPLE_ACTIONS_BEHAVIOUR_NONE:
+                                if (ids.size() == 1)
+                                {
+                                    mShortcutAndActionById[*(ids.begin())].second->call();
+                                }
+                                break;
+
+                            case MULTIPLE_ACTIONS_BEHAVIOUR_ALL:
+                            {
+                                Ids::iterator lastIds = ids.end();
+                                for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
+                                {
+                                    mShortcutAndActionById[*idi].second->call();
+                                }
+                            }
+                            break;
+
+                            default:
+                                ;
+                            }
                         }
                     }
                 }
