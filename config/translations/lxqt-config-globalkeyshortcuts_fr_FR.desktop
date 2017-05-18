@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name[fr_FR]=Touches de raccourcis
+GenericName[fr_FR]=Configuration des touches de raccourcis
+Comment[fr_FR]=Configuration des touches de raccourcis de LXQt
+Exec=lxqt-config-globalkeyshortcuts
+Icon=preferences-desktop-keyboard
+Categories=Settings;DesktopSettings;Qt;LXQt;
+OnlyShowIn=LXQt;
+
+#TRANSLATIONS_DIR=translations
