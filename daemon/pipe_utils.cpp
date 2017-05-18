@@ -25,11 +25,11 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
+#include <QDebug>
 #include "pipe_utils.h"
 
 #include <unistd.h>
 #include <fcntl.h>
-
 
 void initBothPipeEnds(int fd[2])
 {
@@ -54,6 +54,12 @@ error_t createPipe(int fd[2])
 
 error_t readAll(int fd, void *data, size_t length)
 {
+    if (fd < 0)
+    {
+        qDebug() << "TESTING FOR #992";
+        return static_cast<error_t>(-1);
+    }
+
     while (length)
     {
         ssize_t bytes_read = read(fd, data, length);
