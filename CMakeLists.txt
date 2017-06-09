@@ -24,6 +24,9 @@ find_package(Qt5LinguistTools REQUIRED QUIET)
 find_package(lxqt-build-tools ${LXQTBT_MINIMUM_VERSION} REQUIRED)
 find_package(lxqt REQUIRED QUIET)
 
+set(LXQT_GLOBALKEYS_PATCH_VERSION 2)
+set(LXQT_GLOBALKEYS_VERSION ${LXQT_MAJOR_VERSION}.${LXQT_MINOR_VERSION}.${LXQT_GLOBALKEYS_PATCH_VERSION})
+add_definitions("-DLXQT_GLOBALKEYS_VERSION=\"${LXQT_GLOBALKEYS_VERSION}\"")
 
 include(LXQtTranslate)
 include(LXQtCreatePkgConfigFile)
