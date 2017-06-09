@@ -27,11 +27,22 @@
 
 #include <LXQt/SingleApplication>
 
+#include <QCommandLineParser>
 #include "main_window.h"
 
 int main(int argc, char *argv[])
 {
     LXQt::SingleApplication a(argc, argv);
+
+    QCommandLineParser parser;
+    parser.setApplicationDescription(QStringLiteral("LXQt Config Globalkeys "));
+    const QString VERINFO = QStringLiteral(LXQT_GLOBALKEYS_VERSION
+                                           "\nliblxqt   " LXQT_VERSION
+                                           "\nQt        " QT_VERSION_STR);
+    a.setApplicationVersion(VERINFO);
+    parser.addVersionOption();
+    parser.addHelpOption();
+    parser.process(a);
 
     MainWindow w;
     a.setActivationWindow(&w);
