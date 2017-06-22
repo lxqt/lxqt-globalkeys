@@ -123,7 +123,7 @@
     <message>
         <location filename="../../../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation>Menedżer globalnych akcji</translation>
+        <translation>Konfiguracja skrótów klawiszowych</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="52"/>
@@ -180,50 +180,50 @@
     <name>ShortcutConfigWindow</name>
     <message>
         <source>LXQt Shortcut Editor</source>
-        <translation type="vanished">Edytor Skrótów LXQt</translation>
+        <translation>Edytor Skrótów LXQt</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="vanished">Opis</translation>
+        <translation>Opis</translation>
     </message>
     <message>
         <source>Shortcut</source>
-        <translation type="vanished">Skrót</translation>
+        <translation>Skrót</translation>
     </message>
     <message>
         <source>Command</source>
-        <translation type="vanished">Polecenie</translation>
+        <translation>Polecenie</translation>
     </message>
     <message>
         <source>Add New</source>
-        <translation type="vanished">Dodaj</translation>
+        <translation>Dodaj</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="vanished">Usuń</translation>
+        <translation>Usuń</translation>
     </message>
     <message>
         <source>Add Group</source>
-        <translation type="vanished">Dodaj grupę</translation>
+        <translation>Dodaj grupę</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="vanished">Przywróć</translation>
+        <translation>Przywróć</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="vanished">Zamknij</translation>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>
     <name>ShortcutEditor</name>
     <message>
         <source>None</source>
-        <translation type="vanished">Brak</translation>
+        <translation>Brak</translation>
     </message>
     <message>
         <source>Add Shortcut</source>
-        <translation type="vanished">Dodaj skrót</translation>
+        <translation>Dodaj skrót</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -235,7 +235,7 @@
     </message>
     <message>
         <source>Reset Changes</source>
-        <translation type="vanished">Resetuj zmiany</translation>
+        <translation>Resetuj zmiany</translation>
     </message>
 </context>
 </TS>
