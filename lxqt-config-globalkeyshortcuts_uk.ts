@@ -5,11 +5,11 @@
     <name>CommandFinder</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Find a command</source>
-        <translation>Знайти команду</translation>
+        <translation type="vanished">Знайти команду</translation>
     </message>
 </context>
 <context>
@@ -180,62 +180,62 @@
     <name>ShortcutConfigWindow</name>
     <message>
         <source>LXQt Shortcut Editor</source>
-        <translation>Редактор скорочень LXQt</translation>
+        <translation type="vanished">Редактор скорочень LXQt</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>Опис</translation>
+        <translation type="vanished">Опис</translation>
     </message>
     <message>
         <source>Shortcut</source>
-        <translation>Cкорочення</translation>
+        <translation type="vanished">Cкорочення</translation>
     </message>
     <message>
         <source>Command</source>
-        <translation>Команда</translation>
+        <translation type="vanished">Команда</translation>
     </message>
     <message>
         <source>Add New</source>
-        <translation>Додати нове</translation>
+        <translation type="vanished">Додати нове</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Вилучити</translation>
+        <translation type="vanished">Вилучити</translation>
     </message>
     <message>
         <source>Add Group</source>
-        <translation>Додати групу</translation>
+        <translation type="vanished">Додати групу</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Cкинути</translation>
+        <translation type="vanished">Cкинути</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Закрити</translation>
+        <translation type="vanished">Закрити</translation>
     </message>
 </context>
 <context>
     <name>ShortcutEditor</name>
     <message>
         <source>None</source>
-        <translation>Нічого</translation>
+        <translation type="vanished">Нічого</translation>
     </message>
     <message>
         <source>Add Shortcut</source>
-        <translation>Додати скорочення</translation>
+        <translation type="vanished">Додати скорочення</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Вилучити</translation>
+        <translation type="vanished">Вилучити</translation>
     </message>
     <message>
         <source>New Group</source>
-        <translation>Нова група</translation>
+        <translation type="vanished">Нова група</translation>
     </message>
     <message>
         <source>Reset Changes</source>
-        <translation>Скинути зміни</translation>
+        <translation type="vanished">Скинути зміни</translation>
     </message>
 </context>
 </TS>

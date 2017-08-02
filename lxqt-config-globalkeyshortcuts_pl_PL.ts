@@ -5,7 +5,7 @@
     <name>CommandFinder</name>
     <message>
         <source>...</source>
-        <translation>…</translation>
+        <translation type="vanished">…</translation>
     </message>
     <message>
         <source>Find a command</source>
@@ -180,62 +180,62 @@
     <name>ShortcutConfigWindow</name>
     <message>
         <source>LXQt Shortcut Editor</source>
-        <translation>Edytor Skrótów LXQt</translation>
+        <translation type="vanished">Edytor Skrótów LXQt</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>Opis</translation>
+        <translation type="vanished">Opis</translation>
     </message>
     <message>
         <source>Shortcut</source>
-        <translation>Skrót</translation>
+        <translation type="vanished">Skrót</translation>
     </message>
     <message>
         <source>Command</source>
-        <translation>Polecenie</translation>
+        <translation type="vanished">Polecenie</translation>
     </message>
     <message>
         <source>Add New</source>
-        <translation>Dodaj</translation>
+        <translation type="vanished">Dodaj</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Usuń</translation>
+        <translation type="vanished">Usuń</translation>
     </message>
     <message>
         <source>Add Group</source>
-        <translation>Dodaj grupę</translation>
+        <translation type="vanished">Dodaj grupę</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Przywróć</translation>
+        <translation type="vanished">Przywróć</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Zamknij</translation>
+        <translation type="vanished">Zamknij</translation>
     </message>
 </context>
 <context>
     <name>ShortcutEditor</name>
     <message>
         <source>None</source>
-        <translation>Brak</translation>
+        <translation type="vanished">Brak</translation>
     </message>
     <message>
         <source>Add Shortcut</source>
-        <translation>Dodaj skrót</translation>
+        <translation type="vanished">Dodaj skrót</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Usuń</translation>
+        <translation type="vanished">Usuń</translation>
     </message>
     <message>
         <source>New Group</source>
-        <translation>Nowa grupa</translation>
+        <translation type="vanished">Nowa grupa</translation>
     </message>
     <message>
         <source>Reset Changes</source>
-        <translation>Resetuj zmiany</translation>
+        <translation type="vanished">Resetuj zmiany</translation>
     </message>
 </context>
 </TS>

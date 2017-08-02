@@ -1,56 +1,56 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="el">
 <context>
     <name>CommandFinder</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Find a command</source>
-        <translation>Εύρεση εντολής</translation>
+        <translation type="vanished">Εύρεση εντολής</translation>
     </message>
 </context>
 <context>
     <name>DefaultModel</name>
     <message>
-        <location line="49" filename="../../../default_model.cpp"/>
+        <location filename="../../../default_model.cpp" line="49"/>
         <source>Command</source>
         <translation>Εντολή</translation>
     </message>
     <message>
-        <location line="50" filename="../../../default_model.cpp"/>
+        <location filename="../../../default_model.cpp" line="50"/>
         <source>DBus call</source>
         <translation>Κλήση DBus</translation>
     </message>
     <message>
-        <location line="51" filename="../../../default_model.cpp"/>
+        <location filename="../../../default_model.cpp" line="51"/>
         <source>Client</source>
         <translation>Πελάτης</translation>
     </message>
     <message>
-        <location line="141" filename="../../../default_model.cpp"/>
+        <location filename="../../../default_model.cpp" line="141"/>
         <source>Id</source>
         <translation>Αναγνωριστικό</translation>
     </message>
     <message>
-        <location line="144" filename="../../../default_model.cpp"/>
+        <location filename="../../../default_model.cpp" line="144"/>
         <source>Shortcut</source>
         <translation>Συντόμευση</translation>
     </message>
     <message>
-        <location line="147" filename="../../../default_model.cpp"/>
+        <location filename="../../../default_model.cpp" line="147"/>
         <source>Description</source>
         <translation>Περιγραφή</translation>
     </message>
     <message>
-        <location line="150" filename="../../../default_model.cpp"/>
+        <location filename="../../../default_model.cpp" line="150"/>
         <source>Type</source>
         <translation>Τύπος</translation>
     </message>
     <message>
-        <location line="153" filename="../../../default_model.cpp"/>
+        <location filename="../../../default_model.cpp" line="153"/>
         <source>Info</source>
         <translation>Πληροφορίες</translation>
     </message>
@@ -58,62 +58,62 @@
 <context>
     <name>EditActionDialog</name>
     <message>
-        <location line="14" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
         <translation>Ενέργεια επεξεργασίας</translation>
     </message>
     <message>
-        <location line="31" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
         <translation>&amp;Συντόμευση:</translation>
     </message>
     <message>
-        <location line="74" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="74"/>
         <source>&amp;Description:</source>
         <translation>&amp;Περιγραφή:</translation>
     </message>
     <message>
-        <location line="87" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
         <translation>&amp;Ενεργοποιημένο</translation>
     </message>
     <message>
-        <location line="102" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
         <translation>&amp;Εντολή</translation>
     </message>
     <message>
-        <location line="109" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
         <translation>Μήνυμα &amp;DBus:</translation>
     </message>
     <message>
-        <location line="118" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="118"/>
         <source>Type:</source>
         <translation>Τύπος:</translation>
     </message>
     <message>
-        <location line="164" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
         <translation>Ε&amp;ντολή:</translation>
     </message>
     <message>
-        <location line="206" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
         <translation>&amp;Υπηρεσία:</translation>
     </message>
     <message>
-        <location line="219" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
         <translation>&amp;Διαδρομή:</translation>
     </message>
     <message>
-        <location line="232" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
         <translation>&amp;Διεπαφή:</translation>
     </message>
     <message>
-        <location line="245" filename="../../../edit_action_dialog.ui"/>
+        <location filename="../../../edit_action_dialog.ui" line="245"/>
         <source>&amp;Method:</source>
         <translation>&amp;Μέθοδος:</translation>
     </message>
@@ -121,57 +121,57 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location line="14" filename="../../../main_window.ui"/>
+        <location filename="../../../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
         <translation>Διαχειριστής καθολικών ενεργειών</translation>
     </message>
     <message>
-        <location line="52" filename="../../../main_window.ui"/>
+        <location filename="../../../main_window.ui" line="52"/>
         <source>Add ...</source>
         <translation>Προσθήκη ...</translation>
     </message>
     <message>
-        <location line="62" filename="../../../main_window.ui"/>
+        <location filename="../../../main_window.ui" line="62"/>
         <source>Remove</source>
         <translation>Αφαίρεση</translation>
     </message>
     <message>
-        <location line="72" filename="../../../main_window.ui"/>
+        <location filename="../../../main_window.ui" line="72"/>
         <source>Modify ...</source>
         <translation>Τροποποίηση ...</translation>
     </message>
     <message>
-        <location line="89" filename="../../../main_window.ui"/>
+        <location filename="../../../main_window.ui" line="89"/>
         <source>Swap</source>
         <translation>Swap</translation>
     </message>
     <message>
-        <location line="115" filename="../../../main_window.ui"/>
+        <location filename="../../../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
         <translation>Συμπεριφορά πολλαπλών ενεργειών:</translation>
     </message>
     <message>
-        <location line="123" filename="../../../main_window.ui"/>
+        <location filename="../../../main_window.ui" line="123"/>
         <source>First</source>
         <translation>Πρώτη</translation>
     </message>
     <message>
-        <location line="128" filename="../../../main_window.ui"/>
+        <location filename="../../../main_window.ui" line="128"/>
         <source>Last</source>
         <translation>Τελευταία</translation>
     </message>
     <message>
-        <location line="133" filename="../../../main_window.ui"/>
+        <location filename="../../../main_window.ui" line="133"/>
         <source>None</source>
         <translation>Ουδεμία</translation>
     </message>
     <message>
-        <location line="138" filename="../../../main_window.ui"/>
+        <location filename="../../../main_window.ui" line="138"/>
         <source>All</source>
         <translation>Όλες</translation>
     </message>
     <message>
-        <location line="176" filename="../../../main_window.ui"/>
+        <location filename="../../../main_window.ui" line="176"/>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
     </message>
@@ -180,62 +180,62 @@
     <name>ShortcutConfigWindow</name>
     <message>
         <source>LXQt Shortcut Editor</source>
-        <translation>Επεξεργαστής συντομεύσεων LXQt</translation>
+        <translation type="vanished">Επεξεργαστής συντομεύσεων LXQt</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>Περιγραφή</translation>
+        <translation type="vanished">Περιγραφή</translation>
     </message>
     <message>
         <source>Shortcut</source>
-        <translation>Συντόμευση</translation>
+        <translation type="vanished">Συντόμευση</translation>
     </message>
     <message>
         <source>Command</source>
-        <translation>Εντολή</translation>
+        <translation type="vanished">Εντολή</translation>
     </message>
     <message>
         <source>Add New</source>
-        <translation>Πρόσθεση νέου</translation>
+        <translation type="vanished">Πρόσθεση νέου</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Αφαίρεση</translation>
+        <translation type="vanished">Αφαίρεση</translation>
     </message>
     <message>
         <source>Add Group</source>
-        <translation>Προσθήκη ομάδας</translation>
+        <translation type="vanished">Προσθήκη ομάδας</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Επαναφορά</translation>
+        <translation type="vanished">Επαναφορά</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Κλείσιμο</translation>
+        <translation type="vanished">Κλείσιμο</translation>
     </message>
 </context>
 <context>
     <name>ShortcutEditor</name>
     <message>
         <source>None</source>
-        <translation>Ουδεμία</translation>
+        <translation type="vanished">Ουδεμία</translation>
     </message>
     <message>
         <source>Add Shortcut</source>
-        <translation>Προσθήκη συντόμευσης</translation>
+        <translation type="vanished">Προσθήκη συντόμευσης</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Αφαίρεση</translation>
+        <translation type="vanished">Αφαίρεση</translation>
     </message>
     <message>
         <source>New Group</source>
-        <translation>Νέα ομάδα</translation>
+        <translation type="vanished">Νέα ομάδα</translation>
     </message>
     <message>
         <source>Reset Changes</source>
-        <translation>Επαναφορά αλλαγών</translation>
+        <translation type="vanished">Επαναφορά αλλαγών</translation>
     </message>
 </context>
 </TS>

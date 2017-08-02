@@ -5,11 +5,11 @@
     <name>CommandFinder</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Find a command</source>
-        <translation>Najít příkaz</translation>
+        <translation type="vanished">Najít příkaz</translation>
     </message>
 </context>
 <context>
@@ -180,62 +180,62 @@
     <name>ShortcutConfigWindow</name>
     <message>
         <source>LXQt Shortcut Editor</source>
-        <translation>Editor zkratek</translation>
+        <translation type="vanished">Editor zkratek</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>Popis</translation>
+        <translation type="vanished">Popis</translation>
     </message>
     <message>
         <source>Shortcut</source>
-        <translation>Zkratka</translation>
+        <translation type="vanished">Zkratka</translation>
     </message>
     <message>
         <source>Command</source>
-        <translation>Příkaz</translation>
+        <translation type="vanished">Příkaz</translation>
     </message>
     <message>
         <source>Add New</source>
-        <translation>Přidat novou</translation>
+        <translation type="vanished">Přidat novou</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Odstranit</translation>
+        <translation type="vanished">Odstranit</translation>
     </message>
     <message>
         <source>Add Group</source>
-        <translation>Přidat skupinu</translation>
+        <translation type="vanished">Přidat skupinu</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Vynulovat</translation>
+        <translation type="vanished">Vynulovat</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Zavřít</translation>
+        <translation type="vanished">Zavřít</translation>
     </message>
 </context>
 <context>
     <name>ShortcutEditor</name>
     <message>
         <source>None</source>
-        <translation>Žádná</translation>
+        <translation type="vanished">Žádná</translation>
     </message>
     <message>
         <source>Add Shortcut</source>
-        <translation>Přidat zkratku</translation>
+        <translation type="vanished">Přidat zkratku</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Odstranit</translation>
+        <translation type="vanished">Odstranit</translation>
     </message>
     <message>
         <source>New Group</source>
-        <translation>Nová skupina</translation>
+        <translation type="vanished">Nová skupina</translation>
     </message>
     <message>
         <source>Reset Changes</source>
-        <translation>Vynulovat změny</translation>
+        <translation type="vanished">Vynulovat změny</translation>
     </message>
 </context>
 </TS>

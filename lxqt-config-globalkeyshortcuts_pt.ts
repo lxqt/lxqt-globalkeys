@@ -5,11 +5,11 @@
     <name>CommandFinder</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Find a command</source>
-        <translation>Localizar um comando</translation>
+        <translation type="vanished">Localizar um comando</translation>
     </message>
 </context>
 <context>
@@ -180,62 +180,62 @@
     <name>ShortcutConfigWindow</name>
     <message>
         <source>LXQt Shortcut Editor</source>
-        <translation>Editor de atalhos do LXQt</translation>
+        <translation type="vanished">Editor de atalhos do LXQt</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>Descrição</translation>
+        <translation type="vanished">Descrição</translation>
     </message>
     <message>
         <source>Shortcut</source>
-        <translation>Atalho</translation>
+        <translation type="vanished">Atalho</translation>
     </message>
     <message>
         <source>Command</source>
-        <translation>Comando</translation>
+        <translation type="vanished">Comando</translation>
     </message>
     <message>
         <source>Add New</source>
-        <translation>Adicionar</translation>
+        <translation type="vanished">Adicionar</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Remover</translation>
+        <translation type="vanished">Remover</translation>
     </message>
     <message>
         <source>Add Group</source>
-        <translation>Adicionar grupo</translation>
+        <translation type="vanished">Adicionar grupo</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Restaurar</translation>
+        <translation type="vanished">Restaurar</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Fechar</translation>
+        <translation type="vanished">Fechar</translation>
     </message>
 </context>
 <context>
     <name>ShortcutEditor</name>
     <message>
         <source>None</source>
-        <translation>Nenhum</translation>
+        <translation type="vanished">Nenhum</translation>
     </message>
     <message>
         <source>Add Shortcut</source>
-        <translation>Adicionar atalho</translation>
+        <translation type="vanished">Adicionar atalho</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Remover</translation>
+        <translation type="vanished">Remover</translation>
     </message>
     <message>
         <source>New Group</source>
-        <translation>Novo grupo</translation>
+        <translation type="vanished">Novo grupo</translation>
     </message>
     <message>
         <source>Reset Changes</source>
-        <translation>Restaurar alterações</translation>
+        <translation type="vanished">Restaurar alterações</translation>
     </message>
 </context>
 </TS>
