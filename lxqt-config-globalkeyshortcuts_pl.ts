@@ -32,7 +32,7 @@
     <message>
         <location filename="../../../default_model.cpp" line="141"/>
         <source>Id</source>
-        <translation>Identyfikator</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="144"/>
