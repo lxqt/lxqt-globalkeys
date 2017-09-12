@@ -1147,238 +1147,12 @@ void Core::run()
         while (mX11EventLoopActive)
         {
             XNextEvent(mDisplay, &event);
-            if (!mX11EventLoopActive)
-            {
-                break;
-            }
-
-            switch (event.type)
-            {
-            case KeyPress:
-            {
-                QMutexLocker lock(&mDataMutex);
-
-                if (mGrabbingShortcut)
-                {
-//                    log(LOG_DEBUG, "KeyPress %08x %08x", event.xkey.state, event.xkey.keycode);
-
-                    bool ignoreKey = false;
-                    bool cancel = false;
-                    QString shortcut;
-
-                    int keysymsPerKeycode;
-                    lockX11Error();
-                    KeySym *keySyms = XGetKeyboardMapping(mDisplay, event.xkey.keycode, 1, &keysymsPerKeycode);
-                    checkX11Error();
-
-                    if (keysymsPerKeycode)
-                    {
-                        if (keySyms[0])
-                        {
-                            KeySym keySym = 0;
-
-//                            log(LOG_DEBUG, "keysymsPerKeycode %d", keysymsPerKeycode);
-
-//                            for (int i = 0; i < keysymsPerKeycode; ++i)
-//                                log(LOG_DEBUG, "keySym #%d %08x", i, keySyms[i]);
-
-                            if ((keysymsPerKeycode >= 2) && keySyms[1] && (keySyms[0] >= XK_a) && (keySyms[0] <= XK_z))
-                            {
-                                keySym = keySyms[1];
-                            }
-                            else if (keysymsPerKeycode >= 1)
-                            {
-                                keySym = keySyms[0];
-                            }
-
-                            if (keySym)
-                            {
-                                if (isEscape(keySym, event.xkey.state & allShifts))
-                                {
-                                    cancel = true;
-                                }
-                                else
-                                {
-                                    if (isModifier(keySym) || !isAllowed(keySym, event.xkey.state & allShifts))
-                                    {
-                                        ignoreKey = true;
-                                    }
-                                    else
-                                    {
-                                        char *str = XKeysymToString(keySym);
-
-                                        if (str && *str)
-                                        {
-                                            if (event.xkey.state & ShiftMask)
-                                            {
-                                                shortcut += "Shift+";
-                                            }
-                                            if (event.xkey.state & ControlMask)
-                                            {
-                                                shortcut += "Control+";
-                                            }
-                                            if (event.xkey.state & AltMask)
-                                            {
-                                                shortcut += "Alt+";
-                                            }
-                                            if (event.xkey.state & MetaMask)
-                                            {
-                                                shortcut += "Meta+";
-                                            }
-                                            if (event.xkey.state & Level3Mask)
-                                            {
-                                                shortcut += "Level3+";
-                                            }
-                                            if (event.xkey.state & Level5Mask)
-                                            {
-                                                shortcut += "Level5+";
-                                            }
-
-                                            shortcut += str;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (!ignoreKey)
-                    {
-                        IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
-                        if ((idsByShortcut == mIdsByShortcut.end()) || (idsByShortcut.value().isEmpty()))
-                        {
-                            log(LOG_DEBUG, "grabShortcut: checking %s", qPrintable(shortcut));
-                            lockX11Error();
-                            XUngrabKeyboard(mDisplay, CurrentTime);
-                            checkX11Error();
-
-                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.end();
-                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.begin(); modifiers != lastAllModifiers; ++modifiers)
-                            {
-                                log(LOG_DEBUG, "grabShortcut: checking %02x + %02x", event.xkey.keycode, event.xkey.state | *modifiers);
-                                lockX11Error();
-                                XGrabKey(mDisplay, event.xkey.keycode, event.xkey.state | *modifiers, rootWindow, False, GrabModeAsync, GrabModeAsync);
-                                ignoreKey |= checkX11Error(LOG_DEBUG);
-                            }
-
-                            lockX11Error();
-                            XUngrabKey(mDisplay, event.xkey.keycode, event.xkey.state, rootWindow);
-                            checkX11Error();
-
-                            if (ignoreKey)
-                            {
-                                lockX11Error();
-                                XGrabKeyboard(mDisplay, rootWindow, False, GrabModeAsync, GrabModeAsync, CurrentTime);
-                                checkX11Error();
-                            }
-                        }
-                        else
-                        {
-                            log(LOG_DEBUG, "grabShortcut: already grabbed %s", qPrintable(shortcut));
-                            lockX11Error();
-                            XUngrabKeyboard(mDisplay, CurrentTime);
-                            checkX11Error();
-                        }
-                    }
-                    if (!ignoreKey)
-                    {
-                        mGrabbingShortcut = false;
-
-                        if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &cancel, sizeof(cancel)))
-                        {
-                            log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                            close(mX11RequestPipe[STDIN_FILENO]);
-                            mX11EventLoopActive = false;
-                            break;
-                        }
-                        if (!cancel)
-                        {
-                            size_t length = shortcut.length();
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &length, sizeof(length)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], qPrintable(shortcut), length))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                        }
-
-                        emit onShortcutGrabbed();
-                    }
-                }
-                else
-                {
-                    QString shortcut = mShortcutByX11[qMakePair(static_cast<KeyCode>(event.xkey.keycode), event.xkey.state & allShifts)];
-                    log(LOG_DEBUG, "KeyPress %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
-
-                    IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
-                    if (idsByShortcut != mIdsByShortcut.end())
-                    {
-                        Ids &ids = idsByShortcut.value();
-                        switch (mMultipleActionsBehaviour)
-                        {
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
-                        {
-                            Ids::iterator lastIds = ids.end();
-                            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
-                                if (mShortcutAndActionById[*idi].second->call())
-                                {
-                                    break;
-                                }
-                        }
-                        break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_LAST:
-                        {
-                            Ids::iterator firstIds = ids.begin();
-                            for (Ids::iterator idi = ids.end(); idi != firstIds;)
-                            {
-                                --idi;
-                                if (mShortcutAndActionById[*idi].second->call())
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_NONE:
-                            if (ids.size() == 1)
-                            {
-                                mShortcutAndActionById[*(ids.begin())].second->call();
-                            }
-                            break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_ALL:
-                        {
-                            Ids::iterator lastIds = ids.end();
-                            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
-                            {
-                                mShortcutAndActionById[*idi].second->call();
-                            }
-                        }
-                        break;
-
-                        default:
-                            ;
-                        }
-                    }
-                }
-            }
-            break;
-
-            default:
+            // always check if the main thread is waiting for something
             {
                 pollfd fds[1];
                 fds[0].fd = mX11RequestPipe[STDIN_FILENO];
                 fds[0].events = POLLIN | POLLERR | POLLHUP;
-                if (poll(fds, 1, 0) >= 0)
+                while (poll(fds, 1, 0) > 0)
                 {
                     if (fds[0].revents & POLLIN)
                     {
@@ -1644,6 +1418,227 @@ void Core::run()
                     }
                 }
             }
+            if (!mX11EventLoopActive)
+            {
+                break;
+            }
+
+            if (event.type == KeyPress)
+            {
+                QMutexLocker lock(&mDataMutex);
+
+                if (mGrabbingShortcut)
+                {
+//                    log(LOG_DEBUG, "KeyPress %08x %08x", event.xkey.state, event.xkey.keycode);
+
+                    bool ignoreKey = false;
+                    bool cancel = false;
+                    QString shortcut;
+
+                    int keysymsPerKeycode;
+                    lockX11Error();
+                    KeySym *keySyms = XGetKeyboardMapping(mDisplay, event.xkey.keycode, 1, &keysymsPerKeycode);
+                    checkX11Error();
+
+                    if (keysymsPerKeycode)
+                    {
+                        if (keySyms[0])
+                        {
+                            KeySym keySym = 0;
+
+//                            log(LOG_DEBUG, "keysymsPerKeycode %d", keysymsPerKeycode);
+
+//                            for (int i = 0; i < keysymsPerKeycode; ++i)
+//                                log(LOG_DEBUG, "keySym #%d %08x", i, keySyms[i]);
+
+                            if ((keysymsPerKeycode >= 2) && keySyms[1] && (keySyms[0] >= XK_a) && (keySyms[0] <= XK_z))
+                            {
+                                keySym = keySyms[1];
+                            }
+                            else if (keysymsPerKeycode >= 1)
+                            {
+                                keySym = keySyms[0];
+                            }
+
+                            if (keySym)
+                            {
+                                if (isEscape(keySym, event.xkey.state & allShifts))
+                                {
+                                    cancel = true;
+                                }
+                                else
+                                {
+                                    if (isModifier(keySym) || !isAllowed(keySym, event.xkey.state & allShifts))
+                                    {
+                                        ignoreKey = true;
+                                    }
+                                    else
+                                    {
+                                        char *str = XKeysymToString(keySym);
+
+                                        if (str && *str)
+                                        {
+                                            if (event.xkey.state & ShiftMask)
+                                            {
+                                                shortcut += "Shift+";
+                                            }
+                                            if (event.xkey.state & ControlMask)
+                                            {
+                                                shortcut += "Control+";
+                                            }
+                                            if (event.xkey.state & AltMask)
+                                            {
+                                                shortcut += "Alt+";
+                                            }
+                                            if (event.xkey.state & MetaMask)
+                                            {
+                                                shortcut += "Meta+";
+                                            }
+                                            if (event.xkey.state & Level3Mask)
+                                            {
+                                                shortcut += "Level3+";
+                                            }
+                                            if (event.xkey.state & Level5Mask)
+                                            {
+                                                shortcut += "Level5+";
+                                            }
+
+                                            shortcut += str;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (!ignoreKey)
+                    {
+                        IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
+                        if ((idsByShortcut == mIdsByShortcut.end()) || (idsByShortcut.value().isEmpty()))
+                        {
+                            log(LOG_DEBUG, "grabShortcut: checking %s", qPrintable(shortcut));
+                            lockX11Error();
+                            XUngrabKeyboard(mDisplay, CurrentTime);
+                            checkX11Error();
+
+                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.end();
+                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.begin(); modifiers != lastAllModifiers; ++modifiers)
+                            {
+                                log(LOG_DEBUG, "grabShortcut: checking %02x + %02x", event.xkey.keycode, event.xkey.state | *modifiers);
+                                lockX11Error();
+                                XGrabKey(mDisplay, event.xkey.keycode, event.xkey.state | *modifiers, rootWindow, False, GrabModeAsync, GrabModeAsync);
+                                ignoreKey |= checkX11Error(LOG_DEBUG);
+                            }
+
+                            lockX11Error();
+                            XUngrabKey(mDisplay, event.xkey.keycode, event.xkey.state, rootWindow);
+                            checkX11Error();
+
+                            if (ignoreKey)
+                            {
+                                lockX11Error();
+                                XGrabKeyboard(mDisplay, rootWindow, False, GrabModeAsync, GrabModeAsync, CurrentTime);
+                                checkX11Error();
+                            }
+                        }
+                        else
+                        {
+                            log(LOG_DEBUG, "grabShortcut: already grabbed %s", qPrintable(shortcut));
+                            lockX11Error();
+                            XUngrabKeyboard(mDisplay, CurrentTime);
+                            checkX11Error();
+                        }
+                    }
+                    if (!ignoreKey)
+                    {
+                        mGrabbingShortcut = false;
+
+                        if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &cancel, sizeof(cancel)))
+                        {
+                            log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                            close(mX11RequestPipe[STDIN_FILENO]);
+                            mX11EventLoopActive = false;
+                            break;
+                        }
+                        if (!cancel)
+                        {
+                            size_t length = shortcut.length();
+                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &length, sizeof(length)))
+                            {
+                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                                close(mX11RequestPipe[STDIN_FILENO]);
+                                mX11EventLoopActive = false;
+                                break;
+                            }
+                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], qPrintable(shortcut), length))
+                            {
+                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                                close(mX11RequestPipe[STDIN_FILENO]);
+                                mX11EventLoopActive = false;
+                                break;
+                            }
+                        }
+
+                        emit onShortcutGrabbed();
+                    }
+                }
+                else
+                {
+                    QString shortcut = mShortcutByX11[qMakePair(static_cast<KeyCode>(event.xkey.keycode), event.xkey.state & allShifts)];
+                    log(LOG_DEBUG, "KeyPress %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
+
+                    IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
+                    if (idsByShortcut != mIdsByShortcut.end())
+                    {
+                        Ids &ids = idsByShortcut.value();
+                        switch (mMultipleActionsBehaviour)
+                        {
+                        case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
+                        {
+                            Ids::iterator lastIds = ids.end();
+                            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
+                                if (mShortcutAndActionById[*idi].second->call())
+                                {
+                                    break;
+                                }
+                        }
+                        break;
+
+                        case MULTIPLE_ACTIONS_BEHAVIOUR_LAST:
+                        {
+                            Ids::iterator firstIds = ids.begin();
+                            for (Ids::iterator idi = ids.end(); idi != firstIds;)
+                            {
+                                --idi;
+                                if (mShortcutAndActionById[*idi].second->call())
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                        case MULTIPLE_ACTIONS_BEHAVIOUR_NONE:
+                            if (ids.size() == 1)
+                            {
+                                mShortcutAndActionById[*(ids.begin())].second->call();
+                            }
+                            break;
+
+                        case MULTIPLE_ACTIONS_BEHAVIOUR_ALL:
+                        {
+                            Ids::iterator lastIds = ids.end();
+                            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
+                            {
+                                mShortcutAndActionById[*idi].second->call();
+                            }
+                        }
+                        break;
+
+                        default:
+                            ;
+                        }
+                    }
+                }
             }
         }
     }
