@@ -42,6 +42,7 @@
 #include <errno.h>
 #include <string.h>
 #include <stdio.h>
+#include <mutex>
 
 #include <stdexcept>
 
@@ -55,16 +56,6 @@
 #include "command_action.h"
 
 #include "core.h"
-
-
-class MutexUnlocker
-{
-public:
-    MutexUnlocker(QMutex *mutex): m(mutex) {}
-    ~MutexUnlocker() { m->unlock(); }
-private:
-    QMutex *m;
-};
 
 
 enum
@@ -1164,7 +1155,7 @@ void Core::run()
 
             if (event.type == KeyPress && mDataMutex.tryLock(0))
             {
-                MutexUnlocker unlocker(&mDataMutex);
+                std::unique_lock<QMutex> unlocker(mDataMutex, std::adopt_lock);
 
                 // pop event from the x11 queue and process it
                 XNextEvent(mDisplay, &event);
