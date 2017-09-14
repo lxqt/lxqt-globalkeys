@@ -57,6 +57,16 @@
 #include "core.h"
 
 
+class MutexUnlocker
+{
+public:
+    MutexUnlocker(QMutex *mutex): m(mutex) {}
+    ~MutexUnlocker() { m->unlock(); }
+private:
+    QMutex *m;
+};
+
+
 enum
 {
     X11_OP_StringToKeycode,
@@ -1146,17 +1156,18 @@ void Core::run()
         XEvent event;
         while (mX11EventLoopActive)
         {
-            XNextEvent(mDisplay, &event);
+            XPeekEvent(mDisplay, &event);
             if (!mX11EventLoopActive)
             {
                 break;
             }
 
-            switch (event.type)
+            if (event.type == KeyPress && mDataMutex.tryLock(0))
             {
-            case KeyPress:
-            {
-                QMutexLocker lock(&mDataMutex);
+                MutexUnlocker unlocker(&mDataMutex);
+
+                // pop event from the x11 queue and process it
+                XNextEvent(mDisplay, &event);
 
                 if (mGrabbingShortcut)
                 {
@@ -1370,11 +1381,15 @@ void Core::run()
                         }
                     }
                 }
-            }
-            break;
 
-            default:
+            }
+            else
+            // check for pending pipe requests from other thread
             {
+                if (event.type != KeyPress) {
+                    XNextEvent(mDisplay, &event);
+                }
+
                 pollfd fds[1];
                 fds[0].fd = mX11RequestPipe[STDIN_FILENO];
                 fds[0].events = POLLIN | POLLERR | POLLHUP;
@@ -1643,7 +1658,6 @@ void Core::run()
                         }
                     }
                 }
-            }
             }
         }
     }
