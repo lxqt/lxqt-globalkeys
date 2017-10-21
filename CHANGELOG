@@ -1,7 +1,49 @@
 
-lxqt-globalkeys-0.11.1 / 2017-01-01
+lxqt-globalkeys-0.12.0 / 2017-10-21
 ===================================
 
+  * Set patch version
+  * Don't export github templates
+  * fix deadlock - don't accept keyPress when processing dbus call (#56)
+  * Added Lithuanian language
+  * lxqt-config-globalkeys: set Qt::AA_UseHighDpiPixmaps to true
+  * Added QCommandLineParser and basic cli interface to lxqt-config-globalkeys
+  * Adeed LXQT_GLOBALKEYS_PATCH_VERSION
+  * Fixes a FTBFS in superbuild mode (#51)
+  * Added autostart and xdg to CMakeLists.txt
+  * changed xdg/CmakeLists.txt
+  * fixed xdg/CMakeLists.txt renamed config to xdg - merge preparation
+  * Use const iterators
+  * globalkeys: Open "empty" browser on activation
+  * Updated *_da.desktop files and removed *_da_DK.desktop files
+  * Update AUTHORS
+  * Open https://duckduckgo.com instead of google.com as default
+  * Update desktop entries and Replace fr_FR by fr
+  * lxqt-rc.xml: Change default config install path
+  * Settings Openbox updated.
+  * Screenshot (Shift+Print), file manager (ctl+Alt+e) and web browser (Ctl+atl+i) key shortcuts added.
+  * Default key shortcuts added to lxqt-globalkeysd.
+  * Update Greek translation (el) Remove country variant from language code
+  * CMake: Adds Runtime and Devel install COMPONENTs
+  * Coding style changes
+  * Adds double quotes to everything that may break
+  * Updates the build system to use the Targets infrastructure
+  * Drops hardcoded /etc/xdg paths
+  * Updated german translation, replaced Qt4 by Qt in all xsession/translations
+  * Updates translations infrastructure
+  * Update the required minimum cmake version
+  * remove dead template lines switch OnlyShowIn from Razor -> LXQt stringchanges LxQt -> LXQt
+  * Add session.conf and windowmanagers.conf.
+  * Support lxqt-session and add necessary xdg autostart desktop entry files.
+  * Rename dirs and replace razor with lxqt. Install lxqt.conf to /etc/xdg/lxqt and provide theme config.
+  * Properly set default wallpaper for pcmanfm-qt. Comment out openbox config handling in startlxde-qt since it's not needed.
+  * Fix file paths, replacing razor with lxqt. * Remove Alt+F2 and Ctrl+Esc from openbox config file to avoid conflicts with lxqt-panel & lxqt-globalkeys.
+  * Add default configuration files for lxde-qt session.
+
+0.11.1 / 2017-01-01
+===================
+
+  * Release 0.11.1: Update changelog
   * Added *da.desktop
   * Use the lxqt-build-tools/lxqt_create_portable_headers
   * Use the new lxqt-build-tools package
