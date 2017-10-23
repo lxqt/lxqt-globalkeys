@@ -166,26 +166,4 @@
         <translation>Fermer</translation>
     </message>
 </context>
-<context>
-    <name>ShortcutConfigWindow</name>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Supprimer</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Fermer</translation>
-    </message>
-</context>
-<context>
-    <name>ShortcutEditor</name>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Aucun(e)</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Supprimer</translation>
-    </message>
-</context>
 </TS>
