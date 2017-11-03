@@ -197,6 +197,14 @@ bool EditActionDialog::load(qulonglong id)
         else
         {
             command_PTE->clear();
+
+            // To disable all radio boxes, once one has been selected, we need to turn exclusivity off temporarily
+            command_RB->setAutoExclusive(false);
+            dbus_method_RB->setAutoExclusive(false);
+            command_RB->setChecked(false);
+            dbus_method_RB->setChecked(false);
+            command_RB->setAutoExclusive(true);
+            dbus_method_RB->setAutoExclusive(true);
         }
 
         description_LE->setEnabled(canEdit);
