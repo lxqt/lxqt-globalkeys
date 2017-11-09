@@ -127,7 +127,7 @@
     <message>
         <location filename="../../../main_window.ui" line="72"/>
         <source>Modify ...</source>
-        <translation>Ændr ...</translation>
+        <translation>Rediger ...</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="89"/>
