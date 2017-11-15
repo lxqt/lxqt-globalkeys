@@ -6,42 +6,42 @@
     <message>
         <location filename="../../../default_model.cpp" line="49"/>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンド</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="50"/>
         <source>DBus call</source>
-        <translation type="unfinished"></translation>
+        <translation>DBus コール</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="51"/>
         <source>Client</source>
-        <translation type="unfinished"></translation>
+        <translation>クライアント</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="141"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation>ld</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="144"/>
         <source>Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>ショートカット</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="147"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>説明</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="150"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>タイプ</translation>
     </message>
     <message>
         <location filename="../../../default_model.cpp" line="153"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>情報</translation>
     </message>
 </context>
 <context>
@@ -49,62 +49,62 @@
     <message>
         <location filename="../../../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation type="unfinished"></translation>
+        <translation>動作の編集</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation type="unfinished"></translation>
+        <translation>ショートカット(&amp;S):</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="74"/>
         <source>&amp;Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>説明(&amp;D):</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>有効にする(&amp;E)</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンド(&amp;C)</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation type="unfinished"></translation>
+        <translation>DBus メッセージ(&amp;D)</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="118"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>タイプ:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンド(&amp;m):</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation type="unfinished"></translation>
+        <translation>サービス(&amp;e):</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>パス(&amp;P):</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation type="unfinished"></translation>
+        <translation>インターフェース(&amp;I):</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="245"/>
         <source>&amp;Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>メソッド(&amp;M):</translation>
     </message>
 </context>
 <context>
@@ -117,22 +117,22 @@
     <message>
         <location filename="../../../main_window.ui" line="52"/>
         <source>Add ...</source>
-        <translation type="unfinished"></translation>
+        <translation>追加 ...</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="62"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="72"/>
         <source>Modify ...</source>
-        <translation type="unfinished"></translation>
+        <translation>修正 ...</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="89"/>
         <source>Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>スワップ</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="115"/>
@@ -142,27 +142,27 @@
     <message>
         <location filename="../../../main_window.ui" line="123"/>
         <source>First</source>
-        <translation type="unfinished"></translation>
+        <translation>最初の</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="128"/>
         <source>Last</source>
-        <translation type="unfinished"></translation>
+        <translation>最後の</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="133"/>
         <source>None</source>
-        <translation type="unfinished">なし</translation>
+        <translation>なし</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="138"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>全て</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="176"/>
         <source>Close</source>
-        <translation type="unfinished">閉じる</translation>
+        <translation>閉じる</translation>
     </message>
 </context>
 <context>
