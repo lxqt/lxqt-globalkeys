@@ -10,6 +10,10 @@
 
 @PACKAGE_INIT@
 
+if (CMAKE_VERSION VERSION_LESS 3.0.2)
+    message(FATAL_ERROR \"@PROJECT_NAME@ requires at least CMake version 3.0.2\")
+endif()
+
 include(CMakeFindDependencyMacro)
 
 set(LXQT_GLOBALKEYS_UI_MAJOR_VERSION @LXQT_MAJOR_VERSION@)
@@ -19,9 +23,11 @@ set(LXQT_GLOBALKEYS_UI_VERSION @LXQT_VERSION@)
 
 find_dependency(Qt5Widgets)
 find_dependency(Qt5DBus)
-find_dependency(lxqt-globalkeys)
+find_dependency(@LXQT_GLOBALKEYS_LIBRARY_NAME@)
 
-if (CMAKE_VERSION VERSION_GREATER 2.8.12)
-    cmake_policy(SET CMP0024 OLD)
+if (NOT TARGET @LXQT_GLOBALKEYS_UI_LIBRARY_NAME@)
+    if (POLICY CMP0024)
+        cmake_policy(SET CMP0024 NEW)
+    endif()
+    include("${CMAKE_CURRENT_LIST_DIR}/@LXQT_GLOBALKEYS_UI_LIBRARY_NAME@-targets.cmake")
 endif()
-include("${CMAKE_CURRENT_LIST_DIR}/lxqt-globalkeys-ui-targets.cmake")
