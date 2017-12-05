@@ -1244,6 +1244,11 @@ void Core::run()
                             }
                         }
                     }
+                    if (keySyms)
+                    {
+                        XFree(keySyms);
+                        keySyms = nullptr;
+                    }
                     if (!ignoreKey)
                     {
                         IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
