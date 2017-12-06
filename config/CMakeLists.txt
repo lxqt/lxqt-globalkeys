@@ -100,6 +100,12 @@ endforeach()
 
 qt5_add_resources(${PROJECT_NAME}_RESOURCE_FILES ${${PROJECT_NAME}_RESOURCES})
 
+set_property(SOURCE
+        ${${PROJECT_NAME}_DBUS_INTERFACE_FILES}
+        ${${PROJECT_NAME}_DBUS_ADAPTOR_FILES}
+    PROPERTY SKIP_AUTOGEN ON
+)
+
 # Translations **********************************
 lxqt_translate_ts(${PROJECT_NAME}_QM_FILES
     UPDATE_TRANSLATIONS ${UPDATE_TRANSLATIONS}
