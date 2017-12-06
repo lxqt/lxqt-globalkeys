@@ -140,6 +140,12 @@ set(${PROJECT_NAME}_ALL_FILES
     ${${PROJECT_NAME}_GENERATED_FILES}
 )
 
+set_property(SOURCE
+        ${${PROJECT_NAME}_DBUS_INTERFACE_FILES}
+        ${${PROJECT_NAME}_DBUS_ADAPTOR_FILES}
+    PROPERTY SKIP_AUTOGEN ON
+)
+
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_ALL_FILES})
 target_link_libraries(${PROJECT_NAME} ${X11_LIBRARIES} lxqt Qt5::Widgets Qt5::DBus)
 lxqt_enable_target_exceptions(${PROJECT_NAME} PRIVATE)
