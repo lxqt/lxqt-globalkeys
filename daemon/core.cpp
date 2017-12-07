@@ -1121,7 +1121,7 @@ void Core::run()
 
     Window rootWindow = DefaultRootWindow(mDisplay);
 
-    XSelectInput(mDisplay, rootWindow, KeyPressMask);
+    XSelectInput(mDisplay, rootWindow, KeyPressMask | KeyReleaseMask);
 
     mInterClientCommunicationWindow = XCreateSimpleWindow(mDisplay, rootWindow, 0, 0, 1, 1, 0, 0, 0);
 
@@ -1145,6 +1145,8 @@ void Core::run()
     char signal = 0;
     if (write(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)) == sizeof(signal))
     {
+        bool keyReleaseExpected = false;
+
         XEvent event;
         while (mX11EventLoopActive)
         {
@@ -1154,7 +1156,14 @@ void Core::run()
                 break;
             }
 
-            if (event.type == KeyPress && mDataMutex.tryLock(0))
+            if ((event.type == KeyRelease) && !keyReleaseExpected)
+            {
+                // pop event from the x11 queue and do nothing
+                XNextEvent(mDisplay, &event);
+                continue;
+            }
+
+            if (((event.type == KeyPress) || (event.type == KeyRelease)) && mDataMutex.tryLock(0))
             {
                 std::unique_lock<QMutex> unlocker(mDataMutex, std::adopt_lock);
 
@@ -1388,7 +1397,7 @@ void Core::run()
             else
             // check for pending pipe requests from other thread
             {
-                if (event.type != KeyPress) {
+                if ((event.type != KeyPress) && (event.type != KeyRelease)) {
                     XNextEvent(mDisplay, &event);
                 }
 
