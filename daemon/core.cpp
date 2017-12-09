@@ -1162,6 +1162,7 @@ void Core::run()
                 XNextEvent(mDisplay, &event);
                 continue;
             }
+            keyReleaseExpected = false; // Close time window for accepting meta keys.
 
             if (((event.type == KeyPress) || (event.type == KeyRelease)) && mDataMutex.tryLock(0))
             {
@@ -1211,7 +1212,29 @@ void Core::run()
                                 }
                                 else
                                 {
-                                    if (isModifier(keySym) || !isAllowed(keySym, event.xkey.state & allShifts))
+                                    if (isModifier(keySym))
+                                    {
+                                        if (event.type == KeyPress)
+                                        {
+                                            ignoreKey = true;
+                                            keyReleaseExpected = true;
+                                        }
+                                        else
+                                        {
+                                            // Only the meta keys are allowed.
+
+                                            if ((event.xkey.state & allShifts) == MetaMask)
+                                            {
+                                                shortcut = XKeysymToString(keySym);
+                                                event.xkey.state &= ~allShifts; // Modifier keys must not use shift states.
+                                            }
+                                            else
+                                            {
+                                                ignoreKey = true;
+                                            }
+                                        }
+                                    }
+                                    else if ((event.type == KeyRelease) || !isAllowed(keySym, event.xkey.state & allShifts))
                                     {
                                         ignoreKey = true;
                                     }
