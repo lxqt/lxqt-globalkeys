@@ -206,7 +206,7 @@ void DefaultModel::daemonAppeared()
 
     beginInsertRows(QModelIndex(), 0, allIds.size() - 1);
 
-    foreach(qulonglong id, allIds)
+    for(qulonglong id : qAsConst(allIds))
     {
         mContent[id] = mActions->actionById(id).second;
         mShortcuts[mContent[id].shortcut].insert(id);
@@ -233,7 +233,7 @@ void DefaultModel::actionAdded(qulonglong id)
             endInsertRows();
 
             keys = mContent.keys();
-            foreach(qulonglong siblingId, mShortcuts[mContent[id].shortcut])
+            for(qulonglong siblingId : qAsConst(mShortcuts[mContent[id].shortcut]))
             {
                 if (id != siblingId)
                 {
@@ -272,12 +272,12 @@ void DefaultModel::actionModified(qulonglong id)
             {
                 mShortcuts[result.second.shortcut].insert(id);
                 mShortcuts[mContent[id].shortcut].remove(id);
-                foreach(qulonglong siblingId, mShortcuts[mContent[id].shortcut])
+                for(qulonglong siblingId : qAsConst(mShortcuts[mContent[id].shortcut]))
                 {
                     int siblingRow = qBinaryFind(keys, siblingId) - keys.constBegin();
                     emit dataChanged(index(siblingRow, 1), index(siblingRow, 1));
                 }
-                foreach(qulonglong siblingId, mShortcuts[result.second.shortcut])
+                for(qulonglong siblingId : qAsConst(mShortcuts[result.second.shortcut]))
                 {
                     int siblingRow = qBinaryFind(keys, siblingId) - keys.constBegin();
                     emit dataChanged(index(siblingRow, 1), index(siblingRow, 1));
@@ -325,7 +325,7 @@ void DefaultModel::actionRemoved(qulonglong id)
 
         endRemoveRows();
 
-        foreach(qulonglong siblingId, mShortcuts[shortcut])
+        for(qulonglong siblingId : qAsConst(mShortcuts[shortcut]))
         {
             int siblingRow = qBinaryFind(keys, siblingId) - keys.constBegin();
             emit dataChanged(index(siblingRow, 1), index(siblingRow, 1));

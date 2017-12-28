@@ -155,7 +155,8 @@ void MainWindow::on_swap_PB_clicked()
 
 void MainWindow::on_remove_PB_clicked()
 {
-    foreach(const QModelIndex &rowIndex, mSelectionModel->selectedRows())
+    const auto rows = mSelectionModel->selectedRows();
+    for(const QModelIndex &rowIndex : rows)
         mActions->removeAction(mDefaultModel->id(mSortFilterProxyModel->mapToSource(rowIndex)));
 }
 

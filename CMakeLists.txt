@@ -11,7 +11,7 @@ if(NOT CMAKE_BUILD_TYPE)
      set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(LXQTBT_MINIMUM_VERSION "0.4.0")
+set(LXQTBT_MINIMUM_VERSION "0.4.1")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -38,6 +38,8 @@ include(LXQtCompilerSettings NO_POLICY_SCOPE)
 
 include(GNUInstallDirs) # Standard directories for installation
 include(CMakePackageConfigHelpers)
+
+add_definitions(-DQT_NO_FOREACH)
 
 set(LXQT_GLOBALKEYS_LIBRARY_NAME lxqt-globalkeys)
 set(LXQT_GLOBALKEYS_UI_LIBRARY_NAME lxqt-globalkeys-ui)

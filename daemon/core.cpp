@@ -532,7 +532,8 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                 mAllowGrabBaseKeypad = settings.value(/* General/ */QStringLiteral("AllowGrabBaseKeypad"), mAllowGrabBaseKeypad).toBool();
                 mAllowGrabMiscKeypad = settings.value(/* General/ */QStringLiteral("AllowGrabMiscKeypad"), mAllowGrabMiscKeypad).toBool();
 
-                foreach(const QString &section, settings.childGroups())
+                const auto sections = settings.childGroups();
+                for(const QString &section : sections)
                 {
                     if (section != QLatin1String("General"))
                     {
