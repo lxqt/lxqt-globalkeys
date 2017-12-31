@@ -60,7 +60,7 @@
     <message>
         <location filename="../../../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation>Ενέργεια επεξεργασίας</translation>
+        <translation>Επεξεργασία της ενέργειας</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="31"/>
@@ -85,7 +85,7 @@
     <message>
         <location filename="../../../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation>Μήνυμα &amp;DBus:</translation>
+        <translation>Μήνυμα &amp;DBus</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="118"/>
@@ -143,7 +143,7 @@
     <message>
         <location filename="../../../main_window.ui" line="89"/>
         <source>Swap</source>
-        <translation>Swap</translation>
+        <translation>Εναλλαγή</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="115"/>
