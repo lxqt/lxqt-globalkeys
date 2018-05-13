@@ -65,7 +65,7 @@
     <message>
         <location filename="../../../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation>Atajo</translation>
+        <translation>&amp;Atajo:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="74"/>
@@ -75,7 +75,7 @@
     <message>
         <location filename="../../../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation>Habilitado</translation>
+        <translation>&amp;Habilitado</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="102"/>
@@ -105,7 +105,7 @@
     <message>
         <location filename="../../../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation>Ruta:</translation>
+        <translation>&amp;Ruta:</translation>
     </message>
     <message>
         <location filename="../../../edit_action_dialog.ui" line="232"/>
@@ -153,22 +153,22 @@
     <message>
         <location filename="../../../main_window.ui" line="123"/>
         <source>First</source>
-        <translation>Primero</translation>
+        <translation>Primera</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="128"/>
         <source>Last</source>
-        <translation>Último</translation>
+        <translation>Última</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="133"/>
         <source>None</source>
-        <translation>Ninguno</translation>
+        <translation>Ninguna</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="138"/>
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>Todas</translation>
     </message>
     <message>
         <location filename="../../../main_window.ui" line="176"/>
