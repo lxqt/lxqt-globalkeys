@@ -1,4 +1,8 @@
-# Translations
-Name[es]=Configuración de Atajos de LXQt
-Comment[es]=Configure atajos globales del Escritorio de LXQt
-GenericName[es]=Configuración de Atajos Globales de LXQt
+Name[es]=Atajos de teclado
+GenericName[es]=Configuración de los atajos de teclado
+Comment[es]=Configurar los atajos de teclado en LXQt
+
+
+Name=Shortcut Keys
+GenericName=Keyboard Shortcut Settings
+Comment=Configure shortcut keys in LXQt
