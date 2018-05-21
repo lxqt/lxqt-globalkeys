@@ -1,7 +1,28 @@
 
-lxqt-globalkeys-0.12.0 / 2017-10-21
+lxqt-globalkeys-0.13.0 / 2018-05-21
 ===================================
 
+  * Update lxqt-config-globalkeyshortcuts_es.desktop
+  * Spanish translation update
+  * Add shortcut for lockscreen
+  * CMake: Prevent in-source builds
+  * fixed razor-qt -> lxqt and http -> https
+  * Fixed some LXDE mentions
+  * Update zh_CN translation
+  * Triggering shortcuts with meta keys
+  * Register meta keys for shortcuts
+  * Daemon triggers on KeyRelease
+  * free the storage returned by XGetKeyboardMapping
+  * Drop Qt foreach.
+  * Avoid polluting the the x11 shortcut map.
+  * Handle CMake CMP0024
+  * cmake: Handle CMP0071
+  * Fixes wrong radio buttons when changing shortcuts
+
+0.12.0 / 2017-10-21
+===================
+
+  * Release 0.12.0: Update changelog
   * Set patch version
   * Don't export github templates
   * fix deadlock - don't accept keyPress when processing dbus call (#56)
@@ -36,9 +57,9 @@ lxqt-globalkeys-0.12.0 / 2017-10-21
   * Add session.conf and windowmanagers.conf.
   * Support lxqt-session and add necessary xdg autostart desktop entry files.
   * Rename dirs and replace razor with lxqt. Install lxqt.conf to /etc/xdg/lxqt and provide theme config.
-  * Properly set default wallpaper for pcmanfm-qt. Comment out openbox config handling in startlxqt since it's not needed.
+  * Properly set default wallpaper for pcmanfm-qt. Comment out openbox config handling in startlxde-qt since it's not needed.
   * Fix file paths, replacing razor with lxqt. * Remove Alt+F2 and Ctrl+Esc from openbox config file to avoid conflicts with lxqt-panel & lxqt-globalkeys.
-  * Add default configuration files for lxqt session.
+  * Add default configuration files for lxde-qt session.
 
 0.11.1 / 2017-01-01
 ===================
@@ -118,8 +139,8 @@ lxqt-globalkeys-0.12.0 / 2017-10-21
   * daemon: not grabbing disabled shortcuts
   * Update lxqt-config-globalkeyshortcuts_it_IT.desktop
   * client: emitting registrationFinished signal
-  * Add check for NULL pointer. See lxqt/lxqt#521
-  * Use ~ instead of / as working dir. Fixes lxqt/lxqt#521
+  * Add check for NULL pointer. See lxde/lxqt#521
+  * Use ~ instead of / as working dir. Fixes lxde/lxqt#521
   * Make DBus calls to addClientAction async
 
 0.9.0 / 2015-01-07
