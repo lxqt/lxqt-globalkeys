@@ -11,7 +11,7 @@
     <message>
         <location filename="../default_model.cpp" line="50"/>
         <source>DBus call</source>
-        <translation type="unfinished"></translation>
+        <translation>DBus 呼叫</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="51"/>
