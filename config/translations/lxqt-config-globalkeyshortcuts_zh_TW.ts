@@ -112,12 +112,12 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>全域動作管理器</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="52"/>
         <source>Add ...</source>
-        <translation type="unfinished"></translation>
+        <translation>新增 ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="62"/>
@@ -127,27 +127,27 @@
     <message>
         <location filename="../main_window.ui" line="72"/>
         <source>Modify ...</source>
-        <translation type="unfinished"></translation>
+        <translation>修改 ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="89"/>
         <source>Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>交換</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation type="unfinished"></translation>
+        <translation>多動作行為：</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="123"/>
         <source>First</source>
-        <translation type="unfinished"></translation>
+        <translation>第一項</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="128"/>
         <source>Last</source>
-        <translation type="unfinished"></translation>
+        <translation>最後一項</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="133"/>
@@ -157,7 +157,7 @@
     <message>
         <location filename="../main_window.ui" line="138"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>全部</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="176"/>
