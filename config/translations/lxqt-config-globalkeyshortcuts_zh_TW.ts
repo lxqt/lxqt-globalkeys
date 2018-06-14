@@ -36,7 +36,7 @@
     <message>
         <location filename="../default_model.cpp" line="150"/>
         <source>Type</source>
-        <translation type="unfinished">類型ㄆ</translation>
+        <translation type="unfinished">類型</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="153"/>
@@ -54,57 +54,57 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation type="unfinished"></translation>
+        <translation>捷徑 (&amp;S)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
         <source>&amp;Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>描述 (&amp;D)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>啟用 (&amp;E)</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation type="unfinished"></translation>
+        <translation>命令 (&amp;C)</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation type="unfinished"></translation>
+        <translation>DBus 訊息 (&amp;D)</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>類型：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation type="unfinished"></translation>
+        <translation>命令 (&amp;m)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation type="unfinished"></translation>
+        <translation>服務 (&amp;e)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>路徑 (&amp;P)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation type="unfinished"></translation>
+        <translation>介面 (&amp;I)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
         <source>&amp;Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>方法 (&amp;M)：</translation>
     </message>
 </context>
 <context>
