@@ -6,7 +6,7 @@
     <message>
         <location filename="../default_model.cpp" line="49"/>
         <source>Command</source>
-        <translation type="unfinished">指令</translation>
+        <translation>指令</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="50"/>
@@ -26,22 +26,22 @@
     <message>
         <location filename="../default_model.cpp" line="144"/>
         <source>Shortcut</source>
-        <translation type="unfinished">快捷鍵</translation>
+        <translation>快捷鍵</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="147"/>
         <source>Description</source>
-        <translation type="unfinished">描述</translation>
+        <translation>描述</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="150"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">類型ㄆ</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="153"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">資訊</translation>
     </message>
 </context>
 <context>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">編輯動作</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
