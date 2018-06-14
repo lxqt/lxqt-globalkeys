@@ -16,7 +16,7 @@
     <message>
         <location filename="../default_model.cpp" line="51"/>
         <source>Client</source>
-        <translation type="unfinished"></translation>
+        <translation>用戶端</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="141"/>
