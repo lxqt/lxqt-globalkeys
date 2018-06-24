@@ -137,7 +137,7 @@
     <message>
         <location filename="../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation>Flere handlinger adfærd:</translation>
+        <translation>Flere handlinger opførsel:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="123"/>
