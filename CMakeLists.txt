@@ -40,8 +40,6 @@ include(LXQtCompilerSettings NO_POLICY_SCOPE)
 include(GNUInstallDirs) # Standard directories for installation
 include(CMakePackageConfigHelpers)
 
-add_definitions(-DQT_NO_FOREACH)
-
 set(LXQT_GLOBALKEYS_LIBRARY_NAME lxqt-globalkeys)
 set(LXQT_GLOBALKEYS_UI_LIBRARY_NAME lxqt-globalkeys-ui)
 set(LXQT_INSTALL_CMAKE_DIR     "${CMAKE_INSTALL_DATAROOTDIR}/cmake")
