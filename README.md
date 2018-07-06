@@ -63,3 +63,9 @@ which is used to customize shortcuts can be opened from the panel's main menu -
 Preferences - LXQt Settings - Shortcut Keys and is provided by the
 [Configuration Center](https://github.com/lxqt/lxqt-config#configuration-center)
 of [lxqt-config](https://github.com/lxqt/lxqt-config) as well.
+
+### Translation (Weblate)
+
+<a href="https://weblate.lxqt.org/projects/lxqt/lxqt-globalkeys/">
+<img src="https://weblate.lxqt.org/widgets/lxqt/-/lxqt-globalkeys/multi-auto.svg" alt="Translation status" />
+</a>
