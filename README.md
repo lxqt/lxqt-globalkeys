@@ -66,6 +66,6 @@ of [lxqt-config](https://github.com/lxqt/lxqt-config) as well.
 
 ### Translation (Weblate)
 
-<a href="https://weblate.lxqt.org/projects/lxqt/lxqt-globalkeys/">
-<img src="https://weblate.lxqt.org/widgets/lxqt/-/lxqt-globalkeys/multi-auto.svg" alt="Translation status" />
+<a href="https://weblate.lxqt.org/projects/lxqt/lxqt-globalkeys-config/">
+<img src="https://weblate.lxqt.org/widgets/lxqt/-/lxqt-globalkeys-config/multi-auto.svg" alt="Translation status" />
 </a>
