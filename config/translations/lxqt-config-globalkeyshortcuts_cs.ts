@@ -21,7 +21,7 @@
     <message>
         <location filename="../default_model.cpp" line="141"/>
         <source>Id</source>
-        <translation>ID</translation>
+        <translation>Identif.</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="144"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation>Upravit činnost</translation>
+        <translation>Upravit akci</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
@@ -64,7 +64,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation>Po&amp;voleno</translation>
+        <translation>Povol&amp;eno</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation>&amp;Cesta:</translation>
+        <translation>&amp;Popis umístění:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
@@ -112,12 +112,12 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation>Celkový správce činností</translation>
+        <translation>Celkový správce akcí</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="52"/>
         <source>Add ...</source>
-        <translation>Přidat...</translation>
+        <translation>Přidat…</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="62"/>
@@ -127,17 +127,17 @@
     <message>
         <location filename="../main_window.ui" line="72"/>
         <source>Modify ...</source>
-        <translation>Změnit...</translation>
+        <translation>Změnit…</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="89"/>
         <source>Swap</source>
-        <translation>Vyměnit</translation>
+        <translation>Prohodit</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation>Chování při více činnostech:</translation>
+        <translation>Chování při více akcích:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="123"/>
