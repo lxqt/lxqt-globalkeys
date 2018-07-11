@@ -6,12 +6,12 @@
     <message>
         <location filename="../default_model.cpp" line="49"/>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Komento</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="50"/>
         <source>DBus call</source>
-        <translation type="unfinished"></translation>
+        <translation>DBus kutsu</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="51"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../default_model.cpp" line="144"/>
         <source>Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Pikanäppäin</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="147"/>
@@ -36,7 +36,7 @@
     <message>
         <location filename="../default_model.cpp" line="150"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyyppi</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="153"/>
@@ -79,7 +79,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyyppi:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
@@ -112,12 +112,12 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Pikanäppäinmanageri</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="52"/>
         <source>Add ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisää ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="62"/>
@@ -127,7 +127,7 @@
     <message>
         <location filename="../main_window.ui" line="72"/>
         <source>Modify ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Muokkaa ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="89"/>
@@ -142,22 +142,22 @@
     <message>
         <location filename="../main_window.ui" line="123"/>
         <source>First</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensimmäinen</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="128"/>
         <source>Last</source>
-        <translation type="unfinished"></translation>
+        <translation>Viimeinen</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="133"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei mitään</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="138"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaikki</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="176"/>
