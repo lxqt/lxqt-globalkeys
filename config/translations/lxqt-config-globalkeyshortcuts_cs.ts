@@ -11,7 +11,7 @@
     <message>
         <location filename="../default_model.cpp" line="50"/>
         <source>DBus call</source>
-        <translation>Volání DBus</translation>
+        <translation>DBus volání</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="51"/>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation>&amp;Klávesová zkratka:</translation>
+        <translation>Kláve&amp;sová zkratka:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
@@ -74,7 +74,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation>Zpráva &amp;DBus</translation>
+        <translation>Zpráva z &amp;DBus</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation>Celkový správce akcí</translation>
+        <translation>Globální správa akcí</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="52"/>
