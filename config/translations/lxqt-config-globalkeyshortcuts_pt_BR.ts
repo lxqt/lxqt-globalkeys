@@ -99,7 +99,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Interface:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
