@@ -46,9 +46,9 @@ DefaultModel::DefaultModel(Actions *actions, const QColor &grayedOutColour, cons
     connect(actions, SIGNAL(actionsSwapped(qulonglong, qulonglong)), SLOT(actionsSwapped(qulonglong, qulonglong)));
     connect(actions, SIGNAL(actionRemoved(qulonglong)), SLOT(actionRemoved(qulonglong)));
 
-    mVerboseType["command"] = tr("Command");
-    mVerboseType["method"] = tr("DBus call");
-    mVerboseType["client"] = tr("Client");
+    mVerboseType[QStringLiteral("command")] = tr("Command");
+    mVerboseType[QStringLiteral("method")] = tr("DBus call");
+    mVerboseType[QLatin1String("client")] = tr("Client");
 }
 
 DefaultModel::~DefaultModel()
@@ -99,7 +99,7 @@ QVariant DefaultModel::data(const QModelIndex &index, int role) const
         {
             qulonglong id = mContent.keys()[index.row()];
             bool multiple = (index.column() == 1) && (mShortcuts[mContent[id].shortcut].size() > 1);
-            bool inactive = (mContent[id].type == "client") && (mActions->getClientActionSender(id).isEmpty());
+            bool inactive = (mContent[id].type == QLatin1String("client")) && (mActions->getClientActionSender(id).isEmpty());
             if (multiple || inactive)
                 return multiple ? (inactive ? mHighlightedItalicFont : mHighlightedFont) : mItalicFont;
         }

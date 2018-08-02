@@ -58,24 +58,24 @@ static QString joinCommandLine(const QString &command, QStringList arguments)
     for (int i = 0; i < m; ++i)
     {
         QString &item = arguments[i];
-        if (item.contains(QRegExp("[ \r\n\t\"']")))
+        if (item.contains(QRegExp(QStringLiteral("[ \r\n\t\"']"))))
         {
-            item.prepend("'").append("'");
+            item.prepend(QLatin1Char('\'')).append(QLatin1Char('\''));
         }
         else if (item.isEmpty())
         {
-            item = QString("''");
+            item = QString::fromLatin1("''");
         }
     }
-    return arguments.join(" ");
+    return arguments.join(QLatin1Char(' '));
 }
 
 static QStringList splitCommandLine(QString commandLine)
 {
-    commandLine.prepend(" ").append(" ");
+    commandLine.prepend(QLatin1Char(' ')).append(QLatin1Char(' '));
     QStringList result;
-    QRegExp spacePattern("\\s+");
-    QRegExp itemPattern("([^ \r\n\t\"']+)|((\"([^\"]|\\\")*\")|('([^']|\\')*'))(?=\\s)");
+    QRegExp spacePattern(QStringLiteral("\\s+"));
+    QRegExp itemPattern(QStringLiteral("([^ \r\n\t\"']+)|((\"([^\"]|\\\")*\")|('([^']|\\')*'))(?=\\s)"));
 
     for (int pos = 0; ;)
     {
@@ -164,16 +164,16 @@ bool EditActionDialog::load(qulonglong id)
             return false;
         }
 
-        bool canEdit = ((info.second.type == "command") || (info.second.type == "method"));
+        bool canEdit = ((info.second.type == QLatin1String("command")) || (info.second.type == QLatin1String("method")));
 
         mShortcut = info.second.shortcut;
         shortcut_SS->setText(mShortcut);
         description_LE->setText(info.second.description);
         enabled_CB->setChecked(info.second.enabled);
-        command_RB->setChecked(info.second.type == "command");
-        dbus_method_RB->setChecked(info.second.type == "method");
-        action_SW->setCurrentWidget((info.second.type == "method") ? dbus_method_P : command_P);
-        if (info.second.type == "command")
+        command_RB->setChecked(info.second.type == QLatin1String("command"));
+        dbus_method_RB->setChecked(info.second.type == QLatin1String("method"));
+        action_SW->setCurrentWidget((info.second.type == QLatin1String("method")) ? dbus_method_P : command_P);
+        if (info.second.type == QLatin1String("command"))
         {
             QPair<bool, CommandActionInfo> commandInfo = mActions->commandActionInfoById(id);
             if (!commandInfo.first)
@@ -182,7 +182,7 @@ bool EditActionDialog::load(qulonglong id)
             }
             command_PTE->setPlainText(joinCommandLine(commandInfo.second.command, commandInfo.second.arguments));
         }
-        else if (info.second.type == "method")
+        else if (info.second.type == QLatin1String("method"))
         {
             QPair<bool, MethodActionInfo> methodInfo = mActions->methodActionInfoById(id);
             if (!methodInfo.first)

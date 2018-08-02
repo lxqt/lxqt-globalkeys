@@ -237,9 +237,9 @@ int main(int argc, char *argv[])
 
     if (configFiles.empty() && home && *home)
     {
-        if( ! QFile::exists(QString::fromLocal8Bit(home) + "/" DEFAULT_CONFIG) ) //Load default settings
-            configFiles.push_back("/etc/xdg/lxqt/globalkeyshortcuts.conf");
-        configFiles.push_back(QString::fromLocal8Bit(home) + "/" DEFAULT_CONFIG);
+        if( ! QFile::exists(QString::fromLocal8Bit(home) + QLatin1Char('/') + QLatin1String(DEFAULT_CONFIG)) ) //Load default settings
+            configFiles.push_back(QStringLiteral("/etc/xdg/lxqt/globalkeyshortcuts.conf"));
+        configFiles.push_back(QString::fromLocal8Bit(home) + QLatin1Char('/') + QLatin1String(DEFAULT_CONFIG));
     }
 
     LXQt::Application app(argc, argv);
