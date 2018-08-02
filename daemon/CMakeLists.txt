@@ -147,6 +147,14 @@ set_property(SOURCE
 )
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_ALL_FILES})
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE
+        "QT_USE_QSTRINGBUILDER"
+        "QT_NO_CAST_FROM_ASCII"
+        "QT_NO_CAST_TO_ASCII"
+        "QT_NO_URL_CAST_FROM_STRING"
+        "QT_NO_CAST_FROM_BYTEARRAY"
+)
 target_link_libraries(${PROJECT_NAME} ${X11_LIBRARIES} lxqt Qt5::Widgets Qt5::DBus)
 lxqt_enable_target_exceptions(${PROJECT_NAME} PRIVATE)
 

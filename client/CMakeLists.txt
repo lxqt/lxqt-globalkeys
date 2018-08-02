@@ -173,7 +173,13 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_compile_definitions(${PROJECT_NAME}
-    PRIVATE "SHARED_EXPORT=Q_DECL_EXPORT"
+    PRIVATE
+        "SHARED_EXPORT=Q_DECL_EXPORT"
+        "QT_USE_QSTRINGBUILDER"
+        "QT_NO_CAST_FROM_ASCII"
+        "QT_NO_CAST_TO_ASCII"
+        "QT_NO_URL_CAST_FROM_STRING"
+        "QT_NO_CAST_FROM_BYTEARRAY"
 )
 
 export(TARGETS ${PROJECT_NAME} FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-targets.cmake")

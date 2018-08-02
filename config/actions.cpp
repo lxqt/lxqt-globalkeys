@@ -31,12 +31,12 @@
 
 Actions::Actions(QObject *parent)
     : QObject(parent)
-    , mServiceWatcher(new QDBusServiceWatcher("org.lxqt.global_key_shortcuts", QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, this))
+    , mServiceWatcher(new QDBusServiceWatcher(QLatin1String("org.lxqt.global_key_shortcuts"), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, this))
     , mMultipleActionsBehaviour(MULTIPLE_ACTIONS_BEHAVIOUR_FIRST)
 {
     connect(mServiceWatcher, SIGNAL(serviceUnregistered(QString)), this, SLOT(on_daemonDisappeared(QString)));
     connect(mServiceWatcher, SIGNAL(serviceRegistered(QString)), this, SLOT(on_daemonAppeared(QString)));
-    mDaemonProxy = new org::lxqt::global_key_shortcuts::daemon("org.lxqt.global_key_shortcuts", "/daemon", QDBusConnection::sessionBus(), this);
+    mDaemonProxy = new org::lxqt::global_key_shortcuts::daemon(QLatin1String("org.lxqt.global_key_shortcuts"), QStringLiteral("/daemon"), QDBusConnection::sessionBus(), this);
 
     connect(mDaemonProxy, SIGNAL(actionAdded(qulonglong)), this, SLOT(on_actionAdded(qulonglong)));
     connect(mDaemonProxy, SIGNAL(actionEnabled(qulonglong, bool)), this, SLOT(on_actionEnabled(qulonglong, bool)));
@@ -82,7 +82,7 @@ void Actions::init()
     GeneralActionInfos::const_iterator M = mGeneralActionInfo.constEnd();
     for (GeneralActionInfos::const_iterator I = mGeneralActionInfo.constBegin(); I != M; ++I)
     {
-        if (I.value().type == "client")
+        if (I.value().type == QLatin1String("client"))
         {
             QString shortcut;
             QString description;
@@ -100,7 +100,7 @@ void Actions::init()
                 updateClientActionSender(I.key());
             }
         }
-        else if (I.value().type == "method")
+        else if (I.value().type == QLatin1String("method"))
         {
             QString shortcut;
             QString description;
@@ -122,7 +122,7 @@ void Actions::init()
                 mMethodActionInfo[I.key()] = info;
             }
         }
-        else if (I.value().type == "command")
+        else if (I.value().type == QLatin1String("command"))
         {
             QString shortcut;
             QString description;
@@ -237,7 +237,7 @@ void Actions::do_actionAdded(qulonglong id)
         mGeneralActionInfo[id] = generalActionInfo;
     }
 
-    if (type == "client")
+    if (type == QLatin1String("client"))
     {
         QDBusObjectPath path;
         if (getClientActionInfoById(id, shortcut, description, enabled, path))
@@ -250,7 +250,7 @@ void Actions::do_actionAdded(qulonglong id)
             mClientActionInfo[id] = clientActionInfo;
         }
     }
-    else if (type == "method")
+    else if (type == QLatin1String("method"))
     {
         QString service;
         QDBusObjectPath path;
@@ -269,7 +269,7 @@ void Actions::do_actionAdded(qulonglong id)
             mMethodActionInfo[id] = methodActionInfo;
         }
     }
-    else if (type == "command")
+    else if (type == QLatin1String("command"))
     {
         QString command;
         QStringList arguments;
@@ -299,7 +299,7 @@ void Actions::on_actionEnabled(qulonglong id, bool enabled)
     {
         GI.value().enabled = enabled;
 
-        if (GI.value().type == "client")
+        if (GI.value().type == QLatin1String("client"))
         {
             ClientActionInfos::iterator DI = mClientActionInfo.find(id);
             if (DI != mClientActionInfo.end())
@@ -307,7 +307,7 @@ void Actions::on_actionEnabled(qulonglong id, bool enabled)
                 DI.value().enabled = enabled;
             }
         }
-        else if (GI.value().type == "method")
+        else if (GI.value().type == QLatin1String("method"))
         {
             MethodActionInfos::iterator MI = mMethodActionInfo.find(id);
             if (MI != mMethodActionInfo.end())
@@ -315,7 +315,7 @@ void Actions::on_actionEnabled(qulonglong id, bool enabled)
                 MI.value().enabled = enabled;
             }
         }
-        else if (GI.value().type == "command")
+        else if (GI.value().type == QLatin1String("command"))
         {
             CommandActionInfos::iterator CI = mCommandActionInfo.find(id);
             if (CI != mCommandActionInfo.end())
@@ -355,7 +355,7 @@ void Actions::on_actionsSwapped(qulonglong id1, qulonglong id2)
 
         if (GI1.value().type == GI2.value().type)
         {
-            if (GI1.value().type == "client")
+            if (GI1.value().type == QLatin1String("client"))
             {
                 ClientActionInfos::iterator DI1 = mClientActionInfo.find(id1);
                 ClientActionInfos::iterator DI2 = mClientActionInfo.find(id2);
@@ -367,7 +367,7 @@ void Actions::on_actionsSwapped(qulonglong id1, qulonglong id2)
                     swapped = true;
                 }
             }
-            else if (GI1.value().type == "method")
+            else if (GI1.value().type == QLatin1String("method"))
             {
                 MethodActionInfos::iterator MI1 = mMethodActionInfo.find(id1);
                 MethodActionInfos::iterator MI2 = mMethodActionInfo.find(id2);
@@ -379,7 +379,7 @@ void Actions::on_actionsSwapped(qulonglong id1, qulonglong id2)
                     swapped = true;
                 }
             }
-            else if (GI1.value().type == "command")
+            else if (GI1.value().type == QLatin1String("command"))
             {
                 CommandActionInfos::iterator CI1 = mCommandActionInfo.find(id1);
                 CommandActionInfos::iterator CI2 = mCommandActionInfo.find(id2);

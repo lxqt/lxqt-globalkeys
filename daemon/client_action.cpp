@@ -75,7 +75,7 @@ void ClientAction::appeared(const QDBusConnection &connection, const QString &se
         return;
     }
     mService = service;
-    mProxy = new ClientProxy(mService, QDBusObjectPath("/global_key_shortcuts" + mPath.path()), connection);
+    mProxy = new ClientProxy(mService, QDBusObjectPath(QStringLiteral("/global_key_shortcuts") + mPath.path()), connection);
 }
 
 void ClientAction::disappeared()

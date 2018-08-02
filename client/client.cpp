@@ -39,12 +39,12 @@ namespace GlobalKeyShortcut
 ClientImpl::ClientImpl(Client *interface, QObject *parent)
     : QObject(parent)
     , mInterface(interface)
-    , mServiceWatcher(new QDBusServiceWatcher("org.lxqt.global_key_shortcuts", QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, this))
+    , mServiceWatcher(new QDBusServiceWatcher(QLatin1String("org.lxqt.global_key_shortcuts"), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, this))
     , mDaemonPresent(false)
 {
     connect(mServiceWatcher, SIGNAL(serviceUnregistered(QString)), this, SLOT(daemonDisappeared(QString)));
     connect(mServiceWatcher, SIGNAL(serviceRegistered(QString)), this, SLOT(daemonAppeared(QString)));
-    mProxy = new org::lxqt::global_key_shortcuts::native("org.lxqt.global_key_shortcuts", "/native", QDBusConnection::sessionBus(), this);
+    mProxy = new org::lxqt::global_key_shortcuts::native(QLatin1String("org.lxqt.global_key_shortcuts"), QStringLiteral("/native"), QDBusConnection::sessionBus(), this);
     mDaemonPresent = mProxy->isValid();
 
     connect(this, SIGNAL(emitShortcutGrabbed(QString)), mInterface, SIGNAL(shortcutGrabbed(QString)));
@@ -61,7 +61,7 @@ ClientImpl::~ClientImpl()
     QMap<QString, Action*>::iterator M = mActions.end();
     for (QMap<QString, Action*>::iterator I = mActions.begin(); I != M; ++I)
     {
-        QDBusConnection::sessionBus().unregisterObject(QString("/global_key_shortcuts") + I.key());
+        QDBusConnection::sessionBus().unregisterObject(QLatin1String("/global_key_shortcuts") + I.key());
 
         delete I.value();
     }
@@ -123,7 +123,7 @@ void ClientImpl::registrationFinished(QDBusPendingCallWatcher *watcher)
 
 Action *ClientImpl::addClientAction(const QString &shortcut, const QString &path, const QString &description, QObject *parent)
 {
-    if (!QRegExp("(/[A-Za-z0-9_]+){2,}").exactMatch(path))
+    if (!QRegExp(QStringLiteral("(/[A-Za-z0-9_]+){2,}")).exactMatch(path))
     {
         return 0;
     }
@@ -138,7 +138,7 @@ Action *ClientImpl::addClientAction(const QString &shortcut, const QString &path
     ActionImpl *globalActionImpl = new ActionImpl(this, globalAction, path, description, globalAction);
     globalAction->impl = globalActionImpl;
 
-    if (!QDBusConnection::sessionBus().registerObject(QString("/global_key_shortcuts") + path, globalActionImpl))
+    if (!QDBusConnection::sessionBus().registerObject(QLatin1String("/global_key_shortcuts") + path, globalActionImpl))
     {
         return 0;
     }
@@ -212,7 +212,7 @@ bool ClientImpl::removeClientAction(const QString &path)
         return false;
     }
 
-    QDBusConnection::sessionBus().unregisterObject(QString("/global_key_shortcuts") + path);
+    QDBusConnection::sessionBus().unregisterObject(QLatin1String("/global_key_shortcuts") + path);
 
     mActions[path]->disconnect();
     mActions.remove(path);
@@ -246,7 +246,7 @@ void ClientImpl::removeAction(ActionImpl *actionImpl)
     QDBusPendingReply<bool> reply = mProxy->deactivateClientAction(QDBusObjectPath(path));
     reply.waitForFinished();
 
-    QDBusConnection::sessionBus().unregisterObject(QString("/global_key_shortcuts") + path);
+    QDBusConnection::sessionBus().unregisterObject(QLatin1String("/global_key_shortcuts") + path);
 
     mActions[path]->disconnect();
     mActions.remove(path);

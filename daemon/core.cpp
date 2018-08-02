@@ -411,7 +411,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     initBothPipeEnds(mX11RequestPipe);
     initBothPipeEnds(mX11ResponsePipe);
 
-    mConfigFile = QString(getenv("HOME")) + QStringLiteral("/.config/global_key_shortcutss.ini");
+    mConfigFile = QFile::decodeName(qgetenv("HOME")) + QStringLiteral("/.config/global_key_shortcutss.ini");
 
     try
     {
@@ -423,7 +423,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
         lxqtApp->listenToUnixSignals(QList<int>() << SIGTERM << SIGINT);
 
 
-        if (!QDBusConnection::sessionBus().registerService("org.lxqt.global_key_shortcuts"))
+        if (!QDBusConnection::sessionBus().registerService(QStringLiteral("org.lxqt.global_key_shortcuts")))
         {
             throw std::runtime_error(std::string("Cannot register service 'org.lxqt.global_key_shortcuts'"));
         }
@@ -737,36 +737,36 @@ void Core::saveConfig()
     switch (mMultipleActionsBehaviour)
     {
     case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
-        settings.setValue(/* General/ */"MultipleActionsBehaviour", firstStr);
+        settings.setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), firstStr);
         break;
 
     case MULTIPLE_ACTIONS_BEHAVIOUR_LAST:
-        settings.setValue(/* General/ */"MultipleActionsBehaviour", lastStr);
+        settings.setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), lastStr);
         break;
 
     case MULTIPLE_ACTIONS_BEHAVIOUR_ALL:
-        settings.setValue(/* General/ */"MultipleActionsBehaviour", allStr);
+        settings.setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), allStr);
         break;
 
     case MULTIPLE_ACTIONS_BEHAVIOUR_NONE:
-        settings.setValue(/* General/ */"MultipleActionsBehaviour", noneStr);
+        settings.setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), noneStr);
         break;
 
     default:
         ;
     }
 
-    settings.setValue(/* General/ */"AllowGrabLocks",       mAllowGrabLocks);
-    settings.setValue(/* General/ */"AllowGrabBaseSpecial", mAllowGrabBaseSpecial);
-    settings.setValue(/* General/ */"AllowGrabMiscSpecial", mAllowGrabMiscSpecial);
-    settings.setValue(/* General/ */"AllowGrabBaseKeypad",  mAllowGrabBaseKeypad);
-    settings.setValue(/* General/ */"AllowGrabMiscKeypad",  mAllowGrabMiscKeypad);
+    settings.setValue(/* General/ */QLatin1String("AllowGrabLocks"),       mAllowGrabLocks);
+    settings.setValue(/* General/ */QLatin1String("AllowGrabBaseSpecial"), mAllowGrabBaseSpecial);
+    settings.setValue(/* General/ */QLatin1String("AllowGrabMiscSpecial"), mAllowGrabMiscSpecial);
+    settings.setValue(/* General/ */QLatin1String("AllowGrabBaseKeypad"),  mAllowGrabBaseKeypad);
+    settings.setValue(/* General/ */QLatin1String("AllowGrabMiscKeypad"),  mAllowGrabMiscKeypad);
 
     ShortcutAndActionById::const_iterator lastShortcutAndActionById = mShortcutAndActionById.constEnd();
     for (ShortcutAndActionById::const_iterator shortcutAndActionById = mShortcutAndActionById.constBegin(); shortcutAndActionById != lastShortcutAndActionById; ++shortcutAndActionById)
     {
         const BaseAction *action = shortcutAndActionById.value().second;
-        QString section = shortcutAndActionById.value().first + "." + QString::number(shortcutAndActionById.key());
+        QString section = shortcutAndActionById.value().first + QLatin1Char('.') + QString::number(shortcutAndActionById.key());
 
         settings.beginGroup(section);
 
@@ -1141,8 +1141,8 @@ void Core::run()
         allModifiers.insert(ignoreLocks);
     }
 
-    const QString metaLeft = XKeysymToString(XK_Super_L);
-    const QString metaRight = XKeysymToString(XK_Super_R);
+    const QString metaLeft = QString::fromUtf8(XKeysymToString(XK_Super_L));
+    const QString metaRight = QString::fromUtf8(XKeysymToString(XK_Super_R));
 
     char signal = 0;
     if (write(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)) == sizeof(signal))
@@ -1227,7 +1227,7 @@ void Core::run()
 
                                             if ((event.xkey.state & allShifts) == MetaMask)
                                             {
-                                                shortcut = XKeysymToString(keySym);
+                                                shortcut = QString::fromUtf8(XKeysymToString(keySym));
                                                 event.xkey.state &= ~allShifts; // Modifier keys must not use shift states.
                                             }
                                             else
@@ -1248,30 +1248,30 @@ void Core::run()
                                         {
                                             if (event.xkey.state & ShiftMask)
                                             {
-                                                shortcut += "Shift+";
+                                                shortcut += QLatin1String("Shift+");
                                             }
                                             if (event.xkey.state & ControlMask)
                                             {
-                                                shortcut += "Control+";
+                                                shortcut += QLatin1String("Control+");
                                             }
                                             if (event.xkey.state & AltMask)
                                             {
-                                                shortcut += "Alt+";
+                                                shortcut += QLatin1String("Alt+");
                                             }
                                             if (event.xkey.state & MetaMask)
                                             {
-                                                shortcut += "Meta+";
+                                                shortcut += QLatin1String("Meta+");
                                             }
                                             if (event.xkey.state & Level3Mask)
                                             {
-                                                shortcut += "Level3+";
+                                                shortcut += QLatin1String("Level3+");
                                             }
                                             if (event.xkey.state & Level5Mask)
                                             {
-                                                shortcut += "Level5+";
+                                                shortcut += QLatin1String("Level5+");
                                             }
 
-                                            shortcut += str;
+                                            shortcut += QString::fromUtf8(str);
                                         }
                                     }
                                 }
@@ -1891,7 +1891,7 @@ QString Core::remoteKeycodeToString(KeyCode keyCode)
             qApp->quit();
             return QString();
         }
-        result = str.data();
+        result = QString::fromUtf8(str.data());
     }
 
     return result;
@@ -1995,32 +1995,32 @@ Core::X11Shortcut Core::ShortcutToX11(const QString &shortcut)
 {
     X11Shortcut result(0, 0);
 
-    QStringList parts = shortcut.split('+');
+    QStringList parts = shortcut.split(QLatin1Char('+'));
 
     size_t m = parts.size();
     for (size_t i = 0; i < m - 1; ++i)
     {
-        if (parts[i] == "Shift")
+        if (parts[i] == QLatin1String("Shift"))
         {
             result.second |= ShiftMask;
         }
-        else if (parts[i] == "Control")
+        else if (parts[i] == QLatin1String("Control"))
         {
             result.second |= ControlMask;
         }
-        else if (parts[i] == "Alt")
+        else if (parts[i] == QLatin1String("Alt"))
         {
             result.second |= AltMask;
         }
-        else if (parts[i] == "Meta")
+        else if (parts[i] == QLatin1String("Meta"))
         {
             result.second |= MetaMask;
         }
-        else if (parts[i] == "Level3")
+        else if (parts[i] == QLatin1String("Level3"))
         {
             result.second |= Level3Mask;
         }
-        else if (parts[i] == "Level5")
+        else if (parts[i] == QLatin1String("Level5"))
         {
             result.second |= Level5Mask;
         }
@@ -2049,27 +2049,27 @@ QString Core::X11ToShortcut(const X11Shortcut &X11shortcut)
 
     if (X11shortcut.second & ShiftMask)
     {
-        result += "Shift+";
+        result += QLatin1String("Shift+");
     }
     if (X11shortcut.second & ControlMask)
     {
-        result += "Control+";
+        result += QLatin1String("Control+");
     }
     if (X11shortcut.second & AltMask)
     {
-        result += "Alt+";
+        result += QLatin1String("Alt+");
     }
     if (X11shortcut.second & MetaMask)
     {
-        result += "Meta+";
+        result += QLatin1String("Meta+");
     }
     if (X11shortcut.second & Level3Mask)
     {
-        result += "Level3+";
+        result += QLatin1String("Level3+");
     }
     if (X11shortcut.second & Level5Mask)
     {
-        result += "Level5+";
+        result += QLatin1String("Level5+");
     }
 
     QString key = remoteKeycodeToString(X11shortcut.first);
@@ -2276,7 +2276,7 @@ qulonglong Core::registerMethodAction(const QString &shortcut, const QString &se
 
 void Core::addCommandAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
 {
-    log(LOG_INFO, "addCommandAction shortcut:'%s' command:'%s' arguments:'%s' description:'%s'", qPrintable(shortcut), qPrintable(command), qPrintable(joinToString(arguments, "", "' '", "")), qPrintable(description));
+    log(LOG_INFO, "addCommandAction shortcut:'%s' command:'%s' arguments:'%s' description:'%s'", qPrintable(shortcut), qPrintable(command), qPrintable(joinToString(arguments, QString(), QLatin1String("' '"), QString())), qPrintable(description));
 
     QMutexLocker lock(&mDataMutex);
 
@@ -2418,7 +2418,7 @@ void Core::modifyMethodAction(bool &result, const qulonglong &id, const QString 
 
 void Core::modifyCommandAction(bool &result, const qulonglong &id, const QString &command, const QStringList &arguments, const QString &description)
 {
-    log(LOG_INFO, "modifyCommandAction id:%llu command:'%s' arguments:'%s' description:'%s'", id, qPrintable(command), qPrintable(joinToString(arguments, "", "' '", "")), qPrintable(description));
+    log(LOG_INFO, "modifyCommandAction id:%llu command:'%s' arguments:'%s' description:'%s'", id, qPrintable(command), qPrintable(joinToString(arguments, QString(), QLatin1String("' '"), QString())), qPrintable(description));
 
     QMutexLocker lock(&mDataMutex);
 
@@ -3150,22 +3150,22 @@ GeneralActionInfo Core::actionInfo(const ShortcutAndAction &shortcutAndAction) c
     result.description = action->description();
     result.enabled = action->isEnabled();
 
-    result.type = action->type();
+    result.type = QString::fromLatin1(action->type());
 
-    if (result.type == ClientAction::id())
+    if (result.type == QLatin1String(ClientAction::id()))
     {
         const ClientAction *clientAction = dynamic_cast<const ClientAction *>(action);
         result.info = clientAction->path().path();
     }
-    else if (result.type == MethodAction::id())
+    else if (result.type == QLatin1String(MethodAction::id()))
     {
         const MethodAction *methodAction = dynamic_cast<const MethodAction *>(action);
-        result.info = methodAction->service() + " "
-                      + methodAction->path().path() + " "
-                      + methodAction->interface() + " "
+        result.info = methodAction->service() + QLatin1Char(' ')
+                      + methodAction->path().path() + QLatin1Char(' ')
+                      + methodAction->interface() + QLatin1Char(' ')
                       + methodAction->method();
     }
-    else if (result.type == CommandAction::id())
+    else if (result.type == QLatin1String(CommandAction::id()))
     {
         const CommandAction *commandAction = dynamic_cast<const CommandAction *>(action);
         result.info = joinCommandLine(commandAction->command(), commandAction->args());
@@ -3414,7 +3414,7 @@ void Core::shortcutGrabbed()
                 qApp->quit();
                 return;
             }
-            shortcut = str.data();
+            shortcut = QString::fromUtf8(str.data());
         }
     }
 

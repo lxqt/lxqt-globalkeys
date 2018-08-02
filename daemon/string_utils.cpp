@@ -45,14 +45,14 @@ QString joinCommandLine(const QString &command, QStringList arguments)
     for (int i = 0; i < m; ++i)
     {
         QString &item = arguments[i];
-        if (item.contains(QRegExp("[ \r\n\t\"']")))
+        if (item.contains(QRegExp(QStringLiteral("[ \r\n\t\"']"))))
         {
-            item.prepend("'").append("'");
+            item.prepend(QLatin1Char('\'')).append(QLatin1Char('\''));
         }
         else if (item.isEmpty())
         {
-            item = QString("''");
+            item = QString(QStringLiteral("''"));
         }
     }
-    return arguments.join(" ");
+    return arguments.join(QLatin1Char(' '));
 }

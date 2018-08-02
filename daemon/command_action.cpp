@@ -53,7 +53,7 @@ bool CommandAction::call()
     bool result = QProcess::startDetached(mCommand, mArgs);
     if (!result)
     {
-        mLogTarget->log(LOG_WARNING, "Failed to launch command \"%s\"%s", qPrintable(mCommand), qPrintable(joinToString(mArgs, " \"", "\" \"", "\"")));
+        mLogTarget->log(LOG_WARNING, "Failed to launch command \"%s\"%s", qPrintable(mCommand), qPrintable(joinToString(mArgs, QStringLiteral(" \""), QStringLiteral("\" \""), QStringLiteral("\""))));
     }
 
     return result;
