@@ -5,7 +5,7 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-find_package(KF5WindowSystem REQUIRED QUIET)
+find_package(KF5WindowSystem REQUIRED)
 
 set(QT_DBUS_PREFIX "org.qtproject")
 
