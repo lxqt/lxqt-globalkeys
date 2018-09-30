@@ -132,12 +132,12 @@
     <message>
         <location filename="../main_window.ui" line="89"/>
         <source>Swap</source>
-        <translation type="unfinished">Trocar</translation>
+        <translation>Trocar</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation type="unfinished">Comportamento de múltiplas ações:</translation>
+        <translation>Múltiplas ações de comportamento:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="123"/>
