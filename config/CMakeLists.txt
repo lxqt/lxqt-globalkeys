@@ -1,10 +1,6 @@
 set(PROJECT_NAME lxqt-config-globalkeyshortcuts)
 project(${PROJECT_NAME})
 
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-endif()
-
 find_package(KF5WindowSystem REQUIRED)
 
 set(QT_DBUS_PREFIX "org.qtproject")

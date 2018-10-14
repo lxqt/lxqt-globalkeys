@@ -1,10 +1,6 @@
 set(PROJECT_NAME lxqt-globalkeysd)
 project(${PROJECT_NAME})
 
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-endif()
-
 find_package(X11)
 include_directories("${X11_INCLUDE_DIR}")
 
