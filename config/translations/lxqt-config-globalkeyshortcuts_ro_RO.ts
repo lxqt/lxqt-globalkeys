@@ -6,12 +6,12 @@
     <message>
         <location filename="../default_model.cpp" line="49"/>
         <source>Command</source>
-        <translation type="unfinished">Comandă</translation>
+        <translation>Comandă</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="50"/>
         <source>DBus call</source>
-        <translation type="unfinished"></translation>
+        <translation>Apel DBus</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="51"/>
@@ -31,7 +31,7 @@
     <message>
         <location filename="../default_model.cpp" line="147"/>
         <source>Description</source>
-        <translation type="unfinished">Descriere</translation>
+        <translation>Descriere</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="150"/>
