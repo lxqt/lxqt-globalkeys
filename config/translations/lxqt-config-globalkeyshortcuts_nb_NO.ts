@@ -6,17 +6,17 @@
     <message>
         <location filename="../default_model.cpp" line="49"/>
         <source>Command</source>
-        <translation></translation>
+        <translation>Kommando</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="50"/>
         <source>DBus call</source>
-        <translation></translation>
+        <translation>DBus-kommando</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="51"/>
         <source>Client</source>
-        <translation></translation>
+        <translation>Klient</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="141"/>
@@ -26,12 +26,12 @@
     <message>
         <location filename="../default_model.cpp" line="144"/>
         <source>Shortcut</source>
-        <translation></translation>
+        <translation>Snarevei</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="147"/>
         <source>Description</source>
-        <translation></translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="150"/>
@@ -49,32 +49,32 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation></translation>
+        <translation>Forandr handling</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation></translation>
+        <translation>&amp;Snarevei:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
         <source>&amp;Description:</source>
-        <translation></translation>
+        <translation>&amp;Beskrivelse:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation></translation>
+        <translation>&amp;Skrudd på</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation></translation>
+        <translation>&amp;Kommando</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation></translation>
+        <translation>&amp;DBus-beskjed</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
@@ -84,27 +84,27 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation></translation>
+        <translation>Ko&amp;mmando:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation></translation>
+        <translation>T&amp;jeneste:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation></translation>
+        <translation>&amp;Sti:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation></translation>
+        <translation>&amp;Grensesnitt:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
         <source>&amp;Method:</source>
-        <translation></translation>
+        <translation>&amp;Metode:</translation>
     </message>
 </context>
 <context>
@@ -112,57 +112,57 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation></translation>
+        <translation>Global handlingshåndterer</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="52"/>
         <source>Add ...</source>
-        <translation></translation>
+        <translation>Legg til ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="62"/>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Fjern</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="72"/>
         <source>Modify ...</source>
-        <translation></translation>
+        <translation>Forandr ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="89"/>
         <source>Swap</source>
-        <translation></translation>
+        <translation>Bytt ut</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation></translation>
+        <translation>Oppførsel ved flere handlinger:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="123"/>
         <source>First</source>
-        <translation></translation>
+        <translation>Første</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="128"/>
         <source>Last</source>
-        <translation></translation>
+        <translation>Siste</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="133"/>
         <source>None</source>
-        <translation></translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="138"/>
         <source>All</source>
-        <translation></translation>
+        <translation>Alle</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="176"/>
         <source>Close</source>
-        <translation></translation>
+        <translation>Lukk</translation>
     </message>
 </context>
 </TS>
