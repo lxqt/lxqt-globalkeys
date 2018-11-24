@@ -1,8 +1,6 @@
 set(PROJECT_NAME lxqt-config-globalkeyshortcuts)
 project(${PROJECT_NAME})
 
-find_package(KF5WindowSystem REQUIRED)
-
 set(QT_DBUS_PREFIX "org.qtproject")
 
 set(${PROJECT_NAME}_PATH_TO_DAEMON "${LXQT_GLOBALKEYS_SOURCE_DIR}/daemon")
