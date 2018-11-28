@@ -4,16 +4,15 @@ lxqt-globalkeys-0.14.0 / 2018-12-01
 
   * Bumped version to 0.14.0
   * Don't use automatic string conversions
-  * Deleted superfluous *cs_CZ.desktop files
-  
   * Improved cmake scripting
     - Set cmake_minimum_required to 3.1.0
-    - Use POLKIT_AGENT_LDFLAGS instead of use POLKIT_AGENT_LIBRARIES
     - Removed locale compile definitons
     - Remove QUIET from find_package
-  * Moved translations from lxqt-l10n back to lxqt-policykit
+  * Moved translations from lxqt-l10n back to lxqt-globalkeys
     - Removed obsolete translation fuctionality
     - Added translation promo in README.md
+  * Deleted superfluous *cs_CZ.desktop files
+  * Translation updates
 
 lxqt-globalkeys-0.13.0 / 2018-05-21
 ===================================
