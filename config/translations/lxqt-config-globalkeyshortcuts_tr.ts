@@ -64,7 +64,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation>&amp;Etkinleştir</translation>
+        <translation>&amp;Etkin</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
@@ -89,7 +89,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation>S&amp;evis:</translation>
+        <translation>S&amp;ervis:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
