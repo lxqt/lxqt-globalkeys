@@ -137,7 +137,7 @@
     <message>
         <location filename="../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation>Поведение нескольких действий:</translation>
+        <translation>При наличии нескольких действий выполнять:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="123"/>
@@ -152,7 +152,7 @@
     <message>
         <location filename="../main_window.ui" line="133"/>
         <source>None</source>
-        <translation>Не задано</translation>
+        <translation type="unfinished">Нет</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="138"/>
