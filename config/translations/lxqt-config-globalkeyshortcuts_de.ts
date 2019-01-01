@@ -26,7 +26,7 @@
     <message>
         <location filename="../default_model.cpp" line="144"/>
         <source>Shortcut</source>
-        <translation>Kurzbefehl</translation>
+        <translation>Tastenkürzel</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="147"/>
@@ -41,7 +41,7 @@
     <message>
         <location filename="../default_model.cpp" line="153"/>
         <source>Info</source>
-        <translation>Information</translation>
+        <translation>Info</translation>
     </message>
 </context>
 <context>
@@ -49,12 +49,12 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation>Befehl bearbeiten</translation>
+        <translation>Aktion bearbeiten</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation>&amp;Kurzbefehl:</translation>
+        <translation>Ta&amp;stenkürzel:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
@@ -69,12 +69,12 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation>B&amp;efehl</translation>
+        <translation>&amp;Befehl</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation>&amp;DBus-Nachricht</translation>
+        <translation>&amp;DBus-Meldung</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
@@ -89,7 +89,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation>Ser&amp;vice:</translation>
+        <translation>Di&amp;enst:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
@@ -100,7 +100,7 @@
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
         <translatorcomment>&amp;Schnittstelle:</translatorcomment>
-        <translation>&amp;Interface:</translation>
+        <translation>Schn&amp;ittstelle:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
@@ -113,7 +113,7 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation>Globaler Aktionsmanager</translation>
+        <translation>Globale Aktionsverwaltung</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="52"/>
