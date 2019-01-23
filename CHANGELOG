@@ -1,5 +1,5 @@
 
-lxqt-globalkeys-0.14.0 / 2018-12-01
+lxqt-globalkeys-0.14.0 / 2019-01-25
 ===================================
 
   * Bumped version to 0.14.0
@@ -34,8 +34,8 @@ lxqt-globalkeys-0.13.0 / 2018-05-21
   * cmake: Handle CMP0071
   * Fixes wrong radio buttons when changing shortcuts
 
-0.12.0 / 2017-10-21
-===================
+lxqt-globalkeys-0.12.0 / 2017-10-21
+===================================
 
   * Release 0.12.0: Update changelog
   * Set patch version
@@ -76,8 +76,8 @@ lxqt-globalkeys-0.13.0 / 2018-05-21
   * Fix file paths, replacing razor with lxqt. * Remove Alt+F2 and Ctrl+Esc from openbox config file to avoid conflicts with lxqt-panel & lxqt-globalkeys.
   * Add default configuration files for lxde-qt session.
 
-0.11.1 / 2017-01-01
-===================
+lxqt-globalkeys-0.11.1 / 2017-01-01
+===================================
 
   * Release 0.11.1: Update changelog
   * Added *da.desktop
@@ -86,8 +86,8 @@ lxqt-globalkeys-0.13.0 / 2018-05-21
   * Create lxqt-config-globalkeyshortcuts_fr.desktop
   * Remove cpack (#41)
 
-0.11.0 / 2016-09-24
-===================
+lxqt-globalkeys-0.11.0 / 2016-09-24
+===================================
 
   * Release 0.11.0: Add changelog
   * Add README.md
@@ -112,8 +112,8 @@ lxqt-globalkeys-0.13.0 / 2018-05-21
   * upd: lxqt-config-globalkeyshortcuts_hu.ts
   * Fix warning
 
-0.10.0 / 2015-10-31
-===================
+lxqt-globalkeys-0.10.0 / 2015-10-31
+===================================
 
   * Fix license file
   * Update translations
@@ -158,8 +158,8 @@ lxqt-globalkeys-0.13.0 / 2018-05-21
   * Use ~ instead of / as working dir. Fixes lxde/lxqt#521
   * Make DBus calls to addClientAction async
 
-0.9.0 / 2015-01-07
-==================
+lxqt-globalkeys-0.9.0 / 2015-01-07
+==================================
 
   * Portuguese update
   * - Unify naming for a unique lxqt. No more suffixes
@@ -170,8 +170,8 @@ lxqt-globalkeys-0.13.0 / 2018-05-21
   * Drop Qt4 support in code
   * Clean up CMakeLists.txt and drop Qt 4 support
 
-0.8.0 / 2014-10-10
-==================
+lxqt-globalkeys-0.8.0 / 2014-10-10
+==================================
 
   * Adapt to the translation infrastructure
   * - Fix Greek translation to conform with desktopfile validation
@@ -185,13 +185,13 @@ lxqt-globalkeys-0.13.0 / 2018-05-21
   * Use new LXQt header files.
   * Improve FreeBSD support
 
-0.7.0 / 2014-05-07
-==================
+lxqt-globalkeys-0.7.0 / 2014-05-07
+==================================
 
   * Update COPYING
 
-0.6.99 / 2014-04-30
-===================
+lxqt-globalkeys-0.6.99 / 2014-04-30
+===================================
 
   * remove old translation templates remove translated icon names
   * Add #include <libgen.h> for using basename(). Add typedef for error_t if it's not defined.
