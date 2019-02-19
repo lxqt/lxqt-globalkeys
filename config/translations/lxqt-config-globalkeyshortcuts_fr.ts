@@ -153,7 +153,7 @@
     <message>
         <location filename="../main_window.ui" line="133"/>
         <source>None</source>
-        <translation>Aucune</translation>
+        <translation>Aucun</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="138"/>
