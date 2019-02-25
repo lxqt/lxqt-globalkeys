@@ -74,17 +74,17 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation>Message D&amp;Bus</translation>
+        <translation>Message &amp;DBus</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
         <source>Type:</source>
-        <translation>Type :</translation>
+        <translation>Type(s) :</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation>C&amp;ommande :</translation>
+        <translation>Co&amp;mmande :</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation>Chemi&amp;n :</translation>
+        <translation>&amp;Chemin :</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
