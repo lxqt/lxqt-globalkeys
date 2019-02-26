@@ -79,7 +79,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
         <source>Type:</source>
-        <translation>Type(s) :</translation>
+        <translation>Type :</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
