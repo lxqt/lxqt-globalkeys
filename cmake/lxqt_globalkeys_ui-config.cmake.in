@@ -16,9 +16,9 @@ endif()
 
 include(CMakeFindDependencyMacro)
 
+find_dependency(@LXQT_GLOBALKEYS_LIBRARY_NAME@ @LXQT_GLOBALKEYS_VERSION@)
 find_dependency(Qt5Widgets)
 find_dependency(Qt5DBus)
-find_dependency(@LXQT_GLOBALKEYS_LIBRARY_NAME@)
 
 if (NOT TARGET @LXQT_GLOBALKEYS_UI_LIBRARY_NAME@)
     if (POLICY CMP0024)
