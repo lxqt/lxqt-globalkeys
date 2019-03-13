@@ -102,7 +102,7 @@ void MainWindow::daemonAppeared()
 
     actions_TV->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
 
-    int m = actions_TV->model()->columnCount() - 1;
+    int m = actions_TV->model()->columnCount();
     for (int i = 0; i < m; ++i)
     {
         actions_TV->resizeColumnToContents(i);
