@@ -731,8 +731,9 @@ void Core::saveConfig()
     }
 
     QSettings settings(mConfigFile, QSettings::IniFormat);
-
+    QVariant windowSize = settings.value(QStringLiteral("WindowSize"));
     settings.clear();
+    settings.setValue(QStringLiteral("WindowSize"), windowSize);
 
     switch (mMultipleActionsBehaviour)
     {
