@@ -32,6 +32,7 @@
 
 #include <QItemSelectionModel>
 #include <QSortFilterProxyModel>
+#include <QSettings>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -70,6 +71,18 @@ MainWindow::MainWindow(QWidget *parent)
     connect(mActions, SIGNAL(daemonDisappeared()), SLOT(daemonDisappeared()));
     connect(mActions, SIGNAL(daemonAppeared()), SLOT(daemonAppeared()));
     connect(mActions, SIGNAL(multipleActionsBehaviourChanged(MultipleActionsBehaviour)), SLOT(multipleActionsBehaviourChanged(MultipleActionsBehaviour)));
+
+    // restore/remember win size
+    // FIXME: Change the code structure so that the config file can be obtained from one place.
+    QSettings *config = new QSettings(QStringLiteral("lxqt"), QStringLiteral("globalkeyshortcuts"), this);
+    QSize windowSize = config->value(QStringLiteral("WindowSize"), size()).toSize();
+    if (windowSize.isValid())
+        resize(windowSize);
+    connect(this, &QDialog::finished, [this, config]()
+    {
+        if (config->value(QStringLiteral("WindowSize")) != size())
+            config->setValue(QStringLiteral("WindowSize"), size());
+    });
 }
 
 void MainWindow::changeEvent(QEvent *e)
