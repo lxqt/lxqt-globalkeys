@@ -28,8 +28,8 @@
 #ifndef GLOBAL_ACTION_DAEMON__PIPE_UTILS__INCLUDED
 #define GLOBAL_ACTION_DAEMON__PIPE_UTILS__INCLUDED
 
-#include <stddef.h>
-#include <errno.h>
+#include <cstddef>
+#include <cerrno>
 
 #ifndef __error_t_defined
 // FIXME: error_t seems to be GNU specific?

@@ -34,13 +34,13 @@
 #include "meta_types.h"
 #include "core.h"
 
-#include <errno.h>
+#include <cerrno>
 #include <getopt.h>
-#include <string.h>
+#include <cstring>
 #include <unistd.h>
-#include <stdio.h>
+#include <cstdio>
 #include <syslog.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <libgen.h> // for basename()
 
 #define DEFAULT_CONFIG ".config/lxqt/globalkeyshortcuts.conf"
