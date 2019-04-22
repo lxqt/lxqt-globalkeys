@@ -62,7 +62,7 @@ class ClientImpl : public QObject
 
 public:
     ClientImpl(Client *interface, QObject *parent = nullptr);
-    ~ClientImpl();
+    ~ClientImpl() override;
 
     Action *addClientAction(const QString &shortcut, const QString &path, const QString &description, QObject *parent);
 

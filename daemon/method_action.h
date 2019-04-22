@@ -44,9 +44,9 @@ public:
 
     static const char *id() { return "method"; }
 
-    virtual const char *type() const { return id(); }
+    const char *type() const override { return id(); }
 
-    virtual bool call();
+    bool call() override;
 
     QString service() const { return mService; }
 

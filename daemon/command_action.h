@@ -42,9 +42,9 @@ public:
 
     static const char *id() { return "command"; }
 
-    virtual const char *type() const { return id(); }
+    const char *type() const override { return id(); }
 
-    virtual bool call();
+    bool call() override;
 
     QString command() const { return mCommand; }
 

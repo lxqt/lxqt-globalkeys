@@ -43,13 +43,13 @@ class ClientAction : public BaseAction
 public:
     ClientAction(LogTarget *logTarget, const QDBusObjectPath &path, const QString &description);
     ClientAction(LogTarget *logTarget, const QDBusConnection &connection, const QString &service, const QDBusObjectPath &path, const QString &description);
-    ~ClientAction();
+    ~ClientAction() override;
 
     static const char *id() { return "client"; }
 
-    virtual const char *type() const { return id(); }
+    const char *type() const override { return id(); }
 
-    virtual bool call();
+    bool call() override;
 
     void shortcutChanged(const QString &oldShortcut, const QString &newShortcut);
 

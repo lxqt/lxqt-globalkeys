@@ -50,7 +50,7 @@ class SHARED_EXPORT Client : public QObject
 
 public:
     static Client *instance();
-    ~Client();
+    ~Client() override;
 
     Action *addAction(const QString &shortcut, const QString &path, const QString &description, QObject *parent = nullptr);
     bool removeAction(const QString &path);

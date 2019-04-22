@@ -53,7 +53,7 @@ public slots:
     void multipleActionsBehaviourChanged(MultipleActionsBehaviour behaviour);
 
 protected:
-    void changeEvent(QEvent *e);
+    void changeEvent(QEvent *e) override;
 
 protected slots:
     void selectionChanged(const QItemSelection &, const QItemSelection &);

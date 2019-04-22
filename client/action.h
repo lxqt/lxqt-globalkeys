@@ -52,7 +52,7 @@ class SHARED_EXPORT Action : public QObject
     friend class ClientImpl;
 
 public:
-    ~Action();
+    ~Action() override;
 
     QString changeShortcut(const QString &shortcut);
     bool changeDescription(const QString &description);
