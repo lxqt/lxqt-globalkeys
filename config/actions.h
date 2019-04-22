@@ -60,7 +60,7 @@ class Actions : public QObject
     Q_OBJECT
 public:
     Actions(QObject *parent = nullptr);
-    ~Actions();
+    ~Actions() override;
 
 
     QList<qulonglong> allActionIds() const;

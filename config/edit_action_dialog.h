@@ -51,7 +51,7 @@ protected slots:
     void on_dbus_method_RB_clicked(bool);
 
 protected:
-    void changeEvent(QEvent *e);
+    void changeEvent(QEvent *e) override;
 
 private:
     Actions *mActions;

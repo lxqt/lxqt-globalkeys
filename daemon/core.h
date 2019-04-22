@@ -74,11 +74,11 @@ class Core : public QThread, public LogTarget
     Q_OBJECT
 public:
     Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringList &configFiles, bool multipleActionsBehaviourSet, MultipleActionsBehaviour multipleActionsBehaviour, QObject *parent = nullptr);
-    ~Core();
+    ~Core() override;
 
     bool ready() const { return mReady; }
 
-    virtual void log(int level, const char *format, ...) const;
+    void log(int level, const char *format, ...) const override;
 
 signals:
     void onShortcutGrabbed();
@@ -168,7 +168,7 @@ private:
 
     void wakeX11Thread();
 
-    void run();
+    void run() override;
 
     KeyCode remoteStringToKeycode(const QString &str);
     QString remoteKeycodeToString(KeyCode keyCode);

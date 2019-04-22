@@ -46,7 +46,7 @@ class ActionImpl : public QObject
 
 public:
     ActionImpl(ClientImpl *client, Action *interface, const QString &path, const QString &description, QObject *parent = nullptr);
-    ~ActionImpl();
+    ~ActionImpl() override;
 
     QString changeShortcut(const QString &shortcut);
     bool changeDescription(const QString &description);
