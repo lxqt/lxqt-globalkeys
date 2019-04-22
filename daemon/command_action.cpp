@@ -29,8 +29,8 @@
 
 #include <QProcess>
 
-#include <errno.h>
-#include <string.h>
+#include <cerrno>
+#include <cstring>
 
 #include "log_target.h"
 #include "string_utils.h"
