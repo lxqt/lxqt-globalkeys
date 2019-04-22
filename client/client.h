@@ -52,7 +52,7 @@ public:
     static Client *instance();
     ~Client();
 
-    Action *addAction(const QString &shortcut, const QString &path, const QString &description, QObject *parent = 0);
+    Action *addAction(const QString &shortcut, const QString &path, const QString &description, QObject *parent = nullptr);
     bool removeAction(const QString &path);
 
     bool isDaemonPresent() const;

@@ -125,12 +125,12 @@ Action *ClientImpl::addClientAction(const QString &shortcut, const QString &path
 {
     if (!QRegExp(QStringLiteral("(/[A-Za-z0-9_]+){2,}")).exactMatch(path))
     {
-        return 0;
+        return nullptr;
     }
 
     if (mActions.contains(path))
     {
-        return 0;
+        return nullptr;
     }
 
     Action *globalAction = new Action(parent);
@@ -140,7 +140,7 @@ Action *ClientImpl::addClientAction(const QString &shortcut, const QString &path
 
     if (!QDBusConnection::sessionBus().registerObject(QLatin1String("/global_key_shortcuts") + path, globalActionImpl))
     {
-        return 0;
+        return nullptr;
     }
 
     if (mDaemonPresent)
@@ -314,7 +314,7 @@ Client *Client::instance()
 }
 
 Client::Client()
-    : QObject(0)
+    : QObject(nullptr)
     , impl(new ClientImpl(this, this))
 {
 }

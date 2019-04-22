@@ -39,7 +39,7 @@ class NativeAdaptor : public QObject, protected QDBusContext
 {
     Q_OBJECT
 public:
-    NativeAdaptor(QObject *parent = 0);
+    NativeAdaptor(QObject *parent = nullptr);
 
     QString addClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, qulonglong &id);
     bool modifyClientAction(const QDBusObjectPath &path, const QString &description);

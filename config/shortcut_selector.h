@@ -40,8 +40,8 @@ class ShortcutSelector : public QToolButton
 {
     Q_OBJECT
 public:
-    explicit ShortcutSelector(Actions *actions, QWidget *parent = 0);
-    explicit ShortcutSelector(QWidget *parent = 0);
+    explicit ShortcutSelector(Actions *actions, QWidget *parent = nullptr);
+    explicit ShortcutSelector(QWidget *parent = nullptr);
     void setActions(Actions *actions);
 
     QAction *addMenuAction(const QString &title);

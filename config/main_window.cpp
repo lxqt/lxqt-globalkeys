@@ -37,7 +37,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QDialog(parent)
-    , mEditActionDialog(0)
+    , mEditActionDialog(nullptr)
 {
     setupUi(this);
 

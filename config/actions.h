@@ -59,7 +59,7 @@ class Actions : public QObject
 {
     Q_OBJECT
 public:
-    Actions(QObject *parent = 0);
+    Actions(QObject *parent = nullptr);
     ~Actions();
 
 

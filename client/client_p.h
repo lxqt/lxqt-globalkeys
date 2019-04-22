@@ -61,7 +61,7 @@ class ClientImpl : public QObject
     Q_OBJECT
 
 public:
-    ClientImpl(Client *interface, QObject *parent = 0);
+    ClientImpl(Client *interface, QObject *parent = nullptr);
     ~ClientImpl();
 
     Action *addClientAction(const QString &shortcut, const QString &path, const QString &description, QObject *parent);

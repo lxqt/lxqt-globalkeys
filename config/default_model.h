@@ -54,7 +54,7 @@ class DefaultModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit DefaultModel(Actions *actions, const QColor &grayedOutColour, const QFont &highlightedFont, const QFont &italicFont, const QFont &highlightedItalicFont, QObject *parent = 0);
+    explicit DefaultModel(Actions *actions, const QColor &grayedOutColour, const QFont &highlightedFont, const QFont &italicFont, const QFont &highlightedItalicFont, QObject *parent = nullptr);
     ~DefaultModel();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
