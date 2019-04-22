@@ -60,14 +60,14 @@ int main(int argc, char *argv[])
 
     static struct option longOptions[] =
     {
-        {"no-daemon", no_argument, 0, 'n'},
-        {"daemon", no_argument, 0, 'd'},
-        {"use-syslog", no_argument, 0, 's'},
-        {"log-level", required_argument, 0, 'l'},
-        {"multiple-actions-behaviour", required_argument, 0, 'm'},
-        {"config-file", required_argument, 0, 'f'},
-        {"help", no_argument, 0, 'h'},
-        {0, 0, 0, 0}
+        {"no-daemon", no_argument, nullptr, 'n'},
+        {"daemon", no_argument, nullptr, 'd'},
+        {"use-syslog", no_argument, nullptr, 's'},
+        {"log-level", required_argument, nullptr, 'l'},
+        {"multiple-actions-behaviour", required_argument, nullptr, 'm'},
+        {"config-file", required_argument, nullptr, 'f'},
+        {"help", no_argument, nullptr, 'h'},
+        {nullptr, 0, nullptr, 0}
     };
 
     for (;;)

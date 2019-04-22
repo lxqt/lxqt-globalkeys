@@ -43,7 +43,7 @@ class DaemonAdaptor : public QObject, protected QDBusContext
 {
     Q_OBJECT
 public:
-    DaemonAdaptor(QObject *parent = 0);
+    DaemonAdaptor(QObject *parent = nullptr);
 
 public slots:
     QString addMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description, qulonglong &id);

@@ -39,7 +39,7 @@ class EditActionDialog : public QDialog, private Ui::EditActionDialog
     Q_OBJECT
 
 public:
-    explicit EditActionDialog(Actions *actions, QWidget *parent = 0);
+    explicit EditActionDialog(Actions *actions, QWidget *parent = nullptr);
 
     bool load(qulonglong id);
 

@@ -34,7 +34,7 @@
 
 ShortcutSelector::ShortcutSelector(Actions *actions, QWidget *parent)
     : QToolButton(parent)
-    , mActions(0)
+    , mActions(nullptr)
     , mShortcutTimer(new QTimer(this))
     , mAutoApplyShortcut(false)
 {
@@ -44,7 +44,7 @@ ShortcutSelector::ShortcutSelector(Actions *actions, QWidget *parent)
 
 ShortcutSelector::ShortcutSelector(QWidget *parent)
     : QToolButton(parent)
-    , mActions(0)
+    , mActions(nullptr)
     , mShortcutTimer(new QTimer(this))
     , mAutoApplyShortcut(false)
 {

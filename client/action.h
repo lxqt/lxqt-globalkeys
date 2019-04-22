@@ -70,7 +70,7 @@ signals:
     void shortcutChanged(const QString &oldShortcut, const QString &newShortcut);
 
 private:
-    Action(QObject *parent = 0);
+    Action(QObject *parent = nullptr);
 
     ActionImpl *impl;
 };

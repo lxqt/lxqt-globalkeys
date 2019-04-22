@@ -133,7 +133,7 @@ void ActionImpl::shortcutChanged(const QString &oldShortcut, const QString &newS
 
 Action::Action(QObject *parent)
     : QObject(parent)
-    , impl(0)
+    , impl(nullptr)
 {
 }
 

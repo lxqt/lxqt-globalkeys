@@ -48,7 +48,7 @@ class SHARED_EXPORT ShortcutSelector : public QToolButton
 {
     Q_OBJECT
 public:
-    explicit ShortcutSelector(QWidget *parent = 0);
+    explicit ShortcutSelector(QWidget *parent = nullptr);
 
     QAction *addMenuAction(const QString &title);
 

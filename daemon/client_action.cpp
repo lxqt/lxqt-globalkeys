@@ -32,14 +32,14 @@
 
 ClientAction::ClientAction(LogTarget *logTarget, const QDBusObjectPath &path, const QString &description)
     : BaseAction(logTarget, description)
-    , mProxy(0)
+    , mProxy(nullptr)
     , mPath(path)
 {
 }
 
 ClientAction::ClientAction(LogTarget *logTarget, const QDBusConnection &connection, const QString &service, const QDBusObjectPath &path, const QString &description)
     : BaseAction(logTarget, description)
-    , mProxy(0)
+    , mProxy(nullptr)
     , mPath(path)
 {
     appeared(connection, service);
@@ -82,7 +82,7 @@ void ClientAction::disappeared()
 {
     mService.clear();
     delete mProxy;
-    mProxy = 0;
+    mProxy = nullptr;
 }
 
 void ClientAction::shortcutChanged(const QString &oldShortcut, const QString &newShortcut)

@@ -73,7 +73,7 @@ class Core : public QThread, public LogTarget
 {
     Q_OBJECT
 public:
-    Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringList &configFiles, bool multipleActionsBehaviourSet, MultipleActionsBehaviour multipleActionsBehaviour, QObject *parent = 0);
+    Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringList &configFiles, bool multipleActionsBehaviourSet, MultipleActionsBehaviour multipleActionsBehaviour, QObject *parent = nullptr);
     ~Core();
 
     bool ready() const { return mReady; }

@@ -69,7 +69,7 @@ enum
 };
 
 
-static Core *s_Core = 0;
+static Core *s_Core = nullptr;
 
 static const QLatin1String ExecKey("Exec");
 static const QLatin1String EnabledKey("Enabled");
@@ -381,11 +381,11 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     , mReady(false)
     , mUseSyslog(useSyslog)
     , mMinLogLevel(minLogLevel)
-    , mDisplay(0)
+    , mDisplay(nullptr)
     , mInterClientCommunicationWindow(0)
     , mServiceWatcher{new QDBusServiceWatcher{this}}
-    , mDaemonAdaptor(0)
-    , mNativeAdaptor(0)
+    , mDaemonAdaptor(nullptr)
+    , mNativeAdaptor(nullptr)
     , mLastId(0ull)
     , mGrabbingShortcut(false)
     , AltMask(Mod1Mask)
@@ -1114,7 +1114,7 @@ void Core::run()
 
     int (*oldx11ErrorHandler)(Display * display, XErrorEvent * errorEvent) = XSetErrorHandler(::x11ErrorHandler);
 
-    mDisplay = XOpenDisplay(NULL);
+    mDisplay = XOpenDisplay(nullptr);
     XSynchronize(mDisplay, True);
 
     lockX11Error();
@@ -1528,7 +1528,7 @@ void Core::run()
                             lockX11Error();
                             KeySym *keySyms = XGetKeyboardMapping(mDisplay, keyCode, 1, &keysymsPerKeycode);
                             x11Error = checkX11Error();
-                            char *str = NULL;
+                            char *str = nullptr;
 
                             if (!x11Error)
                             {

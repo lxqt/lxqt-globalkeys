@@ -43,7 +43,7 @@ class ClientProxy : public QObject
     friend class ClientAction;
 
 public:
-    ClientProxy(const QString &service, const QDBusObjectPath &path, const QDBusConnection &connection, QObject *parent = 0);
+    ClientProxy(const QString &service, const QDBusObjectPath &path, const QDBusConnection &connection, QObject *parent = nullptr);
 
 signals:
     void activated();

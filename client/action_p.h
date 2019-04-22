@@ -45,7 +45,7 @@ class ActionImpl : public QObject
     Q_OBJECT
 
 public:
-    ActionImpl(ClientImpl *client, Action *interface, const QString &path, const QString &description, QObject *parent = 0);
+    ActionImpl(ClientImpl *client, Action *interface, const QString &path, const QString &description, QObject *parent = nullptr);
     ~ActionImpl();
 
     QString changeShortcut(const QString &shortcut);
