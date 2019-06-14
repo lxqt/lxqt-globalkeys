@@ -112,7 +112,7 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ショートカットキー(Global Actions Manager)</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="52"/>
@@ -137,7 +137,7 @@
     <message>
         <location filename="../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation type="unfinished"></translation>
+        <translation>複数設定されたアクションの動作方法:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="123"/>
