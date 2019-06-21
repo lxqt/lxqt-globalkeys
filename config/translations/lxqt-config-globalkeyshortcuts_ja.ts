@@ -112,7 +112,7 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation type="unfinished">ショートカットキー(Global Actions Manager)</translation>
+        <translation>グローバル・アクションの管理</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="52"/>
