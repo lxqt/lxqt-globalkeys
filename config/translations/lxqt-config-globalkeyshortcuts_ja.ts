@@ -21,7 +21,7 @@
     <message>
         <location filename="../default_model.cpp" line="141"/>
         <source>Id</source>
-        <translation>ld</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="144"/>
@@ -84,12 +84,12 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation>コマンド(&amp;m):</translation>
+        <translation>コマンド(&amp;M):</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation>サービス(&amp;e):</translation>
+        <translation>サービス(&amp;E):</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
