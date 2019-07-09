@@ -58,6 +58,7 @@ class NativeAdaptor;
 class DBusProxy;
 class BaseAction;
 class QDBusServiceWatcher;
+class QSettings;
 
 template<class Key>
 class QOrderedSet : public QMap<Key, Key>
@@ -242,7 +243,7 @@ private:
     bool mAllowGrabMiscKeypad;
     bool mAllowGrabPrintable;
 
-    QString mConfigFile;
+    QScopedPointer<QSettings> mSettings;
     bool mSaveAllowed;
 
     QTimer *mShortcutGrabTimeout;
