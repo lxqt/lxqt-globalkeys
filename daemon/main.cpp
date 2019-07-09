@@ -43,8 +43,6 @@
 #include <cstdlib>
 #include <libgen.h> // for basename()
 
-#define DEFAULT_CONFIG ".config/lxqt/globalkeyshortcuts.conf"
-
 
 int main(int argc, char *argv[])
 {
@@ -212,7 +210,7 @@ int main(int argc, char *argv[])
                "  --config-file=FILENAME\n"
                "      Use config file FILENAME. Can be used several times.\n"
                "      The last loaded file is used to save settings.\n"
-               "      Default is: ${HOME}/" DEFAULT_CONFIG "\n"
+               "      Default is: ${XDG_CONFIG_HOME}/lxqt/globalkeyshortcuts.conf\n"
                "\n"
                "  --help\n"
                "  -h\n"
@@ -234,13 +232,6 @@ int main(int argc, char *argv[])
     const char* home = getenv("HOME");
     int ignoreIt = chdir((home && *home) ? home : "/");
     (void)ignoreIt;
-
-    if (configFiles.empty() && home && *home)
-    {
-        if( ! QFile::exists(QString::fromLocal8Bit(home) + QLatin1Char('/') + QLatin1String(DEFAULT_CONFIG)) ) //Load default settings
-            configFiles.push_back(QStringLiteral("/etc/xdg/lxqt/globalkeyshortcuts.conf"));
-        configFiles.push_back(QString::fromLocal8Bit(home) + QLatin1Char('/') + QLatin1String(DEFAULT_CONFIG));
-    }
 
     LXQt::Application app(argc, argv);
 
