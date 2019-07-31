@@ -122,7 +122,7 @@
     <message>
         <location filename="../main_window.ui" line="62"/>
         <source>Remove</source>
-        <translation>削除</translation>
+        <translation>削除する</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="72"/>
@@ -132,32 +132,32 @@
     <message>
         <location filename="../main_window.ui" line="89"/>
         <source>Swap</source>
-        <translation>スワップ</translation>
+        <translation>入れ替える</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="115"/>
         <source>Multiple actions behaviour:</source>
-        <translation>複数設定されたアクションの動作方法:</translation>
+        <translation>複数設定されたアクションの動作:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="123"/>
         <source>First</source>
-        <translation>最初の</translation>
+        <translation>最初のみ実行</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="128"/>
         <source>Last</source>
-        <translation>最後の</translation>
+        <translation>最後のみ実行</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="133"/>
         <source>None</source>
-        <translation>なし</translation>
+        <translation>何もしない</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="138"/>
         <source>All</source>
-        <translation>全て</translation>
+        <translation>すべて実行</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="176"/>
