@@ -464,6 +464,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
 
         {
+            QStringList execList, interfaceList, pathList;
             // use regular XDG hierarchy (implemented by QSettings) if no config file given on command line
             auto config_file_i = configFiles.cbegin();
             if (config_file_i != configFiles.cend())
@@ -553,7 +554,12 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                         if (mSettings->contains(ExecKey))
                         {
                             QStringList values = mSettings->value(ExecKey).toStringList();
-                            id = registerCommandAction(shortcut, values[0], values.mid(1), description);
+                            QString str = shortcut + values.join(QString()) + description;
+                            if (!execList.contains(str)) // don't add the same shortcut
+                            {
+                                id = registerCommandAction(shortcut, values[0], values.mid(1), description);
+                                execList << str;
+                            }
                         }
                         else
                         {
@@ -576,13 +582,23 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                                         {
                                             QString method = iniValue;
 
-                                            id = registerMethodAction(shortcut, service, QDBusObjectPath(path), interface, method, description);
+                                            QString str = shortcut + service + path + interface + method + description;
+                                            if (!interfaceList.contains(str)) // don't add the same shortcut
+                                            {
+                                                id = registerMethodAction(shortcut, service, QDBusObjectPath(path), interface, method, description);
+                                                interfaceList << str;
+                                            }
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    id = registerClientAction(shortcut, QDBusObjectPath(path), description);
+                                    QString str = shortcut + path + description;
+                                    if (!pathList.contains(str)) // don't add the same shortcut
+                                    {
+                                        id = registerClientAction(shortcut, QDBusObjectPath(path), description);
+                                        pathList << str;
+                                    }
                                 }
                             }
                         }
