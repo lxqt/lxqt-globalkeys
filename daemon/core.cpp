@@ -29,6 +29,7 @@
 
 #include <QScopedArrayPointer>
 #include <QSettings>
+#include <QStandardPaths>
 #include <QTimer>
 #include <QDBusConnectionInterface>
 #include <QDBusServiceWatcher>
@@ -399,8 +400,6 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     , mAllowGrabBaseKeypad(true)
     , mAllowGrabMiscKeypad(true)
     , mAllowGrabPrintable(false)
-
-    , mSettings{new QSettings{QStringLiteral("lxqt"), QStringLiteral("globalkeyshortcuts")}}
     , mSaveAllowed(false)
 
     , mShortcutGrabTimeout(new QTimer(this))
@@ -464,20 +463,29 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
 
         {
+            bool allowGrabLocksSet = false, allowGrabBaseSpecialSet = false, allowGrabMiscSpecialSet = false, allowGrabBaseKeypadSet = false, allowGrabMiscKeypadSet = false;
             QStringList execList, interfaceList, pathList;
             // use regular XDG hierarchy (implemented by QSettings) if no config file given on command line
-            auto config_file_i = configFiles.cbegin();
-            if (config_file_i != configFiles.cend())
-                mSettings.reset(new QSettings{*config_file_i, QSettings::IniFormat});
-            for (bool finished = false; !finished; )
+            QStringList configs(configFiles);
+            if (configs.isEmpty())
             {
+                const auto locations = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
+                for (const auto &location : locations)
+                    configs << location + QLatin1String("/lxqt/globalkeyshortcuts.conf");
+            }
+            size_t fm = configs.size();
+            for (size_t fi = 0; fi < fm; ++fi)
+            {
+                QSettings settings(configs[fi], QSettings::IniFormat, this);
+
                 QString iniValue;
 
                 if (!minLogLevelSet)
                 {
-                    iniValue = mSettings->value(/* General/ */QStringLiteral("LogLevel")).toString();
+                    iniValue = settings.value(/* General/ */QStringLiteral("LogLevel")).toString();
                     if (!iniValue.isEmpty())
                     {
+                        minLogLevelSet = true;
                         if (iniValue == QLatin1String("error"))
                         {
                             mMinLogLevel = LOG_ERR;
@@ -498,14 +506,19 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                         {
                             mMinLogLevel = LOG_DEBUG;
                         }
+                        else
+                        {
+                            minLogLevelSet = false;
+                        }
                     }
                 }
 
                 if (!multipleActionsBehaviourSet)
                 {
-                    iniValue = mSettings->value(/* General/ */QStringLiteral("MultipleActionsBehaviour")).toString();
+                    iniValue = settings.value(/* General/ */QStringLiteral("MultipleActionsBehaviour")).toString();
                     if (!iniValue.isEmpty())
                     {
+                        multipleActionsBehaviourSet = true;
                         if (iniValue == firstStr)
                         {
                             mMultipleActionsBehaviour = MULTIPLE_ACTIONS_BEHAVIOUR_FIRST;
@@ -522,21 +535,66 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                         {
                             mMultipleActionsBehaviour = MULTIPLE_ACTIONS_BEHAVIOUR_NONE;
                         }
+                        else
+                        {
+                            multipleActionsBehaviourSet = false;
+                        }
                     }
                 }
 
-                mAllowGrabLocks = mSettings->value(/* General/ */QStringLiteral("AllowGrabLocks"), mAllowGrabLocks).toBool();
-                mAllowGrabBaseSpecial = mSettings->value(/* General/ */QStringLiteral("AllowGrabBaseSpecial"), mAllowGrabBaseSpecial).toBool();
-                mAllowGrabMiscSpecial = mSettings->value(/* General/ */QStringLiteral("AllowGrabMiscSpecial"), mAllowGrabMiscSpecial).toBool();
-                mAllowGrabBaseKeypad = mSettings->value(/* General/ */QStringLiteral("AllowGrabBaseKeypad"), mAllowGrabBaseKeypad).toBool();
-                mAllowGrabMiscKeypad = mSettings->value(/* General/ */QStringLiteral("AllowGrabMiscKeypad"), mAllowGrabMiscKeypad).toBool();
+                QVariant v;
+                if (!allowGrabLocksSet)
+                {
+                    v = settings.value(/* General/ */QStringLiteral("AllowGrabLocks"), mAllowGrabLocks);
+                    if (v.isValid())
+                    {
+                        mAllowGrabLocks = v.toBool();
+                        allowGrabLocksSet = true;
+                    }
+                }
+                if (!allowGrabBaseSpecialSet)
+                {
+                    v = settings.value(/* General/ */QStringLiteral("AllowGrabBaseSpecial"), mAllowGrabBaseSpecial);
+                    if (v.isValid())
+                    {
+                        mAllowGrabBaseSpecial = v.toBool();
+                        allowGrabBaseSpecialSet = true;
+                    }
+                }
+                if (!allowGrabMiscSpecialSet)
+                {
+                    v = settings.value(/* General/ */QStringLiteral("AllowGrabMiscSpecial"), mAllowGrabMiscSpecial);
+                    if (v.isValid())
+                    {
+                        mAllowGrabMiscSpecial = v.toBool();
+                        allowGrabMiscSpecialSet = true;
+                    }
+                }
+                if (!allowGrabBaseKeypadSet)
+                {
+                    v = settings.value(/* General/ */QStringLiteral("AllowGrabBaseKeypad"), mAllowGrabBaseKeypad);
+                    if (v.isValid())
+                    {
+                        mAllowGrabBaseKeypad = v.toBool();
+                        allowGrabBaseKeypadSet = true;
+                    }
+                }
+                if (!allowGrabMiscKeypadSet)
+                {
+                    v = settings.value(/* General/ */QStringLiteral("AllowGrabMiscKeypad"), mAllowGrabMiscKeypad);
+                    if (v.isValid())
+                    {
+                        mAllowGrabMiscKeypad = v.toBool();
+                        allowGrabMiscKeypadSet = true;
+                    }
+                }
 
-                const auto sections = mSettings->childGroups();
+                const auto sections = settings.childGroups();
                 for(const QString &section : sections)
                 {
                     if (section != QLatin1String("General"))
                     {
-                        mSettings->beginGroup(section);
+                        settings.beginGroup(section);
 
                         QString shortcut = section;
                         int pos = shortcut.indexOf(QLatin1Char('.'));
@@ -547,13 +605,13 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
                         qulonglong id = 0ull;
 
-                        bool enabled = mSettings->value(EnabledKey, true).toBool();
+                        bool enabled = settings.value(EnabledKey, true).toBool();
 
-                        QString description = mSettings->value(CommentKey).toString();
+                        QString description = settings.value(CommentKey).toString();
 
-                        if (mSettings->contains(ExecKey))
+                        if (settings.contains(ExecKey))
                         {
-                            QStringList values = mSettings->value(ExecKey).toStringList();
+                            QStringList values = settings.value(ExecKey).toStringList();
                             QString str = shortcut + values.join(QString()) + description;
                             if (!execList.contains(str)) // don't add the same shortcut
                             {
@@ -563,21 +621,21 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                         }
                         else
                         {
-                            iniValue = mSettings->value(pathKey).toString();
+                            iniValue = settings.value(pathKey).toString();
                             if (!iniValue.isEmpty())
                             {
                                 QString path = iniValue;
 
-                                if (mSettings->contains(interfaceKey))
+                                if (settings.contains(interfaceKey))
                                 {
-                                    QString interface = mSettings->value(interfaceKey).toString();
+                                    QString interface = settings.value(interfaceKey).toString();
 
-                                    iniValue = mSettings->value(serviceKey).toString();
+                                    iniValue = settings.value(serviceKey).toString();
                                     if (!iniValue.isEmpty())
                                     {
                                         QString service = iniValue;
 
-                                        iniValue = mSettings->value(methodKey).toString();
+                                        iniValue = settings.value(methodKey).toString();
                                         if (!iniValue.isEmpty())
                                         {
                                             QString method = iniValue;
@@ -607,17 +665,11 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                             enableActionNonGuarded(id, enabled);
                         }
 
-                        mSettings->endGroup();
+                        settings.endGroup();
                     }
                 }
-                finished = config_file_i == configFiles.cend();
-                if (!finished)
-                    mSettings.reset(new QSettings{*config_file_i++, QSettings::IniFormat});
-
             }
         }
-        log(LOG_DEBUG, "Config file: %s", qPrintable(mSettings->fileName()));
-
 
         log(LOG_DEBUG, "MinLogLevel: %s", strLevel(mMinLogLevel));
         switch (mMultipleActionsBehaviour)
@@ -748,37 +800,38 @@ void Core::saveConfig()
         return;
     }
 
-    QVariant windowSize = mSettings->value(QStringLiteral("WindowSize"));
-    mSettings->clear();
-    mSettings->setValue(QStringLiteral("WindowSize"), windowSize);
+    QSettings settings(QStringLiteral("lxqt"), QStringLiteral("globalkeyshortcuts"));
+    QVariant windowSize = settings.value(QStringLiteral("WindowSize"));
+    settings.clear();
+    settings.setValue(QStringLiteral("WindowSize"), windowSize);
 
     switch (mMultipleActionsBehaviour)
     {
     case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
-        mSettings->setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), firstStr);
+        settings.setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), firstStr);
         break;
 
     case MULTIPLE_ACTIONS_BEHAVIOUR_LAST:
-        mSettings->setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), lastStr);
+        settings.setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), lastStr);
         break;
 
     case MULTIPLE_ACTIONS_BEHAVIOUR_ALL:
-        mSettings->setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), allStr);
+        settings.setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), allStr);
         break;
 
     case MULTIPLE_ACTIONS_BEHAVIOUR_NONE:
-        mSettings->setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), noneStr);
+        settings.setValue(/* General/ */QLatin1String("MultipleActionsBehaviour"), noneStr);
         break;
 
     default:
         ;
     }
 
-    mSettings->setValue(/* General/ */QLatin1String("AllowGrabLocks"),       mAllowGrabLocks);
-    mSettings->setValue(/* General/ */QLatin1String("AllowGrabBaseSpecial"), mAllowGrabBaseSpecial);
-    mSettings->setValue(/* General/ */QLatin1String("AllowGrabMiscSpecial"), mAllowGrabMiscSpecial);
-    mSettings->setValue(/* General/ */QLatin1String("AllowGrabBaseKeypad"),  mAllowGrabBaseKeypad);
-    mSettings->setValue(/* General/ */QLatin1String("AllowGrabMiscKeypad"),  mAllowGrabMiscKeypad);
+    settings.setValue(/* General/ */QLatin1String("AllowGrabLocks"),       mAllowGrabLocks);
+    settings.setValue(/* General/ */QLatin1String("AllowGrabBaseSpecial"), mAllowGrabBaseSpecial);
+    settings.setValue(/* General/ */QLatin1String("AllowGrabMiscSpecial"), mAllowGrabMiscSpecial);
+    settings.setValue(/* General/ */QLatin1String("AllowGrabBaseKeypad"),  mAllowGrabBaseKeypad);
+    settings.setValue(/* General/ */QLatin1String("AllowGrabMiscKeypad"),  mAllowGrabMiscKeypad);
 
     ShortcutAndActionById::const_iterator lastShortcutAndActionById = mShortcutAndActionById.constEnd();
     for (ShortcutAndActionById::const_iterator shortcutAndActionById = mShortcutAndActionById.constBegin(); shortcutAndActionById != lastShortcutAndActionById; ++shortcutAndActionById)
@@ -786,31 +839,31 @@ void Core::saveConfig()
         const BaseAction *action = shortcutAndActionById.value().second;
         QString section = shortcutAndActionById.value().first + QLatin1Char('.') + QString::number(shortcutAndActionById.key());
 
-        mSettings->beginGroup(section);
+        settings.beginGroup(section);
 
-        mSettings->setValue(EnabledKey, action->isEnabled());
-        mSettings->setValue(CommentKey, action->description());
+        settings.setValue(EnabledKey, action->isEnabled());
+        settings.setValue(CommentKey, action->description());
 
         if (!strcmp(action->type(), CommandAction::id()))
         {
             const CommandAction *commandAction = dynamic_cast<const CommandAction *>(action);
-            mSettings->setValue(ExecKey, QVariant(QStringList() << commandAction->command() += commandAction->args()));
+            settings.setValue(ExecKey, QVariant(QStringList() << commandAction->command() += commandAction->args()));
         }
         else if (!strcmp(action->type(), MethodAction::id()))
         {
             const MethodAction *methodAction = dynamic_cast<const MethodAction *>(action);
-            mSettings->setValue(serviceKey,   methodAction->service());
-            mSettings->setValue(pathKey,      methodAction->path().path());
-            mSettings->setValue(interfaceKey, methodAction->interface());
-            mSettings->setValue(methodKey,    methodAction->method());
+            settings.setValue(serviceKey,   methodAction->service());
+            settings.setValue(pathKey,      methodAction->path().path());
+            settings.setValue(interfaceKey, methodAction->interface());
+            settings.setValue(methodKey,    methodAction->method());
         }
         else if (!strcmp(action->type(), ClientAction::id()))
         {
             const ClientAction *clientAction = dynamic_cast<const ClientAction *>(action);
-            mSettings->setValue(pathKey,  clientAction->path().path());
+            settings.setValue(pathKey,  clientAction->path().path());
         }
 
-        mSettings->endGroup();
+        settings.endGroup();
     }
 }
 

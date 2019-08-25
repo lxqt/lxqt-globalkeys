@@ -243,7 +243,6 @@ private:
     bool mAllowGrabMiscKeypad;
     bool mAllowGrabPrintable;
 
-    QScopedPointer<QSettings> mSettings;
     bool mSaveAllowed;
 
     QTimer *mShortcutGrabTimeout;
