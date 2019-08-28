@@ -62,6 +62,7 @@ protected slots:
     void on_modify_PB_clicked();
     void on_swap_PB_clicked();
     void on_remove_PB_clicked();
+    void on_default_PB_clicked();
 
     void on_multipleActionsBehaviour_CB_currentIndexChanged(int);
 

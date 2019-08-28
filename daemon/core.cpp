@@ -464,6 +464,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
         {
             bool allowGrabLocksSet = false, allowGrabBaseSpecialSet = false, allowGrabMiscSpecialSet = false, allowGrabBaseKeypadSet = false, allowGrabMiscKeypadSet = false;
+            bool userConfigExists = false;
             QStringList execList, interfaceList, pathList;
             // use regular XDG hierarchy (implemented by QSettings) if no config file given on command line
             QStringList configs(configFiles);
@@ -472,6 +473,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                 const auto locations = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
                 for (const auto &location : locations)
                     configs << location + QLatin1String("/lxqt/globalkeyshortcuts.conf");
+                userConfigExists = QFile::exists(configs[0]); // user config has priority
             }
             size_t fm = configs.size();
             for (size_t fi = 0; fi < fm; ++fi)
@@ -589,6 +591,11 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                     }
                 }
 
+                // if the user config already exists, don't get global shortcuts
+                // because the user may have removed some of them
+                if(userConfigExists && fi > 0)
+                    continue;
+
                 const auto sections = settings.childGroups();
                 for(const QString &section : sections)
                 {
@@ -669,6 +676,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                     }
                 }
             }
+            log(LOG_DEBUG, "Config file: %s", qPrintable(configs[0]));
         }
 
         log(LOG_DEBUG, "MinLogLevel: %s", strLevel(mMinLogLevel));
