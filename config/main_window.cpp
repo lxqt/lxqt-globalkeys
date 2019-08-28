@@ -33,7 +33,15 @@
 #include <QItemSelectionModel>
 #include <QSortFilterProxyModel>
 #include <QSettings>
+#include <QStandardPaths>
+#include <QMessageBox>
 
+static const QLatin1String ExecKey("Exec");
+static const QLatin1String CommentKey("Comment");
+static const QLatin1String serviceKey("service");
+static const QLatin1String pathKey("path");
+static const QLatin1String interfaceKey("interface");
+static const QLatin1String methodKey("method");
 
 MainWindow::MainWindow(QWidget *parent)
     : QDialog(parent)
@@ -171,6 +179,97 @@ void MainWindow::on_remove_PB_clicked()
     const auto rows = mSelectionModel->selectedRows();
     for(const QModelIndex &rowIndex : rows)
         mActions->removeAction(mDefaultModel->id(mSortFilterProxyModel->mapToSource(rowIndex)));
+}
+
+void MainWindow::on_default_PB_clicked()
+{
+    if (QMessageBox::question(this,
+                              tr("Restore Default"),
+                              tr("Your defined shortcuts will be removed.\nDo you want to proceed?"),
+                              QMessageBox::Yes | QMessageBox::No,
+                              QMessageBox::No) != QMessageBox::Yes)
+    {
+        return;
+    }
+
+    QGuiApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    actions_TV->setUpdatesEnabled(false);
+
+    // remove all actions
+    for(int i = 0; i < mDefaultModel->rowCount(); ++i)
+        mActions->removeAction(mDefaultModel->id(mDefaultModel->index(i, 0)));
+
+    // add root actions
+    QStringList execList, interfaceList;
+    QStringList configs;
+    const auto locations = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
+    for(const auto &location : locations)
+        configs << location + QLatin1String("/lxqt/globalkeyshortcuts.conf");
+    for(int i = 1; i < configs.size(); ++i)
+    {
+        QSettings settings(configs[i], QSettings::IniFormat, this);
+        QString iniValue;
+        const auto sections = settings.childGroups();
+        for(const QString &section : sections)
+        {
+            if (section != QLatin1String("General"))
+            {
+                settings.beginGroup(section);
+
+                QString shortcut = section;
+                int pos = shortcut.indexOf(QLatin1Char('.'));
+                if (pos != -1)
+                {
+                    shortcut = shortcut.left(pos);
+                }
+                QString description = settings.value(CommentKey).toString();
+
+                if (settings.contains(ExecKey))
+                {
+                    QStringList values = settings.value(ExecKey).toStringList();
+                    QString str = shortcut + values.join(QString()) + description;
+                    if (!execList.contains(str)) // don't add the same shortcut
+                    {
+                        mActions->addCommandAction(shortcut, values[0], values.mid(1), description);
+                        execList << str;
+                    }
+                }
+                else
+                {
+                    iniValue = settings.value(pathKey).toString();
+                    if (!iniValue.isEmpty())
+                    {
+                        QString path = iniValue;
+                        if (settings.contains(interfaceKey))
+                        {
+                            QString interface = settings.value(interfaceKey).toString();
+                            iniValue = settings.value(serviceKey).toString();
+                            if (!iniValue.isEmpty())
+                            {
+                                QString service = iniValue;
+                                iniValue = settings.value(methodKey).toString();
+                                if (!iniValue.isEmpty())
+                                {
+                                    QString method = iniValue;
+
+                                    QString str = shortcut + service + path + interface + method + description;
+                                    if (!interfaceList.contains(str)) // don't add the same shortcut
+                                    {
+                                        mActions->addMethodAction(shortcut, service, QDBusObjectPath(path), interface, method, description);
+                                        interfaceList << str;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                settings.endGroup();
+            }
+        }
+    }
+
+    actions_TV->setUpdatesEnabled(true);
+    QGuiApplication::restoreOverrideCursor();
 }
 
 void MainWindow::on_actions_TV_doubleClicked(const QModelIndex &index)
