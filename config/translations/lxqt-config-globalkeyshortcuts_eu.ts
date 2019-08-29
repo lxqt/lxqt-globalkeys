@@ -11,17 +11,17 @@
     <message>
         <location filename="../default_model.cpp" line="50"/>
         <source>DBus call</source>
-        <translation type="unfinished"></translation>
+        <translation>DBus deia</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="51"/>
         <source>Client</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeroa</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="141"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifikazioa</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="144"/>
@@ -36,12 +36,12 @@
     <message>
         <location filename="../default_model.cpp" line="150"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="153"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioa</translation>
     </message>
 </context>
 <context>
@@ -49,27 +49,27 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekintza editatu</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Lasterbidea:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
         <source>&amp;Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Deskribapena:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gaituta</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Komandoa</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
