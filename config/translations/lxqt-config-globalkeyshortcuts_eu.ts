@@ -74,17 +74,17 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; DBus mezua</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mota:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ko&amp;mandoa:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
