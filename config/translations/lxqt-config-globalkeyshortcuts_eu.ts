@@ -21,7 +21,7 @@
     <message>
         <location filename="../default_model.cpp" line="141"/>
         <source>Id</source>
-        <translation>Identifikazioa</translation>
+        <translation>id</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="144"/>
@@ -36,7 +36,7 @@
     <message>
         <location filename="../default_model.cpp" line="150"/>
         <source>Type</source>
-        <translation>Tipo</translation>
+        <translation>Mota</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="153"/>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation>&amp;Lasterbidea:</translation>
+        <translation>&amp;Zuzeneko sarbidea:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
