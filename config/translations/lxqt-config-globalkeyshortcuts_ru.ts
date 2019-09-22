@@ -115,54 +115,70 @@
         <translation>Управление глобальными действиями</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="52"/>
+        <location filename="../main_window.ui" line="55"/>
         <source>Add ...</source>
         <translation>Добавить...</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="62"/>
+        <location filename="../main_window.ui" line="65"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="72"/>
+        <location filename="../main_window.ui" line="75"/>
         <source>Modify ...</source>
         <translation>Изменить...</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="89"/>
+        <location filename="../main_window.ui" line="92"/>
         <source>Swap</source>
         <translation>Заменить</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="115"/>
+        <location filename="../main_window.ui" line="118"/>
         <source>Multiple actions behaviour:</source>
         <translation>При наличии нескольких действий выполнять:</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="123"/>
+        <location filename="../main_window.ui" line="126"/>
         <source>First</source>
         <translation>Первое</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="128"/>
+        <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
         <translation>Последнее</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="133"/>
+        <location filename="../main_window.ui" line="136"/>
         <source>None</source>
         <translation type="unfinished">Нет</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="138"/>
+        <location filename="../main_window.ui" line="141"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="176"/>
+        <location filename="../main_window.ui" line="166"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window.ui" line="186"/>
         <source>Close</source>
         <translation>Закрыть</translation>
+    </message>
+    <message>
+        <location filename="../main_window.cpp" line="187"/>
+        <source>Restore Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window.cpp" line="188"/>
+        <source>Your defined shortcuts will be removed.
+Do you want to proceed?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
