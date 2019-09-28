@@ -26,7 +26,7 @@
     <message>
         <location filename="../default_model.cpp" line="144"/>
         <source>Shortcut</source>
-        <translation>Snarevei</translation>
+        <translation>Tastatursnarevei</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="147"/>
@@ -49,12 +49,12 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation>Forandr handling</translation>
+        <translation>Rediger handling</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation>&amp;Snarevei:</translation>
+        <translation>&amp;Tastatursnarevei:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
@@ -89,7 +89,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation>T&amp;jeneste:</translation>
+        <translation>&amp;Tjeneste:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
@@ -127,7 +127,7 @@
     <message>
         <location filename="../main_window.ui" line="75"/>
         <source>Modify ...</source>
-        <translation>Forandr ...</translation>
+        <translation>Rediger ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="92"/>
@@ -162,7 +162,7 @@
     <message>
         <location filename="../main_window.ui" line="166"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="186"/>
@@ -172,13 +172,14 @@
     <message>
         <location filename="../main_window.cpp" line="187"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Gjenopprett standardinnstillinger</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="188"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dine egne tastatursnareveiertastatursnarvei blir tatt vekk.
+Ønsker du å fortsette?</translation>
     </message>
 </context>
 </TS>
