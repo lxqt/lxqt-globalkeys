@@ -152,7 +152,7 @@
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
-        <translation>Nenhuma</translation>
+        <translation>Nada</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
@@ -162,7 +162,7 @@
     <message>
         <location filename="../main_window.ui" line="166"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Padrão</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="186"/>
@@ -172,13 +172,14 @@
     <message>
         <location filename="../main_window.cpp" line="187"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Repor predefinições</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="188"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Os atalhos definidos por si serão removidos.
+Tem a certeza de que deseja continuar?</translation>
     </message>
 </context>
 </TS>
