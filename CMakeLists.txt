@@ -72,13 +72,13 @@ configure_package_config_file(
 #************************************************
 write_basic_package_version_file(
     "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_CMAKE_NAME}-config-version.cmake"
-    VERSION ${LXQT_VERSION}
+    VERSION ${LXQT_GLOBALKEYS_VERSION}
     COMPATIBILITY AnyNewerVersion
 )
 
 write_basic_package_version_file(
     "${CMAKE_BINARY_DIR}/${LXQT_GLOBALKEYS_UI_CMAKE_NAME}-config-version.cmake"
-    VERSION ${LXQT_VERSION}
+    VERSION ${LXQT_GLOBLKEYS_VERSION}
     COMPATIBILITY AnyNewerVersion
 )
 #************************************************
