@@ -99,7 +99,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Käyttöliittymä:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
@@ -162,7 +162,7 @@
     <message>
         <location filename="../main_window.ui" line="166"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Oletusasetukset</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="186"/>
@@ -172,13 +172,14 @@
     <message>
         <location filename="../main_window.cpp" line="187"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Palauta Oletusasetukset</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="188"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Määritellyt pikanäppäimet poistetaan.
+Haluatko jatkaa?</translation>
     </message>
 </context>
 </TS>
