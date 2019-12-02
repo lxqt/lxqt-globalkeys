@@ -179,7 +179,7 @@
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
         <translation>Seus atalhos definidos serão removidos.
-Você quer prosseguir?</translation>
+Você deseja prosseguir?</translation>
     </message>
 </context>
 </TS>
