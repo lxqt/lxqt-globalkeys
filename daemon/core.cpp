@@ -33,6 +33,7 @@
 #include <QTimer>
 #include <QDBusConnectionInterface>
 #include <QDBusServiceWatcher>
+#include <QFile>
 
 #include <cstddef>
 #include <cstdlib>
