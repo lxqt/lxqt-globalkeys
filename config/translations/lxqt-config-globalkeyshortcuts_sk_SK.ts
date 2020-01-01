@@ -162,7 +162,7 @@
     <message>
         <location filename="../main_window.ui" line="166"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Predvolené</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="186"/>
@@ -172,13 +172,14 @@
     <message>
         <location filename="../main_window.cpp" line="187"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrátiť na východzie hodnoty</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="188"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vami určené klávesové skratky budú odobrané
+Naozaj to chcete?</translation>
     </message>
 </context>
 </TS>
