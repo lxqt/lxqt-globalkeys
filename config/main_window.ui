@@ -123,22 +123,22 @@
       <widget class="QComboBox" name="multipleActionsBehaviour_CB">
        <item>
         <property name="text">
-         <string>First</string>
+         <string comment="globalkeys/config/multipleActions">First</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Last</string>
+         <string comment="globalkeys/config/multipleActions">Last</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>None</string>
+         <string comment="globalkeys/config/multipleActions">None</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>All</string>
+         <string comment="globalkeys/config/multipleActions">All</string>
         </property>
        </item>
       </widget>
