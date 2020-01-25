@@ -41,7 +41,7 @@
     <message>
         <location filename="../default_model.cpp" line="153"/>
         <source>Info</source>
-        <translation>Infó</translation>
+        <translation>Információ</translation>
     </message>
 </context>
 <context>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation>Akció szerkesztés</translation>
+        <translation>Művelet szerkesztése</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
@@ -112,32 +112,32 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation>Általános akció kezelés</translation>
+        <translation>Általános művelet kezelő</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="55"/>
         <source>Add ...</source>
-        <translation>Hozzáad ...</translation>
+        <translation>Hozzáadás ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="65"/>
         <source>Remove</source>
-        <translation>Töröl</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="75"/>
         <source>Modify ...</source>
-        <translation>Módosít ...</translation>
+        <translation>Módosítás ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="92"/>
         <source>Swap</source>
-        <translation>Vált</translation>
+        <translation>Csere</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="118"/>
         <source>Multiple actions behaviour:</source>
-        <translation>Többes viselkedés:</translation>
+        <translation type="unfinished">Több művelet viselkedése:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="126"/>
@@ -162,7 +162,7 @@
     <message>
         <location filename="../main_window.ui" line="166"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="186"/>
@@ -172,13 +172,14 @@
     <message>
         <location filename="../main_window.cpp" line="187"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett visszaállítása</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="188"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>A megadott hivatkozások eltávolításra kerülnek. 
+Akarod folytatni?</translation>
     </message>
 </context>
 </TS>
