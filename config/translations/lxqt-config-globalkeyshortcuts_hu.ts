@@ -137,7 +137,7 @@
     <message>
         <location filename="../main_window.ui" line="118"/>
         <source>Multiple actions behaviour:</source>
-        <translation type="unfinished">Több művelet viselkedése:</translation>
+        <translation>Több művelet viselkedése:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="126"/>
