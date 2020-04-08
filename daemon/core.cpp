@@ -1373,8 +1373,8 @@ void Core::run()
                             XUngrabKeyboard(mDisplay, CurrentTime);
                             checkX11Error();
 
-                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.end();
-                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.begin(); modifiers != lastAllModifiers; ++modifiers)
+                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.cend();
+                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.cbegin(); modifiers != lastAllModifiers; ++modifiers)
                             {
                                 log(LOG_DEBUG, "grabShortcut: checking %02x + %02x", event.xkey.keycode, event.xkey.state | *modifiers);
                                 lockX11Error();
@@ -1684,8 +1684,8 @@ void Core::run()
                                 break;
                             }
 
-                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.end();
-                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.begin(); modifiers != lastAllModifiers; ++modifiers)
+                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.cend();
+                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.cbegin(); modifiers != lastAllModifiers; ++modifiers)
                             {
                                 lockX11Error();
                                 XGrabKey(mDisplay, X11shortcut.first, X11shortcut.second | *modifiers, rootWindow, False, GrabModeAsync, GrabModeAsync);
@@ -1728,8 +1728,8 @@ void Core::run()
                             }
 
                             lockX11Error();
-                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.end();
-                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.begin(); modifiers != lastAllModifiers; ++modifiers)
+                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.cend();
+                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.cbegin(); modifiers != lastAllModifiers; ++modifiers)
                             {
                                 XUngrabKey(mDisplay, X11shortcut.first, X11shortcut.second | *modifiers, rootWindow);
                             }
@@ -1813,8 +1813,8 @@ void Core::serviceDisappeared(const QString &sender)
     ClientPathsBySender::iterator clientPathsBySender = mClientPathsBySender.find(sender);
     if (clientPathsBySender != mClientPathsBySender.end())
     {
-        ClientPaths::const_iterator lastClientPath = clientPathsBySender.value().end();
-        for (ClientPaths::const_iterator clientPath = clientPathsBySender.value().begin(); clientPath != lastClientPath; ++clientPath)
+        ClientPaths::const_iterator lastClientPath = clientPathsBySender.value().cend();
+        for (ClientPaths::const_iterator clientPath = clientPathsBySender.value().cbegin(); clientPath != lastClientPath; ++clientPath)
         {
             const QDBusObjectPath &path = *clientPath;
 
