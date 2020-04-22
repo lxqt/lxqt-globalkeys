@@ -152,7 +152,7 @@
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
-        <translation type="unfinished">Нет</translation>
+        <translation>Ни одного</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
