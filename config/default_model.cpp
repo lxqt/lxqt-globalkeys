@@ -178,7 +178,7 @@ Qt::ItemFlags DefaultModel::flags(const QModelIndex &index) const
     return result;
 }
 
-bool DefaultModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool DefaultModel::setData(const QModelIndex & /*index*/, const QVariant & /*(value*/, int /*role*/)
 {
     return false;
 }
