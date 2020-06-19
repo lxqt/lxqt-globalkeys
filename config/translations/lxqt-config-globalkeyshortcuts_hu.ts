@@ -21,7 +21,7 @@
     <message>
         <location filename="../default_model.cpp" line="141"/>
         <source>Id</source>
-        <translation></translation>
+        <translation>Azonosító</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="144"/>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation>Általános művelet kezelő</translation>
+        <translation>Általános műveletkezelő</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="55"/>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../main_window.ui" line="65"/>
         <source>Remove</source>
-        <translation>Törlés</translation>
+        <translation>Eltávolítás</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="75"/>
@@ -137,7 +137,7 @@
     <message>
         <location filename="../main_window.ui" line="118"/>
         <source>Multiple actions behaviour:</source>
-        <translation>Több művelet viselkedése:</translation>
+        <translation>Viselkedés több műveletnél:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="126"/>
@@ -152,7 +152,7 @@
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
-        <translation>Nincs</translation>
+        <translation>Egyik sem</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
