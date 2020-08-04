@@ -2488,8 +2488,11 @@ void Core::modifyMethodAction(bool &result, const qulonglong &id, const QString 
         return;
     }
 
+    bool isEnabled = action->isEnabled();
     delete action;
-    shortcutAndActionById.value().second = new MethodAction(this, QDBusConnection::sessionBus(), service, path, interface, method, description);
+    MethodAction *newAction = new MethodAction(this, QDBusConnection::sessionBus(), service, path, interface, method, description);
+    newAction->setEnabled(isEnabled);
+    shortcutAndActionById.value().second = newAction;
 
     saveConfig();
 
@@ -2519,8 +2522,11 @@ void Core::modifyCommandAction(bool &result, const qulonglong &id, const QString
         return;
     }
 
+    bool isEnabled = action->isEnabled();
     delete action;
-    shortcutAndActionById.value().second = new CommandAction(this, command, arguments, description);
+    CommandAction *newAction = new CommandAction(this, command, arguments, description);
+    newAction->setEnabled(isEnabled);
+    shortcutAndActionById.value().second = newAction;
 
     saveConfig();
 
@@ -2622,18 +2628,21 @@ bool Core::enableActionNonGuarded(qulonglong id, bool enabled)
         shortcutAndActionById.value().second->setEnabled(enabled);
         if (enabled)
         {
-            IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
-            if (idsByShortcut != mIdsByShortcut.end())
+            X11Shortcut X11shortcut;
+            QString newShortcut = checkShortcut(shortcut, X11shortcut);
+            if (newShortcut.isEmpty())
             {
-                if (idsByShortcut.value().isEmpty())
-                {
-                    if (!remoteXGrabKey(mX11ByShortcut[shortcut]))
-                    {
-                        log(LOG_WARNING, "Cannot grab shortcut '%s'", qPrintable(shortcut));
-                    }
-                }
+                return false;
             }
-            idsByShortcut = mDisabledIdsByShortcut.find(shortcut);
+            newShortcut = grabOrReuseKey(X11shortcut, newShortcut);
+            if (newShortcut.isEmpty())
+            {
+                return false;
+            }
+            mIdsByShortcut[newShortcut].insert(id);
+            shortcutAndActionById.value().first = newShortcut;
+
+            IdsByShortcut::iterator idsByShortcut = mDisabledIdsByShortcut.find(shortcut);
             if (idsByShortcut != mDisabledIdsByShortcut.end())
             {
                 idsByShortcut.value().remove(id);
@@ -2642,7 +2651,6 @@ bool Core::enableActionNonGuarded(qulonglong id, bool enabled)
                     mDisabledIdsByShortcut.erase(idsByShortcut);
                 }
             }
-            mIdsByShortcut[shortcut].insert(id);
         }
         else
         {
