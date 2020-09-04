@@ -2233,7 +2233,7 @@ QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortc
             mShortcutAndActionById[id].first = newShortcut;
         }
 
-        if (!newShortcut.isEmpty())
+        if (!newShortcut.isEmpty() && shortcutAndAction.second->isEnabled())
         {
             newShortcut = grabOrReuseKey(X11shortcut, newShortcut);
             mIdsByShortcut[newShortcut].insert(id);
