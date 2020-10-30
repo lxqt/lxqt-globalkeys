@@ -4,42 +4,42 @@
 <context>
     <name>DefaultModel</name>
     <message>
-        <location filename="../default_model.cpp" line="49"/>
+        <location filename="../default_model.cpp" line="51"/>
         <source>Command</source>
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="50"/>
+        <location filename="../default_model.cpp" line="52"/>
         <source>DBus call</source>
         <translation>Appel DBus</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="51"/>
+        <location filename="../default_model.cpp" line="53"/>
         <source>Client</source>
         <translation>Client</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="141"/>
+        <location filename="../default_model.cpp" line="143"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="144"/>
+        <location filename="../default_model.cpp" line="146"/>
         <source>Shortcut</source>
         <translation>Raccourci</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="147"/>
+        <location filename="../default_model.cpp" line="149"/>
         <source>Description</source>
         <translation>Description</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="150"/>
+        <location filename="../default_model.cpp" line="152"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="153"/>
+        <location filename="../default_model.cpp" line="155"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
@@ -143,22 +143,26 @@
     <message>
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
-        <translation>Première</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Première</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
-        <translation>Dernière</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Dernière</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
-        <translation>Aucun</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Aucun</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
-        <translation>Toutes</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Toutes</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>
@@ -180,7 +184,7 @@
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
         <translation>Vos raccourcis définis seront supprimés.
-Voulez-vous procéder ?</translation>
+Voulez-vous procéder&#x202f;?</translation>
     </message>
 </context>
 </TS>
