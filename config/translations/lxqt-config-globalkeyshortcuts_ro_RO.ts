@@ -4,42 +4,42 @@
 <context>
     <name>DefaultModel</name>
     <message>
-        <location filename="../default_model.cpp" line="49"/>
+        <location filename="../default_model.cpp" line="51"/>
         <source>Command</source>
         <translation>Comandă</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="50"/>
+        <location filename="../default_model.cpp" line="52"/>
         <source>DBus call</source>
         <translation>Apel DBus</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="51"/>
+        <location filename="../default_model.cpp" line="53"/>
         <source>Client</source>
         <translation>Client</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="141"/>
+        <location filename="../default_model.cpp" line="143"/>
         <source>Id</source>
         <translation>Identificare</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="144"/>
+        <location filename="../default_model.cpp" line="146"/>
         <source>Shortcut</source>
         <translation type="unfinished">Accelerator</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="147"/>
+        <location filename="../default_model.cpp" line="149"/>
         <source>Description</source>
         <translation>Descriere</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="150"/>
+        <location filename="../default_model.cpp" line="152"/>
         <source>Type</source>
         <translation>Tip</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="153"/>
+        <location filename="../default_model.cpp" line="155"/>
         <source>Info</source>
         <translation>Informare</translation>
     </message>
@@ -142,22 +142,26 @@
     <message>
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
-        <translation>Primul</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Primul</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
-        <translation>Ultimul</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Ultimul</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
+        <comment>globalkeys/config/multipleActions</comment>
         <translation type="unfinished">Nimic</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
-        <translation>Toate</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Toate</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>

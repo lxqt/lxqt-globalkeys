@@ -4,42 +4,42 @@
 <context>
     <name>DefaultModel</name>
     <message>
-        <location filename="../default_model.cpp" line="49"/>
+        <location filename="../default_model.cpp" line="51"/>
         <source>Command</source>
         <translation>Comando</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="50"/>
+        <location filename="../default_model.cpp" line="52"/>
         <source>DBus call</source>
         <translation>Chiamata DBus</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="51"/>
+        <location filename="../default_model.cpp" line="53"/>
         <source>Client</source>
         <translation>Client</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="141"/>
+        <location filename="../default_model.cpp" line="143"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="144"/>
+        <location filename="../default_model.cpp" line="146"/>
         <source>Shortcut</source>
         <translation>Scorciatoia</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="147"/>
+        <location filename="../default_model.cpp" line="149"/>
         <source>Description</source>
         <translation>Descrizione</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="150"/>
+        <location filename="../default_model.cpp" line="152"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="153"/>
+        <location filename="../default_model.cpp" line="155"/>
         <source>Info</source>
         <translation>Informazione</translation>
     </message>
@@ -142,22 +142,26 @@
     <message>
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
-        <translation>Primo</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Primo</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
-        <translation>Ultimo</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Ultimo</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
-        <translation>Nessuno</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Nessuno</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
-        <translation>Tutti</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Tutti</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>

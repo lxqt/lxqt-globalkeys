@@ -4,42 +4,42 @@
 <context>
     <name>DefaultModel</name>
     <message>
-        <location filename="../default_model.cpp" line="49"/>
+        <location filename="../default_model.cpp" line="51"/>
         <source>Command</source>
         <translation>Komanda</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="50"/>
+        <location filename="../default_model.cpp" line="52"/>
         <source>DBus call</source>
         <translation>DBus izsaukums</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="51"/>
+        <location filename="../default_model.cpp" line="53"/>
         <source>Client</source>
         <translation>Klients</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="141"/>
+        <location filename="../default_model.cpp" line="143"/>
         <source>Id</source>
         <translation>Identifikators</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="144"/>
+        <location filename="../default_model.cpp" line="146"/>
         <source>Shortcut</source>
         <translation>Saīsne</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="147"/>
+        <location filename="../default_model.cpp" line="149"/>
         <source>Description</source>
         <translation>Apraksts</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="150"/>
+        <location filename="../default_model.cpp" line="152"/>
         <source>Type</source>
         <translation>Tips</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="153"/>
+        <location filename="../default_model.cpp" line="155"/>
         <source>Info</source>
         <translation>Informācija</translation>
     </message>
@@ -142,22 +142,26 @@
     <message>
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
-        <translation>Pirmais</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Pirmais</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
-        <translation>Pēdējais</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Pēdējais</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
-        <translation>Neviens</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Neviens</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
-        <translation>Visi</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Visi</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>

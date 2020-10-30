@@ -4,42 +4,42 @@
 <context>
     <name>DefaultModel</name>
     <message>
-        <location filename="../default_model.cpp" line="49"/>
+        <location filename="../default_model.cpp" line="51"/>
         <source>Command</source>
         <translation>Komento</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="50"/>
+        <location filename="../default_model.cpp" line="52"/>
         <source>DBus call</source>
         <translation>D-Bus-kutsu</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="51"/>
+        <location filename="../default_model.cpp" line="53"/>
         <source>Client</source>
         <translation>Sovellus</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="141"/>
+        <location filename="../default_model.cpp" line="143"/>
         <source>Id</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="144"/>
+        <location filename="../default_model.cpp" line="146"/>
         <source>Shortcut</source>
         <translation>Pikanäppäin</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="147"/>
+        <location filename="../default_model.cpp" line="149"/>
         <source>Description</source>
         <translation>Kuvaus</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="150"/>
+        <location filename="../default_model.cpp" line="152"/>
         <source>Type</source>
         <translation>Tyyppi</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="153"/>
+        <location filename="../default_model.cpp" line="155"/>
         <source>Info</source>
         <translation>Toiminto</translation>
     </message>
@@ -142,22 +142,26 @@
     <message>
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
-        <translation>Ensimmäinen</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Ensimmäinen</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
-        <translation>Viimeinen</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Viimeinen</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
-        <translation>Ei mitään</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Ei mitään</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
-        <translation>Kaikki</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">Kaikki</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>

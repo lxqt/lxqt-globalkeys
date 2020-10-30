@@ -4,42 +4,42 @@
 <context>
     <name>DefaultModel</name>
     <message>
-        <location filename="../default_model.cpp" line="49"/>
+        <location filename="../default_model.cpp" line="51"/>
         <source>Command</source>
         <translation>أمر</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="50"/>
+        <location filename="../default_model.cpp" line="52"/>
         <source>DBus call</source>
         <translation>نداء DBus</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="51"/>
+        <location filename="../default_model.cpp" line="53"/>
         <source>Client</source>
         <translation>عميل</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="141"/>
+        <location filename="../default_model.cpp" line="143"/>
         <source>Id</source>
         <translation>المعرّف</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="144"/>
+        <location filename="../default_model.cpp" line="146"/>
         <source>Shortcut</source>
         <translation>الاختصار</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="147"/>
+        <location filename="../default_model.cpp" line="149"/>
         <source>Description</source>
         <translation>الوصف</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="150"/>
+        <location filename="../default_model.cpp" line="152"/>
         <source>Type</source>
         <translation>النوع</translation>
     </message>
     <message>
-        <location filename="../default_model.cpp" line="153"/>
+        <location filename="../default_model.cpp" line="155"/>
         <source>Info</source>
         <translation>معلومات</translation>
     </message>
@@ -142,22 +142,26 @@
     <message>
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
-        <translation>الأول</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">الأول</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
-        <translation>الأخير</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">الأخير</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
-        <translation>بلا</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">بلا</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
-        <translation>الكل</translation>
+        <comment>globalkeys/config/multipleActions</comment>
+        <translation type="unfinished">الكل</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>
