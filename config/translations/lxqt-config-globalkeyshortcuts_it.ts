@@ -143,13 +143,13 @@
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Primo</translation>
+        <translation>Primo</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Ultimo</translation>
+        <translation>Ultimo</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
@@ -161,7 +161,7 @@
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Tutti</translation>
+        <translation>Tutti</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>

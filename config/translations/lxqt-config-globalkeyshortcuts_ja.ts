@@ -143,25 +143,25 @@
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">最初のみ実行</translation>
+        <translation>1 番目</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">最後のみ実行</translation>
+        <translation>最後</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">何もしない</translation>
+        <translation>何もしない</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">すべて実行</translation>
+        <translation>すべて</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>
