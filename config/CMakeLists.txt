@@ -113,6 +113,7 @@ lxqt_app_translation_loader(${PROJECT_NAME}_QM_LOADER ${PROJECT_NAME})
 lxqt_translate_desktop(${PROJECT_NAME}_DESKTOP_FILES
     SOURCES
     ${PROJECT_NAME}.desktop.in
+    USE_YAML
 )
 #************************************************
 
