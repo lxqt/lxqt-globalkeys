@@ -18,10 +18,7 @@ customize the shortcut settings.
 
 The only runtime dependencies is [liblxqt](https://github.com/lxqt/liblxqt).
 Additional build dependencies are CMake and optionally Git to pull latest VCS
-checkouts. The localization files were outsourced to repository
-[lxqt-l10n](https://github.com/lxqt/lxqt-l10n) so the corresponding dependencies
-are needed, too. Please refer to this repository's `README.md` for further
-information.
+checkouts.
 
 Code configuration is handled by CMake. CMake variable `CMAKE_INSTALL_PREFIX`
 has to be set to `/usr` on most operating systems, depending on the way library
