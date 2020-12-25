@@ -144,25 +144,25 @@
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Erste</translation>
+        <translation>Erste</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Letzte</translation>
+        <translation>Letzte</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Keine</translation>
+        <translation>Keine</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Alle</translation>
+        <translation>Alle</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>
