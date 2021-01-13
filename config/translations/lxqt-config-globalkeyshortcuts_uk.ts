@@ -143,30 +143,30 @@
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Перша</translation>
+        <translation>Перша</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Остання</translation>
+        <translation>Остання</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Нічого</translation>
+        <translation>Нічого</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Все</translation>
+        <translation>Все</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Типова</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="186"/>
@@ -176,13 +176,14 @@
     <message>
         <location filename="../main_window.cpp" line="187"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Відновити типову</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="188"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Призначені ярлики буде вилучено.
+Хочете продовжити?</translation>
     </message>
 </context>
 </TS>
