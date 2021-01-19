@@ -144,25 +144,25 @@
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Première</translation>
+        <translation>Première</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Dernière</translation>
+        <translation>Dernière</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Aucun</translation>
+        <translation>Aucune</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Toutes</translation>
+        <translation>Toutes</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>
@@ -184,7 +184,7 @@
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
         <translation>Vos raccourcis définis seront supprimés.
-Voulez-vous procéder&#x202f;?</translation>
+Voulez-vous procéder ?</translation>
     </message>
 </context>
 </TS>
