@@ -34,18 +34,18 @@ Actions::Actions(QObject *parent)
     , mServiceWatcher(new QDBusServiceWatcher(QLatin1String("org.lxqt.global_key_shortcuts"), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, this))
     , mMultipleActionsBehaviour(MULTIPLE_ACTIONS_BEHAVIOUR_FIRST)
 {
-    connect(mServiceWatcher, SIGNAL(serviceUnregistered(QString)), this, SLOT(on_daemonDisappeared(QString)));
-    connect(mServiceWatcher, SIGNAL(serviceRegistered(QString)), this, SLOT(on_daemonAppeared(QString)));
+    connect(mServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &Actions::on_daemonDisappeared);
+    connect(mServiceWatcher, &QDBusServiceWatcher::serviceRegistered,   this, &Actions::on_daemonAppeared);
     mDaemonProxy = new org::lxqt::global_key_shortcuts::daemon(QLatin1String("org.lxqt.global_key_shortcuts"), QStringLiteral("/daemon"), QDBusConnection::sessionBus(), this);
 
-    connect(mDaemonProxy, SIGNAL(actionAdded(qulonglong)), this, SLOT(on_actionAdded(qulonglong)));
-    connect(mDaemonProxy, SIGNAL(actionEnabled(qulonglong, bool)), this, SLOT(on_actionEnabled(qulonglong, bool)));
-    connect(mDaemonProxy, SIGNAL(clientActionSenderChanged(qulonglong, QString)), this, SLOT(on_clientActionSenderChanged(qulonglong, QString)));
-    connect(mDaemonProxy, SIGNAL(actionModified(qulonglong)), this, SLOT(on_actionModified(qulonglong)));
-    connect(mDaemonProxy, SIGNAL(actionRemoved(qulonglong)), this, SLOT(on_actionRemoved(qulonglong)));
-    connect(mDaemonProxy, SIGNAL(actionShortcutChanged(qulonglong)), this, SLOT(on_actionShortcutChanged(qulonglong)));
-    connect(mDaemonProxy, SIGNAL(actionsSwapped(qulonglong, qulonglong)), this, SLOT(on_actionsSwapped(qulonglong, qulonglong)));
-    connect(mDaemonProxy, SIGNAL(multipleActionsBehaviourChanged(uint)), this, SLOT(on_multipleActionsBehaviourChanged(uint)));
+    connect(mDaemonProxy, &org::lxqt::global_key_shortcuts::daemon::actionAdded,                     this, &Actions::on_actionAdded);
+    connect(mDaemonProxy, &org::lxqt::global_key_shortcuts::daemon::actionEnabled,                   this, &Actions::on_actionEnabled);
+    connect(mDaemonProxy, &org::lxqt::global_key_shortcuts::daemon::clientActionSenderChanged,       this, &Actions::on_clientActionSenderChanged);
+    connect(mDaemonProxy, &org::lxqt::global_key_shortcuts::daemon::actionModified,                  this, &Actions::on_actionModified);
+    connect(mDaemonProxy, &org::lxqt::global_key_shortcuts::daemon::actionRemoved,                   this, &Actions::on_actionRemoved);
+    connect(mDaemonProxy, &org::lxqt::global_key_shortcuts::daemon::actionShortcutChanged,           this, &Actions::on_actionShortcutChanged);
+    connect(mDaemonProxy, &org::lxqt::global_key_shortcuts::daemon::actionsSwapped,                  this, &Actions::on_actionsSwapped);
+    connect(mDaemonProxy, &org::lxqt::global_key_shortcuts::daemon::multipleActionsBehaviourChanged, this, &Actions::on_multipleActionsBehaviourChanged);
 
     QTimer::singleShot(0, this, SLOT(delayedInit()));
 }
@@ -635,7 +635,7 @@ void Actions::grabShortcut(uint timeout)
 {
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(mDaemonProxy->grabShortcut(timeout), this);
 
-    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher *)), this, SLOT(grabShortcutFinished(QDBusPendingCallWatcher *)));
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, &Actions::grabShortcutFinished);
 }
 
 void Actions::cancelShortcutGrab()

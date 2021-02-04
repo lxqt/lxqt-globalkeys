@@ -74,11 +74,11 @@ MainWindow::MainWindow(QWidget *parent)
     mSelectionModel = new QItemSelectionModel(actions_TV->model());
     actions_TV->setSelectionModel(mSelectionModel);
 
-    connect(mSelectionModel, SIGNAL(selectionChanged(QItemSelection, QItemSelection)), SLOT(selectionChanged(QItemSelection, QItemSelection)));
+    connect(mSelectionModel, &QItemSelectionModel::selectionChanged, this, &MainWindow::selectionChanged);
 
-    connect(mActions, SIGNAL(daemonDisappeared()), SLOT(daemonDisappeared()));
-    connect(mActions, SIGNAL(daemonAppeared()), SLOT(daemonAppeared()));
-    connect(mActions, SIGNAL(multipleActionsBehaviourChanged(MultipleActionsBehaviour)), SLOT(multipleActionsBehaviourChanged(MultipleActionsBehaviour)));
+    connect(mActions, &Actions::daemonDisappeared,               this, &MainWindow::daemonDisappeared);
+    connect(mActions, &Actions::daemonAppeared,                  this, &MainWindow::daemonAppeared);
+    connect(mActions, &Actions::multipleActionsBehaviourChanged, this, &MainWindow::multipleActionsBehaviourChanged);
 
     // restore/remember win size
     // FIXME: Change the code structure so that the config file can be obtained from one place.

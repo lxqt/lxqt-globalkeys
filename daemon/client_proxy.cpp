@@ -35,8 +35,8 @@ ClientProxy::ClientProxy(const QString &service, const QDBusObjectPath &path, co
     : QObject(parent)
 {
     org::lxqt::global_key_shortcuts::client *iface = new org::lxqt::global_key_shortcuts::client(service, path.path(), connection, this);
-    connect(this, SIGNAL(activated()), iface, SLOT(activated()));
-    connect(this, SIGNAL(shortcutChanged(QString, QString)), iface, SLOT(shortcutChanged(QString, QString)));
+    connect(this, &ClientProxy::activated,       iface, &org::lxqt::global_key_shortcuts::client::activated);
+    connect(this, &ClientProxy::shortcutChanged, iface, &org::lxqt::global_key_shortcuts::client::shortcutChanged);
 }
 
 void ClientProxy::emitActivated()

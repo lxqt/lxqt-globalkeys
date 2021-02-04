@@ -40,13 +40,13 @@ DefaultModel::DefaultModel(Actions *actions, const QColor &grayedOutColour, cons
     , mItalicFont(italicFont)
     , mHighlightedItalicFont(highlightedItalicFont)
 {
-    connect(actions, SIGNAL(daemonDisappeared()), SLOT(daemonDisappeared()));
-    connect(actions, SIGNAL(daemonAppeared()), SLOT(daemonAppeared()));
-    connect(actions, SIGNAL(actionAdded(qulonglong)), SLOT(actionAdded(qulonglong)));
-    connect(actions, SIGNAL(actionModified(qulonglong)), SLOT(actionModified(qulonglong)));
-    connect(actions, SIGNAL(actionEnabled(qulonglong, bool)), SLOT(actionEnabled(qulonglong, bool)));
-    connect(actions, SIGNAL(actionsSwapped(qulonglong, qulonglong)), SLOT(actionsSwapped(qulonglong, qulonglong)));
-    connect(actions, SIGNAL(actionRemoved(qulonglong)), SLOT(actionRemoved(qulonglong)));
+    connect(actions, &Actions::daemonDisappeared, this, &DefaultModel::daemonDisappeared);
+    connect(actions, &Actions::daemonAppeared,    this, &DefaultModel::daemonAppeared);
+    connect(actions, &Actions::actionAdded,       this, &DefaultModel::actionAdded);
+    connect(actions, &Actions::actionModified,    this, &DefaultModel::actionModified);
+    connect(actions, &Actions::actionEnabled,     this, &DefaultModel::actionEnabled);
+    connect(actions, &Actions::actionsSwapped,    this, &DefaultModel::actionsSwapped);
+    connect(actions, &Actions::actionRemoved,     this, &DefaultModel::actionRemoved);
 
     mVerboseType[QStringLiteral("command")] = tr("Command");
     mVerboseType[QStringLiteral("method")] = tr("DBus call");

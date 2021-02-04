@@ -59,9 +59,9 @@ void ShortcutSelector::init()
     mShortcutTimer->setInterval(1000);
     mShortcutTimer->setSingleShot(false);
 
-    connect(this, SIGNAL(clicked()), this, SLOT(grabShortcut()));
+    connect(this, &ShortcutSelector::clicked, this, &ShortcutSelector::grabShortcut);
 
-    connect(mShortcutTimer, SIGNAL(timeout()), this, SLOT(shortcutTimer_timeout()));
+    connect(mShortcutTimer, &QTimer::timeout, this, &ShortcutSelector::shortcutTimer_timeout);
 }
 
 void ShortcutSelector::setActions(Actions *actions)
@@ -71,10 +71,10 @@ void ShortcutSelector::setActions(Actions *actions)
         return;
     }
     mActions = actions;
-    connect(mActions, SIGNAL(grabShortcutCancelled()), this, SLOT(grabShortcut_fail()));
-    connect(mActions, SIGNAL(grabShortcutTimedout()), this, SLOT(grabShortcut_fail()));
-    connect(mActions, SIGNAL(grabShortcutFailed()), this, SLOT(grabShortcut_fail()));
-    connect(mActions, SIGNAL(shortcutGrabbed(QString)), this, SLOT(newShortcutGrabbed(QString)));
+    connect(mActions, &Actions::grabShortcutCancelled, this, &ShortcutSelector::grabShortcut_fail);
+    connect(mActions, &Actions::grabShortcutTimedout,  this, &ShortcutSelector::grabShortcut_fail);
+    connect(mActions, &Actions::grabShortcutFailed,    this, &ShortcutSelector::grabShortcut_fail);
+    connect(mActions, &Actions::shortcutGrabbed,       this, &ShortcutSelector::newShortcutGrabbed);
 }
 
 void ShortcutSelector::grabShortcut(int timeout)

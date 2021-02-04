@@ -45,9 +45,9 @@ ActionImpl::ActionImpl(ClientImpl *client, Action *interface, const QString &pat
 {
     new OrgLxqtActionClientAdaptor(this);
 
-    connect(this, SIGNAL(emitRegistrationFinished()), mInterface, SIGNAL(registrationFinished()));
-    connect(this, SIGNAL(emitActivated()), mInterface, SIGNAL(activated()));
-    connect(this, SIGNAL(emitShortcutChanged(QString, QString)), mInterface, SIGNAL(shortcutChanged(QString, QString)));
+    connect(this, &ActionImpl::emitRegistrationFinished, mInterface, &Action::registrationFinished);
+    connect(this, &ActionImpl::emitActivated,            mInterface, &Action::activated);
+    connect(this, &ActionImpl::emitShortcutChanged,      mInterface, &Action::shortcutChanged);
 }
 
 ActionImpl::~ActionImpl()

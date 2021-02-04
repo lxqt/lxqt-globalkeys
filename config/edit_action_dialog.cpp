@@ -35,7 +35,7 @@ EditActionDialog::EditActionDialog(Actions *actions, QWidget *parent)
     setupUi(this);
     shortcut_SS->setActions(mActions);
 
-    connect(this, SIGNAL(accepted()), SLOT(when_accepted()));
+    connect(this, &EditActionDialog::accepted, this, &EditActionDialog::when_accepted);
 }
 
 void EditActionDialog::changeEvent(QEvent *e)
