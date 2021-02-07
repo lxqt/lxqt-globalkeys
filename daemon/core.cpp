@@ -728,43 +728,43 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
         connect(mServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &Core::serviceDisappeared);
 
-        connect(mDaemonAdaptor, SIGNAL(onAddMethodAction(QPair<QString, qulonglong>&, QString, QString, QDBusObjectPath, QString, QString, QString)), this, SLOT(addMethodAction(QPair<QString, qulonglong>&, QString, QString, QDBusObjectPath, QString, QString, QString)));
-        connect(mDaemonAdaptor, SIGNAL(onAddCommandAction(QPair<QString, qulonglong>&, QString, QString, QStringList, QString)), this, SLOT(addCommandAction(QPair<QString, qulonglong>&, QString, QString, QStringList, QString)));
-        connect(mDaemonAdaptor, SIGNAL(onModifyActionDescription(bool &, qulonglong, QString)), this, SLOT(modifyActionDescription(bool &, qulonglong, QString)));
-        connect(mDaemonAdaptor, SIGNAL(onModifyMethodAction(bool &, qulonglong, QString, QDBusObjectPath, QString, QString, QString)), this, SLOT(modifyMethodAction(bool &, qulonglong, QString, QDBusObjectPath, QString, QString, QString)));
-        connect(mDaemonAdaptor, SIGNAL(onModifyCommandAction(bool &, qulonglong, QString, QStringList, QString)), this, SLOT(modifyCommandAction(bool &, qulonglong, QString, QStringList, QString)));
-        connect(mDaemonAdaptor, SIGNAL(onEnableAction(bool &, qulonglong, bool)), this, SLOT(enableAction(bool &, qulonglong, bool)));
-        connect(mDaemonAdaptor, SIGNAL(onIsActionEnabled(bool &, qulonglong)), this, SLOT(isActionEnabled(bool &, qulonglong)));
-        connect(mDaemonAdaptor, SIGNAL(onGetClientActionSender(QString &, qulonglong)), this, SLOT(getClientActionSender(QString &, qulonglong)));
-        connect(mDaemonAdaptor, SIGNAL(onChangeShortcut(QString &, qulonglong, QString)), this, SLOT(changeShortcut(QString &, qulonglong, QString)));
-        connect(mDaemonAdaptor, SIGNAL(onSwapActions(bool &, qulonglong, qulonglong)), this, SLOT(swapActions(bool &, qulonglong, qulonglong)));
-        connect(mDaemonAdaptor, SIGNAL(onRemoveAction(bool &, qulonglong)), this, SLOT(removeAction(bool &, qulonglong)));
-        connect(mDaemonAdaptor, SIGNAL(onSetMultipleActionsBehaviour(MultipleActionsBehaviour)), this, SLOT(setMultipleActionsBehaviour(MultipleActionsBehaviour)));
-        connect(mDaemonAdaptor, SIGNAL(onGetMultipleActionsBehaviour(MultipleActionsBehaviour &)), this, SLOT(getMultipleActionsBehaviour(MultipleActionsBehaviour &)));
-        connect(mDaemonAdaptor, SIGNAL(onGetAllActionIds(QList<qulonglong>&)), this, SLOT(getAllActionIds(QList<qulonglong>&)));
-        connect(mDaemonAdaptor, SIGNAL(onGetActionById(QPair<bool, GeneralActionInfo>&, qulonglong)), this, SLOT(getActionById(QPair<bool, GeneralActionInfo>&, qulonglong)));
-        connect(mDaemonAdaptor, SIGNAL(onGetAllActions(QMap<qulonglong, GeneralActionInfo>&)), this, SLOT(getAllActions(QMap<qulonglong, GeneralActionInfo>&)));
-        connect(mDaemonAdaptor, SIGNAL(onGetClientActionInfoById(QPair<bool, ClientActionInfo>&, qulonglong)), this, SLOT(getClientActionInfoById(QPair<bool, ClientActionInfo>&, qulonglong)));
-        connect(mDaemonAdaptor, SIGNAL(onGetMethodActionInfoById(QPair<bool, MethodActionInfo>&, qulonglong)), this, SLOT(getMethodActionInfoById(QPair<bool, MethodActionInfo>&, qulonglong)));
-        connect(mDaemonAdaptor, SIGNAL(onGetCommandActionInfoById(QPair<bool, CommandActionInfo>&, qulonglong)), this, SLOT(getCommandActionInfoById(QPair<bool, CommandActionInfo>&, qulonglong)));
-        connect(mDaemonAdaptor, SIGNAL(onGrabShortcut(uint, QString &, bool &, bool &, bool &, QDBusMessage)), this, SLOT(grabShortcut(uint, QString &, bool &, bool &, bool &, QDBusMessage)));
-        connect(mDaemonAdaptor, SIGNAL(onCancelShortcutGrab()), this, SLOT(cancelShortcutGrab()));
-        connect(mDaemonAdaptor, SIGNAL(onQuit()), qApp, SLOT(quit()));
+        connect(mDaemonAdaptor, &DaemonAdaptor::onAddMethodAction,             this, &Core::addMethodAction);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onAddCommandAction,            this, &Core::addCommandAction);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onModifyActionDescription,     this, &Core::modifyActionDescription);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onModifyMethodAction,          this, &Core::modifyMethodAction);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onModifyCommandAction,         this, &Core::modifyCommandAction);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onEnableAction,                this, &Core::enableAction);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onIsActionEnabled,             this, &Core::isActionEnabled);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onGetClientActionSender,       this, &Core::getClientActionSender);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onChangeShortcut,              this, &Core::changeShortcut);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onSwapActions,                 this, &Core::swapActions);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onRemoveAction,                this, &Core::removeAction);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onSetMultipleActionsBehaviour, this, &Core::setMultipleActionsBehaviour);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onGetMultipleActionsBehaviour, this, &Core::getMultipleActionsBehaviour);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onGetAllActionIds,             this, &Core::getAllActionIds);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onGetActionById,               this, &Core::getActionById);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onGetAllActions,               this, &Core::getAllActions);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onGetClientActionInfoById,     this, &Core::getClientActionInfoById);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onGetMethodActionInfoById,     this, &Core::getMethodActionInfoById);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onGetCommandActionInfoById,    this, &Core::getCommandActionInfoById);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onGrabShortcut,                this, &Core::grabShortcut);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onCancelShortcutGrab,          this, &Core::cancelShortcutGrab);
+        connect(mDaemonAdaptor, &DaemonAdaptor::onQuit,                        qApp, &QCoreApplication::quit);
 
-        connect(mNativeAdaptor, SIGNAL(onAddClientAction(QPair<QString, qulonglong>&, QString, QDBusObjectPath, QString, QString)), this, SLOT(addClientAction(QPair<QString, qulonglong>&, QString, QDBusObjectPath, QString, QString)));
-        connect(mNativeAdaptor, SIGNAL(onModifyClientAction(qulonglong &, QDBusObjectPath, QString, QString)), this, SLOT(modifyClientAction(qulonglong &, QDBusObjectPath, QString, QString)));
-        connect(mNativeAdaptor, SIGNAL(onEnableClientAction(bool &, QDBusObjectPath, bool, QString)), this, SLOT(enableClientAction(bool &, QDBusObjectPath, bool, QString)));
-        connect(mNativeAdaptor, SIGNAL(onIsClientActionEnabled(bool &, QDBusObjectPath, QString)), this, SLOT(isClientActionEnabled(bool &, QDBusObjectPath, QString)));
-        connect(mNativeAdaptor, SIGNAL(onChangeClientActionShortcut(QPair<QString, qulonglong>&, QDBusObjectPath, QString, QString)), this, SLOT(changeClientActionShortcut(QPair<QString, qulonglong>&, QDBusObjectPath, QString, QString)));
-        connect(mNativeAdaptor, SIGNAL(onRemoveClientAction(bool &, QDBusObjectPath, QString)), this, SLOT(removeClientAction(bool &, QDBusObjectPath, QString)));
-        connect(mNativeAdaptor, SIGNAL(onDeactivateClientAction(bool &, QDBusObjectPath, QString)), this, SLOT(deactivateClientAction(bool &, QDBusObjectPath, QString)));
-        connect(mNativeAdaptor, SIGNAL(onGrabShortcut(uint, QString &, bool &, bool &, bool &, QDBusMessage)), this, SLOT(grabShortcut(uint, QString &, bool &, bool &, bool &, QDBusMessage)));
-        connect(mNativeAdaptor, SIGNAL(onCancelShortcutGrab()), this, SLOT(cancelShortcutGrab()));
+        connect(mNativeAdaptor, &NativeAdaptor::onAddClientAction,             this, &Core::addClientAction);
+        connect(mNativeAdaptor, &NativeAdaptor::onModifyClientAction,          this, &Core::modifyClientAction);
+        connect(mNativeAdaptor, &NativeAdaptor::onEnableClientAction,          this, &Core::enableClientAction);
+        connect(mNativeAdaptor, &NativeAdaptor::onIsClientActionEnabled,       this, &Core::isClientActionEnabled);
+        connect(mNativeAdaptor, &NativeAdaptor::onChangeClientActionShortcut,  this, &Core::changeClientActionShortcut);
+        connect(mNativeAdaptor, &NativeAdaptor::onRemoveClientAction,          this, &Core::removeClientAction);
+        connect(mNativeAdaptor, &NativeAdaptor::onDeactivateClientAction,      this, &Core::deactivateClientAction);
+        connect(mNativeAdaptor, &NativeAdaptor::onGrabShortcut,                this, &Core::grabShortcut);
+        connect(mNativeAdaptor, &NativeAdaptor::onCancelShortcutGrab,          this, &Core::cancelShortcutGrab);
 
         mShortcutGrabTimeout->setSingleShot(true);
 
-        connect(this, SIGNAL(onShortcutGrabbed()), this, SLOT(shortcutGrabbed()), Qt::QueuedConnection);
-        connect(mShortcutGrabTimeout, SIGNAL(timeout()), this, SLOT(shortcutGrabTimedout()));
+        connect(this,                 &Core::onShortcutGrabbed, this, &Core::shortcutGrabbed, Qt::QueuedConnection);
+        connect(mShortcutGrabTimeout, &QTimer::timeout,         this, &Core::shortcutGrabTimedout);
 
 
         log(LOG_NOTICE, "Started");

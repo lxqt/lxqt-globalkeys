@@ -42,18 +42,18 @@ ClientImpl::ClientImpl(Client *interface, QObject *parent)
     , mServiceWatcher(new QDBusServiceWatcher(QLatin1String("org.lxqt.global_key_shortcuts"), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForOwnerChange, this))
     , mDaemonPresent(false)
 {
-    connect(mServiceWatcher, SIGNAL(serviceUnregistered(QString)), this, SLOT(daemonDisappeared(QString)));
-    connect(mServiceWatcher, SIGNAL(serviceRegistered(QString)), this, SLOT(daemonAppeared(QString)));
+    connect(mServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &ClientImpl::daemonDisappeared);
+    connect(mServiceWatcher, &QDBusServiceWatcher::serviceRegistered,   this, &ClientImpl::daemonAppeared);
     mProxy = new org::lxqt::global_key_shortcuts::native(QLatin1String("org.lxqt.global_key_shortcuts"), QStringLiteral("/native"), QDBusConnection::sessionBus(), this);
     mDaemonPresent = mProxy->isValid();
 
-    connect(this, SIGNAL(emitShortcutGrabbed(QString)), mInterface, SIGNAL(shortcutGrabbed(QString)));
-    connect(this, SIGNAL(emitGrabShortcutFailed()), mInterface, SIGNAL(grabShortcutFailed()));
-    connect(this, SIGNAL(emitGrabShortcutCancelled()), mInterface, SIGNAL(grabShortcutCancelled()));
-    connect(this, SIGNAL(emitGrabShortcutTimedout()), mInterface, SIGNAL(grabShortcutTimedout()));
-    connect(this, SIGNAL(emitDaemonDisappeared()), mInterface, SIGNAL(daemonDisappeared()));
-    connect(this, SIGNAL(emitDaemonAppeared()), mInterface, SIGNAL(daemonAppeared()));
-    connect(this, SIGNAL(emitDaemonPresenceChanged(bool)), mInterface, SIGNAL(daemonPresenceChanged(bool)));
+    connect(this, &ClientImpl::emitShortcutGrabbed,       mInterface, &Client::shortcutGrabbed);
+    connect(this, &ClientImpl::emitGrabShortcutFailed,    mInterface, &Client::grabShortcutFailed);
+    connect(this, &ClientImpl::emitGrabShortcutCancelled, mInterface, &Client::grabShortcutCancelled);
+    connect(this, &ClientImpl::emitGrabShortcutTimedout,  mInterface, &Client::grabShortcutTimedout);
+    connect(this, &ClientImpl::emitDaemonDisappeared,     mInterface, &Client::daemonDisappeared);
+    connect(this, &ClientImpl::emitDaemonAppeared,        mInterface, &Client::daemonAppeared);
+    connect(this, &ClientImpl::emitDaemonPresenceChanged, mInterface, &Client::daemonPresenceChanged);
 }
 
 ClientImpl::~ClientImpl()
@@ -83,7 +83,7 @@ void ClientImpl::daemonAppeared(const QString &)
         ActionImpl *globalActionImpl = I.value()->impl;
 
         QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(mProxy->addClientAction(globalActionImpl->shortcut(), QDBusObjectPath(globalActionImpl->path()), globalActionImpl->description()));
-        connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher *)), this, SLOT(registrationFinished(QDBusPendingCallWatcher *)));
+        connect(watcher, &QDBusPendingCallWatcher::finished, this, &ClientImpl::registrationFinished);
         mPendingRegistrationsActions[watcher] = globalActionImpl;
         mPendingRegistrationsWatchers[globalActionImpl] = watcher;
         globalActionImpl->setRegistrationPending(true);
@@ -146,7 +146,7 @@ Action *ClientImpl::addClientAction(const QString &shortcut, const QString &path
     if (mDaemonPresent)
     {
         QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(mProxy->addClientAction(shortcut, QDBusObjectPath(path), description));
-        connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher *)), this, SLOT(registrationFinished(QDBusPendingCallWatcher *)));
+        connect(watcher, &QDBusPendingCallWatcher::finished, this, &ClientImpl::registrationFinished);
         mPendingRegistrationsActions[watcher] = globalActionImpl;
         mPendingRegistrationsWatchers[globalActionImpl] = watcher;
         globalActionImpl->setRegistrationPending(true);
@@ -256,7 +256,7 @@ void ClientImpl::grabShortcut(uint timeout)
 {
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(mProxy->grabShortcut(timeout), this);
 
-    connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher *)), this, SLOT(grabShortcutFinished(QDBusPendingCallWatcher *)));
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, &ClientImpl::grabShortcutFinished);
 }
 
 void ClientImpl::cancelShortcutGrab()

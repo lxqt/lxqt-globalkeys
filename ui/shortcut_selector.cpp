@@ -47,13 +47,13 @@ ShortcutSelector::ShortcutSelector(QWidget *parent)
     mShortcutTimer->setInterval(1000);
     mShortcutTimer->setSingleShot(false);
 
-    connect(this, SIGNAL(clicked()), this, SLOT(grabShortcut()));
+    connect(this, &ShortcutSelector::clicked, this, &ShortcutSelector::grabShortcut);
 
-    connect(mShortcutTimer, SIGNAL(timeout()), this, SLOT(shortcutTimer_timeout()));
-    connect(mClient, SIGNAL(grabShortcutCancelled()), this, SLOT(grabShortcut_fail()));
-    connect(mClient, SIGNAL(grabShortcutTimedout()), this, SLOT(grabShortcut_fail()));
-    connect(mClient, SIGNAL(grabShortcutFailed()), this, SLOT(grabShortcut_fail()));
-    connect(mClient, SIGNAL(shortcutGrabbed(QString)), this, SLOT(newShortcutGrabbed(QString)));
+    connect(mShortcutTimer, &QTimer::timeout, this, &ShortcutSelector::shortcutTimer_timeout);
+    connect(mClient, &GlobalKeyShortcut::Client::grabShortcutCancelled, this, &ShortcutSelector::grabShortcut_fail);
+    connect(mClient, &GlobalKeyShortcut::Client::grabShortcutTimedout,  this, &ShortcutSelector::grabShortcut_fail);
+    connect(mClient, &GlobalKeyShortcut::Client::grabShortcutFailed,    this, &ShortcutSelector::grabShortcut_fail);
+    connect(mClient, &GlobalKeyShortcut::Client::shortcutGrabbed,       this, &ShortcutSelector::newShortcutGrabbed);
 }
 
 void ShortcutSelector::grabShortcut(int timeout)
