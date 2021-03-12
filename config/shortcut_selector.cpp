@@ -59,7 +59,7 @@ void ShortcutSelector::init()
     mShortcutTimer->setInterval(1000);
     mShortcutTimer->setSingleShot(false);
 
-    connect(this, &ShortcutSelector::clicked, this, &ShortcutSelector::grabShortcut);
+    connect(this, &ShortcutSelector::clicked, this, [this] { grabShortcut(); });
 
     connect(mShortcutTimer, &QTimer::timeout, this, &ShortcutSelector::shortcutTimer_timeout);
 }
