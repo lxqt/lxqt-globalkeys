@@ -137,7 +137,7 @@
     <message>
         <location filename="../main_window.ui" line="118"/>
         <source>Multiple actions behaviour:</source>
-        <translation>複数定義されたアクションの動作:</translation>
+        <translation>重複するアクションの動作:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="126"/>
