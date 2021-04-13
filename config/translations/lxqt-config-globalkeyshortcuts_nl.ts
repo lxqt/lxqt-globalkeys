@@ -16,12 +16,12 @@
     <message>
         <location filename="../default_model.cpp" line="53"/>
         <source>Client</source>
-        <translation>Cliënt</translation>
+        <translation>Client</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="143"/>
         <source>Id</source>
-        <translation>Id</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="146"/>
@@ -41,7 +41,7 @@
     <message>
         <location filename="../default_model.cpp" line="155"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>Informatie</translation>
     </message>
 </context>
 <context>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation>Actie bewerken</translation>
+        <translation>Actie aanpassen</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
@@ -64,12 +64,12 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation>&amp;Ingeschakeld</translation>
+        <translation>Ing&amp;eschakeld</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation>&amp;Opdracht</translation>
+        <translation>Opdra&amp;cht</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
@@ -89,7 +89,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation>&amp;Dienst:</translation>
+        <translation>Di&amp;enst:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation>&amp;Gebruikersschil:</translation>
+        <translation>Vormgev&amp;ing:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../main_window.ui" line="55"/>
         <source>Add ...</source>
-        <translation>Toevoegen ...</translation>
+        <translation>Toevoegen…</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="65"/>
@@ -127,7 +127,7 @@
     <message>
         <location filename="../main_window.ui" line="75"/>
         <source>Modify ...</source>
-        <translation>Wijzigen ...</translation>
+        <translation>Aanpassen…</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="92"/>
@@ -176,14 +176,14 @@
     <message>
         <location filename="../main_window.cpp" line="187"/>
         <source>Restore Default</source>
-        <translation>Herstel standaard</translation>
+        <translation>Standaardwaarden</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="188"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation>Je ingestelde snelkoppelingen worden verwijderd.
-Wil je verder gaan?</translation>
+        <translation>Uw ingestelde sneltoetsen worden verwijderd.
+Weet u zeker dat u wilt doorgaan?</translation>
     </message>
 </context>
 </TS>
