@@ -143,25 +143,25 @@
         <location filename="../main_window.ui" line="126"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Prvé</translation>
+        <translation>Prvá</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="131"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Posledné</translation>
+        <translation>Posledná</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="136"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Žiadne</translation>
+        <translation>Žiadna</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="141"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Všetko</translation>
+        <translation>Všetky</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="166"/>
@@ -176,13 +176,13 @@
     <message>
         <location filename="../main_window.cpp" line="187"/>
         <source>Restore Default</source>
-        <translation>Vrátiť na východzie hodnoty</translation>
+        <translation>Vrátiť na predvolené hodnoty</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="188"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation>Vami určené klávesové skratky budú odobrané
+        <translation>Vami určené klávesové skratky budú odstránené.
 Naozaj to chcete?</translation>
     </message>
 </context>
