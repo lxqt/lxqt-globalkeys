@@ -94,7 +94,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation>&amp;Popis umiestnenia:</translation>
+        <translation>&amp;Cesta:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
@@ -132,12 +132,12 @@
     <message>
         <location filename="../main_window.ui" line="92"/>
         <source>Swap</source>
-        <translation>Prehodiť</translation>
+        <translation>Vymeniť</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="118"/>
         <source>Multiple actions behaviour:</source>
-        <translation>Chovanie pri viacerých akciách:</translation>
+        <translation>Správanie pri viacerých akciách:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="126"/>
