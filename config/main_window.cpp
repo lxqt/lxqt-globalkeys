@@ -69,10 +69,17 @@ MainWindow::MainWindow(QWidget *parent)
     mSortFilterProxyModel = new QSortFilterProxyModel(this);
 
     mSortFilterProxyModel->setSourceModel(mDefaultModel);
+    mSortFilterProxyModel->setFilterKeyColumn(-1);
+    mSortFilterProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     actions_TV->setModel(mSortFilterProxyModel);
 
     mSelectionModel = new QItemSelectionModel(actions_TV->model());
     actions_TV->setSelectionModel(mSelectionModel);
+
+    connect(filter_LE, &QLineEdit::textChanged, [this]{
+      auto filterTerm = filter_LE->text();
+      mSortFilterProxyModel->setFilterRegularExpression(filterTerm);
+    });
 
     connect(mSelectionModel, &QItemSelectionModel::selectionChanged, this, &MainWindow::selectionChanged);
 
