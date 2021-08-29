@@ -76,10 +76,7 @@ MainWindow::MainWindow(QWidget *parent)
     mSelectionModel = new QItemSelectionModel(actions_TV->model());
     actions_TV->setSelectionModel(mSelectionModel);
 
-    connect(filter_LE, &QLineEdit::textChanged, [this]{
-      auto filterTerm = filter_LE->text();
-      mSortFilterProxyModel->setFilterRegularExpression(filterTerm);
-    });
+    connect(filter_LE, &QLineEdit::textChanged, mSortFilterProxyModel, &QSortFilterProxyModel::setFilterFixedString);
 
     connect(mSelectionModel, &QItemSelectionModel::selectionChanged, this, &MainWindow::selectionChanged);
 
