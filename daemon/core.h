@@ -225,14 +225,13 @@ private:
     SenderByClientPath mSenderByClientPath; // add: path->sender
     ClientPathsBySender mClientPathsBySender; // disappear: sender->[path]
 
-
-    unsigned int NumLockMask;
-    unsigned int ScrollLockMask;
-    unsigned int CapsLockMask;
-    unsigned int AltMask;
-    unsigned int MetaMask;
-    unsigned int Level3Mask;
-    unsigned int Level5Mask;
+    // (UNUSED) const unsigned int NumLockMask;
+    // (UNUSED) const unsigned int ScrollLockMask;
+    // (UNUSED) const unsigned int CapsLockMask;
+    const unsigned int AltMask    = Mod1Mask;
+    const unsigned int MetaMask   = Mod4Mask;
+    const unsigned int Level3Mask = Mod5Mask; // note: mask swapped
+    const unsigned int Level5Mask = Mod3Mask; // note: mask swapped
 
     MultipleActionsBehaviour mMultipleActionsBehaviour;
 

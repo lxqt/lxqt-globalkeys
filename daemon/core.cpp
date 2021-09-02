@@ -390,10 +390,6 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     , mNativeAdaptor(nullptr)
     , mLastId(0ull)
     , mGrabbingShortcut(false)
-    , AltMask(Mod1Mask)
-    , MetaMask(Mod4Mask)
-    , Level3Mask(Mod5Mask)
-    , Level5Mask(Mod3Mask)
     , mMultipleActionsBehaviour(multipleActionsBehaviour)
     , mAllowGrabLocks(false)
     , mAllowGrabBaseSpecial(false)
@@ -402,7 +398,6 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     , mAllowGrabMiscKeypad(true)
     , mAllowGrabPrintable(false)
     , mSaveAllowed(false)
-
     , mShortcutGrabTimeout(new QTimer(this))
     , mShortcutGrabRequested(false)
 {
