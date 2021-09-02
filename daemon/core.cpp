@@ -1305,8 +1305,7 @@ void Core::run()
                         }
                         break;
 
-                        default:
-                            ;
+                        case MULTIPLE_ACTIONS_BEHAVIOUR__COUNT: break; // just a counter
                         }
                     }
                 }
