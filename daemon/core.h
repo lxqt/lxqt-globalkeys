@@ -87,18 +87,18 @@ private:
     Core &operator = (const Core &);
 
 private:
-    typedef QPair<KeyCode, unsigned int> X11Shortcut;
-    typedef QMap<X11Shortcut, QString> ShortcutByX11;
-    typedef QMap<QString, X11Shortcut> X11ByShortcut;
-    typedef QOrderedSet<qulonglong> Ids;
-    typedef QMap<QString, Ids> IdsByShortcut;
-    typedef QDBusObjectPath ClientPath;
-    typedef QMap<ClientPath, qulonglong> IdByClientPath;
-    typedef QPair<QString, BaseAction *> ShortcutAndAction;
-    typedef QMap<qulonglong, ShortcutAndAction> ShortcutAndActionById;
-    typedef QMap<ClientPath, QString> SenderByClientPath;
-    typedef QSet<ClientPath> ClientPaths;
-    typedef QMap<QString, ClientPaths> ClientPathsBySender;
+    using X11Shortcut           = QPair<KeyCode, unsigned int>;
+    using ShortcutByX11         = QMap<X11Shortcut, QString>;
+    using X11ByShortcut         = QMap<QString, X11Shortcut>;
+    using Ids                   = QOrderedSet<qulonglong>;
+    using IdsByShortcut         = QMap<QString, Ids>;
+    using ClientPath            = QDBusObjectPath;
+    using IdByClientPath        = QMap<ClientPath, qulonglong>;
+    using ShortcutAndAction     = QPair<QString, BaseAction *>;
+    using ShortcutAndActionById = QMap<qulonglong, ShortcutAndAction>;
+    using SenderByClientPath    = QMap<ClientPath, QString>;
+    using ClientPaths           = QSet<ClientPath>;
+    using ClientPathsBySender   = QMap<QString, ClientPaths>;
 
 private slots:
     void serviceDisappeared(const QString &sender);
