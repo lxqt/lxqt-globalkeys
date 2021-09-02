@@ -100,52 +100,52 @@ private:
     using ClientPaths           = QSet<ClientPath>;
     using ClientPathsBySender   = QMap<QString, ClientPaths>;
 
-private slots:
-    void serviceDisappeared(const QString &sender);
+private:
+    Q_INVOKABLE void serviceDisappeared(const QString &sender);
 
-    void addClientAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
-    void addMethodAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
-    void addCommandAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
+    Q_INVOKABLE void addClientAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
+    Q_INVOKABLE void addMethodAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
+    Q_INVOKABLE void addCommandAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
 
-    void modifyClientAction(qulonglong &result, const QDBusObjectPath &path, const QString &description, const QString &sender);
-    void modifyActionDescription(bool &result, const qulonglong &id, const QString &description);
-    void modifyMethodAction(bool &result, const qulonglong &id, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
-    void modifyCommandAction(bool &result, const qulonglong &id, const QString &command, const QStringList &arguments, const QString &description);
+    Q_INVOKABLE void modifyClientAction(qulonglong &result, const QDBusObjectPath &path, const QString &description, const QString &sender);
+    Q_INVOKABLE void modifyActionDescription(bool &result, const qulonglong &id, const QString &description);
+    Q_INVOKABLE void modifyMethodAction(bool &result, const qulonglong &id, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
+    Q_INVOKABLE void modifyCommandAction(bool &result, const qulonglong &id, const QString &command, const QStringList &arguments, const QString &description);
 
-    void enableClientAction(bool &result, const QDBusObjectPath &path, bool enabled, const QString &sender);
-    void isClientActionEnabled(bool &enabled, const QDBusObjectPath &path, const QString &sender);
-    void enableAction(bool &result, qulonglong id, bool enabled);
-    void isActionEnabled(bool &enabled, qulonglong id);
+    Q_INVOKABLE void enableClientAction(bool &result, const QDBusObjectPath &path, bool enabled, const QString &sender);
+    Q_INVOKABLE void isClientActionEnabled(bool &enabled, const QDBusObjectPath &path, const QString &sender);
+    Q_INVOKABLE void enableAction(bool &result, qulonglong id, bool enabled);
+    Q_INVOKABLE void isActionEnabled(bool &enabled, qulonglong id);
 
-    void getClientActionSender(QString &sender, qulonglong id);
+    Q_INVOKABLE void getClientActionSender(QString &sender, qulonglong id);
 
 
-    void changeClientActionShortcut(QPair<QString, qulonglong> &result, const QDBusObjectPath &path, const QString &shortcut, const QString &sender);
-    void changeShortcut(QString &result, const qulonglong &id, const QString &shortcut);
+    Q_INVOKABLE void changeClientActionShortcut(QPair<QString, qulonglong> &result, const QDBusObjectPath &path, const QString &shortcut, const QString &sender);
+    Q_INVOKABLE void changeShortcut(QString &result, const qulonglong &id, const QString &shortcut);
 
-    void swapActions(bool &result, const qulonglong &id1, const qulonglong &id2);
+    Q_INVOKABLE void swapActions(bool &result, const qulonglong &id1, const qulonglong &id2);
 
-    void removeClientAction(bool &result, const QDBusObjectPath &path, const QString &sender);
-    void removeAction(bool &result, const qulonglong &id);
+    Q_INVOKABLE void removeClientAction(bool &result, const QDBusObjectPath &path, const QString &sender);
+    Q_INVOKABLE void removeAction(bool &result, const qulonglong &id);
 
-    void deactivateClientAction(bool &result, const QDBusObjectPath &path, const QString &sender);
+    Q_INVOKABLE void deactivateClientAction(bool &result, const QDBusObjectPath &path, const QString &sender);
 
-    void setMultipleActionsBehaviour(const MultipleActionsBehaviour &behaviour);
-    void getMultipleActionsBehaviour(MultipleActionsBehaviour &result) const;
+    Q_INVOKABLE void setMultipleActionsBehaviour(const MultipleActionsBehaviour &behaviour);
+    Q_INVOKABLE void getMultipleActionsBehaviour(MultipleActionsBehaviour &result) const;
 
-    void getAllActionIds(QList<qulonglong> &result) const;
-    void getActionById(QPair<bool, GeneralActionInfo> &result, const qulonglong &id) const;
-    void getAllActions(QMap<qulonglong, GeneralActionInfo> &result) const;
+    Q_INVOKABLE void getAllActionIds(QList<qulonglong> &result) const;
+    Q_INVOKABLE void getActionById(QPair<bool, GeneralActionInfo> &result, const qulonglong &id) const;
+    Q_INVOKABLE void getAllActions(QMap<qulonglong, GeneralActionInfo> &result) const;
 
-    void getClientActionInfoById(QPair<bool, ClientActionInfo> &result, const qulonglong &id) const;
-    void getMethodActionInfoById(QPair<bool, MethodActionInfo> &result, const qulonglong &id) const;
-    void getCommandActionInfoById(QPair<bool, CommandActionInfo> &result, const qulonglong &id) const;
+    Q_INVOKABLE void getClientActionInfoById(QPair<bool, ClientActionInfo> &result, const qulonglong &id) const;
+    Q_INVOKABLE void getMethodActionInfoById(QPair<bool, MethodActionInfo> &result, const qulonglong &id) const;
+    Q_INVOKABLE void getCommandActionInfoById(QPair<bool, CommandActionInfo> &result, const qulonglong &id) const;
 
-    void grabShortcut(const uint &timeout, QString &shortcut, bool &failed, bool &cancelled, bool &timedout, const QDBusMessage &message);
-    void cancelShortcutGrab();
+    Q_INVOKABLE void grabShortcut(const uint &timeout, QString &shortcut, bool &failed, bool &cancelled, bool &timedout, const QDBusMessage &message);
+    Q_INVOKABLE void cancelShortcutGrab();
 
-    void shortcutGrabbed();
-    void shortcutGrabTimedout();
+    Q_INVOKABLE void shortcutGrabbed();
+    Q_INVOKABLE void shortcutGrabTimedout();
 
 private:
     bool enableActionNonGuarded(qulonglong id, bool enabled);
