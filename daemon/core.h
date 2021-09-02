@@ -202,6 +202,22 @@ private:
         }
         return false;
     }
+    constexpr bool isSuperKey(KeySym keySym, unsigned int modifiers) const {
+        switch (keySym) {
+        case 0:
+            // only MetaMask modifier is set (no key symbol)
+            return modifiers == MetaMask;
+
+        case XK_Super_L:
+        case XK_Super_R:
+        case XK_Meta_L:
+        case XK_Meta_R:
+            // meta key symbol with no modifers OR modifer matches MetaMask
+            return !modifiers || modifiers == MetaMask;
+        }
+
+        return false;
+    }
     constexpr bool isAllowed(KeySym keySym, unsigned int modifiers) const {
         switch (keySym)
         {
