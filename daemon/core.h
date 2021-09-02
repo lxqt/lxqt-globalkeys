@@ -25,9 +25,7 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#ifndef GLOBAL_ACTION_DAEMON__CORE__INCLUDED
-#define GLOBAL_ACTION_DAEMON__CORE__INCLUDED
-
+#pragma once
 
 #include <QThread>
 #include <QMap>
@@ -250,5 +248,3 @@ private:
 
     bool mSuppressX11ErrorMessages;
 };
-
-#endif // GLOBAL_ACTION_DAEMON__CORE__INCLUDED
