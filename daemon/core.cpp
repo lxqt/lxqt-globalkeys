@@ -1015,8 +1015,8 @@ void Core::run()
         allModifiers.insert(ignoreLocks);
     }
 
-    const QString metaLeft = QString::fromUtf8(XKeysymToString(XK_Super_L));
-    const QString metaRight = QString::fromUtf8(XKeysymToString(XK_Super_R));
+    const QString superLeft = QString::fromUtf8(XKeysymToString(XK_Super_L));
+    const QString superRight = QString::fromUtf8(XKeysymToString(XK_Super_R));
 
     char signal = 0;
     if (write(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)) == sizeof(signal))
@@ -1245,7 +1245,7 @@ void Core::run()
 
                     if (event.type == KeyPress)
                     {
-                        if ((shortcut == metaLeft) || (shortcut == metaRight))
+                        if ((shortcut == superLeft) || (shortcut == superRight))
                         {
                             keyReleaseExpected = true;
                             continue;
