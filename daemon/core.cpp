@@ -983,24 +983,18 @@ void Core::wakeX11Thread()
 void Core::run()
 {
     mX11EventLoopActive = true;
-
     XInitThreads();
 
     int (*oldx11ErrorHandler)(Display * display, XErrorEvent * errorEvent) = XSetErrorHandler(::x11ErrorHandler);
 
     mDisplay = XOpenDisplay(nullptr);
     XSynchronize(mDisplay, True);
-
     lockX11Error();
 
     Window rootWindow = DefaultRootWindow(mDisplay);
-
     XSelectInput(mDisplay, rootWindow, KeyPressMask | KeyReleaseMask);
-
     mInterClientCommunicationWindow = XCreateSimpleWindow(mDisplay, rootWindow, 0, 0, 1, 1, 0, 0, 0);
-
     XSelectInput(mDisplay, mInterClientCommunicationWindow, StructureNotifyMask);
-
     if (checkX11Error())
     {
         return;
