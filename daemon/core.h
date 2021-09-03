@@ -177,7 +177,6 @@ private:
     bool remoteXUngrabKey(const X11Shortcut &X11shortcut);
 
     QString grabOrReuseKey(const X11Shortcut &X11shortcut, const QString &shortcut);
-
     QString checkShortcut(const QString &shortcut, X11Shortcut &X11shortcut);
 
     constexpr bool isEscape(KeySym keySym, unsigned int modifiers) const { return ((keySym == XK_Escape) && (!modifiers)); }
@@ -391,16 +390,13 @@ private:
     }
 
     void saveConfig();
-
     void lockX11Error();
     bool checkX11Error(int level = LOG_NOTICE, uint timeout = 10);
-
     bool waitForX11Error(int level, uint timeout);
 
 private:
     bool mReady;
     bool mUseSyslog;
-
     int mMinLogLevel;
 
     int mX11ErrorPipe[2];
@@ -411,13 +407,11 @@ private:
     bool mX11EventLoopActive;
 
     mutable QMutex mX11ErrorMutex;
+    mutable QMutex mDataMutex;
 
     QDBusServiceWatcher *mServiceWatcher;
     DaemonAdaptor *mDaemonAdaptor;
     NativeAdaptor *mNativeAdaptor;
-
-    mutable QMutex mDataMutex;
-
     qulonglong mLastId;
 
     bool mGrabbingShortcut;
@@ -450,9 +444,8 @@ private:
 
     bool mSaveAllowed;
 
-    QTimer *mShortcutGrabTimeout;
+    QTimer* mShortcutGrabTimeout;
     QDBusMessage mShortcutGrabRequest;
     bool mShortcutGrabRequested;
-
     bool mSuppressX11ErrorMessages;
 };
