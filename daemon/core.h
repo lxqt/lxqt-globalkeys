@@ -83,8 +83,10 @@ signals:
     void onShortcutGrabbed();
 
 private:
-    Core(const Core &);
-    Core &operator = (const Core &);
+    Core(const Core&) = delete;
+    Core(const Core&&) = delete;
+    Core& operator =(const Core&) = delete;
+    Core& operator =(const Core&&) = delete;
 
 private:
     using X11Shortcut           = QPair<KeyCode, unsigned int>;
