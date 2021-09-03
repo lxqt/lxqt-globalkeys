@@ -1000,24 +1000,33 @@ void Core::run()
         return;
     }
 
-    QSet<unsigned int> allModifiers;
-    unsigned int allShifts = ShiftMask | ControlMask | AltMask | MetaMask | Level3Mask | Level5Mask;
-    unsigned int ignoreMask = 0xff ^ allShifts;
-    for (unsigned int i = 0; i < 0x100; ++i)
-    {
-        unsigned int ignoreLocks = i & ignoreMask;
-        allModifiers.insert(ignoreLocks);
-    }
+    runEventLoop(rootWindow);
 
-    const QString superLeft = QString::fromUtf8(XKeysymToString(XK_Super_L));
-    const QString superRight = QString::fromUtf8(XKeysymToString(XK_Super_R));
+    lockX11Error();
+    XUngrabKey(mDisplay, AnyKey, AnyModifier, rootWindow);
+    XSetErrorHandler(oldx11ErrorHandler);
+    XCloseDisplay(mDisplay);
+    checkX11Error(0);
+}
 
+void Core::runEventLoop(Window rootWindow)
+{
     char signal = 0;
     if (write(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)) == sizeof(signal))
     {
-        bool keyReleaseExpected = false;
-
         XEvent event;
+        bool keyReleaseExpected = false;
+        const QString superLeft = QString::fromUtf8(XKeysymToString(XK_Super_L));
+        const QString superRight = QString::fromUtf8(XKeysymToString(XK_Super_R));
+        QSet<unsigned int> allModifiers;
+        unsigned int allShifts = ShiftMask | ControlMask | AltMask | MetaMask | Level3Mask | Level5Mask;
+        unsigned int ignoreMask = 0xff ^ allShifts;
+        for (unsigned int i = 0; i < 0x100; ++i)
+        {
+            unsigned int ignoreLocks = i & ignoreMask;
+            allModifiers.insert(ignoreLocks);
+        }
+
         while (mX11EventLoopActive)
         {
             XPeekEvent(mDisplay, &event);
@@ -1576,19 +1585,13 @@ void Core::run()
                             mDataMutex.unlock();
                         }
                         break;
+                        } // end of switch-case
 
-                        }
                     }
                 }
             }
         }
     }
-
-    lockX11Error();
-    XUngrabKey(mDisplay, AnyKey, AnyModifier, rootWindow);
-    XSetErrorHandler(oldx11ErrorHandler);
-    XCloseDisplay(mDisplay);
-    checkX11Error(0);
 }
 
 void Core::serviceDisappeared(const QString &sender)

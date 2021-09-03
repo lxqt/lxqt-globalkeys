@@ -170,6 +170,7 @@ private:
     void wakeX11Thread();
 
     void run() override;
+    void runEventLoop(Window rootWindow);
 
     KeyCode remoteStringToKeycode(const QString &str);
     QString remoteKeycodeToString(KeyCode keyCode);
