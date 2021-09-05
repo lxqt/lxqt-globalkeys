@@ -160,7 +160,7 @@
         <location filename="../main_window.ui" line="150"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation>Nijedna</translation>
+        <translation>Ništa</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="155"/>
