@@ -118,7 +118,7 @@
     <message>
         <location filename="../main_window.ui" line="24"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Chercher</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="69"/>
@@ -189,7 +189,7 @@
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
         <translation>Vos raccourcis définis seront supprimés.
-Voulez-vous procéder&#x202f;?</translation>
+Voulez-vous procéder ?</translation>
     </message>
 </context>
 </TS>
