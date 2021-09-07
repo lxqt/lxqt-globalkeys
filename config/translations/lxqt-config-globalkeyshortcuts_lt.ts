@@ -117,7 +117,7 @@
     <message>
         <location filename="../main_window.ui" line="24"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieškoti</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="69"/>

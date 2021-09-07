@@ -94,7 +94,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation>&amp;Pad:</translation>
+        <translation>&amp;Locatie:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../main_window.ui" line="24"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="69"/>
