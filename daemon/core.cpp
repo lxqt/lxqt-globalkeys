@@ -390,10 +390,6 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     , mNativeAdaptor(nullptr)
     , mLastId(0ull)
     , mGrabbingShortcut(false)
-    , AltMask(Mod1Mask)
-    , MetaMask(Mod4Mask)
-    , Level3Mask(Mod5Mask)
-    , Level5Mask(Mod3Mask)
     , mMultipleActionsBehaviour(multipleActionsBehaviour)
     , mAllowGrabLocks(false)
     , mAllowGrabBaseSpecial(false)
@@ -402,7 +398,6 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     , mAllowGrabMiscKeypad(true)
     , mAllowGrabPrintable(false)
     , mSaveAllowed(false)
-
     , mShortcutGrabTimeout(new QTimer(this))
     , mShortcutGrabRequested(false)
 {
@@ -985,251 +980,53 @@ void Core::wakeX11Thread()
     }
 }
 
-bool Core::isEscape(KeySym keySym, unsigned int modifiers)
-{
-    return ((keySym == XK_Escape) && (!modifiers));
-}
-
-bool Core::isModifier(KeySym keySym)
-{
-    switch (keySym)
-    {
-    case XK_Shift_L:
-    case XK_Shift_R:
-    case XK_Control_L:
-    case XK_Control_R:
-    case XK_Meta_L:
-    case XK_Meta_R:
-    case XK_Alt_L:
-    case XK_Alt_R:
-    case XK_Super_L:
-    case XK_Super_R:
-    case XK_Hyper_L:
-    case XK_Hyper_R:
-    case XK_ISO_Level3_Shift:
-    case XK_ISO_Level5_Shift:
-    case XK_ISO_Group_Shift:
-        return true;
-
-    }
-    return false;
-}
-
-bool Core::isAllowed(KeySym keySym, unsigned int modifiers)
-{
-    switch (keySym)
-    {
-    case XK_Scroll_Lock:
-    case XK_Num_Lock:
-    case XK_Caps_Lock:
-    case XK_ISO_Lock:
-    case XK_ISO_Level3_Lock:
-    case XK_ISO_Level5_Lock:
-    case XK_ISO_Group_Lock:
-    case XK_ISO_Next_Group_Lock:
-    case XK_ISO_Prev_Group_Lock:
-    case XK_ISO_First_Group_Lock:
-    case XK_ISO_Last_Group_Lock:
-        if (!modifiers)
-        {
-            return mAllowGrabLocks;
-        }
-        break;
-
-    case XK_Home:
-    case XK_Left:
-    case XK_Up:
-    case XK_Right:
-    case XK_Down:
-    case XK_Page_Up:
-    case XK_Page_Down:
-    case XK_End:
-    case XK_Delete:
-    case XK_Insert:
-    case XK_BackSpace:
-    case XK_Tab:
-    case XK_Return:
-    case XK_space:
-        if (!modifiers)
-        {
-            return mAllowGrabBaseSpecial;
-        }
-        break;
-
-    case XK_Pause:
-    case XK_Print:
-    case XK_Linefeed:
-    case XK_Clear:
-    case XK_Multi_key:
-    case XK_Codeinput:
-    case XK_SingleCandidate:
-    case XK_MultipleCandidate:
-    case XK_PreviousCandidate:
-    case XK_Begin:
-    case XK_Select:
-    case XK_Execute:
-    case XK_Undo:
-    case XK_Redo:
-    case XK_Menu:
-    case XK_Find:
-    case XK_Cancel:
-    case XK_Help:
-    case XK_Sys_Req:
-    case XK_Break:
-        if (!modifiers)
-        {
-            return mAllowGrabMiscSpecial;
-        }
-        break;
-
-    case XK_KP_Enter:
-    case XK_KP_Home:
-    case XK_KP_Left:
-    case XK_KP_Up:
-    case XK_KP_Right:
-    case XK_KP_Down:
-    case XK_KP_Page_Up:
-    case XK_KP_Page_Down:
-    case XK_KP_End:
-    case XK_KP_Begin:
-    case XK_KP_Insert:
-    case XK_KP_Delete:
-    case XK_KP_Multiply:
-    case XK_KP_Add:
-    case XK_KP_Subtract:
-    case XK_KP_Decimal:
-    case XK_KP_Divide:
-    case XK_KP_0:
-    case XK_KP_1:
-    case XK_KP_2:
-    case XK_KP_3:
-    case XK_KP_4:
-    case XK_KP_5:
-    case XK_KP_6:
-    case XK_KP_7:
-    case XK_KP_8:
-    case XK_KP_9:
-        if (!modifiers)
-        {
-            return mAllowGrabBaseKeypad;
-        }
-        break;
-
-    case XK_KP_Space:
-    case XK_KP_Tab:
-    case XK_KP_F1:
-    case XK_KP_F2:
-    case XK_KP_F3:
-    case XK_KP_F4:
-    case XK_KP_Equal:
-    case XK_KP_Separator:
-        if (!modifiers)
-        {
-            return mAllowGrabMiscKeypad;
-        }
-        break;
-
-    case XK_grave:
-    case XK_1:
-    case XK_2:
-    case XK_3:
-    case XK_4:
-    case XK_5:
-    case XK_6:
-    case XK_7:
-    case XK_8:
-    case XK_9:
-    case XK_0:
-    case XK_minus:
-    case XK_equal:
-    case XK_Q:
-    case XK_W:
-    case XK_E:
-    case XK_R:
-    case XK_T:
-    case XK_Y:
-    case XK_U:
-    case XK_I:
-    case XK_O:
-    case XK_P:
-    case XK_bracketleft:
-    case XK_bracketright:
-    case XK_backslash:
-    case XK_A:
-    case XK_S:
-    case XK_D:
-    case XK_F:
-    case XK_G:
-    case XK_H:
-    case XK_J:
-    case XK_K:
-    case XK_L:
-    case XK_semicolon:
-    case XK_apostrophe:
-    case XK_Z:
-    case XK_X:
-    case XK_C:
-    case XK_V:
-    case XK_B:
-    case XK_N:
-    case XK_M:
-    case XK_comma:
-    case XK_period:
-    case XK_slash:
-        if (!(modifiers & ~(ShiftMask | Level3Mask | Level5Mask)))
-        {
-            return mAllowGrabPrintable;
-        }
-        break;
-
-    }
-    return true;
-}
-
 void Core::run()
 {
     mX11EventLoopActive = true;
-
     XInitThreads();
 
     int (*oldx11ErrorHandler)(Display * display, XErrorEvent * errorEvent) = XSetErrorHandler(::x11ErrorHandler);
 
     mDisplay = XOpenDisplay(nullptr);
     XSynchronize(mDisplay, True);
-
     lockX11Error();
 
     Window rootWindow = DefaultRootWindow(mDisplay);
-
     XSelectInput(mDisplay, rootWindow, KeyPressMask | KeyReleaseMask);
-
     mInterClientCommunicationWindow = XCreateSimpleWindow(mDisplay, rootWindow, 0, 0, 1, 1, 0, 0, 0);
-
     XSelectInput(mDisplay, mInterClientCommunicationWindow, StructureNotifyMask);
-
     if (checkX11Error())
     {
         return;
     }
 
-    QSet<unsigned int> allModifiers;
-    unsigned int allShifts = ShiftMask | ControlMask | AltMask | MetaMask | Level3Mask | Level5Mask;
-    unsigned int ignoreMask = 0xff ^ allShifts;
-    for (unsigned int i = 0; i < 0x100; ++i)
-    {
-        unsigned int ignoreLocks = i & ignoreMask;
-        allModifiers.insert(ignoreLocks);
-    }
+    runEventLoop(rootWindow);
 
-    const QString metaLeft = QString::fromUtf8(XKeysymToString(XK_Super_L));
-    const QString metaRight = QString::fromUtf8(XKeysymToString(XK_Super_R));
+    lockX11Error();
+    XUngrabKey(mDisplay, AnyKey, AnyModifier, rootWindow);
+    XSetErrorHandler(oldx11ErrorHandler);
+    XCloseDisplay(mDisplay);
+    checkX11Error(0);
+}
 
+void Core::runEventLoop(Window rootWindow)
+{
     char signal = 0;
     if (write(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)) == sizeof(signal))
     {
-        bool keyReleaseExpected = false;
-
         XEvent event;
+        bool keyReleaseExpected = false;
+        const QString superLeft = QString::fromUtf8(XKeysymToString(XK_Super_L));
+        const QString superRight = QString::fromUtf8(XKeysymToString(XK_Super_R));
+        QSet<unsigned int> allModifiers;
+        unsigned int allShifts = ShiftMask | ControlMask | AltMask | MetaMask | Level3Mask | Level5Mask;
+        unsigned int ignoreMask = 0xff ^ allShifts;
+        for (unsigned int i = 0; i < 0x100; ++i)
+        {
+            unsigned int ignoreLocks = i & ignoreMask;
+            allModifiers.insert(ignoreLocks);
+        }
+
         while (mX11EventLoopActive)
         {
             XPeekEvent(mDisplay, &event);
@@ -1451,7 +1248,7 @@ void Core::run()
 
                     if (event.type == KeyPress)
                     {
-                        if ((shortcut == metaLeft) || (shortcut == metaRight))
+                        if ((shortcut == superLeft) || (shortcut == superRight))
                         {
                             keyReleaseExpected = true;
                             continue;
@@ -1511,8 +1308,7 @@ void Core::run()
                         }
                         break;
 
-                        default:
-                            ;
+                        case MULTIPLE_ACTIONS_BEHAVIOUR__COUNT: break; // just a counter
                         }
                     }
                 }
@@ -1789,19 +1585,13 @@ void Core::run()
                             mDataMutex.unlock();
                         }
                         break;
+                        } // end of switch-case
 
-                        }
                     }
                 }
             }
         }
     }
-
-    lockX11Error();
-    XUngrabKey(mDisplay, AnyKey, AnyModifier, rootWindow);
-    XSetErrorHandler(oldx11ErrorHandler);
-    XCloseDisplay(mDisplay);
-    checkX11Error(0);
 }
 
 void Core::serviceDisappeared(const QString &sender)

@@ -25,9 +25,7 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#ifndef GLOBAL_ACTION_DAEMON__CORE__INCLUDED
-#define GLOBAL_ACTION_DAEMON__CORE__INCLUDED
-
+#pragma once
 
 #include <QThread>
 #include <QMap>
@@ -85,24 +83,26 @@ signals:
     void onShortcutGrabbed();
 
 private:
-    Core(const Core &);
-    Core &operator = (const Core &);
+    Core(const Core&) = delete;
+    Core(const Core&&) = delete;
+    Core& operator =(const Core&) = delete;
+    Core& operator =(const Core&&) = delete;
 
 private:
-    typedef QPair<KeyCode, unsigned int> X11Shortcut;
-    typedef QMap<X11Shortcut, QString> ShortcutByX11;
-    typedef QMap<QString, X11Shortcut> X11ByShortcut;
-    typedef QOrderedSet<qulonglong> Ids;
-    typedef QMap<QString, Ids> IdsByShortcut;
-    typedef QDBusObjectPath ClientPath;
-    typedef QMap<ClientPath, qulonglong> IdByClientPath;
-    typedef QPair<QString, BaseAction *> ShortcutAndAction;
-    typedef QMap<qulonglong, ShortcutAndAction> ShortcutAndActionById;
-    typedef QMap<ClientPath, QString> SenderByClientPath;
-    typedef QSet<ClientPath> ClientPaths;
-    typedef QMap<QString, ClientPaths> ClientPathsBySender;
+    using X11Shortcut           = QPair<KeyCode, unsigned int>;
+    using ShortcutByX11         = QMap<X11Shortcut, QString>;
+    using X11ByShortcut         = QMap<QString, X11Shortcut>;
+    using Ids                   = QOrderedSet<qulonglong>;
+    using IdsByShortcut         = QMap<QString, Ids>;
+    using ClientPath            = QDBusObjectPath;
+    using IdByClientPath        = QMap<ClientPath, qulonglong>;
+    using ShortcutAndAction     = QPair<QString, BaseAction *>;
+    using ShortcutAndActionById = QMap<qulonglong, ShortcutAndAction>;
+    using SenderByClientPath    = QMap<ClientPath, QString>;
+    using ClientPaths           = QSet<ClientPath>;
+    using ClientPathsBySender   = QMap<QString, ClientPaths>;
 
-private slots:
+private:
     void serviceDisappeared(const QString &sender);
 
     void addClientAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
@@ -170,6 +170,7 @@ private:
     void wakeX11Thread();
 
     void run() override;
+    void runEventLoop(Window rootWindow);
 
     KeyCode remoteStringToKeycode(const QString &str);
     QString remoteKeycodeToString(KeyCode keyCode);
@@ -177,24 +178,226 @@ private:
     bool remoteXUngrabKey(const X11Shortcut &X11shortcut);
 
     QString grabOrReuseKey(const X11Shortcut &X11shortcut, const QString &shortcut);
-
     QString checkShortcut(const QString &shortcut, X11Shortcut &X11shortcut);
 
-    bool isEscape(KeySym keySym, unsigned int modifiers);
-    bool isModifier(KeySym keySym);
-    bool isAllowed(KeySym keySym, unsigned int modifiers);
+    constexpr bool isEscape(KeySym keySym, unsigned int modifiers) const { return ((keySym == XK_Escape) && (!modifiers)); }
+    constexpr bool isModifier(KeySym keySym) const {
+        switch (keySym)
+        {
+        case XK_Shift_L:
+        case XK_Shift_R:
+        case XK_Control_L:
+        case XK_Control_R:
+        case XK_Meta_L:
+        case XK_Meta_R:
+        case XK_Alt_L:
+        case XK_Alt_R:
+        case XK_Super_L: // FIXME: Super_L is not a modifier (X bug?)
+        case XK_Super_R: // FIXME: Super_R is not a modifier (X bug?)
+        case XK_Hyper_L:
+        case XK_Hyper_R:
+        case XK_ISO_Level3_Shift:
+        case XK_ISO_Level5_Shift:
+        case XK_ISO_Group_Shift:
+            return true;
+
+        }
+        return false;
+    }
+    constexpr bool isSuperKey(KeySym keySym, unsigned int modifiers) const {
+        switch (keySym) {
+        case 0:
+            // only MetaMask modifier is set (no key symbol)
+            return modifiers == MetaMask;
+
+        case XK_Super_L:
+        case XK_Super_R:
+        case XK_Meta_L:
+        case XK_Meta_R:
+            // meta key symbol with no modifers OR modifer matches MetaMask
+            return !modifiers || modifiers == MetaMask;
+        }
+
+        return false;
+    }
+    constexpr bool isAllowed(KeySym keySym, unsigned int modifiers) const {
+        switch (keySym)
+        {
+        case XK_Scroll_Lock:
+        case XK_Num_Lock:
+        case XK_Caps_Lock:
+        case XK_ISO_Lock:
+        case XK_ISO_Level3_Lock:
+        case XK_ISO_Level5_Lock:
+        case XK_ISO_Group_Lock:
+        case XK_ISO_Next_Group_Lock:
+        case XK_ISO_Prev_Group_Lock:
+        case XK_ISO_First_Group_Lock:
+        case XK_ISO_Last_Group_Lock:
+            if (!modifiers)
+            {
+                return mAllowGrabLocks;
+            }
+            break;
+
+        case XK_Home:
+        case XK_Left:
+        case XK_Up:
+        case XK_Right:
+        case XK_Down:
+        case XK_Page_Up:
+        case XK_Page_Down:
+        case XK_End:
+        case XK_Delete:
+        case XK_Insert:
+        case XK_BackSpace:
+        case XK_Tab:
+        case XK_Return:
+        case XK_space:
+            if (!modifiers)
+            {
+                return mAllowGrabBaseSpecial;
+            }
+            break;
+
+        case XK_Pause:
+        case XK_Print:
+        case XK_Linefeed:
+        case XK_Clear:
+        case XK_Multi_key:
+        case XK_Codeinput:
+        case XK_SingleCandidate:
+        case XK_MultipleCandidate:
+        case XK_PreviousCandidate:
+        case XK_Begin:
+        case XK_Select:
+        case XK_Execute:
+        case XK_Undo:
+        case XK_Redo:
+        case XK_Menu:
+        case XK_Find:
+        case XK_Cancel:
+        case XK_Help:
+        case XK_Sys_Req:
+        case XK_Break:
+            if (!modifiers)
+            {
+                return mAllowGrabMiscSpecial;
+            }
+            break;
+
+        case XK_KP_Enter:
+        case XK_KP_Home:
+        case XK_KP_Left:
+        case XK_KP_Up:
+        case XK_KP_Right:
+        case XK_KP_Down:
+        case XK_KP_Page_Up:
+        case XK_KP_Page_Down:
+        case XK_KP_End:
+        case XK_KP_Begin:
+        case XK_KP_Insert:
+        case XK_KP_Delete:
+        case XK_KP_Multiply:
+        case XK_KP_Add:
+        case XK_KP_Subtract:
+        case XK_KP_Decimal:
+        case XK_KP_Divide:
+        case XK_KP_0:
+        case XK_KP_1:
+        case XK_KP_2:
+        case XK_KP_3:
+        case XK_KP_4:
+        case XK_KP_5:
+        case XK_KP_6:
+        case XK_KP_7:
+        case XK_KP_8:
+        case XK_KP_9:
+            if (!modifiers)
+            {
+                return mAllowGrabBaseKeypad;
+            }
+            break;
+
+        case XK_KP_Space:
+        case XK_KP_Tab:
+        case XK_KP_F1:
+        case XK_KP_F2:
+        case XK_KP_F3:
+        case XK_KP_F4:
+        case XK_KP_Equal:
+        case XK_KP_Separator:
+            if (!modifiers)
+            {
+                return mAllowGrabMiscKeypad;
+            }
+            break;
+
+        case XK_grave:
+        case XK_1:
+        case XK_2:
+        case XK_3:
+        case XK_4:
+        case XK_5:
+        case XK_6:
+        case XK_7:
+        case XK_8:
+        case XK_9:
+        case XK_0:
+        case XK_minus:
+        case XK_equal:
+        case XK_Q:
+        case XK_W:
+        case XK_E:
+        case XK_R:
+        case XK_T:
+        case XK_Y:
+        case XK_U:
+        case XK_I:
+        case XK_O:
+        case XK_P:
+        case XK_bracketleft:
+        case XK_bracketright:
+        case XK_backslash:
+        case XK_A:
+        case XK_S:
+        case XK_D:
+        case XK_F:
+        case XK_G:
+        case XK_H:
+        case XK_J:
+        case XK_K:
+        case XK_L:
+        case XK_semicolon:
+        case XK_apostrophe:
+        case XK_Z:
+        case XK_X:
+        case XK_C:
+        case XK_V:
+        case XK_B:
+        case XK_N:
+        case XK_M:
+        case XK_comma:
+        case XK_period:
+        case XK_slash:
+            if (!(modifiers & ~(ShiftMask | Level3Mask | Level5Mask)))
+            {
+                return mAllowGrabPrintable;
+            }
+            break;
+
+        }
+        return true;
+    }
 
     void saveConfig();
-
     void lockX11Error();
     bool checkX11Error(int level = LOG_NOTICE, uint timeout = 10);
-
     bool waitForX11Error(int level, uint timeout);
 
 private:
     bool mReady;
     bool mUseSyslog;
-
     int mMinLogLevel;
 
     int mX11ErrorPipe[2];
@@ -205,13 +408,11 @@ private:
     bool mX11EventLoopActive;
 
     mutable QMutex mX11ErrorMutex;
+    mutable QMutex mDataMutex;
 
     QDBusServiceWatcher *mServiceWatcher;
     DaemonAdaptor *mDaemonAdaptor;
     NativeAdaptor *mNativeAdaptor;
-
-    mutable QMutex mDataMutex;
-
     qulonglong mLastId;
 
     bool mGrabbingShortcut;
@@ -225,14 +426,13 @@ private:
     SenderByClientPath mSenderByClientPath; // add: path->sender
     ClientPathsBySender mClientPathsBySender; // disappear: sender->[path]
 
-
-    unsigned int NumLockMask;
-    unsigned int ScrollLockMask;
-    unsigned int CapsLockMask;
-    unsigned int AltMask;
-    unsigned int MetaMask;
-    unsigned int Level3Mask;
-    unsigned int Level5Mask;
+    // (UNUSED) const unsigned int NumLockMask;
+    // (UNUSED) const unsigned int ScrollLockMask;
+    // (UNUSED) const unsigned int CapsLockMask;
+    const unsigned int AltMask    = Mod1Mask;
+    const unsigned int MetaMask   = Mod4Mask;
+    const unsigned int Level3Mask = Mod5Mask; // note: mask swapped
+    const unsigned int Level5Mask = Mod3Mask; // note: mask swapped
 
     MultipleActionsBehaviour mMultipleActionsBehaviour;
 
@@ -245,11 +445,8 @@ private:
 
     bool mSaveAllowed;
 
-    QTimer *mShortcutGrabTimeout;
+    QTimer* mShortcutGrabTimeout;
     QDBusMessage mShortcutGrabRequest;
     bool mShortcutGrabRequested;
-
     bool mSuppressX11ErrorMessages;
 };
-
-#endif // GLOBAL_ACTION_DAEMON__CORE__INCLUDED
