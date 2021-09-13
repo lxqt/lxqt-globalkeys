@@ -146,6 +146,7 @@ private:
     void grabShortcut(const uint &timeout, QString &shortcut, bool &failed, bool &cancelled, bool &timedout, const QDBusMessage &message);
     void cancelShortcutGrab();
 
+    void on_shortcut(const Ids& ids) const;
     void shortcutGrabbed();
     void shortcutGrabTimedout();
 
