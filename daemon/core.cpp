@@ -1560,10 +1560,12 @@ void Core::on_shortcut(const Ids& ids) const
     {
         auto lastIds = ids.end();
         for (auto idi = ids.begin(); idi != lastIds; ++idi)
+        {
             if (mShortcutAndActionById[*idi].second->call())
             {
                 break;
             }
+        }
     }
     break;
 
