@@ -1519,6 +1519,7 @@ void Core::updateShortcutState(XEvent& event, bool& keyReleaseExpected, unsigned
 {
     if (event.type == KeyRelease)
     {
+        log(LOG_DEBUG, "KeyRelease 1 -> %08x %08x", event.xkey.state, event.xkey.keycode);
         event.xkey.state &= ~allShifts; // Modifier keys must not use shift states.
     }
 
@@ -1537,11 +1538,11 @@ void Core::updateShortcutState(XEvent& event, bool& keyReleaseExpected, unsigned
             keyReleaseExpected = true;
             return;
         }
-        log(LOG_DEBUG, "KeyPress %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
+        log(LOG_DEBUG, "KeyPress %08x %08x %s", event.xkey.state, event.xkey.keycode, qPrintable(shortcut));
     }
     else
     {
-        log(LOG_DEBUG, "KeyRelease %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
+        log(LOG_DEBUG, "KeyRelease 2 -> %08x %08x %s", event.xkey.state, event.xkey.keycode, qPrintable(shortcut));
     }
 
     IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
