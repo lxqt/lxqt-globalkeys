@@ -171,6 +171,7 @@ private:
 
     void run() override;
     void runEventLoop(Window rootWindow);
+    void updateShortcutState(XEvent& event, bool& keyReleaseExpected, unsigned int allShifts);
 
     KeyCode remoteStringToKeycode(const QString &str);
     QString remoteKeycodeToString(KeyCode keyCode);
@@ -433,6 +434,9 @@ private:
     const unsigned int MetaMask   = Mod4Mask;
     const unsigned int Level3Mask = Mod5Mask; // note: mask swapped
     const unsigned int Level5Mask = Mod3Mask; // note: mask swapped
+
+    const QString superLeft  = QString::fromUtf8(XKeysymToString(XK_Super_L));
+    const QString superRight = QString::fromUtf8(XKeysymToString(XK_Super_R));
 
     MultipleActionsBehaviour mMultipleActionsBehaviour;
 

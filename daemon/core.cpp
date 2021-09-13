@@ -1016,8 +1016,6 @@ void Core::runEventLoop(Window rootWindow)
     {
         XEvent event;
         bool keyReleaseExpected = false;
-        const QString superLeft = QString::fromUtf8(XKeysymToString(XK_Super_L));
-        const QString superRight = QString::fromUtf8(XKeysymToString(XK_Super_R));
         QSet<unsigned int> allModifiers;
         unsigned int allShifts = ShiftMask | ControlMask | AltMask | MetaMask | Level3Mask | Level5Mask;
         unsigned int ignoreMask = 0xff ^ allShifts;
@@ -1233,84 +1231,7 @@ void Core::runEventLoop(Window rootWindow)
                 }
                 else
                 {
-                    if (event.type == KeyRelease)
-                    {
-                        event.xkey.state &= ~allShifts; // Modifier keys must not use shift states.
-                    }
-
-                    X11Shortcut shortcutKey = qMakePair(static_cast<KeyCode>(event.xkey.keycode), event.xkey.state & allShifts);
-                    ShortcutByX11::const_iterator shortcutIt = mShortcutByX11.constFind(shortcutKey);
-                    if (shortcutIt == mShortcutByX11.constEnd())
-                    {
-                        continue;
-                    }
-                    const QString& shortcut = shortcutIt.value();
-
-                    if (event.type == KeyPress)
-                    {
-                        if ((shortcut == superLeft) || (shortcut == superRight))
-                        {
-                            keyReleaseExpected = true;
-                            continue;
-                        }
-                        log(LOG_DEBUG, "KeyPress %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
-                    }
-                    else
-                    {
-                        log(LOG_DEBUG, "KeyRelease %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
-                    }
-
-                    IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
-                    if (idsByShortcut != mIdsByShortcut.end())
-                    {
-                        Ids &ids = idsByShortcut.value();
-                        switch (mMultipleActionsBehaviour)
-                        {
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
-                        {
-                            Ids::iterator lastIds = ids.end();
-                            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
-                                if (mShortcutAndActionById[*idi].second->call())
-                                {
-                                    break;
-                                }
-                        }
-                        break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_LAST:
-                        {
-                            Ids::iterator firstIds = ids.begin();
-                            for (Ids::iterator idi = ids.end(); idi != firstIds;)
-                            {
-                                --idi;
-                                if (mShortcutAndActionById[*idi].second->call())
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_NONE:
-                            if (ids.size() == 1)
-                            {
-                                mShortcutAndActionById[*(ids.begin())].second->call();
-                            }
-                            break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_ALL:
-                        {
-                            Ids::iterator lastIds = ids.end();
-                            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
-                            {
-                                mShortcutAndActionById[*idi].second->call();
-                            }
-                        }
-                        break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR__COUNT: break; // just a counter
-                        }
-                    }
+                    updateShortcutState(event, keyReleaseExpected, allShifts);
                 }
 
             }
@@ -1590,6 +1511,88 @@ void Core::runEventLoop(Window rootWindow)
                     }
                 }
             }
+        }
+    }
+}
+
+void Core::updateShortcutState(XEvent& event, bool& keyReleaseExpected, unsigned int allShifts)
+{
+    if (event.type == KeyRelease)
+    {
+        event.xkey.state &= ~allShifts; // Modifier keys must not use shift states.
+    }
+
+    X11Shortcut shortcutKey = qMakePair(static_cast<KeyCode>(event.xkey.keycode), event.xkey.state & allShifts);
+    ShortcutByX11::const_iterator shortcutIt = mShortcutByX11.constFind(shortcutKey);
+    if (shortcutIt == mShortcutByX11.constEnd())
+    {
+        return;
+    }
+    const QString& shortcut = shortcutIt.value();
+
+    if (event.type == KeyPress)
+    {
+        if ((shortcut == superLeft) || (shortcut == superRight))
+        {
+            keyReleaseExpected = true;
+            return;
+        }
+        log(LOG_DEBUG, "KeyPress %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
+    }
+    else
+    {
+        log(LOG_DEBUG, "KeyRelease %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
+    }
+
+    IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
+    if (idsByShortcut != mIdsByShortcut.end())
+    {
+        Ids &ids = idsByShortcut.value();
+        switch (mMultipleActionsBehaviour)
+        {
+        case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
+        {
+            Ids::iterator lastIds = ids.end();
+            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
+                if (mShortcutAndActionById[*idi].second->call())
+                {
+                    break;
+                }
+        }
+        break;
+
+        case MULTIPLE_ACTIONS_BEHAVIOUR_LAST:
+        {
+            Ids::iterator firstIds = ids.begin();
+            for (Ids::iterator idi = ids.end(); idi != firstIds;)
+            {
+                --idi;
+                if (mShortcutAndActionById[*idi].second->call())
+                {
+                    break;
+                }
+            }
+        }
+        break;
+
+        case MULTIPLE_ACTIONS_BEHAVIOUR_NONE:
+            if (ids.size() == 1)
+            {
+                mShortcutAndActionById[*(ids.begin())].second->call();
+            }
+            break;
+
+        case MULTIPLE_ACTIONS_BEHAVIOUR_ALL:
+        {
+            Ids::iterator lastIds = ids.end();
+            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
+            {
+                mShortcutAndActionById[*idi].second->call();
+            }
+        }
+        break;
+
+        case MULTIPLE_ACTIONS_BEHAVIOUR__COUNT: break; // just a counter
         }
     }
 }
