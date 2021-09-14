@@ -172,6 +172,7 @@ private:
 
     void run() override;
     void runEventLoop(Window rootWindow);
+    void handlePendingEvents(XEvent& event, Window rootWindow, char& signal, const QSet<unsigned int>& allModifiers);
     void updateShortcutState(XEvent& event, bool& keyReleaseExpected, unsigned int allShifts);
 
     KeyCode remoteStringToKeycode(const QString &str);

@@ -1236,281 +1236,287 @@ void Core::runEventLoop(Window rootWindow)
 
             }
             else
-            // check for pending pipe requests from other thread
             {
-                if ((event.type != KeyPress) && (event.type != KeyRelease)) {
-                    XNextEvent(mDisplay, &event);
+                // check for pending pipe requests from other thread
+                handlePendingEvents(event, rootWindow, signal, allModifiers);
+            }
+        }
+    }
+}
+
+/** check for pending pipe requests from other thread */
+void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, const QSet<unsigned int>& allModifiers)
+{
+    if ((event.type != KeyPress) && (event.type != KeyRelease)) {
+        XNextEvent(mDisplay, &event);
+    }
+
+    pollfd fds[1];
+    fds[0].fd = mX11RequestPipe[STDIN_FILENO];
+    fds[0].events = POLLIN | POLLERR | POLLHUP;
+    if (poll(fds, 1, 0) >= 0)
+    {
+        if (fds[0].revents & POLLIN)
+        {
+            size_t X11Operation;
+            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11Operation, sizeof(X11Operation)))
+            {
+                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
+                close(mX11ResponsePipe[STDIN_FILENO]);
+                mX11EventLoopActive = false;
+                return;
+            }
+//                            log(LOG_DEBUG, "X11Operation: %d", X11Operation);
+
+            switch (X11Operation)
+            {
+            case X11_OP_StringToKeycode:
+            {
+                bool x11Error = false;
+                KeyCode keyCode = 0;
+                size_t length;
+                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &length, sizeof(length)))
+                {
+                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
+                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+                if (length)
+                {
+                    QScopedArrayPointer<char> str(new char[length + 1]);
+                    str[length] = '\0';
+                    if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], str.data(), length))
+                    {
+                        log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
+                        close(mX11ResponsePipe[STDIN_FILENO]);
+                        mX11EventLoopActive = false;
+                        break;
+                    }
+                    KeySym keySym = XStringToKeysym(str.data());
+                    lockX11Error();
+                    keyCode = XKeysymToKeycode(mDisplay, keySym);
+                    x11Error = checkX11Error();
                 }
 
-                pollfd fds[1];
-                fds[0].fd = mX11RequestPipe[STDIN_FILENO];
-                fds[0].events = POLLIN | POLLERR | POLLHUP;
-                if (poll(fds, 1, 0) >= 0)
+                signal = x11Error ? 1 : 0;
+                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
                 {
-                    if (fds[0].revents & POLLIN)
+                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                    close(mX11RequestPipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+
+                if (!x11Error)
+                    if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &keyCode, sizeof(keyCode)))
                     {
-                        size_t X11Operation;
-                        if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11Operation, sizeof(X11Operation)))
+                        log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                        close(mX11RequestPipe[STDIN_FILENO]);
+                        mX11EventLoopActive = false;
+                        break;
+                    }
+            }
+            break;
+
+            case X11_OP_KeycodeToString:
+            {
+                KeyCode keyCode;
+                bool x11Error = false;
+                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &keyCode, sizeof(keyCode)))
+                {
+                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
+                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+                int keysymsPerKeycode;
+                lockX11Error();
+                KeySym *keySyms = XGetKeyboardMapping(mDisplay, keyCode, 1, &keysymsPerKeycode);
+                x11Error = checkX11Error();
+                char *str = nullptr;
+
+                if (!x11Error)
+                {
+                    KeySym keySym = 0;
+                    if ((keysymsPerKeycode >= 2) && keySyms[1] && (keySyms[0] >= XK_a) && (keySyms[0] <= XK_z))
+                    {
+                        keySym = keySyms[1];
+                    }
+                    else if (keysymsPerKeycode >= 1)
+                    {
+                        keySym = keySyms[0];
+                    }
+
+                    if (keySym)
+                    {
+                        str = XKeysymToString(keySym);
+                    }
+                }
+
+                signal = x11Error ? 1 : 0;
+                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
+                {
+                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                    close(mX11RequestPipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+
+                if (!x11Error)
+                {
+                    size_t length = 0;
+                    if (str)
+                    {
+                        length = strlen(str);
+                    }
+                    if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &length, sizeof(length)))
+                    {
+                        log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                        close(mX11RequestPipe[STDIN_FILENO]);
+                        mX11EventLoopActive = false;
+                        break;
+                    }
+                    if (length)
+                    {
+                        if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], str, length))
                         {
-                            log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                            close(mX11ResponsePipe[STDIN_FILENO]);
+                            log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                            close(mX11RequestPipe[STDIN_FILENO]);
                             mX11EventLoopActive = false;
                             break;
                         }
-//                            log(LOG_DEBUG, "X11Operation: %d", X11Operation);
-
-                        switch (X11Operation)
-                        {
-                        case X11_OP_StringToKeycode:
-                        {
-                            bool x11Error = false;
-                            KeyCode keyCode = 0;
-                            size_t length;
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &length, sizeof(length)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                            if (length)
-                            {
-                                QScopedArrayPointer<char> str(new char[length + 1]);
-                                str[length] = '\0';
-                                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], str.data(), length))
-                                {
-                                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                    close(mX11ResponsePipe[STDIN_FILENO]);
-                                    mX11EventLoopActive = false;
-                                    break;
-                                }
-                                KeySym keySym = XStringToKeysym(str.data());
-                                lockX11Error();
-                                keyCode = XKeysymToKeycode(mDisplay, keySym);
-                                x11Error = checkX11Error();
-                            }
-
-                            signal = x11Error ? 1 : 0;
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-
-                            if (!x11Error)
-                                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &keyCode, sizeof(keyCode)))
-                                {
-                                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                    close(mX11RequestPipe[STDIN_FILENO]);
-                                    mX11EventLoopActive = false;
-                                    break;
-                                }
-                        }
-                        break;
-
-                        case X11_OP_KeycodeToString:
-                        {
-                            KeyCode keyCode;
-                            bool x11Error = false;
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &keyCode, sizeof(keyCode)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                            int keysymsPerKeycode;
-                            lockX11Error();
-                            KeySym *keySyms = XGetKeyboardMapping(mDisplay, keyCode, 1, &keysymsPerKeycode);
-                            x11Error = checkX11Error();
-                            char *str = nullptr;
-
-                            if (!x11Error)
-                            {
-                                KeySym keySym = 0;
-                                if ((keysymsPerKeycode >= 2) && keySyms[1] && (keySyms[0] >= XK_a) && (keySyms[0] <= XK_z))
-                                {
-                                    keySym = keySyms[1];
-                                }
-                                else if (keysymsPerKeycode >= 1)
-                                {
-                                    keySym = keySyms[0];
-                                }
-
-                                if (keySym)
-                                {
-                                    str = XKeysymToString(keySym);
-                                }
-                            }
-
-                            signal = x11Error ? 1 : 0;
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-
-                            if (!x11Error)
-                            {
-                                size_t length = 0;
-                                if (str)
-                                {
-                                    length = strlen(str);
-                                }
-                                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &length, sizeof(length)))
-                                {
-                                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                    close(mX11RequestPipe[STDIN_FILENO]);
-                                    mX11EventLoopActive = false;
-                                    break;
-                                }
-                                if (length)
-                                {
-                                    if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], str, length))
-                                    {
-                                        log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                        close(mX11RequestPipe[STDIN_FILENO]);
-                                        mX11EventLoopActive = false;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        break;
-
-                        case X11_OP_XGrabKey:
-                        {
-                            X11Shortcut X11shortcut;
-                            bool x11Error = false;
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.first, sizeof(X11shortcut.first)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.second, sizeof(X11shortcut.second)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-
-                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.cend();
-                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.cbegin(); modifiers != lastAllModifiers; ++modifiers)
-                            {
-                                lockX11Error();
-                                XGrabKey(mDisplay, X11shortcut.first, X11shortcut.second | *modifiers, rootWindow, False, GrabModeAsync, GrabModeAsync);
-                                bool x11e = checkX11Error();
-                                if (x11e)
-                                {
-                                    log(LOG_DEBUG, "XGrabKey: %02x + %02x", X11shortcut.first, X11shortcut.second | *modifiers);
-                                }
-                                x11Error |= x11e;
-                            }
-
-                            signal = x11Error ? 1 : 0;
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                        }
-                        break;
-
-                        case X11_OP_XUngrabKey:
-                        {
-                            X11Shortcut X11shortcut;
-                            bool x11Error = false;
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.first, sizeof(X11shortcut.first)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.second, sizeof(X11shortcut.second)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-
-                            lockX11Error();
-                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.cend();
-                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.cbegin(); modifiers != lastAllModifiers; ++modifiers)
-                            {
-                                XUngrabKey(mDisplay, X11shortcut.first, X11shortcut.second | *modifiers, rootWindow);
-                            }
-                            x11Error = checkX11Error();
-
-                            signal = x11Error ? 1 : 0;
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                        }
-                        break;
-
-                        case X11_OP_XGrabKeyboard:
-                        {
-                            lockX11Error();
-                            int result = XGrabKeyboard(mDisplay, rootWindow, False, GrabModeAsync, GrabModeAsync, CurrentTime);
-                            bool x11Error = checkX11Error();
-                            if (!result && x11Error)
-                            {
-                                result = -1;
-                            }
-
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &result, sizeof(result)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                            mDataMutex.lock();
-                            mGrabbingShortcut = true;
-                            mDataMutex.unlock();
-                        }
-                        break;
-
-                        case X11_OP_XUngrabKeyboard:
-                        {
-                            lockX11Error();
-                            XUngrabKeyboard(mDisplay, CurrentTime);
-                            bool x11Error = checkX11Error();
-
-                            signal = x11Error ? 1 : 0;
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-
-                            mDataMutex.lock();
-                            mGrabbingShortcut = false;
-                            mDataMutex.unlock();
-                        }
-                        break;
-                        } // end of switch-case
-
                     }
                 }
             }
+            break;
+
+            case X11_OP_XGrabKey:
+            {
+                X11Shortcut X11shortcut;
+                bool x11Error = false;
+                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.first, sizeof(X11shortcut.first)))
+                {
+                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
+                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.second, sizeof(X11shortcut.second)))
+                {
+                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
+                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+
+                QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.cend();
+                for (QSet<unsigned int>::const_iterator modifiers = allModifiers.cbegin(); modifiers != lastAllModifiers; ++modifiers)
+                {
+                    lockX11Error();
+                    XGrabKey(mDisplay, X11shortcut.first, X11shortcut.second | *modifiers, rootWindow, False, GrabModeAsync, GrabModeAsync);
+                    bool x11e = checkX11Error();
+                    if (x11e)
+                    {
+                        log(LOG_DEBUG, "XGrabKey: %02x + %02x", X11shortcut.first, X11shortcut.second | *modifiers);
+                    }
+                    x11Error |= x11e;
+                }
+
+                signal = x11Error ? 1 : 0;
+                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
+                {
+                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                    close(mX11RequestPipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+            }
+            break;
+
+            case X11_OP_XUngrabKey:
+            {
+                X11Shortcut X11shortcut;
+                bool x11Error = false;
+                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.first, sizeof(X11shortcut.first)))
+                {
+                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
+                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.second, sizeof(X11shortcut.second)))
+                {
+                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
+                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+
+                lockX11Error();
+                QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.cend();
+                for (QSet<unsigned int>::const_iterator modifiers = allModifiers.cbegin(); modifiers != lastAllModifiers; ++modifiers)
+                {
+                    XUngrabKey(mDisplay, X11shortcut.first, X11shortcut.second | *modifiers, rootWindow);
+                }
+                x11Error = checkX11Error();
+
+                signal = x11Error ? 1 : 0;
+                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
+                {
+                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                    close(mX11RequestPipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+            }
+            break;
+
+            case X11_OP_XGrabKeyboard:
+            {
+                lockX11Error();
+                int result = XGrabKeyboard(mDisplay, rootWindow, False, GrabModeAsync, GrabModeAsync, CurrentTime);
+                bool x11Error = checkX11Error();
+                if (!result && x11Error)
+                {
+                    result = -1;
+                }
+
+                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &result, sizeof(result)))
+                {
+                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                    close(mX11RequestPipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+                mDataMutex.lock();
+                mGrabbingShortcut = true;
+                mDataMutex.unlock();
+            }
+            break;
+
+            case X11_OP_XUngrabKeyboard:
+            {
+                lockX11Error();
+                XUngrabKeyboard(mDisplay, CurrentTime);
+                bool x11Error = checkX11Error();
+
+                signal = x11Error ? 1 : 0;
+                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
+                {
+                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+                    close(mX11RequestPipe[STDIN_FILENO]);
+                    mX11EventLoopActive = false;
+                    break;
+                }
+
+                mDataMutex.lock();
+                mGrabbingShortcut = false;
+                mDataMutex.unlock();
+            }
+            break;
+            } // end of switch-case
+
         }
     }
 }
