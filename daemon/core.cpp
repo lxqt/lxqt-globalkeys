@@ -1036,7 +1036,9 @@ void Core::runEventLoop(Window rootWindow)
             if ((event.type == KeyRelease) && !keyReleaseExpected)
             {
                 // pop event from the x11 queue and do nothing
+                log(LOG_DEBUG, "Ignored KeyRelease 1 -> %08x %08x", event.xkey.state, event.xkey.keycode);
                 XNextEvent(mDisplay, &event);
+                log(LOG_DEBUG, "Ignored KeyRelease 2 -> %08x %08x", event.xkey.state, event.xkey.keycode);
                 continue;
             }
             keyReleaseExpected = false; // Close time window for accepting meta keys.
@@ -1047,6 +1049,7 @@ void Core::runEventLoop(Window rootWindow)
 
                 // pop event from the x11 queue and process it
                 XNextEvent(mDisplay, &event);
+                log(LOG_DEBUG, "Handling %s -> %08x %08x", event.type == KeyPress ? "KeyPress" : "KeyRelease", event.xkey.state, event.xkey.keycode);
 
                 if (mGrabbingShortcut)
                 {
@@ -1527,6 +1530,7 @@ void Core::updateShortcutState(XEvent& event, bool& keyReleaseExpected, unsigned
     {
         log(LOG_DEBUG, "KeyRelease 1 -> %08x %08x", event.xkey.state, event.xkey.keycode);
         event.xkey.state &= ~allShifts; // Modifier keys must not use shift states.
+        log(LOG_DEBUG, "KeyRelease 2 -> %08x %08x", event.xkey.state, event.xkey.keycode);
     }
 
     X11Shortcut shortcutKey = qMakePair(static_cast<KeyCode>(event.xkey.keycode), event.xkey.state & allShifts);
@@ -1539,16 +1543,16 @@ void Core::updateShortcutState(XEvent& event, bool& keyReleaseExpected, unsigned
     const QString& shortcut = shortcutIt.value();
     if (event.type == KeyPress)
     {
+        log(LOG_DEBUG, "KeyPress %08x %08x %s ", event.xkey.state, event.xkey.keycode, qPrintable(shortcut));
         if ((shortcut == superLeft) || (shortcut == superRight))
         {
             keyReleaseExpected = true;
             return;
         }
-        log(LOG_DEBUG, "KeyPress %08x %08x %s", event.xkey.state, event.xkey.keycode, qPrintable(shortcut));
     }
     else
     {
-        log(LOG_DEBUG, "KeyRelease 2 -> %08x %08x %s", event.xkey.state, event.xkey.keycode, qPrintable(shortcut));
+        log(LOG_DEBUG, "KeyRelease 3 -> %08x %08x %s", event.xkey.state, event.xkey.keycode, qPrintable(shortcut));
     }
 
     IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
