@@ -1041,7 +1041,7 @@ void Core::runEventLoop(Window rootWindow)
                 log(LOG_DEBUG, "Ignored KeyRelease 2 -> %08x %08x", event.xkey.state, event.xkey.keycode);
                 continue;
             }
-            keyReleaseExpected = false; // Close time window for accepting meta keys.
+            keyReleaseExpected = false; // initialize for next event
 
             if (((event.type == KeyPress) || (event.type == KeyRelease)) && mDataMutex.tryLock(0))
             {
