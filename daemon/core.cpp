@@ -700,8 +700,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
             log(LOG_DEBUG, "MultipleActionsBehaviour: none");
             break;
 
-        default:
-            ;
+        case MULTIPLE_ACTIONS_BEHAVIOUR__COUNT: break; // just a counter
         }
         log(LOG_DEBUG, "AllowGrabLocks: %s",       mAllowGrabLocks       ? "true" : "false");
         log(LOG_DEBUG, "AllowGrabBaseSpecial: %s", mAllowGrabBaseSpecial ? "true" : "false");
