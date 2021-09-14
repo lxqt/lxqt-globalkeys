@@ -1548,11 +1548,11 @@ void Core::updateShortcutState(XEvent& event, bool& keyReleaseExpected, unsigned
     IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
     if (idsByShortcut != mIdsByShortcut.end())
     {
-        on_shortcut(idsByShortcut.value());
+        this->shortcut(idsByShortcut.value());
     }
 }
 
-void Core::on_shortcut(const Ids& ids) const
+void Core::shortcut(const Ids& ids) const
 {
     switch (mMultipleActionsBehaviour)
     {
