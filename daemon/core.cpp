@@ -401,6 +401,12 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     , mShortcutGrabTimeout(new QTimer(this))
     , mShortcutGrabRequested(false)
 {
+#if 0
+    // debugging
+    mUseSyslog = false;
+    mMinLogLevel = 7;
+#endif
+
     s_Core = this;
 
     initBothPipeEnds(mX11ErrorPipe);
