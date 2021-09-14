@@ -2031,7 +2031,6 @@ QString Core::checkShortcut(const QString &shortcut, X11Shortcut &X11shortcut)
 QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
 {
     X11Shortcut X11shortcut;
-
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
 //    if (newShortcut.isEmpty())
 //    {
@@ -2054,13 +2053,13 @@ QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortc
             mIdsByShortcut[newShortcut].insert(id);
         }
 
-        dynamic_cast<ClientAction*>(shortcutAndAction.second)->appeared(QDBusConnection::sessionBus(), sender);
+        auto action = static_cast<ClientAction*>(shortcutAndAction.second);
+        action->appeared(QDBusConnection::sessionBus(), sender);
 
         return qMakePair(newShortcut, id);
     }
 
     qulonglong id = ++mLastId;
-
     if (!sender.isEmpty() && !newShortcut.isEmpty())
     {
         newShortcut = grabOrReuseKey(X11shortcut, newShortcut);
@@ -2068,11 +2067,10 @@ QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortc
     }
 
     mIdByClientPath[path] = id;
-    ClientAction *clientAction = sender.isEmpty() ? new ClientAction(this, path, description) : new ClientAction(this, QDBusConnection::sessionBus(), sender, path, description);
+    auto clientAction = sender.isEmpty() ? new ClientAction(this, path, description) : new ClientAction(this, QDBusConnection::sessionBus(), sender, path, description);
     mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, clientAction);
 
     log(LOG_INFO, "addClientAction shortcut:'%s' id:%llu", qPrintable(newShortcut), id);
-
     return qMakePair(newShortcut, id);
 }
 
@@ -2125,7 +2123,8 @@ qulonglong Core::registerClientAction(const QString &shortcut, const QDBusObject
 
     QMutexLocker lock(&mDataMutex);
 
-    return addOrRegisterClientAction(shortcut, path, description, QString()).second;
+    auto action = addOrRegisterClientAction(shortcut, path, description, QString());
+    return action.second;
 }
 
 void Core::addMethodAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
