@@ -68,16 +68,21 @@ public:
     }
 };
 
-class Core : public QThread, public LogTarget
+class Core : public QThread
 {
     Q_OBJECT
+
 public:
     Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringList &configFiles, bool multipleActionsBehaviourSet, MultipleActionsBehaviour multipleActionsBehaviour, QObject *parent = nullptr);
     ~Core() override;
 
     bool ready() const { return mReady; }
 
-    void log(int level, const char *format, ...) const override;
+    template<class... Args>
+    void log(int level, const char *format, Args&&... args) const {
+        // NOTE: If the logger is unassigned the SEGFAULT is intentional!
+        mCoreLogger->log(level, format, std::forward<Args>(args)...);
+    }
 
 signals:
     void onShortcutGrabbed();
@@ -399,10 +404,9 @@ private:
     bool waitForX11Error(int level, uint timeout);
 
 private:
-    bool mReady;
-    bool mUseSyslog;
-    int mMinLogLevel;
+    std::unique_ptr<LogTarget> mCoreLogger;
 
+    bool mReady;
     int mX11ErrorPipe[2];
     int mX11RequestPipe[2];
     int mX11ResponsePipe[2];

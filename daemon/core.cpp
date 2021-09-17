@@ -343,46 +343,9 @@ const char *x11opcodeToString(unsigned char opcode)
     return "";
 }
 
-static const char *strLevel(int level)
-{
-    switch (level)
-    {
-    case LOG_EMERG:
-        return "Emergency";
-
-    case LOG_ALERT:
-        return "Alert";
-
-    case LOG_CRIT:
-        return "Critical";
-
-    case LOG_ERR:
-        return "Error";
-
-    case LOG_WARNING:
-        return "Warning";
-
-    case LOG_NOTICE:
-        return "Notice";
-
-    case LOG_INFO:
-        return "Info";
-
-    case LOG_DEBUG:
-        return "Debug";
-
-    default:
-        return "";
-    }
-}
-
-
 Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringList &configFiles, bool multipleActionsBehaviourSet, MultipleActionsBehaviour multipleActionsBehaviour, QObject *parent)
     : QThread(parent)
-    , LogTarget()
     , mReady(false)
-    , mUseSyslog(useSyslog)
-    , mMinLogLevel(minLogLevel)
     , mDisplay(nullptr)
     , mInterClientCommunicationWindow(0)
     , mServiceWatcher{new QDBusServiceWatcher{this}}
@@ -403,8 +366,11 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 {
 #if 0
     // debugging
-    mUseSyslog = false;
-    mMinLogLevel = 7;
+    Q_UNUSED(minLogLevel);
+    Q_UNUSED(useSyslog);
+    mCoreLogger = std::make_unique<LogTarget>(LOG_DEBUG, false);
+#else
+    mCoreLogger = std::make_unique<LogTarget>(minLogLevel, useSyslog);
 #endif
 
     s_Core = this;
@@ -487,33 +453,16 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                 if (!minLogLevelSet)
                 {
                     iniValue = settings.value(/* General/ */QStringLiteral("LogLevel")).toString();
-                    if (!iniValue.isEmpty())
+                    auto lvl = LogTarget::levelFromStr(qPrintable(iniValue));
+                    if (lvl >= 0)
                     {
+                        mCoreLogger->mMinLogLevel = lvl;
                         minLogLevelSet = true;
-                        if (iniValue == QLatin1String("error"))
-                        {
-                            mMinLogLevel = LOG_ERR;
-                        }
-                        else if (iniValue == QLatin1String("warning"))
-                        {
-                            mMinLogLevel = LOG_WARNING;
-                        }
-                        else if (iniValue == QLatin1String("notice"))
-                        {
-                            mMinLogLevel = LOG_NOTICE;
-                        }
-                        else if (iniValue == QLatin1String("info"))
-                        {
-                            mMinLogLevel = LOG_INFO;
-                        }
-                        else if (iniValue == QLatin1String("debug"))
-                        {
-                            mMinLogLevel = LOG_DEBUG;
-                        }
-                        else
-                        {
-                            minLogLevelSet = false;
-                        }
+                    }
+                    else
+                    {
+                        auto lvlStr = LogTarget::strLevel(mCoreLogger->mMinLogLevel);
+                        qInfo("no loglevel configured in %s (result = %d); current loglevel: %s", qUtf8Printable(settings.fileName()), lvl, lvlStr);
                     }
                 }
 
@@ -681,7 +630,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
             log(LOG_DEBUG, "Config file: %s", qPrintable(configs[0]));
         }
 
-        log(LOG_DEBUG, "MinLogLevel: %s", strLevel(mMinLogLevel));
+        log(LOG_DEBUG, "MinLogLevel: %s", LogTarget::strLevel(mCoreLogger->mMinLogLevel));
         switch (mMultipleActionsBehaviour)
         {
         case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
@@ -880,28 +829,6 @@ void Core::unixSignalHandler(int signalNumber)
 {
     log(LOG_INFO, "Signal #%d received", signalNumber);
     qApp->quit();
-}
-
-void Core::log(int level, const char *format, ...) const
-{
-    if (level > mMinLogLevel)
-    {
-        return;
-    }
-
-    va_list ap;
-    va_start(ap, format);
-    if (mUseSyslog)
-    {
-        vsyslog(LOG_MAKEPRI(LOG_USER, level), format, ap);
-    }
-    else
-    {
-        fprintf(stderr, "[%s] ", strLevel(level));
-        vfprintf(stderr, format, ap);
-        fprintf(stderr, "\n");
-    }
-    va_end(ap);
 }
 
 int Core::x11ErrorHandler(Display */*display*/, XErrorEvent *errorEvent)
@@ -2067,7 +1994,7 @@ QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortc
     }
 
     mIdByClientPath[path] = id;
-    auto clientAction = sender.isEmpty() ? new ClientAction(this, path, description) : new ClientAction(this, QDBusConnection::sessionBus(), sender, path, description);
+    auto clientAction = sender.isEmpty() ? new ClientAction(mCoreLogger.get(), path, description) : new ClientAction(mCoreLogger.get(), QDBusConnection::sessionBus(), sender, path, description);
     mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, clientAction);
 
     log(LOG_INFO, "addClientAction shortcut:'%s' id:%llu", qPrintable(newShortcut), id);
@@ -2152,7 +2079,7 @@ void Core::addMethodAction(QPair<QString, qulonglong> &result, const QString &sh
     qulonglong id = ++mLastId;
 
     mIdsByShortcut[newShortcut].insert(id);
-    mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, new MethodAction(this, QDBusConnection::sessionBus(), service, path, interface, method, description));
+    mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, new MethodAction(mCoreLogger.get(), QDBusConnection::sessionBus(), service, path, interface, method, description));
 
     log(LOG_INFO, "addMethodAction shortcut:'%s' id:%llu", qPrintable(newShortcut), id);
 
@@ -2193,7 +2120,7 @@ void Core::addCommandAction(QPair<QString, qulonglong> &result, const QString &s
     qulonglong id = ++mLastId;
 
     mIdsByShortcut[newShortcut].insert(id);
-    mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, new CommandAction(this, command, arguments, description));
+    mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, new CommandAction(mCoreLogger.get(), command, arguments, description));
 
     log(LOG_INFO, "addCommandAction shortcut:'%s' id:%llu", qPrintable(newShortcut), id);
 
@@ -2304,7 +2231,7 @@ void Core::modifyMethodAction(bool &result, const qulonglong &id, const QString 
 
     bool isEnabled = action->isEnabled();
     delete action;
-    MethodAction *newAction = new MethodAction(this, QDBusConnection::sessionBus(), service, path, interface, method, description);
+    auto newAction = new MethodAction(mCoreLogger.get(), QDBusConnection::sessionBus(), service, path, interface, method, description);
     newAction->setEnabled(isEnabled);
     shortcutAndActionById.value().second = newAction;
 
@@ -2338,7 +2265,7 @@ void Core::modifyCommandAction(bool &result, const qulonglong &id, const QString
 
     bool isEnabled = action->isEnabled();
     delete action;
-    CommandAction *newAction = new CommandAction(this, command, arguments, description);
+    auto newAction = new CommandAction(mCoreLogger.get(), command, arguments, description);
     newAction->setEnabled(isEnabled);
     shortcutAndActionById.value().second = newAction;
 
