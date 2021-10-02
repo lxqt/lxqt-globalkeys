@@ -1192,10 +1192,9 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
         if (fds[0].revents & POLLIN)
         {
             size_t X11Operation;
-            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11Operation, sizeof(X11Operation)))
+            if (readX11PipeRequest(&X11Operation, sizeof(X11Operation)))
             {
-                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                close(mX11ResponsePipe[STDIN_FILENO]);
+                // pipe error
                 mX11EventLoopActive = false;
                 return;
             }
@@ -1208,10 +1207,9 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
                 bool x11Error = false;
                 KeyCode keyCode = 0;
                 size_t length;
-                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &length, sizeof(length)))
+                if (readX11PipeRequest(&length, sizeof(length)))
                 {
-                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
@@ -1219,10 +1217,9 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
                 {
                     QScopedArrayPointer<char> str(new char[length + 1]);
                     str[length] = '\0';
-                    if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], str.data(), length))
+                    if (readX11PipeRequest(str.data(), length))
                     {
-                        log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                        close(mX11ResponsePipe[STDIN_FILENO]);
+                        // pipe error
                         mX11EventLoopActive = false;
                         break;
                     }
@@ -1233,19 +1230,17 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
                 }
 
                 signal = x11Error ? 1 : 0;
-                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
+                if (writeX11PipeResponse(&signal, sizeof(signal)))
                 {
-                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                    close(mX11RequestPipe[STDIN_FILENO]);
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
 
                 if (!x11Error)
-                    if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &keyCode, sizeof(keyCode)))
+                    if (writeX11PipeResponse(&keyCode, sizeof(keyCode)))
                     {
-                        log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                        close(mX11RequestPipe[STDIN_FILENO]);
+                        // pipe error
                         mX11EventLoopActive = false;
                         break;
                     }
@@ -1256,10 +1251,9 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
             {
                 KeyCode keyCode;
                 bool x11Error = false;
-                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &keyCode, sizeof(keyCode)))
+                if (readX11PipeRequest(&keyCode, sizeof(keyCode)))
                 {
-                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
@@ -1288,10 +1282,9 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
                 }
 
                 signal = x11Error ? 1 : 0;
-                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
+                if (writeX11PipeResponse(&signal, sizeof(signal)))
                 {
-                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                    close(mX11RequestPipe[STDIN_FILENO]);
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
@@ -1303,19 +1296,17 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
                     {
                         length = strlen(str);
                     }
-                    if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &length, sizeof(length)))
+                    if (writeX11PipeResponse(&length, sizeof(length)))
                     {
-                        log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                        close(mX11RequestPipe[STDIN_FILENO]);
+                        // pipe error
                         mX11EventLoopActive = false;
                         break;
                     }
                     if (length)
                     {
-                        if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], str, length))
+                        if (writeX11PipeResponse(str, length))
                         {
-                            log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                            close(mX11RequestPipe[STDIN_FILENO]);
+                            // pipe error
                             mX11EventLoopActive = false;
                             break;
                         }
@@ -1328,17 +1319,15 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
             {
                 X11Shortcut X11shortcut;
                 bool x11Error = false;
-                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.first, sizeof(X11shortcut.first)))
+                if (readX11PipeRequest(&X11shortcut.first, sizeof(X11shortcut.first)))
                 {
-                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
-                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.second, sizeof(X11shortcut.second)))
+                if (readX11PipeRequest(&X11shortcut.second, sizeof(X11shortcut.second)))
                 {
-                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
@@ -1356,10 +1345,9 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
                 }
 
                 signal = x11Error ? 1 : 0;
-                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
+                if (writeX11PipeResponse(&signal, sizeof(signal)))
                 {
-                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                    close(mX11RequestPipe[STDIN_FILENO]);
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
@@ -1370,17 +1358,15 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
             {
                 X11Shortcut X11shortcut;
                 bool x11Error = false;
-                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.first, sizeof(X11shortcut.first)))
+                if (readX11PipeRequest(&X11shortcut.first, sizeof(X11shortcut.first)))
                 {
-                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
-                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.second, sizeof(X11shortcut.second)))
+                if (readX11PipeRequest(&X11shortcut.second, sizeof(X11shortcut.second)))
                 {
-                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                    close(mX11ResponsePipe[STDIN_FILENO]);
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
@@ -1393,10 +1379,9 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
                 x11Error = checkX11Error();
 
                 signal = x11Error ? 1 : 0;
-                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
+                if (writeX11PipeResponse(&signal, sizeof(signal)))
                 {
-                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                    close(mX11RequestPipe[STDIN_FILENO]);
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
@@ -1413,13 +1398,12 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
                     result = -1;
                 }
 
-                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &result, sizeof(result)))
-                {
-                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                    close(mX11RequestPipe[STDIN_FILENO]);
+                if (writeX11PipeResponse(&result, sizeof(result))) {
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
+
                 mDataMutex.lock();
                 mGrabbingShortcut = true;
                 mDataMutex.unlock();
@@ -1433,10 +1417,8 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
                 bool x11Error = checkX11Error();
 
                 signal = x11Error ? 1 : 0;
-                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
-                {
-                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                    close(mX11RequestPipe[STDIN_FILENO]);
+                if (writeX11PipeResponse(&signal, sizeof(signal))) {
+                    // pipe error
                     mX11EventLoopActive = false;
                     break;
                 }
