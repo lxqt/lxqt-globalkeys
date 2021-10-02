@@ -1345,15 +1345,14 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
                     break;
                 }
 
-                QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.cend();
-                for (QSet<unsigned int>::const_iterator modifiers = allModifiers.cbegin(); modifiers != lastAllModifiers; ++modifiers)
+                for (auto modifier : qAsConst(allModifiers))
                 {
                     lockX11Error();
-                    XGrabKey(mDisplay, X11shortcut.first, X11shortcut.second | *modifiers, rootWindow, False, GrabModeAsync, GrabModeAsync);
+                    XGrabKey(mDisplay, X11shortcut.first, X11shortcut.second | modifier, rootWindow, False, GrabModeAsync, GrabModeAsync);
                     bool x11e = checkX11Error();
                     if (x11e)
                     {
-                        log(LOG_DEBUG, "XGrabKey: %02x + %02x", X11shortcut.first, X11shortcut.second | *modifiers);
+                        log(LOG_DEBUG, "XGrabKey: %02x + %02x", X11shortcut.first, X11shortcut.second | modifier);
                     }
                     x11Error |= x11e;
                 }
@@ -1389,10 +1388,9 @@ void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, c
                 }
 
                 lockX11Error();
-                QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.cend();
-                for (QSet<unsigned int>::const_iterator modifiers = allModifiers.cbegin(); modifiers != lastAllModifiers; ++modifiers)
+                for (auto modifier : qAsConst(allModifiers))
                 {
-                    XUngrabKey(mDisplay, X11shortcut.first, X11shortcut.second | *modifiers, rootWindow);
+                    XUngrabKey(mDisplay, X11shortcut.first, X11shortcut.second | modifier, rootWindow);
                 }
                 x11Error = checkX11Error();
 
