@@ -11,12 +11,12 @@
     <message>
         <location filename="../default_model.cpp" line="52"/>
         <source>DBus call</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">llamada DBus</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="53"/>
         <source>Client</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliente</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="143"/>
@@ -41,7 +41,7 @@
     <message>
         <location filename="../default_model.cpp" line="155"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Información</translation>
     </message>
 </context>
 <context>
