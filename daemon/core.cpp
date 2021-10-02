@@ -804,12 +804,12 @@ void Core::saveConfig()
 
         if (!strcmp(action->type(), CommandAction::id()))
         {
-            const CommandAction *commandAction = dynamic_cast<const CommandAction *>(action);
+            auto commandAction = static_cast<const CommandAction*>(action);
             settings.setValue(ExecKey, QVariant(QStringList() << commandAction->command() += commandAction->args()));
         }
         else if (!strcmp(action->type(), MethodAction::id()))
         {
-            const MethodAction *methodAction = dynamic_cast<const MethodAction *>(action);
+            auto methodAction = static_cast<const MethodAction*>(action);
             settings.setValue(serviceKey,   methodAction->service());
             settings.setValue(pathKey,      methodAction->path().path());
             settings.setValue(interfaceKey, methodAction->interface());
@@ -817,7 +817,7 @@ void Core::saveConfig()
         }
         else if (!strcmp(action->type(), ClientAction::id()))
         {
-            const ClientAction *clientAction = dynamic_cast<const ClientAction *>(action);
+            auto clientAction = static_cast<const ClientAction*>(action);
             settings.setValue(pathKey,  clientAction->path().path());
         }
 
