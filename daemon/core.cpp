@@ -37,7 +37,6 @@
 
 #include <cstddef>
 #include <cstdlib>
-#include <unistd.h>
 #include <poll.h>
 #include <csignal>
 #include <cstdarg>
@@ -48,7 +47,6 @@
 
 #include <stdexcept>
 
-#include "pipe_utils.h"
 #include "string_utils.h"
 #include "daemon_adaptor.h"
 #include "native_adaptor.h"

@@ -40,6 +40,7 @@
 
 #include "meta_types.h"
 #include "log_target.h"
+#include "pipe_utils.h"
 
 extern "C" {
 #include <X11/X.h>
@@ -49,6 +50,7 @@ extern "C" {
 #undef Bool
 }
 
+#include <unistd.h>
 
 class QTimer;
 class DaemonAdaptor;
@@ -184,6 +186,26 @@ private:
     QString remoteKeycodeToString(KeyCode keyCode);
     bool remoteXGrabKey(const X11Shortcut &X11shortcut);
     bool remoteXUngrabKey(const X11Shortcut &X11shortcut);
+
+    template<class T>
+    error_t readX11PipeRequest(T* ptr, size_t len) {
+        error_t error = readAll(mX11RequestPipe[STDIN_FILENO], ptr, len);
+        if (error) {
+            log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
+            close(mX11ResponsePipe[STDIN_FILENO]);
+        }
+        return error;
+    }
+
+    template<class T>
+    error_t writeX11PipeResponse(T* ptr, size_t len) {
+        error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], ptr, len);
+        if (error) {
+            log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+            close(mX11RequestPipe[STDIN_FILENO]);
+        }
+        return error;
+    }
 
     QString grabOrReuseKey(const X11Shortcut &X11shortcut, const QString &shortcut);
     QString checkShortcut(const QString &shortcut, X11Shortcut &X11shortcut);
