@@ -117,7 +117,7 @@
     <message>
         <location filename="../main_window.ui" line="24"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Cari</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="69"/>
@@ -171,7 +171,7 @@
     <message>
         <location filename="../main_window.ui" line="180"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Bawaan</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="200"/>
@@ -181,13 +181,14 @@
     <message>
         <location filename="../main_window.cpp" line="191"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulihkan Ke Bawaan</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="192"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Pintasan yang anda tentukan akan di hapus.
+Apa anda mau melanjutkanya?</translation>
     </message>
 </context>
 </TS>
