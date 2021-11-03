@@ -142,25 +142,25 @@
     <message>
         <location filename="../main_window.ui" line="132"/>
         <source>Multiple actions behaviour:</source>
-        <translation>Správanie pri viacerých akciách:</translation>
+        <translation>Pri viacerých akciách použiť:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="140"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation>Prvá</translation>
+        <translation>Prvú</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="145"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation>Posledná</translation>
+        <translation>Poslednú</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="150"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation>Žiadna</translation>
+        <translation>Žiadnu</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="155"/>
