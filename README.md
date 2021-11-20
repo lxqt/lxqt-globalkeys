@@ -30,9 +30,8 @@ as usual.
 
 ### Binary packages
 
-Official binary packages are provided by all major Linux distributions like Arch
-Linux, Debian (as of Debian stretch only), Fedora and openSUSE. Just use your
-package manager to search for string `lxqt-globalkeys`.
+Official binary packages are provided by all major Linux and BSD distributions. 
+Just use your package manager to search for string `lxqt-globalkeys`.
 
 ## Configuration, Usage
 
