@@ -64,7 +64,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation>Aktywn&amp;e</translation>
+        <translation>&amp;Aktywne</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../main_window.ui" line="24"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Szukaj</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="69"/>
@@ -148,25 +148,25 @@
         <location filename="../main_window.ui" line="140"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Pierwsze</translation>
+        <translation>Pierwszy</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="145"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Ostatnie</translation>
+        <translation>Ostatni</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="150"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Brak</translation>
+        <translation>Brak</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="155"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Wszystko</translation>
+        <translation>Wszystkie</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="180"/>
