@@ -403,6 +403,12 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 {
     s_Core = this;
 
+#if 1 // FIXME: Quickfix splitting thread startup.
+    this->multipleActionsBehaviourSet = multipleActionsBehaviourSet;
+    this->configFiles = configFiles;
+    this->minLogLevelSet = minLogLevelSet;
+#endif
+
     initBothPipeEnds(mX11ErrorPipe);
     initBothPipeEnds(mX11RequestPipe);
     initBothPipeEnds(mX11ResponsePipe);
@@ -438,17 +444,24 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
             throw std::runtime_error(std::string("Cannot create X11 response pipe: ") + std::string(strerror(c_error)));
         }
 
+        // FIXME: Quickfix for shitty written async thread initialization.
+        //        IMPORTANT: thread_started will be called from within QCoreApplication::exec()
+        connect(this, &QThread::started, this, &Core::thread_started, Qt::QueuedConnection);
+    } catch(const std::exception& err) {
+        log(LOG_CRIT, "%s", err.what());
+    }
+}
 
-        start();
-
-
+void Core::thread_started() {
+    // FIXME: Quickfix for shitty written async thread initialization
+    try {
         char signal;
-        error_t error = readAll(mX11ResponsePipe[STDIN_FILENO], &signal, sizeof(signal));
-        if (error > 0)
+        error_t c_error = readAll(mX11ResponsePipe[STDIN_FILENO], &signal, sizeof(signal));
+        if (c_error > 0)
         {
             throw std::runtime_error(std::string("Cannot read X11 start signal: ") + std::string(strerror(c_error)));
         }
-        if (error < 0)
+        if (c_error < 0)
         {
             throw std::runtime_error(std::string("Cannot read X11 start signal"));
         }
@@ -769,6 +782,10 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     catch (const std::exception &err)
     {
         log(LOG_CRIT, "%s", err.what());
+    }
+
+    if (!mReady) {
+        qApp->exit(EXIT_FAILURE);
     }
 }
 

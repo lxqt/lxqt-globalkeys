@@ -87,6 +87,7 @@ private:
     Core(const Core&&) = delete;
     Core& operator =(const Core&) = delete;
     Core& operator =(const Core&&) = delete;
+    Q_INVOKABLE void thread_started();
 
 private:
     using X11Shortcut           = QPair<KeyCode, unsigned int>;
@@ -150,6 +151,11 @@ private:
     void shortcutGrabTimedout();
 
 private:
+#if 1 // FIXME: Workaround splitting thread startup.
+    bool minLogLevelSet;
+    QStringList configFiles;
+    bool multipleActionsBehaviourSet;
+#endif
     bool enableActionNonGuarded(qulonglong id, bool enabled);
     QPair<QString, qulonglong> addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
     qulonglong registerClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description);

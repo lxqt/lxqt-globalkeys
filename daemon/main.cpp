@@ -236,11 +236,7 @@ int main(int argc, char *argv[])
     LXQt::Application app(argc, argv);
 
     Core core(runAsDaemon || useSyslog, minLogLevelSet, minLogLevel, configFiles, multipleActionsBehaviourSet, multipleActionsBehaviour);
-
-    if (!core.ready())
-    {
-        return EXIT_FAILURE;
-    }
+    core.start();
 
     return app.exec();
 }
