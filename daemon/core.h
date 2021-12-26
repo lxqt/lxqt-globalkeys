@@ -156,6 +156,8 @@ private:
     QStringList configFiles;
     bool multipleActionsBehaviourSet;
 #endif
+    XErrorHandler   mOldXErrorHandler = nullptr;
+    XIOErrorHandler mOldXIOErrorHandler = nullptr;
     bool enableActionNonGuarded(qulonglong id, bool enabled);
     QPair<QString, qulonglong> addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
     qulonglong registerClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description);
@@ -167,8 +169,8 @@ private:
     friend void unixSignalHandler(int signalNumber);
     void unixSignalHandler(int signalNumber);
 
-    friend int x11ErrorHandler(Display *display, XErrorEvent *errorEvent);
     int x11ErrorHandler(Display *display, XErrorEvent *errorEvent);
+    int x11IoErrorHandler(Display* display);
 
     X11Shortcut ShortcutToX11(const QString &shortcut);
     QString X11ToShortcut(const X11Shortcut &X11shortcut);

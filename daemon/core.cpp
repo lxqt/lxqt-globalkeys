@@ -86,15 +86,6 @@ static const QLatin1String lastStr("last");
 static const QLatin1String allStr("all");
 static const QLatin1String noneStr("none");
 
-int x11ErrorHandler(Display *display, XErrorEvent *errorEvent)
-{
-    if (s_Core)
-    {
-        return s_Core->x11ErrorHandler(display, errorEvent);
-    }
-    return 0;
-}
-
 const char *x11opcodeToString(unsigned char opcode)
 {
     switch (opcode)
@@ -925,6 +916,18 @@ int Core::x11ErrorHandler(Display */*display*/, XErrorEvent *errorEvent)
     return 0;
 }
 
+int Core::x11IoErrorHandler(Display* display)
+{
+#if 1 // TODO: Workaround for https://github.com/lxqt/lxqt-globalkeys/issues/247
+    if (display == mDisplay) {
+        log(LOG_INFO, "X IO error ignored -> workaround for https://github.com/lxqt/lxqt-globalkeys/issues/247");
+        return 0;
+    }
+#endif
+
+    return mOldXIOErrorHandler(display);
+}
+
 bool Core::waitForX11Error(int level, uint timeout)
 {
     pollfd fds[1];
@@ -999,7 +1002,12 @@ void Core::run()
     mX11EventLoopActive = true;
     XInitThreads();
 
-    int (*oldx11ErrorHandler)(Display * display, XErrorEvent * errorEvent) = XSetErrorHandler(::x11ErrorHandler);
+    mOldXErrorHandler = XSetErrorHandler([](auto display, auto errorEvent){
+        return s_Core ? s_Core->x11ErrorHandler(display, errorEvent) : 0;
+    });
+    mOldXIOErrorHandler = XSetIOErrorHandler([](auto display){
+        return s_Core ? s_Core->x11IoErrorHandler(display) : 0;
+    });
 
     mDisplay = XOpenDisplay(nullptr);
     XSynchronize(mDisplay, True);
@@ -1018,7 +1026,8 @@ void Core::run()
 
     lockX11Error();
     XUngrabKey(mDisplay, AnyKey, AnyModifier, rootWindow);
-    XSetErrorHandler(oldx11ErrorHandler);
+    XSetErrorHandler(mOldXErrorHandler);
+    XSetIOErrorHandler(mOldXIOErrorHandler);
     XCloseDisplay(mDisplay);
     checkX11Error(0);
 }
