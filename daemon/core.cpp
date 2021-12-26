@@ -443,17 +443,14 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
         {
             throw std::runtime_error(std::string("Cannot create X11 response pipe: ") + std::string(strerror(c_error)));
         }
-
-        // FIXME: Quickfix for shitty written async thread initialization.
-        //        IMPORTANT: thread_started will be called from within QCoreApplication::exec()
-        connect(this, &QThread::started, this, &Core::thread_started, Qt::QueuedConnection);
     } catch(const std::exception& err) {
         log(LOG_CRIT, "%s", err.what());
     }
 }
 
-void Core::thread_started() {
-    // FIXME: Quickfix for shitty written async thread initialization
+void Core::start() {
+    QThread::start(InheritPriority); // FIXME: Quickfix for shitty written thread initialization
+
     try {
         char signal;
         error_t c_error = readAll(mX11ResponsePipe[STDIN_FILENO], &signal, sizeof(signal));

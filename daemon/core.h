@@ -75,6 +75,7 @@ public:
     Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringList &configFiles, bool multipleActionsBehaviourSet, MultipleActionsBehaviour multipleActionsBehaviour, QObject *parent = nullptr);
     ~Core() override;
 
+    void start();
     bool ready() const { return mReady; }
 
     void log(int level, const char *format, ...) const override;
@@ -87,7 +88,6 @@ private:
     Core(const Core&&) = delete;
     Core& operator =(const Core&) = delete;
     Core& operator =(const Core&&) = delete;
-    Q_INVOKABLE void thread_started();
 
 private:
     using X11Shortcut           = QPair<KeyCode, unsigned int>;
