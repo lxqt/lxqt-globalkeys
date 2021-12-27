@@ -440,6 +440,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 }
 
 void Core::start() {
+    log(LOG_DEBUG, "Starting XEvent listener [0]");
     QThread::start(InheritPriority); // FIXME: Quickfix for shitty written thread initialization
 
     try {
@@ -989,14 +990,19 @@ void Core::wakeX11Thread()
         dummyEvent.format = 32;
 
         lockX11Error();
+        log(LOG_DEBUG, "Core::wakeX11Thread XSendEvent [0]");
         XSendEvent(mDisplay, mInterClientCommunicationWindow, 0, 0, reinterpret_cast<XEvent *>(&dummyEvent));
+        log(LOG_DEBUG, "Core::wakeX11Thread XSendEvent [1]");
         checkX11Error();
+        log(LOG_DEBUG, "Core::wakeX11Thread XFlush [0]");
         XFlush(mDisplay);
+        log(LOG_DEBUG, "Core::wakeX11Thread XFlush [1]");
     }
 }
 
 void Core::run()
 {
+    log(LOG_DEBUG, "Starting XEvent listener [1]");
     mX11EventLoopActive = true;
     XInitThreads();
 
@@ -1020,7 +1026,9 @@ void Core::run()
         return;
     }
 
+    log(LOG_DEBUG, "Starting XEvent listener [2]");
     runEventLoop(rootWindow);
+    log(LOG_DEBUG, "XEvent listener finished");
 
     lockX11Error();
     XUngrabKey(mDisplay, AnyKey, AnyModifier, rootWindow);
