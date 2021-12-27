@@ -918,13 +918,7 @@ int Core::x11ErrorHandler(Display */*display*/, XErrorEvent *errorEvent)
 
 int Core::x11IoErrorHandler(Display* display)
 {
-#if 1 // TODO: Workaround for https://github.com/lxqt/lxqt-globalkeys/issues/247
-    if (display == mDisplay) {
-        log(LOG_INFO, "X IO error ignored -> workaround for https://github.com/lxqt/lxqt-globalkeys/issues/247");
-        return 0;
-    }
-#endif
-
+    log(LOG_CRIT, "X IO error -> May be issue https://github.com/lxqt/lxqt-globalkeys/issues/247");
     return mOldXIOErrorHandler(display);
 }
 
