@@ -976,8 +976,8 @@ bool Core::checkX11Error(int level, uint timeout)
 
 void Core::wakeX11Thread()
 {
-    if (currentThread() != qApp->thread()) {
-        log(LOG_DEBUG, "Core::wakeX11Thread can only be called from main thread");
+    if (currentThread() == this) {
+        log(LOG_DEBUG, "XEvent listener is not waiting. Not waking X11 thread.");
         return;
     }
     if (mInterClientCommunicationWindow)
