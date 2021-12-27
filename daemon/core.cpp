@@ -982,6 +982,10 @@ bool Core::checkX11Error(int level, uint timeout)
 
 void Core::wakeX11Thread()
 {
+    if (currentThread() != qApp->thread()) {
+        log(LOG_DEBUG, "Core::wakeX11Thread can only be called from main thread");
+        return;
+    }
     if (mInterClientCommunicationWindow)
     {
         XClientMessageEvent dummyEvent;
