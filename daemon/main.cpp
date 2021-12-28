@@ -237,6 +237,9 @@ int main(int argc, char *argv[])
 
     Core core(runAsDaemon || useSyslog, minLogLevelSet, minLogLevel, configFiles, multipleActionsBehaviourSet, multipleActionsBehaviour);
     core.start();
+    if (!core.ready()) {
+        return EXIT_FAILURE;
+    }
 
     return app.exec();
 }

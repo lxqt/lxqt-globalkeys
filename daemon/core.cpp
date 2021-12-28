@@ -441,6 +441,10 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 
 void Core::start() {
     log(LOG_DEBUG, "Starting XEvent listener [0]");
+    if (initXEventListener()) {
+        log(LOG_CRIT, "Failed to initialize XEevent listener.");
+        return;
+    }
     QThread::start(InheritPriority); // FIXME: Quickfix for shitty written thread initialization
 
     try {
@@ -772,10 +776,6 @@ void Core::start() {
     {
         log(LOG_CRIT, "%s", err.what());
     }
-
-    if (!mReady) {
-        qApp->exit(EXIT_FAILURE);
-    }
 }
 
 Core::~Core()
@@ -789,6 +789,7 @@ Core::~Core()
     mX11EventLoopActive = false;
     wakeX11Thread();
     wait();
+    deinitXEventListener();
 
     delete mDaemonAdaptor;
 
@@ -1004,10 +1005,18 @@ void Core::wakeX11Thread()
     }
 }
 
-void Core::run()
+void Core::deinitXEventListener()
 {
-    log(LOG_DEBUG, "Starting XEvent listener [1]");
-    mX11EventLoopActive = true;
+    lockX11Error();
+    XUngrabKey(mDisplay, AnyKey, AnyModifier, rootWindow);
+    XSetErrorHandler(mOldXErrorHandler);
+    XSetIOErrorHandler(mOldXIOErrorHandler);
+    XCloseDisplay(mDisplay);
+    checkX11Error(LOG_EMERG);
+}
+
+int Core::initXEventListener()
+{
     XInitThreads();
 
     mOldXErrorHandler = XSetErrorHandler([](auto display, auto errorEvent){
@@ -1021,25 +1030,19 @@ void Core::run()
     XSynchronize(mDisplay, True);
 
     lockX11Error();
-    Window rootWindow = DefaultRootWindow(mDisplay);
+    this->rootWindow = DefaultRootWindow(mDisplay);
     XSelectInput(mDisplay, rootWindow, KeyPressMask | KeyReleaseMask);
     mInterClientCommunicationWindow = XCreateSimpleWindow(mDisplay, rootWindow, 0, 0, 1, 1, 0, 0, 0);
     XSelectInput(mDisplay, mInterClientCommunicationWindow, StructureNotifyMask);
-    if (checkX11Error())
-    {
-        return;
-    }
+    return checkX11Error();
+}
 
-    log(LOG_DEBUG, "Starting XEvent listener [2]");
+void Core::run()
+{
+    log(LOG_DEBUG, "Starting XEvent listener [1]");
+    mX11EventLoopActive = true;
     runEventLoop(rootWindow);
     log(LOG_DEBUG, "XEvent listener finished");
-
-    lockX11Error();
-    XUngrabKey(mDisplay, AnyKey, AnyModifier, rootWindow);
-    XSetErrorHandler(mOldXErrorHandler);
-    XSetIOErrorHandler(mOldXIOErrorHandler);
-    XCloseDisplay(mDisplay);
-    checkX11Error(0);
 }
 
 void Core::runEventLoop(Window rootWindow)

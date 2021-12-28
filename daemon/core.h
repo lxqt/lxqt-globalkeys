@@ -155,6 +155,7 @@ private:
     bool minLogLevelSet;
     QStringList configFiles;
     bool multipleActionsBehaviourSet;
+    Window rootWindow = 0;
 #endif
     XErrorHandler   mOldXErrorHandler = nullptr;
     XIOErrorHandler mOldXIOErrorHandler = nullptr;
@@ -177,6 +178,8 @@ private:
 
     void wakeX11Thread();
 
+    void deinitXEventListener();
+    int initXEventListener();
     void run() override;
     void runEventLoop(Window rootWindow);
 
