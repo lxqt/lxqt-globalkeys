@@ -970,7 +970,9 @@ bool Core::checkX11Error(int level, uint timeout)
 //    unsigned long serial = NextRequest(mDisplay);
 //    log(LOG_DEBUG, "X11 error: serial: %lu", serial);
 
+    log(LOG_DEBUG, "Core::checkX11Error -> waitForX11Error [0]");
     bool result = waitForX11Error(level, timeout);
+    log(LOG_DEBUG, "Core::checkX11Error -> waitForX11Error [1]");
     mX11ErrorMutex.unlock();
     return result;
 }
@@ -1058,7 +1060,9 @@ void Core::runEventLoop(Window rootWindow)
 
         while (mX11EventLoopActive)
         {
+            log(LOG_DEBUG, "Core::run -> XPeekEvent [waiting…]");
             XPeekEvent(mDisplay, &event);
+            log(LOG_DEBUG, "Core::run -> XPeekEvent [event]");
             if (!mX11EventLoopActive)
             {
                 break;
