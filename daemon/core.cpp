@@ -996,9 +996,11 @@ void Core::wakeX11Thread()
         XSendEvent(mDisplay, mInterClientCommunicationWindow, 0, 0, reinterpret_cast<XEvent *>(&dummyEvent));
         log(LOG_DEBUG, "Core::wakeX11Thread XSendEvent [1]");
         checkX11Error();
+#if 0 // Why do we need XFlush here?
         log(LOG_DEBUG, "Core::wakeX11Thread XFlush [0]");
         XFlush(mDisplay);
         log(LOG_DEBUG, "Core::wakeX11Thread XFlush [1]");
+#endif
     }
 }
 
@@ -1017,8 +1019,8 @@ void Core::run()
 
     mDisplay = XOpenDisplay(nullptr);
     XSynchronize(mDisplay, True);
-    lockX11Error();
 
+    lockX11Error();
     Window rootWindow = DefaultRootWindow(mDisplay);
     XSelectInput(mDisplay, rootWindow, KeyPressMask | KeyReleaseMask);
     mInterClientCommunicationWindow = XCreateSimpleWindow(mDisplay, rootWindow, 0, 0, 1, 1, 0, 0, 0);
