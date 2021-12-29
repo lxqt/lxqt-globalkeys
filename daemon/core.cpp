@@ -44,7 +44,6 @@
 #include <cerrno>
 #include <cstring>
 #include <cstdio>
-#include <mutex>
 
 #include <stdexcept>
 
@@ -1083,7 +1082,7 @@ void Core::runEventLoop(Window rootWindow)
 
             if (((event.type == KeyPress) || (event.type == KeyRelease)) && mDataMutex.tryLock(0))
             {
-                std::unique_lock<QMutex> unlocker(mDataMutex, std::adopt_lock);
+                mDataMutex.unlock();
 
                 // pop event from the x11 queue and process it
                 XNextEvent(mDisplay, &event);
