@@ -1059,6 +1059,7 @@ void Core::runEventLoop(Window rootWindow)
         {
             log(LOG_DEBUG, "Core::run -> XPeekEvent [waiting…]");
             XPeekEvent(mDisplay, &event);
+            //QMutexLocker lock(&mDataMutex);
             log(LOG_DEBUG, "Core::run -> XPeekEvent [event]");
             if (!mX11EventLoopActive)
             {
@@ -1072,10 +1073,9 @@ void Core::runEventLoop(Window rootWindow)
                 continue;
             }
             keyReleaseExpected = false; // Close time window for accepting meta keys.
-
-            if (((event.type == KeyPress) || (event.type == KeyRelease)) && mDataMutex.tryLock(0))
+            if (((event.type == KeyPress) || (event.type == KeyRelease)))
             {
-                mDataMutex.unlock();
+                //mDataMutex.unlock();
 
                 // pop event from the x11 queue and process it
                 XNextEvent(mDisplay, &event);
@@ -1589,9 +1589,9 @@ void Core::runEventLoop(Window rootWindow)
                                 mX11EventLoopActive = false;
                                 break;
                             }
-                            mDataMutex.lock();
+                            //mDataMutex.lock();
                             mGrabbingShortcut = true;
-                            mDataMutex.unlock();
+                            //mDataMutex.unlock();
                         }
                         break;
 
@@ -1610,9 +1610,9 @@ void Core::runEventLoop(Window rootWindow)
                                 break;
                             }
 
-                            mDataMutex.lock();
+                            //mDataMutex.lock();
                             mGrabbingShortcut = false;
-                            mDataMutex.unlock();
+                            //mDataMutex.unlock();
                         }
                         break;
                         } // end of switch-case
@@ -2036,7 +2036,6 @@ QString Core::checkShortcut(const QString &shortcut, X11Shortcut &X11shortcut)
 QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
 {
     X11Shortcut X11shortcut;
-
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
 //    if (newShortcut.isEmpty())
 //    {
@@ -2083,9 +2082,13 @@ QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortc
 
 void Core::addClientAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
 {
-    log(LOG_INFO, "addClientAction shortcut:'%s' path:'%s' description:'%s' sender:'%s'", qPrintable(shortcut), qPrintable(path.path()), qPrintable(description), qPrintable(sender));
-
     QMutexLocker lock(&mDataMutex);
+    addClientActionInternal(result, shortcut, path, description, sender);
+}
+
+void Core::addClientActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
+{
+    log(LOG_INFO, "addClientAction shortcut:'%s' path:'%s' description:'%s' sender:'%s'", qPrintable(shortcut), qPrintable(path.path()), qPrintable(description), qPrintable(sender));
 
     SenderByClientPath::iterator senderByClientPath = mSenderByClientPath.find(path);
     if (senderByClientPath != mSenderByClientPath.end())
@@ -2126,18 +2129,25 @@ void Core::addClientAction(QPair<QString, qulonglong> &result, const QString &sh
 
 qulonglong Core::registerClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description)
 {
-    log(LOG_INFO, "registerClientAction shortcut:'%s' path:'%s' description:'%s'", qPrintable(shortcut), qPrintable(path.path()), qPrintable(description));
-
     QMutexLocker lock(&mDataMutex);
+    return registerClientActionInternal(shortcut, path, description);
+}
 
+qulonglong Core::registerClientActionInternal(const QString &shortcut, const QDBusObjectPath &path, const QString &description)
+{
+    log(LOG_INFO, "registerClientAction shortcut:'%s' path:'%s' description:'%s'", qPrintable(shortcut), qPrintable(path.path()), qPrintable(description));
     return addOrRegisterClientAction(shortcut, path, description, QString()).second;
 }
 
 void Core::addMethodAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
 {
-    log(LOG_INFO, "addMethodAction shortcut:'%s' service:'%s' path:'%s' interface:'%s' method:'%s' description:'%s'", qPrintable(shortcut), qPrintable(service), qPrintable(path.path()), qPrintable(interface), qPrintable(method), qPrintable(description));
-
     QMutexLocker lock(&mDataMutex);
+    addMethodActionInternal(result, shortcut, service, path, interface, method, description);
+}
+
+void Core::addMethodActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
+{
+    log(LOG_INFO, "addMethodAction shortcut:'%s' service:'%s' path:'%s' interface:'%s' method:'%s' description:'%s'", qPrintable(shortcut), qPrintable(service), qPrintable(path.path()), qPrintable(interface), qPrintable(method), qPrintable(description));
 
     X11Shortcut X11shortcut;
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
@@ -2169,16 +2179,27 @@ void Core::addMethodAction(QPair<QString, qulonglong> &result, const QString &sh
 
 qulonglong Core::registerMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
 {
+    QMutexLocker lock(&mDataMutex);
+    return registerMethodActionInternal(shortcut, service, path, interface, method, description);
+}
+
+qulonglong Core::registerMethodActionInternal(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
+{
+    log(LOG_INFO, "registerMethodAction shortcut:'%s' path:'%s' description:'%s'", qPrintable(shortcut), qPrintable(path.path()), qPrintable(description));
     QPair<QString, qulonglong> result;
-    addMethodAction(result, shortcut, service, path, interface, method, description);
+    addMethodActionInternal(result, shortcut, service, path, interface, method, description);
     return result.second;
 }
 
 void Core::addCommandAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
 {
-    log(LOG_INFO, "addCommandAction shortcut:'%s' command:'%s' arguments:'%s' description:'%s'", qPrintable(shortcut), qPrintable(command), qPrintable(joinToString(arguments, QString(), QLatin1String("' '"), QString())), qPrintable(description));
-
     QMutexLocker lock(&mDataMutex);
+    addCommandActionInternal(result, shortcut, command, arguments, description);
+}
+
+void Core::addCommandActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
+{
+    log(LOG_INFO, "addCommandAction shortcut:'%s' command:'%s' arguments:'%s' description:'%s'", qPrintable(shortcut), qPrintable(command), qPrintable(joinToString(arguments, QString(), QLatin1String("' '"), QString())), qPrintable(description));
 
     X11Shortcut X11shortcut;
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
@@ -2210,8 +2231,15 @@ void Core::addCommandAction(QPair<QString, qulonglong> &result, const QString &s
 
 qulonglong Core::registerCommandAction(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
 {
+    QMutexLocker lock(&mDataMutex);
+    return registerCommandActionInternal(shortcut, command, arguments, description);
+}
+
+qulonglong Core::registerCommandActionInternal(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
+{
+    log(LOG_INFO, "registerCommandAction shortcut:'%s' arguments:'%s' description:'%s'", qPrintable(shortcut), qPrintable(arguments.join(QLatin1Char(' '))), qPrintable(description));
     QPair<QString, qulonglong> result;
-    addCommandAction(result, shortcut, command, arguments, description);
+    addCommandActionInternal(result, shortcut, command, arguments, description);
     return result.second;
 }
 

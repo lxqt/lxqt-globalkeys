@@ -107,8 +107,11 @@ private:
     void serviceDisappeared(const QString &sender);
 
     void addClientAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
+    void addClientActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
     void addMethodAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
+    void addMethodActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
     void addCommandAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
+    void addCommandActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
 
     void modifyClientAction(qulonglong &result, const QDBusObjectPath &path, const QString &description, const QString &sender);
     void modifyActionDescription(bool &result, const qulonglong &id, const QString &description);
@@ -162,8 +165,11 @@ private:
     bool enableActionNonGuarded(qulonglong id, bool enabled);
     QPair<QString, qulonglong> addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
     qulonglong registerClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description);
+    qulonglong registerClientActionInternal(const QString &shortcut, const QDBusObjectPath &path, const QString &description);
     qulonglong registerMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
+    qulonglong registerMethodActionInternal(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
     qulonglong registerCommandAction(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
+    qulonglong registerCommandActionInternal(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
 
     GeneralActionInfo actionInfo(const ShortcutAndAction &shortcutAndAction) const;
 
