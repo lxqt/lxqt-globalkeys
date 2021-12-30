@@ -236,6 +236,7 @@ int main(int argc, char *argv[])
     LXQt::Application app(argc, argv);
 
     Core core(runAsDaemon || useSyslog, minLogLevelSet, minLogLevel, configFiles, multipleActionsBehaviourSet, multipleActionsBehaviour);
+    core.setObjectName(QStringLiteral("XEvent listener"));
     core.start();
     if (!core.ready()) {
         return EXIT_FAILURE;
