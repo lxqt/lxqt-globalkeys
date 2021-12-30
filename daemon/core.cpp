@@ -925,6 +925,7 @@ int Core::x11IoErrorHandler(Display* display)
 
 bool Core::waitForX11Error(int level, uint timeout)
 {
+    QMutexLocker locker(&mX11ErrorMutex);
     pollfd fds[1];
     fds[0].fd = mX11ErrorPipe[STDIN_FILENO];
     fds[0].events = POLLIN | POLLERR | POLLHUP;
@@ -961,20 +962,12 @@ bool Core::waitForX11Error(int level, uint timeout)
 
 void Core::lockX11Error()
 {
-    mX11ErrorMutex.lock();
     waitForX11Error(false, 0);
 }
 
 bool Core::checkX11Error(int level, uint timeout)
 {
-//    unsigned long serial = NextRequest(mDisplay);
-//    log(LOG_DEBUG, "X11 error: serial: %lu", serial);
-
-    log(LOG_DEBUG, "Core::checkX11Error -> waitForX11Error [0]");
-    bool result = waitForX11Error(level, timeout);
-    log(LOG_DEBUG, "Core::checkX11Error -> waitForX11Error [1]");
-    mX11ErrorMutex.unlock();
-    return result;
+    return waitForX11Error(level, timeout);
 }
 
 void Core::wakeX11Thread()
