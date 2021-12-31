@@ -1009,7 +1009,7 @@ void Core::deinitXEventListener()
 
 int Core::initXEventListener()
 {
-    XInitThreads();
+    //XInitThreads();
 
     mOldXErrorHandler = XSetErrorHandler([](auto display, auto errorEvent){
         return s_Core ? s_Core->x11ErrorHandler(display, errorEvent) : 0;

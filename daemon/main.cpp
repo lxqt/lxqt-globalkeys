@@ -233,6 +233,7 @@ int main(int argc, char *argv[])
     int ignoreIt = chdir((home && *home) ? home : "/");
     (void)ignoreIt;
 
+    XInitThreads();
     LXQt::Application app(argc, argv);
 
     Core core(runAsDaemon || useSyslog, minLogLevelSet, minLogLevel, configFiles, multipleActionsBehaviourSet, multipleActionsBehaviour);
