@@ -987,6 +987,7 @@ void Core::wakeX11Thread()
         lockX11Error();
         log(LOG_DEBUG, "Core::wakeX11Thread XSendEvent [0]");
         XSendEvent(mDisplay, mInterClientCommunicationWindow, 0, 0, reinterpret_cast<XEvent *>(&dummyEvent));
+        XFlush(mDisplay);
         log(LOG_DEBUG, "Core::wakeX11Thread XSendEvent [1]");
         checkX11Error();
 #if 0 // Why do we need XFlush here?
@@ -1019,7 +1020,7 @@ int Core::initXEventListener()
     });
 
     mDisplay = XOpenDisplay(nullptr);
-    XSynchronize(mDisplay, True);
+    //XSynchronize(mDisplay, True);
 
     lockX11Error();
     this->rootWindow = DefaultRootWindow(mDisplay);
