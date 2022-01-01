@@ -44,7 +44,6 @@
 #include <cerrno>
 #include <cstring>
 #include <cstdio>
-#include <mutex>
 
 #include <stdexcept>
 
@@ -85,15 +84,6 @@ static const QLatin1String firstStr("first");
 static const QLatin1String lastStr("last");
 static const QLatin1String allStr("all");
 static const QLatin1String noneStr("none");
-
-int x11ErrorHandler(Display *display, XErrorEvent *errorEvent)
-{
-    if (s_Core)
-    {
-        return s_Core->x11ErrorHandler(display, errorEvent);
-    }
-    return 0;
-}
 
 const char *x11opcodeToString(unsigned char opcode)
 {
@@ -403,6 +393,12 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
 {
     s_Core = this;
 
+#if 1 // FIXME: Quickfix splitting thread startup.
+    this->multipleActionsBehaviourSet = multipleActionsBehaviourSet;
+    this->configFiles = configFiles;
+    this->minLogLevelSet = minLogLevelSet;
+#endif
+
     initBothPipeEnds(mX11ErrorPipe);
     initBothPipeEnds(mX11RequestPipe);
     initBothPipeEnds(mX11ResponsePipe);
@@ -437,18 +433,27 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
         {
             throw std::runtime_error(std::string("Cannot create X11 response pipe: ") + std::string(strerror(c_error)));
         }
+    } catch(const std::exception& err) {
+        log(LOG_CRIT, "%s", err.what());
+    }
+}
 
+void Core::start() {
+    log(LOG_DEBUG, "Starting XEvent listener [0]");
+    if (initXEventListener()) {
+        log(LOG_CRIT, "Failed to initialize XEevent listener.");
+        return;
+    }
+    QThread::start(InheritPriority); // FIXME: Quickfix for shitty written thread initialization
 
-        start();
-
-
+    try {
         char signal;
-        error_t error = readAll(mX11ResponsePipe[STDIN_FILENO], &signal, sizeof(signal));
-        if (error > 0)
+        error_t c_error = readAll(mX11ResponsePipe[STDIN_FILENO], &signal, sizeof(signal));
+        if (c_error > 0)
         {
             throw std::runtime_error(std::string("Cannot read X11 start signal: ") + std::string(strerror(c_error)));
         }
-        if (error < 0)
+        if (c_error < 0)
         {
             throw std::runtime_error(std::string("Cannot read X11 start signal"));
         }
@@ -783,6 +788,7 @@ Core::~Core()
     mX11EventLoopActive = false;
     wakeX11Thread();
     wait();
+    deinitXEventListener();
 
     delete mDaemonAdaptor;
 
@@ -911,8 +917,15 @@ int Core::x11ErrorHandler(Display */*display*/, XErrorEvent *errorEvent)
     return 0;
 }
 
+int Core::x11IoErrorHandler(Display* display)
+{
+    log(LOG_CRIT, "X IO error -> May be issue https://github.com/lxqt/lxqt-globalkeys/issues/247");
+    return mOldXIOErrorHandler(display);
+}
+
 bool Core::waitForX11Error(int level, uint timeout)
 {
+    QMutexLocker locker(&mX11ErrorMutex);
     pollfd fds[1];
     fds[0].fd = mX11ErrorPipe[STDIN_FILENO];
     fds[0].events = POLLIN | POLLERR | POLLHUP;
@@ -949,22 +962,20 @@ bool Core::waitForX11Error(int level, uint timeout)
 
 void Core::lockX11Error()
 {
-    mX11ErrorMutex.lock();
     waitForX11Error(false, 0);
 }
 
 bool Core::checkX11Error(int level, uint timeout)
 {
-//    unsigned long serial = NextRequest(mDisplay);
-//    log(LOG_DEBUG, "X11 error: serial: %lu", serial);
-
-    bool result = waitForX11Error(level, timeout);
-    mX11ErrorMutex.unlock();
-    return result;
+    return waitForX11Error(level, timeout);
 }
 
 void Core::wakeX11Thread()
 {
+    if (currentThread() == this) {
+        log(LOG_DEBUG, "XEvent listener is not waiting. Not waking X11 thread.");
+        return;
+    }
     if (mInterClientCommunicationWindow)
     {
         XClientMessageEvent dummyEvent;
@@ -974,39 +985,57 @@ void Core::wakeX11Thread()
         dummyEvent.format = 32;
 
         lockX11Error();
+        log(LOG_DEBUG, "Core::wakeX11Thread XSendEvent [0]");
         XSendEvent(mDisplay, mInterClientCommunicationWindow, 0, 0, reinterpret_cast<XEvent *>(&dummyEvent));
-        checkX11Error();
         XFlush(mDisplay);
+        log(LOG_DEBUG, "Core::wakeX11Thread XSendEvent [1]");
+        checkX11Error();
+#if 0 // Why do we need XFlush here?
+        log(LOG_DEBUG, "Core::wakeX11Thread XFlush [0]");
+        XFlush(mDisplay);
+        log(LOG_DEBUG, "Core::wakeX11Thread XFlush [1]");
+#endif
     }
+}
+
+void Core::deinitXEventListener()
+{
+    lockX11Error();
+    XUngrabKey(mDisplay, AnyKey, AnyModifier, rootWindow);
+    XSetErrorHandler(mOldXErrorHandler);
+    XSetIOErrorHandler(mOldXIOErrorHandler);
+    XCloseDisplay(mDisplay);
+    checkX11Error(LOG_EMERG);
+}
+
+int Core::initXEventListener()
+{
+    //XInitThreads();
+
+    mOldXErrorHandler = XSetErrorHandler([](auto display, auto errorEvent){
+        return s_Core ? s_Core->x11ErrorHandler(display, errorEvent) : 0;
+    });
+    mOldXIOErrorHandler = XSetIOErrorHandler([](auto display){
+        return s_Core ? s_Core->x11IoErrorHandler(display) : 0;
+    });
+
+    mDisplay = XOpenDisplay(nullptr);
+    //XSynchronize(mDisplay, True);
+
+    lockX11Error();
+    this->rootWindow = DefaultRootWindow(mDisplay);
+    XSelectInput(mDisplay, rootWindow, KeyPressMask | KeyReleaseMask);
+    mInterClientCommunicationWindow = XCreateSimpleWindow(mDisplay, rootWindow, 0, 0, 1, 1, 0, 0, 0);
+    XSelectInput(mDisplay, mInterClientCommunicationWindow, StructureNotifyMask);
+    return checkX11Error();
 }
 
 void Core::run()
 {
+    log(LOG_DEBUG, "Starting XEvent listener [1]");
     mX11EventLoopActive = true;
-    XInitThreads();
-
-    int (*oldx11ErrorHandler)(Display * display, XErrorEvent * errorEvent) = XSetErrorHandler(::x11ErrorHandler);
-
-    mDisplay = XOpenDisplay(nullptr);
-    XSynchronize(mDisplay, True);
-    lockX11Error();
-
-    Window rootWindow = DefaultRootWindow(mDisplay);
-    XSelectInput(mDisplay, rootWindow, KeyPressMask | KeyReleaseMask);
-    mInterClientCommunicationWindow = XCreateSimpleWindow(mDisplay, rootWindow, 0, 0, 1, 1, 0, 0, 0);
-    XSelectInput(mDisplay, mInterClientCommunicationWindow, StructureNotifyMask);
-    if (checkX11Error())
-    {
-        return;
-    }
-
     runEventLoop(rootWindow);
-
-    lockX11Error();
-    XUngrabKey(mDisplay, AnyKey, AnyModifier, rootWindow);
-    XSetErrorHandler(oldx11ErrorHandler);
-    XCloseDisplay(mDisplay);
-    checkX11Error(0);
+    log(LOG_DEBUG, "XEvent listener finished");
 }
 
 void Core::runEventLoop(Window rootWindow)
@@ -1029,7 +1058,10 @@ void Core::runEventLoop(Window rootWindow)
 
         while (mX11EventLoopActive)
         {
+            log(LOG_DEBUG, "Core::run -> XPeekEvent [waiting…]");
             XPeekEvent(mDisplay, &event);
+            //QMutexLocker lock(&mDataMutex);
+            log(LOG_DEBUG, "Core::run -> XPeekEvent [event]");
             if (!mX11EventLoopActive)
             {
                 break;
@@ -1042,10 +1074,9 @@ void Core::runEventLoop(Window rootWindow)
                 continue;
             }
             keyReleaseExpected = false; // Close time window for accepting meta keys.
-
-            if (((event.type == KeyPress) || (event.type == KeyRelease)) && mDataMutex.tryLock(0))
+            if (((event.type == KeyPress) || (event.type == KeyRelease)))
             {
-                std::unique_lock<QMutex> unlocker(mDataMutex, std::adopt_lock);
+                //mDataMutex.unlock();
 
                 // pop event from the x11 queue and process it
                 XNextEvent(mDisplay, &event);
@@ -1559,9 +1590,9 @@ void Core::runEventLoop(Window rootWindow)
                                 mX11EventLoopActive = false;
                                 break;
                             }
-                            mDataMutex.lock();
+                            //mDataMutex.lock();
                             mGrabbingShortcut = true;
-                            mDataMutex.unlock();
+                            //mDataMutex.unlock();
                         }
                         break;
 
@@ -1580,9 +1611,9 @@ void Core::runEventLoop(Window rootWindow)
                                 break;
                             }
 
-                            mDataMutex.lock();
+                            //mDataMutex.lock();
                             mGrabbingShortcut = false;
-                            mDataMutex.unlock();
+                            //mDataMutex.unlock();
                         }
                         break;
                         } // end of switch-case
@@ -2006,7 +2037,6 @@ QString Core::checkShortcut(const QString &shortcut, X11Shortcut &X11shortcut)
 QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
 {
     X11Shortcut X11shortcut;
-
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
 //    if (newShortcut.isEmpty())
 //    {
@@ -2053,9 +2083,13 @@ QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortc
 
 void Core::addClientAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
 {
-    log(LOG_INFO, "addClientAction shortcut:'%s' path:'%s' description:'%s' sender:'%s'", qPrintable(shortcut), qPrintable(path.path()), qPrintable(description), qPrintable(sender));
-
     QMutexLocker lock(&mDataMutex);
+    addClientActionInternal(result, shortcut, path, description, sender);
+}
+
+void Core::addClientActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
+{
+    log(LOG_INFO, "addClientAction shortcut:'%s' path:'%s' description:'%s' sender:'%s'", qPrintable(shortcut), qPrintable(path.path()), qPrintable(description), qPrintable(sender));
 
     SenderByClientPath::iterator senderByClientPath = mSenderByClientPath.find(path);
     if (senderByClientPath != mSenderByClientPath.end())
@@ -2096,18 +2130,25 @@ void Core::addClientAction(QPair<QString, qulonglong> &result, const QString &sh
 
 qulonglong Core::registerClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description)
 {
-    log(LOG_INFO, "registerClientAction shortcut:'%s' path:'%s' description:'%s'", qPrintable(shortcut), qPrintable(path.path()), qPrintable(description));
-
     QMutexLocker lock(&mDataMutex);
+    return registerClientActionInternal(shortcut, path, description);
+}
 
+qulonglong Core::registerClientActionInternal(const QString &shortcut, const QDBusObjectPath &path, const QString &description)
+{
+    log(LOG_INFO, "registerClientAction shortcut:'%s' path:'%s' description:'%s'", qPrintable(shortcut), qPrintable(path.path()), qPrintable(description));
     return addOrRegisterClientAction(shortcut, path, description, QString()).second;
 }
 
 void Core::addMethodAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
 {
-    log(LOG_INFO, "addMethodAction shortcut:'%s' service:'%s' path:'%s' interface:'%s' method:'%s' description:'%s'", qPrintable(shortcut), qPrintable(service), qPrintable(path.path()), qPrintable(interface), qPrintable(method), qPrintable(description));
-
     QMutexLocker lock(&mDataMutex);
+    addMethodActionInternal(result, shortcut, service, path, interface, method, description);
+}
+
+void Core::addMethodActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
+{
+    log(LOG_INFO, "addMethodAction shortcut:'%s' service:'%s' path:'%s' interface:'%s' method:'%s' description:'%s'", qPrintable(shortcut), qPrintable(service), qPrintable(path.path()), qPrintable(interface), qPrintable(method), qPrintable(description));
 
     X11Shortcut X11shortcut;
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
@@ -2139,16 +2180,27 @@ void Core::addMethodAction(QPair<QString, qulonglong> &result, const QString &sh
 
 qulonglong Core::registerMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
 {
+    QMutexLocker lock(&mDataMutex);
+    return registerMethodActionInternal(shortcut, service, path, interface, method, description);
+}
+
+qulonglong Core::registerMethodActionInternal(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
+{
+    log(LOG_INFO, "registerMethodAction shortcut:'%s' path:'%s' description:'%s'", qPrintable(shortcut), qPrintable(path.path()), qPrintable(description));
     QPair<QString, qulonglong> result;
-    addMethodAction(result, shortcut, service, path, interface, method, description);
+    addMethodActionInternal(result, shortcut, service, path, interface, method, description);
     return result.second;
 }
 
 void Core::addCommandAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
 {
-    log(LOG_INFO, "addCommandAction shortcut:'%s' command:'%s' arguments:'%s' description:'%s'", qPrintable(shortcut), qPrintable(command), qPrintable(joinToString(arguments, QString(), QLatin1String("' '"), QString())), qPrintable(description));
-
     QMutexLocker lock(&mDataMutex);
+    addCommandActionInternal(result, shortcut, command, arguments, description);
+}
+
+void Core::addCommandActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
+{
+    log(LOG_INFO, "addCommandAction shortcut:'%s' command:'%s' arguments:'%s' description:'%s'", qPrintable(shortcut), qPrintable(command), qPrintable(joinToString(arguments, QString(), QLatin1String("' '"), QString())), qPrintable(description));
 
     X11Shortcut X11shortcut;
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
@@ -2180,8 +2232,15 @@ void Core::addCommandAction(QPair<QString, qulonglong> &result, const QString &s
 
 qulonglong Core::registerCommandAction(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
 {
+    QMutexLocker lock(&mDataMutex);
+    return registerCommandActionInternal(shortcut, command, arguments, description);
+}
+
+qulonglong Core::registerCommandActionInternal(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
+{
+    log(LOG_INFO, "registerCommandAction shortcut:'%s' arguments:'%s' description:'%s'", qPrintable(shortcut), qPrintable(arguments.join(QLatin1Char(' '))), qPrintable(description));
     QPair<QString, qulonglong> result;
-    addCommandAction(result, shortcut, command, arguments, description);
+    addCommandActionInternal(result, shortcut, command, arguments, description);
     return result.second;
 }
 

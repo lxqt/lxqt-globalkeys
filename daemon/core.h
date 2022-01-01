@@ -75,6 +75,7 @@ public:
     Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringList &configFiles, bool multipleActionsBehaviourSet, MultipleActionsBehaviour multipleActionsBehaviour, QObject *parent = nullptr);
     ~Core() override;
 
+    void start();
     bool ready() const { return mReady; }
 
     void log(int level, const char *format, ...) const override;
@@ -106,8 +107,11 @@ private:
     void serviceDisappeared(const QString &sender);
 
     void addClientAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
+    void addClientActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
     void addMethodAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
+    void addMethodActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
     void addCommandAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
+    void addCommandActionInternal(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
 
     void modifyClientAction(qulonglong &result, const QDBusObjectPath &path, const QString &description, const QString &sender);
     void modifyActionDescription(bool &result, const qulonglong &id, const QString &description);
@@ -150,25 +154,38 @@ private:
     void shortcutGrabTimedout();
 
 private:
+#if 1 // FIXME: Workaround splitting thread startup.
+    bool minLogLevelSet;
+    QStringList configFiles;
+    bool multipleActionsBehaviourSet;
+    Window rootWindow = 0;
+#endif
+    XErrorHandler   mOldXErrorHandler = nullptr;
+    XIOErrorHandler mOldXIOErrorHandler = nullptr;
     bool enableActionNonGuarded(qulonglong id, bool enabled);
     QPair<QString, qulonglong> addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
     qulonglong registerClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description);
+    qulonglong registerClientActionInternal(const QString &shortcut, const QDBusObjectPath &path, const QString &description);
     qulonglong registerMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
+    qulonglong registerMethodActionInternal(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
     qulonglong registerCommandAction(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
+    qulonglong registerCommandActionInternal(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
 
     GeneralActionInfo actionInfo(const ShortcutAndAction &shortcutAndAction) const;
 
     friend void unixSignalHandler(int signalNumber);
     void unixSignalHandler(int signalNumber);
 
-    friend int x11ErrorHandler(Display *display, XErrorEvent *errorEvent);
     int x11ErrorHandler(Display *display, XErrorEvent *errorEvent);
+    int x11IoErrorHandler(Display* display);
 
     X11Shortcut ShortcutToX11(const QString &shortcut);
     QString X11ToShortcut(const X11Shortcut &X11shortcut);
 
     void wakeX11Thread();
 
+    void deinitXEventListener();
+    int initXEventListener();
     void run() override;
     void runEventLoop(Window rootWindow);
 
