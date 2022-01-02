@@ -988,7 +988,14 @@ void Core::run()
     int (*oldx11ErrorHandler)(Display * display, XErrorEvent * errorEvent) = XSetErrorHandler(::x11ErrorHandler);
 
     mDisplay = XOpenDisplay(nullptr);
-    XSynchronize(mDisplay, True);
+    // WARNING: After the following libx11 commit, making Xlib behave synchronously may cause the app
+    // to exit with code 1 at XPeekEvent():
+    // https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/93a050c3ad2d2264d3880db3791387b1a9bf2e9e
+    // The commit assumes that the event queue should be empty if another thread is blocking.
+    // This assumption is made for preventing a possible hang in X11, at the cost of making
+    // an app exit with code 1 when the queue isn't empty. Apparently, a synchronized behavior
+    // can create non-empty queues sometimes.
+    //XSynchronize(mDisplay, True);
     lockX11Error();
 
     Window rootWindow = DefaultRootWindow(mDisplay);
