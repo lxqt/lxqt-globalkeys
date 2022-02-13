@@ -117,12 +117,12 @@
     <message>
         <location filename="../main_window.ui" line="24"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Išči</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="69"/>
         <source>Add ...</source>
-        <translation>Dodaj</translation>
+        <translation>Dodaj ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="79"/>
@@ -132,7 +132,7 @@
     <message>
         <location filename="../main_window.ui" line="89"/>
         <source>Modify ...</source>
-        <translation>Uredi</translation>
+        <translation>Spremeni ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="106"/>
@@ -148,25 +148,25 @@
         <location filename="../main_window.ui" line="140"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Prvo</translation>
+        <translation>Prvo</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="145"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Zadnje</translation>
+        <translation>Zadnje</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="150"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Nič</translation>
+        <translation>Nič</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="155"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Vsa</translation>
+        <translation>Vsa</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="180"/>
