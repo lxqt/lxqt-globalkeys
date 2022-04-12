@@ -189,7 +189,7 @@
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
         <translation>Vos raccourcis définis seront supprimés.
-Voulez-vous procéder ?</translation>
+Voulez-vous procéder&#x202f;?</translation>
     </message>
 </context>
 </TS>
