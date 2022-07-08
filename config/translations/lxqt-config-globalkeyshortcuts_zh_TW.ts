@@ -117,7 +117,7 @@
     <message>
         <location filename="../main_window.ui" line="24"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>搜尋</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="69"/>
@@ -148,30 +148,30 @@
         <location filename="../main_window.ui" line="140"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">第一項</translation>
+        <translation>第一個</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="145"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">最後一項</translation>
+        <translation>最後一個</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="150"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">無</translation>
+        <translation>不動作</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="155"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">全部</translation>
+        <translation>全部</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="180"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>預設值</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="200"/>
@@ -181,13 +181,14 @@
     <message>
         <location filename="../main_window.cpp" line="191"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>回復為預設值</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="192"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>您自訂的快捷鍵將被移除。
+確定要繼續嗎？</translation>
     </message>
 </context>
 </TS>

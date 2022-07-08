@@ -181,7 +181,7 @@
     <message>
         <location filename="../main_window.cpp" line="191"/>
         <source>Restore Default</source>
-        <translation>Palauta Oletusasetukset</translation>
+        <translation>Palauta oletusasetukset</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="192"/>
