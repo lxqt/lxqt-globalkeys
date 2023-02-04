@@ -59,52 +59,52 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
         <source>&amp;Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Descripcion :</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Activat</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Comanda</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation type="unfinished"></translation>
+        <translation>Messatge &amp;DBus</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipe :</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation type="unfinished"></translation>
+        <translation>Co&amp;manda :</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation type="unfinished"></translation>
+        <translation>S&amp;ervici :</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>C&amp;amin :</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Interfàcia :</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
         <source>&amp;Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Metòde :</translation>
     </message>
 </context>
 <context>
@@ -112,76 +112,76 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Acorchis de clavièr LXQt</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="24"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Cercar</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="69"/>
         <source>Add ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustar…</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="79"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Suprimir</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="89"/>
         <source>Modify ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificar…</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="106"/>
         <source>Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>Escambiar</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="132"/>
         <source>Multiple actions behaviour:</source>
-        <translation type="unfinished"></translation>
+        <translation>Compòrtament de las accions multiplas :</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="140"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished"></translation>
+        <translation>Primièra</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="145"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished"></translation>
+        <translation>Darrièra</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="150"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cap</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="155"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished"></translation>
+        <translation>Totas</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="180"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Per defaut</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="200"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampar</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="191"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Restaurar los paramètres per defaut</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="192"/>

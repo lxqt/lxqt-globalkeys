@@ -127,7 +127,7 @@
     <message>
         <location filename="../main_window.ui" line="79"/>
         <source>Remove</source>
-        <translation>Sil</translation>
+        <translation>Kaldır</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="89"/>
@@ -187,7 +187,7 @@
         <location filename="../main_window.cpp" line="192"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation>Belirlediğiniz kısayol silinecek.
+        <translation>Belirlediğiniz kısayol kaldırılacak.
 Devam etmek istiyor musunuz?</translation>
     </message>
 </context>
