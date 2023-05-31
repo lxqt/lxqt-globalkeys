@@ -134,7 +134,7 @@ set(${PROJECT_NAME}_ALL_FILES
 )
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_ALL_FILES})
-target_link_libraries(${PROJECT_NAME} KF5::WindowSystem lxqt)
+target_link_libraries(${PROJECT_NAME} lxqt)
 
 install(TARGETS
     ${PROJECT_NAME}
