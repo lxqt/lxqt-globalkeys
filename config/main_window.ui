@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Global Actions Manager</string>
   </property>
+  <property name="windowIcon">
+   <iconset theme="preferences-desktop-keyboard"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
