@@ -142,7 +142,7 @@
     <message>
         <location filename="../main_window.ui" line="132"/>
         <source>Multiple actions behaviour:</source>
-        <translation>Kun päällekäisiä pikanäppäimiä:</translation>
+        <translation>Käytäntö päällekkäisyyksissä:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="140"/>
