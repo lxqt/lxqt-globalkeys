@@ -6,7 +6,7 @@
     <message>
         <location filename="../default_model.cpp" line="51"/>
         <source>Command</source>
-        <translation type="unfinished">Komandoa</translation>
+        <translation>Komandoa</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="52"/>
@@ -26,12 +26,12 @@
     <message>
         <location filename="../default_model.cpp" line="146"/>
         <source>Shortcut</source>
-        <translation type="unfinished">Lasterbidea</translation>
+        <translation>Lasterbidea</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="149"/>
         <source>Description</source>
-        <translation type="unfinished">Deskribapena</translation>
+        <translation>Deskribapena</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="152"/>
@@ -99,12 +99,12 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Interfazea</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
         <source>&amp;Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Metodoa:</translation>
     </message>
 </context>
 <context>
@@ -117,17 +117,17 @@
     <message>
         <location filename="../main_window.ui" line="24"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilatu</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="69"/>
         <source>Add ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehitu ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="79"/>
         <source>Remove</source>
-        <translation type="unfinished">Kendu</translation>
+        <translation>Kendu</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="89"/>
@@ -160,7 +160,7 @@
         <location filename="../main_window.ui" line="150"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Bat ere ez</translation>
+        <translation>Bat ere ez</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="155"/>
@@ -176,7 +176,7 @@
     <message>
         <location filename="../main_window.ui" line="200"/>
         <source>Close</source>
-        <translation type="unfinished">Itxi</translation>
+        <translation>Itxi</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="191"/>
