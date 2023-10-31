@@ -117,7 +117,7 @@
     <message>
         <location filename="../main_window.ui" line="24"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Search</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="69"/>
@@ -148,30 +148,30 @@
         <location filename="../main_window.ui" line="140"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">First</translation>
+        <translation>First</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="145"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Last</translation>
+        <translation>Last</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="150"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">None</translation>
+        <translation>None</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="155"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">All</translation>
+        <translation>All</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="180"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Default</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="200"/>
@@ -181,7 +181,7 @@
     <message>
         <location filename="../main_window.cpp" line="191"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Restore Default</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="192"/>
