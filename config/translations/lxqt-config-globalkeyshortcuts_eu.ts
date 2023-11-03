@@ -132,7 +132,7 @@
     <message>
         <location filename="../main_window.ui" line="89"/>
         <source>Modify ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldatu ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="106"/>
@@ -142,19 +142,19 @@
     <message>
         <location filename="../main_window.ui" line="132"/>
         <source>Multiple actions behaviour:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hainbat ekintza portaera:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="140"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lehenengoa</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="145"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished"></translation>
+        <translation>Azkena</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="150"/>
@@ -166,7 +166,7 @@
         <location filename="../main_window.ui" line="155"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished"></translation>
+        <translation>Denak</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="180"/>
@@ -187,7 +187,8 @@
         <location filename="../main_window.cpp" line="192"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Definitutako lasterbideak kenduko dira.
+Jarraitu nahi duzu?</translation>
     </message>
 </context>
 </TS>
