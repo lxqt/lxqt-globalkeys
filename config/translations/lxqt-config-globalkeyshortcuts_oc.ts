@@ -115,66 +115,66 @@
         <translation>Acorchis de clavièr LXQt</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="24"/>
+        <location filename="../main_window.ui" line="27"/>
         <source>Search</source>
         <translation>Cercar</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="69"/>
+        <location filename="../main_window.ui" line="72"/>
         <source>Add ...</source>
         <translation>Ajustar…</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="79"/>
+        <location filename="../main_window.ui" line="82"/>
         <source>Remove</source>
         <translation>Suprimir</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="89"/>
+        <location filename="../main_window.ui" line="92"/>
         <source>Modify ...</source>
         <translation>Modificar…</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="106"/>
+        <location filename="../main_window.ui" line="109"/>
         <source>Swap</source>
         <translation>Escambiar</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="132"/>
+        <location filename="../main_window.ui" line="135"/>
         <source>Multiple actions behaviour:</source>
         <translation>Compòrtament de las accions multiplas :</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="140"/>
+        <location filename="../main_window.ui" line="143"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
         <translation>Primièra</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="145"/>
+        <location filename="../main_window.ui" line="148"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
         <translation>Darrièra</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="150"/>
+        <location filename="../main_window.ui" line="153"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
         <translation>Cap</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="155"/>
+        <location filename="../main_window.ui" line="158"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
         <translation>Totas</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="180"/>
+        <location filename="../main_window.ui" line="183"/>
         <source>Default</source>
         <translation>Per defaut</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="200"/>
+        <location filename="../main_window.ui" line="203"/>
         <source>Close</source>
         <translation>Tampar</translation>
     </message>
