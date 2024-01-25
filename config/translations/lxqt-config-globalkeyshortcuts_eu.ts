@@ -171,7 +171,7 @@
     <message>
         <location filename="../main_window.ui" line="183"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehenetsia</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="203"/>
@@ -181,7 +181,7 @@
     <message>
         <location filename="../main_window.cpp" line="191"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Leheneratu lehenetsia</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="192"/>
