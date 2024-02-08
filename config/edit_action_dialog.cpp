@@ -28,6 +28,8 @@
 #include "edit_action_dialog.h"
 #include "actions.h"
 
+#include <QRegularExpression>
+
 EditActionDialog::EditActionDialog(Actions *actions, QWidget *parent)
     : QDialog(parent)
     , mActions(actions)
@@ -51,14 +53,17 @@ void EditActionDialog::changeEvent(QEvent *e)
     }
 }
 
+//FIXME: daemon string_utils.h has same method
 static QString joinCommandLine(const QString &command, QStringList arguments)
 {
+    static const QRegularExpression multilineQuoted(QStringLiteral("[ \r\n\t\"']"));
+
     arguments.prepend(command);
     int m = arguments.length();
     for (int i = 0; i < m; ++i)
     {
         QString &item = arguments[i];
-        if (item.contains(QRegExp(QStringLiteral("[ \r\n\t\"']"))))
+        if (item.contains(multilineQuoted))
         {
             item.prepend(QLatin1Char('\'')).append(QLatin1Char('\''));
         }
@@ -74,36 +79,37 @@ static QStringList splitCommandLine(QString commandLine)
 {
     commandLine.prepend(QLatin1Char(' ')).append(QLatin1Char(' '));
     QStringList result;
-    QRegExp spacePattern(QStringLiteral("\\s+"));
-    QRegExp itemPattern(QStringLiteral("([^ \r\n\t\"']+)|((\"([^\"]|\\\")*\")|('([^']|\\')*'))(?=\\s)"));
+    static QRegularExpression spacePattern(QStringLiteral("\\s+"));
+    static QRegularExpression itemPattern(QStringLiteral("([^ \r\n\t\"']+)|((\"([^\"]|\\\")*\")|('([^']|\\')*'))(?=\\s)"));
 
     for (int pos = 0; ;)
     {
-        if (commandLine.indexOf(spacePattern, pos) != pos)
+        QRegularExpressionMatch match;
+        if (commandLine.indexOf(spacePattern, pos, &match) != pos)
         {
             return QStringList();
         }
-        pos += spacePattern.matchedLength();
+        pos += match.capturedLength();
 
         if (pos == commandLine.length())
         {
             break;
         }
 
-        if (commandLine.indexOf(itemPattern, pos) != pos)
+        if (commandLine.indexOf(itemPattern, pos, &match) != pos)
         {
             return QStringList();
         }
-        pos += itemPattern.matchedLength();
+        pos += match.capturedLength();
 
-        QString item = itemPattern.cap(2);
+        QStringView item = match.capturedView(2);
         if (item.length())
         {
-            result << item.mid(1, item.length() - 2);
+            result << item.mid(1, item.length() - 2).toString();
         }
         else
         {
-            result << itemPattern.cap(1);
+            result << match.captured(1);
         }
     }
     return result;

@@ -31,6 +31,7 @@
 #include "org.lxqt.global_key_shortcuts.native.h"
 
 #include <QDBusConnection>
+#include <QRegularExpression>
 
 
 namespace GlobalKeyShortcut
@@ -123,7 +124,8 @@ void ClientImpl::registrationFinished(QDBusPendingCallWatcher *watcher)
 
 Action *ClientImpl::addClientAction(const QString &shortcut, const QString &path, const QString &description, QObject *parent)
 {
-    if (!QRegExp(QStringLiteral("(/[A-Za-z0-9_]+){2,}")).exactMatch(path))
+    static const QRegularExpression regexp(QRegularExpression::anchoredPattern(QStringLiteral("(/[A-Za-z0-9_]+){2,}")));
+    if (!regexp.match(path).hasMatch())
     {
         return nullptr;
     }
