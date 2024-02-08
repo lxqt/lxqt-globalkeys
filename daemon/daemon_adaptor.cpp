@@ -39,7 +39,7 @@ DaemonAdaptor::DaemonAdaptor(QObject *parent)
 
 QString DaemonAdaptor::addMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description, qulonglong &id)
 {
-    QPair<QString, qulonglong> result;
+    std::pair<QString, qulonglong> result;
     emit onAddMethodAction(result, shortcut, service, path, interface, method, description);
     QString usedShortcut = result.first;
     id = result.second;
@@ -52,7 +52,7 @@ QString DaemonAdaptor::addMethodAction(const QString &shortcut, const QString &s
 
 QString DaemonAdaptor::addCommandAction(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description, qulonglong &id)
 {
-    QPair<QString, qulonglong> result;
+    std::pair<QString, qulonglong> result;
     emit onAddCommandAction(result, shortcut, command, arguments, description);
     QString usedShortcut = result.first;
     id = result.second;
@@ -181,7 +181,7 @@ QList<qulonglong> DaemonAdaptor::getAllActionIds()
 
 bool DaemonAdaptor::getActionById(qulonglong id, QString &shortcut, QString &description, bool &enabled, QString &type, QString &info)
 {
-    QPair<bool, GeneralActionInfo> result;
+    std::pair<bool, GeneralActionInfo> result;
     emit onGetActionById(result, id);
     bool success = result.first;
     if (success)
@@ -204,7 +204,7 @@ QMap<qulonglong, GeneralActionInfo> DaemonAdaptor::getAllActions()
 
 bool DaemonAdaptor::getClientActionInfoById(qulonglong id, QString &shortcut, QString &description, bool &enabled, QDBusObjectPath &path)
 {
-    QPair<bool, ClientActionInfo> result;
+    std::pair<bool, ClientActionInfo> result;
     emit onGetClientActionInfoById(result, id);
     bool success = result.first;
     if (success)
@@ -219,7 +219,7 @@ bool DaemonAdaptor::getClientActionInfoById(qulonglong id, QString &shortcut, QS
 
 bool DaemonAdaptor::getMethodActionInfoById(qulonglong id, QString &shortcut, QString &description, bool &enabled, QString &service, QDBusObjectPath &path, QString &interface, QString &method)
 {
-    QPair<bool, MethodActionInfo> result;
+    std::pair<bool, MethodActionInfo> result;
     emit onGetMethodActionInfoById(result, id);
     bool success = result.first;
     if (success)
@@ -237,7 +237,7 @@ bool DaemonAdaptor::getMethodActionInfoById(qulonglong id, QString &shortcut, QS
 
 bool DaemonAdaptor::getCommandActionInfoById(qulonglong id, QString &shortcut, QString &description, bool &enabled, QString &command, QStringList &arguments)
 {
-    QPair<bool, CommandActionInfo> result;
+    std::pair<bool, CommandActionInfo> result;
     emit onGetCommandActionInfoById(result, id);
     bool success = result.first;
     if (success)

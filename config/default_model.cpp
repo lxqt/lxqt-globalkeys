@@ -221,7 +221,7 @@ void DefaultModel::actionAdded(qulonglong id)
 {
     if (!mContent.contains(id))
     {
-        QPair<bool, GeneralActionInfo> result = mActions->actionById(id);
+        std::pair<bool, GeneralActionInfo> result = mActions->actionById(id);
         if (result.first)
         {
             QList<qulonglong> keys = mContent.keys();
@@ -264,7 +264,7 @@ void DefaultModel::actionModified(qulonglong id)
 {
     if (mContent.contains(id))
     {
-        QPair<bool, GeneralActionInfo> result = mActions->actionById(id);
+        std::pair<bool, GeneralActionInfo> result = mActions->actionById(id);
         if (result.first)
         {
             QList<qulonglong> keys = mContent.keys();

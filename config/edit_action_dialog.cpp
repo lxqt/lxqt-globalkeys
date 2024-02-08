@@ -137,7 +137,7 @@ void EditActionDialog::when_accepted()
     }
     else
     {
-        QPair<QString, qulonglong> result = qMakePair(QString(), 0ull);
+        std::pair<QString, qulonglong> result = std::make_pair(QString(), 0ull);
         if (command_RB->isChecked())
         {
             QStringList commandLine = splitCommandLine(command_PTE->toPlainText());
@@ -164,7 +164,7 @@ bool EditActionDialog::load(qulonglong id)
 
     if (mId)
     {
-        QPair<bool, GeneralActionInfo> info = mActions->actionById(id);
+        std::pair<bool, GeneralActionInfo> info = mActions->actionById(id);
         if (!info.first)
         {
             return false;
@@ -181,7 +181,7 @@ bool EditActionDialog::load(qulonglong id)
         action_SW->setCurrentWidget((info.second.type == QLatin1String("method")) ? dbus_method_P : command_P);
         if (info.second.type == QLatin1String("command"))
         {
-            QPair<bool, CommandActionInfo> commandInfo = mActions->commandActionInfoById(id);
+            std::pair<bool, CommandActionInfo> commandInfo = mActions->commandActionInfoById(id);
             if (!commandInfo.first)
             {
                 return false;
@@ -190,7 +190,7 @@ bool EditActionDialog::load(qulonglong id)
         }
         else if (info.second.type == QLatin1String("method"))
         {
-            QPair<bool, MethodActionInfo> methodInfo = mActions->methodActionInfoById(id);
+            std::pair<bool, MethodActionInfo> methodInfo = mActions->methodActionInfoById(id);
             if (!methodInfo.first)
             {
                 return false;

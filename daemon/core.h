@@ -34,7 +34,6 @@
 #include <QQueue>
 #include <QMutex>
 #include <QList>
-#include <QPair>
 #include <QDBusMessage>
 #include <QDBusObjectPath>
 
@@ -89,14 +88,14 @@ private:
     Core& operator =(const Core&&) = delete;
 
 private:
-    using X11Shortcut           = QPair<KeyCode, unsigned int>;
+    using X11Shortcut           = std::pair<KeyCode, unsigned int>;
     using ShortcutByX11         = QMap<X11Shortcut, QString>;
     using X11ByShortcut         = QMap<QString, X11Shortcut>;
     using Ids                   = QOrderedSet<qulonglong>;
     using IdsByShortcut         = QMap<QString, Ids>;
     using ClientPath            = QDBusObjectPath;
     using IdByClientPath        = QMap<ClientPath, qulonglong>;
-    using ShortcutAndAction     = QPair<QString, BaseAction *>;
+    using ShortcutAndAction     = std::pair<QString, BaseAction *>;
     using ShortcutAndActionById = QMap<qulonglong, ShortcutAndAction>;
     using SenderByClientPath    = QMap<ClientPath, QString>;
     using ClientPaths           = QSet<ClientPath>;
@@ -105,9 +104,9 @@ private:
 private:
     void serviceDisappeared(const QString &sender);
 
-    void addClientAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
-    void addMethodAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
-    void addCommandAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
+    void addClientAction(std::pair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
+    void addMethodAction(std::pair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
+    void addCommandAction(std::pair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
 
     void modifyClientAction(qulonglong &result, const QDBusObjectPath &path, const QString &description, const QString &sender);
     void modifyActionDescription(bool &result, const qulonglong &id, const QString &description);
@@ -122,7 +121,7 @@ private:
     void getClientActionSender(QString &sender, qulonglong id);
 
 
-    void changeClientActionShortcut(QPair<QString, qulonglong> &result, const QDBusObjectPath &path, const QString &shortcut, const QString &sender);
+    void changeClientActionShortcut(std::pair<QString, qulonglong> &result, const QDBusObjectPath &path, const QString &shortcut, const QString &sender);
     void changeShortcut(QString &result, const qulonglong &id, const QString &shortcut);
 
     void swapActions(bool &result, const qulonglong &id1, const qulonglong &id2);
@@ -136,12 +135,12 @@ private:
     void getMultipleActionsBehaviour(MultipleActionsBehaviour &result) const;
 
     void getAllActionIds(QList<qulonglong> &result) const;
-    void getActionById(QPair<bool, GeneralActionInfo> &result, const qulonglong &id) const;
+    void getActionById(std::pair<bool, GeneralActionInfo> &result, const qulonglong &id) const;
     void getAllActions(QMap<qulonglong, GeneralActionInfo> &result) const;
 
-    void getClientActionInfoById(QPair<bool, ClientActionInfo> &result, const qulonglong &id) const;
-    void getMethodActionInfoById(QPair<bool, MethodActionInfo> &result, const qulonglong &id) const;
-    void getCommandActionInfoById(QPair<bool, CommandActionInfo> &result, const qulonglong &id) const;
+    void getClientActionInfoById(std::pair<bool, ClientActionInfo> &result, const qulonglong &id) const;
+    void getMethodActionInfoById(std::pair<bool, MethodActionInfo> &result, const qulonglong &id) const;
+    void getCommandActionInfoById(std::pair<bool, CommandActionInfo> &result, const qulonglong &id) const;
 
     void grabShortcut(const uint &timeout, QString &shortcut, bool &failed, bool &cancelled, bool &timedout, const QDBusMessage &message);
     void cancelShortcutGrab();
@@ -151,7 +150,7 @@ private:
 
 private:
     bool enableActionNonGuarded(qulonglong id, bool enabled);
-    QPair<QString, qulonglong> addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
+    std::pair<QString, qulonglong> addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender);
     qulonglong registerClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description);
     qulonglong registerMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
     qulonglong registerCommandAction(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);

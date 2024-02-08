@@ -35,6 +35,8 @@
 #include <QDBusServiceWatcher>
 #include <QFile>
 
+#include <QString>
+
 #include <cstddef>
 #include <cstdlib>
 #include <unistd.h>
@@ -1245,7 +1247,7 @@ void Core::runEventLoop(Window rootWindow)
                         event.xkey.state &= ~allShifts; // Modifier keys must not use shift states.
                     }
 
-                    X11Shortcut shortcutKey = qMakePair(static_cast<KeyCode>(event.xkey.keycode), event.xkey.state & allShifts);
+                    X11Shortcut shortcutKey = std::make_pair(static_cast<KeyCode>(event.xkey.keycode), event.xkey.state & allShifts);
                     ShortcutByX11::const_iterator shortcutIt = mShortcutByX11.constFind(shortcutKey);
                     if (shortcutIt == mShortcutByX11.constEnd())
                     {
@@ -2010,14 +2012,14 @@ QString Core::checkShortcut(const QString &shortcut, X11Shortcut &X11shortcut)
     return usedShortcut;
 }
 
-QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
+std::pair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
 {
     X11Shortcut X11shortcut;
 
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
 //    if (newShortcut.isEmpty())
 //    {
-//        return qMakePair(QString(), 0ull);
+//        return std::make_pair(QString(), 0ull);
 //    }
 
     IdByClientPath::iterator idByNativeClient = mIdByClientPath.find(path);
@@ -2038,7 +2040,7 @@ QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortc
 
         dynamic_cast<ClientAction*>(shortcutAndAction.second)->appeared(QDBusConnection::sessionBus(), sender);
 
-        return qMakePair(newShortcut, id);
+        return std::make_pair(newShortcut, id);
     }
 
     qulonglong id = ++mLastId;
@@ -2051,14 +2053,14 @@ QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortc
 
     mIdByClientPath[path] = id;
     ClientAction *clientAction = sender.isEmpty() ? new ClientAction(this, path, description) : new ClientAction(this, QDBusConnection::sessionBus(), sender, path, description);
-    mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, clientAction);
+    mShortcutAndActionById[id] = std::make_pair(newShortcut, clientAction);
 
     log(LOG_INFO, "addClientAction shortcut:'%s' id:%llu", qPrintable(newShortcut), id);
 
-    return qMakePair(newShortcut, id);
+    return std::make_pair(newShortcut, id);
 }
 
-void Core::addClientAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
+void Core::addClientAction(std::pair<QString, qulonglong> &result, const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
 {
     log(LOG_INFO, "addClientAction shortcut:'%s' path:'%s' description:'%s' sender:'%s'", qPrintable(shortcut), qPrintable(path.path()), qPrintable(description), qPrintable(sender));
 
@@ -2068,7 +2070,7 @@ void Core::addClientAction(QPair<QString, qulonglong> &result, const QString &sh
     if (senderByClientPath != mSenderByClientPath.end())
     {
         log(LOG_WARNING, "Action already registered for '%s' (sender: %s)", qPrintable(path.path()), qPrintable(sender));
-        result = qMakePair(QString(), 0ull);
+        result = std::make_pair(QString(), 0ull);
         return;
     }
 
@@ -2110,7 +2112,7 @@ qulonglong Core::registerClientAction(const QString &shortcut, const QDBusObject
     return addOrRegisterClientAction(shortcut, path, description, QString()).second;
 }
 
-void Core::addMethodAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
+void Core::addMethodAction(std::pair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
 {
     log(LOG_INFO, "addMethodAction shortcut:'%s' service:'%s' path:'%s' interface:'%s' method:'%s' description:'%s'", qPrintable(shortcut), qPrintable(service), qPrintable(path.path()), qPrintable(interface), qPrintable(method), qPrintable(description));
 
@@ -2120,14 +2122,14 @@ void Core::addMethodAction(QPair<QString, qulonglong> &result, const QString &sh
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
     if (newShortcut.isEmpty())
     {
-        result = qMakePair(QString(), 0ull);
+        result = std::make_pair(QString(), 0ull);
         return;
     }
 
     newShortcut = grabOrReuseKey(X11shortcut, newShortcut);
     if (newShortcut.isEmpty())
     {
-        result = qMakePair(QString(), 0ull);
+        result = std::make_pair(QString(), 0ull);
         return;
     }
 
@@ -2135,23 +2137,23 @@ void Core::addMethodAction(QPair<QString, qulonglong> &result, const QString &sh
     qulonglong id = ++mLastId;
 
     mIdsByShortcut[newShortcut].insert(id);
-    mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, new MethodAction(this, QDBusConnection::sessionBus(), service, path, interface, method, description));
+    mShortcutAndActionById[id] = std::make_pair(newShortcut, new MethodAction(this, QDBusConnection::sessionBus(), service, path, interface, method, description));
 
     log(LOG_INFO, "addMethodAction shortcut:'%s' id:%llu", qPrintable(newShortcut), id);
 
     saveConfig();
 
-    result = qMakePair(newShortcut, id);
+    result = std::make_pair(newShortcut, id);
 }
 
 qulonglong Core::registerMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
 {
-    QPair<QString, qulonglong> result;
+    std::pair<QString, qulonglong> result;
     addMethodAction(result, shortcut, service, path, interface, method, description);
     return result.second;
 }
 
-void Core::addCommandAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
+void Core::addCommandAction(std::pair<QString, qulonglong> &result, const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
 {
     log(LOG_INFO, "addCommandAction shortcut:'%s' command:'%s' arguments:'%s' description:'%s'", qPrintable(shortcut), qPrintable(command), qPrintable(joinToString(arguments, QString(), QLatin1String("' '"), QString())), qPrintable(description));
 
@@ -2161,14 +2163,14 @@ void Core::addCommandAction(QPair<QString, qulonglong> &result, const QString &s
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
     if (newShortcut.isEmpty())
     {
-        result = qMakePair(QString(), 0ull);
+        result = std::make_pair(QString(), 0ull);
         return;
     }
 
     newShortcut = grabOrReuseKey(X11shortcut, newShortcut);
     if (newShortcut.isEmpty())
     {
-        result = qMakePair(QString(), 0ull);
+        result = std::make_pair(QString(), 0ull);
         return;
     }
 
@@ -2176,18 +2178,18 @@ void Core::addCommandAction(QPair<QString, qulonglong> &result, const QString &s
     qulonglong id = ++mLastId;
 
     mIdsByShortcut[newShortcut].insert(id);
-    mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, new CommandAction(this, command, arguments, description));
+    mShortcutAndActionById[id] = std::make_pair(newShortcut, new CommandAction(this, command, arguments, description));
 
     log(LOG_INFO, "addCommandAction shortcut:'%s' id:%llu", qPrintable(newShortcut), id);
 
     saveConfig();
 
-    result = qMakePair(newShortcut, id);
+    result = std::make_pair(newShortcut, id);
 }
 
 qulonglong Core::registerCommandAction(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
 {
-    QPair<QString, qulonglong> result;
+    std::pair<QString, qulonglong> result;
     addCommandAction(result, shortcut, command, arguments, description);
     return result.second;
 }
@@ -2514,13 +2516,13 @@ void Core::getClientActionSender(QString &sender, qulonglong id)
     }
 }
 
-void Core::changeClientActionShortcut(QPair<QString, qulonglong> &result, const QDBusObjectPath &path, const QString &shortcut, const QString &sender)
+void Core::changeClientActionShortcut(std::pair<QString, qulonglong> &result, const QDBusObjectPath &path, const QString &shortcut, const QString &sender)
 {
     log(LOG_INFO, "changeClientActionShortcut path:'%s' shortcut:'%s' sender:'%s'", qPrintable(path.path()), qPrintable(shortcut), qPrintable(sender));
 
     if (shortcut.isEmpty())
     {
-        result = qMakePair(QString(), 0ull);
+        result = std::make_pair(QString(), 0ull);
         return;
     }
 
@@ -2530,7 +2532,7 @@ void Core::changeClientActionShortcut(QPair<QString, qulonglong> &result, const 
     if (idByNativeClient == mIdByClientPath.end())
     {
         log(LOG_WARNING, "No action registered for '%s' (sender: %s)", qPrintable(path.path()), qPrintable(sender));
-        result = qMakePair(QString(), 0ull);
+        result = std::make_pair(QString(), 0ull);
         return;
     }
 
@@ -2538,14 +2540,14 @@ void Core::changeClientActionShortcut(QPair<QString, qulonglong> &result, const 
     if (senderByClientPath == mSenderByClientPath.end())
     {
         log(LOG_WARNING, "No action activated for '%s' (sender: %s)", qPrintable(path.path()), qPrintable(sender));
-        result = qMakePair(QString(), 0ull);
+        result = std::make_pair(QString(), 0ull);
         return;
     }
 
     if (senderByClientPath.value() != sender)
     {
         log(LOG_WARNING, "Sender mismatch: caller: %s owner: %s", qPrintable(senderByClientPath.value()), qPrintable(sender));
-        result = qMakePair(QString(), 0ull);
+        result = std::make_pair(QString(), 0ull);
         return;
     }
 
@@ -2555,7 +2557,7 @@ void Core::changeClientActionShortcut(QPair<QString, qulonglong> &result, const 
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
     if (newShortcut.isEmpty())
     {
-        result = qMakePair(QString(), id);
+        result = std::make_pair(QString(), id);
         return;
     }
 
@@ -2572,7 +2574,7 @@ void Core::changeClientActionShortcut(QPair<QString, qulonglong> &result, const 
             newShortcut = grabOrReuseKey(X11shortcut, newShortcut);
             if (newShortcut.isEmpty())
             {
-                result = qMakePair(QString(), id);
+                result = std::make_pair(QString(), id);
                 return;
             }
 
@@ -2616,7 +2618,7 @@ void Core::changeClientActionShortcut(QPair<QString, qulonglong> &result, const 
 
     mDaemonAdaptor->emit_actionShortcutChanged(id);
 
-    result = qMakePair(newShortcut, id);
+    result = std::make_pair(newShortcut, id);
 }
 
 void Core::changeShortcut(QString &result, const qulonglong &id, const QString &shortcut)
@@ -3059,7 +3061,7 @@ GeneralActionInfo Core::actionInfo(const ShortcutAndAction &shortcutAndAction) c
     return result;
 }
 
-void Core::getActionById(QPair<bool, GeneralActionInfo> &result, const qulonglong &id) const
+void Core::getActionById(std::pair<bool, GeneralActionInfo> &result, const qulonglong &id) const
 {
     log(LOG_INFO, "getActionById id:%llu", id);
 
@@ -3069,11 +3071,11 @@ void Core::getActionById(QPair<bool, GeneralActionInfo> &result, const qulonglon
     if (shortcutAndActionById == mShortcutAndActionById.end())
     {
         log(LOG_WARNING, "No action registered with id #%llu", id);
-        result = qMakePair(false, GeneralActionInfo());
+        result = std::make_pair(false, GeneralActionInfo());
         return;
     }
 
-    result = qMakePair(true, actionInfo(shortcutAndActionById.value()));
+    result = std::make_pair(true, actionInfo(shortcutAndActionById.value()));
 }
 
 void Core::getAllActions(QMap<qulonglong, GeneralActionInfo> &result) const
@@ -3089,7 +3091,7 @@ void Core::getAllActions(QMap<qulonglong, GeneralActionInfo> &result) const
     }
 }
 
-void Core::getClientActionInfoById(QPair<bool, ClientActionInfo> &result, const qulonglong &id) const
+void Core::getClientActionInfoById(std::pair<bool, ClientActionInfo> &result, const qulonglong &id) const
 {
     log(LOG_INFO, "getClientActionInfoById id:%llu", id);
 
@@ -3101,7 +3103,7 @@ void Core::getClientActionInfoById(QPair<bool, ClientActionInfo> &result, const 
     if (shortcutAndActionById == mShortcutAndActionById.end())
     {
         log(LOG_WARNING, "No action registered with id #%llu", id);
-        result = qMakePair(false, info);
+        result = std::make_pair(false, info);
         return;
     }
 
@@ -3110,7 +3112,7 @@ void Core::getClientActionInfoById(QPair<bool, ClientActionInfo> &result, const 
     if (strcmp(action->type(), ClientAction::id()))
     {
         log(LOG_WARNING, "getClientActionInfoById attempts to request action of type '%s'", action->type());
-        result = qMakePair(false, info);
+        result = std::make_pair(false, info);
         return;
     }
 
@@ -3121,10 +3123,10 @@ void Core::getClientActionInfoById(QPair<bool, ClientActionInfo> &result, const 
     const ClientAction *clientAction = dynamic_cast<const ClientAction *>(action);
     info.path = clientAction->path();
 
-    result = qMakePair(true, info);
+    result = std::make_pair(true, info);
 }
 
-void Core::getMethodActionInfoById(QPair<bool, MethodActionInfo> &result, const qulonglong &id) const
+void Core::getMethodActionInfoById(std::pair<bool, MethodActionInfo> &result, const qulonglong &id) const
 {
     log(LOG_INFO, "getMethodActionInfoById id:%llu", id);
 
@@ -3136,7 +3138,7 @@ void Core::getMethodActionInfoById(QPair<bool, MethodActionInfo> &result, const 
     if (shortcutAndActionById == mShortcutAndActionById.end())
     {
         log(LOG_WARNING, "No action registered with id #%llu", id);
-        result = qMakePair(false, info);
+        result = std::make_pair(false, info);
         return;
     }
 
@@ -3145,7 +3147,7 @@ void Core::getMethodActionInfoById(QPair<bool, MethodActionInfo> &result, const 
     if (strcmp(action->type(), MethodAction::id()))
     {
         log(LOG_WARNING, "getMethodActionInfoById attempts to request action of type '%s'", action->type());
-        result = qMakePair(false, info);
+        result = std::make_pair(false, info);
         return;
     }
 
@@ -3159,10 +3161,10 @@ void Core::getMethodActionInfoById(QPair<bool, MethodActionInfo> &result, const 
     info.interface = methodAction->interface();
     info.method = methodAction->method();
 
-    result = qMakePair(true, info);
+    result = std::make_pair(true, info);
 }
 
-void Core::getCommandActionInfoById(QPair<bool, CommandActionInfo> &result, const qulonglong &id) const
+void Core::getCommandActionInfoById(std::pair<bool, CommandActionInfo> &result, const qulonglong &id) const
 {
     log(LOG_INFO, "getCommandActionInfoById id:%llu", id);
 
@@ -3174,7 +3176,7 @@ void Core::getCommandActionInfoById(QPair<bool, CommandActionInfo> &result, cons
     if (shortcutAndActionById == mShortcutAndActionById.end())
     {
         log(LOG_WARNING, "No action registered with id #%llu", id);
-        result = qMakePair(false, info);
+        result = std::make_pair(false, info);
         return;
     }
 
@@ -3183,7 +3185,7 @@ void Core::getCommandActionInfoById(QPair<bool, CommandActionInfo> &result, cons
     if (strcmp(action->type(), CommandAction::id()))
     {
         log(LOG_WARNING, "getCommandActionInfoById attempts to request action of type '%s'", action->type());
-        result = qMakePair(false, info);
+        result = std::make_pair(false, info);
         return;
     }
 
@@ -3195,7 +3197,7 @@ void Core::getCommandActionInfoById(QPair<bool, CommandActionInfo> &result, cons
     info.command = commandAction->command();
     info.arguments = commandAction->args();
 
-    result = qMakePair(true, info);
+    result = std::make_pair(true, info);
 }
 
 void Core::grabShortcut(const uint &timeout, QString &/*shortcut*/, bool &failed, bool &cancelled, bool &timedout, const QDBusMessage &message)

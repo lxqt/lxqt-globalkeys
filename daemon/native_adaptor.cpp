@@ -39,7 +39,7 @@ NativeAdaptor::NativeAdaptor(QObject *parent)
 
 QString NativeAdaptor::addClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, qulonglong &id)
 {
-    QPair<QString, qulonglong> result;
+    std::pair<QString, qulonglong> result;
     emit onAddClientAction(result, shortcut, path, description, calledFromDBus() ? message().service() : QString());
     QString usedShortcut = result.first;
     id = result.second;
@@ -55,7 +55,7 @@ bool NativeAdaptor::modifyClientAction(const QDBusObjectPath &path, const QStrin
 
 QString NativeAdaptor::changeClientActionShortcut(const QDBusObjectPath &path, const QString &shortcut)
 {
-    QPair<QString, qulonglong> result;
+    std::pair<QString, qulonglong> result;
     emit onChangeClientActionShortcut(result, path, shortcut, calledFromDBus() ? message().service() : QString());
     QString usedShortcut = result.first;
     return usedShortcut;
