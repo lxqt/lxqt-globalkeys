@@ -301,7 +301,7 @@ void ClientImpl::grabShortcutFinished(QDBusPendingCallWatcher *call)
 }
 
 
-static QScopedPointer<Client> globalActionNativeClient;
+static std::unique_ptr<Client> globalActionNativeClient;
 
 Client *Client::instance()
 {
@@ -310,7 +310,7 @@ Client *Client::instance()
         globalActionNativeClient.reset(new Client());
     }
 
-    return globalActionNativeClient.data();
+    return globalActionNativeClient.get();
 }
 
 Client::Client()
@@ -321,7 +321,7 @@ Client::Client()
 
 Client::~Client()
 {
-    globalActionNativeClient.take();
+    globalActionNativeClient.release();
 }
 
 Action *Client::addAction(const QString &shortcut, const QString &path, const QString &description, QObject *parent) { return impl->addClientAction(shortcut, path, description, parent); }
