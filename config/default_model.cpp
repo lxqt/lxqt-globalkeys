@@ -208,7 +208,7 @@ void DefaultModel::daemonAppeared()
 
     beginInsertRows(QModelIndex(), 0, allIds.size() - 1);
 
-    for(qulonglong id : qAsConst(allIds))
+    for(qulonglong id : std::as_const(allIds))
     {
         mContent[id] = mActions->actionById(id).second;
         mShortcuts[mContent[id].shortcut].insert(id);
@@ -235,7 +235,7 @@ void DefaultModel::actionAdded(qulonglong id)
             endInsertRows();
 
             keys = mContent.keys();
-            for(qulonglong siblingId : qAsConst(mShortcuts[mContent[id].shortcut]))
+            for(qulonglong siblingId : std::as_const(mShortcuts[mContent[id].shortcut]))
             {
                 if (id != siblingId)
                 {
@@ -274,12 +274,12 @@ void DefaultModel::actionModified(qulonglong id)
             {
                 mShortcuts[result.second.shortcut].insert(id);
                 mShortcuts[mContent[id].shortcut].remove(id);
-                for(qulonglong siblingId : qAsConst(mShortcuts[mContent[id].shortcut]))
+                for(qulonglong siblingId : std::as_const(mShortcuts[mContent[id].shortcut]))
                 {
                     int siblingRow = std::lower_bound(keys.constBegin(), keys.constEnd(), siblingId) - keys.constBegin();
                     emit dataChanged(index(siblingRow, 1), index(siblingRow, 1));
                 }
-                for(qulonglong siblingId : qAsConst(mShortcuts[result.second.shortcut]))
+                for(qulonglong siblingId : std::as_const(mShortcuts[result.second.shortcut]))
                 {
                     int siblingRow = std::lower_bound(keys.constBegin(), keys.constEnd(), siblingId) - keys.constBegin();
                     emit dataChanged(index(siblingRow, 1), index(siblingRow, 1));
@@ -327,7 +327,7 @@ void DefaultModel::actionRemoved(qulonglong id)
 
         endRemoveRows();
 
-        for(qulonglong siblingId : qAsConst(mShortcuts[shortcut]))
+        for(qulonglong siblingId : std::as_const(mShortcuts[shortcut]))
         {
             int siblingRow = std::lower_bound(keys.constBegin(), keys.constEnd(), siblingId) - keys.constBegin();
             emit dataChanged(index(siblingRow, 1), index(siblingRow, 1));
