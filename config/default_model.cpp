@@ -76,19 +76,19 @@ QVariant DefaultModel::data(const QModelIndex &index, int role) const
             switch (index.column())
             {
             case 0:
-                return mContent.keys()[index.row()];
+                return std::next(mContent.begin(), index.row()).key();
 
             case 1:
-                return mContent[mContent.keys()[index.row()]].shortcut;
+                return std::next(mContent.begin(), index.row())->shortcut;
 
             case 2:
-                return mContent[mContent.keys()[index.row()]].description;
+                return std::next(mContent.begin(), index.row())->description;
 
             case 3:
-                return mVerboseType[mContent[mContent.keys()[index.row()]].type];
+                return mVerboseType[std::next(mContent.begin(), index.row())->type];
 
             case 4:
-                return mContent[mContent.keys()[index.row()]].info;
+                return std::next(mContent.begin(), index.row())->info;
             }
         break;
 
@@ -99,7 +99,7 @@ QVariant DefaultModel::data(const QModelIndex &index, int role) const
     {
         if ((index.row() >= 0) && (index.row() < rowCount()))
         {
-            qulonglong id = mContent.keys()[index.row()];
+            qulonglong id = std::next(mContent.begin(), index.row()).key();
             bool multiple = (index.column() == 1) && (mShortcuts[mContent[id].shortcut].size() > 1);
             bool inactive = (mContent[id].type == QLatin1String("client")) && (mActions->getClientActionSender(id).isEmpty());
             if (multiple || inactive)
@@ -109,7 +109,7 @@ QVariant DefaultModel::data(const QModelIndex &index, int role) const
         break;
 
     case Qt::ForegroundRole:
-        if (!mContent[mContent.keys()[index.row()]].enabled)
+        if (!std::next(mContent.begin(), index.row())->enabled)
         {
             return mGrayedOutColour;
         }
@@ -118,7 +118,7 @@ QVariant DefaultModel::data(const QModelIndex &index, int role) const
     case Qt::CheckStateRole:
         if ((index.row() >= 0) && (index.row() < rowCount()) && (index.column() == 0))
         {
-            return mContent[mContent.keys()[index.row()]].enabled ? Qt::Checked : Qt::Unchecked;
+            return std::next(mContent.begin(), index.row())->enabled ? Qt::Checked : Qt::Unchecked;
         }
         break;
 
@@ -187,7 +187,7 @@ qulonglong DefaultModel::id(const QModelIndex &index) const
 {
     if ((index.row() >= 0) && (index.row() < rowCount()))
     {
-        return mContent.keys()[index.row()];
+        return std::next(mContent.begin(), index.row()).key();
     }
     return 0ull;
 }
