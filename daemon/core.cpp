@@ -37,7 +37,6 @@
 
 #include <cstddef>
 #include <cstdlib>
-#include <unistd.h>
 #include <poll.h>
 #include <csignal>
 #include <cstdarg>
@@ -48,7 +47,6 @@
 
 #include <stdexcept>
 
-#include "pipe_utils.h"
 #include "string_utils.h"
 #include "daemon_adaptor.h"
 #include "native_adaptor.h"
@@ -343,46 +341,9 @@ const char *x11opcodeToString(unsigned char opcode)
     return "";
 }
 
-static const char *strLevel(int level)
-{
-    switch (level)
-    {
-    case LOG_EMERG:
-        return "Emergency";
-
-    case LOG_ALERT:
-        return "Alert";
-
-    case LOG_CRIT:
-        return "Critical";
-
-    case LOG_ERR:
-        return "Error";
-
-    case LOG_WARNING:
-        return "Warning";
-
-    case LOG_NOTICE:
-        return "Notice";
-
-    case LOG_INFO:
-        return "Info";
-
-    case LOG_DEBUG:
-        return "Debug";
-
-    default:
-        return "";
-    }
-}
-
-
 Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringList &configFiles, bool multipleActionsBehaviourSet, MultipleActionsBehaviour multipleActionsBehaviour, QObject *parent)
     : QThread(parent)
-    , LogTarget()
     , mReady(false)
-    , mUseSyslog(useSyslog)
-    , mMinLogLevel(minLogLevel)
     , mDisplay(nullptr)
     , mInterClientCommunicationWindow(0)
     , mServiceWatcher{new QDBusServiceWatcher{this}}
@@ -401,6 +362,15 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
     , mShortcutGrabTimeout(new QTimer(this))
     , mShortcutGrabRequested(false)
 {
+#if 0
+    // debugging
+    Q_UNUSED(minLogLevel);
+    Q_UNUSED(useSyslog);
+    mCoreLogger = std::make_unique<LogTarget>(LOG_DEBUG, false);
+#else
+    mCoreLogger = std::make_unique<LogTarget>(minLogLevel, useSyslog);
+#endif
+
     s_Core = this;
 
     initBothPipeEnds(mX11ErrorPipe);
@@ -481,33 +451,16 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
                 if (!minLogLevelSet)
                 {
                     iniValue = settings.value(/* General/ */QStringLiteral("LogLevel")).toString();
-                    if (!iniValue.isEmpty())
+                    auto lvl = LogTarget::levelFromStr(qPrintable(iniValue));
+                    if (lvl >= 0)
                     {
+                        mCoreLogger->mMinLogLevel = lvl;
                         minLogLevelSet = true;
-                        if (iniValue == QLatin1String("error"))
-                        {
-                            mMinLogLevel = LOG_ERR;
-                        }
-                        else if (iniValue == QLatin1String("warning"))
-                        {
-                            mMinLogLevel = LOG_WARNING;
-                        }
-                        else if (iniValue == QLatin1String("notice"))
-                        {
-                            mMinLogLevel = LOG_NOTICE;
-                        }
-                        else if (iniValue == QLatin1String("info"))
-                        {
-                            mMinLogLevel = LOG_INFO;
-                        }
-                        else if (iniValue == QLatin1String("debug"))
-                        {
-                            mMinLogLevel = LOG_DEBUG;
-                        }
-                        else
-                        {
-                            minLogLevelSet = false;
-                        }
+                    }
+                    else
+                    {
+                        auto lvlStr = LogTarget::strLevel(mCoreLogger->mMinLogLevel);
+                        qInfo("no loglevel configured in %s (result = %d); current loglevel: %s", qUtf8Printable(settings.fileName()), lvl, lvlStr);
                     }
                 }
 
@@ -675,7 +628,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
             log(LOG_DEBUG, "Config file: %s", qPrintable(configs[0]));
         }
 
-        log(LOG_DEBUG, "MinLogLevel: %s", strLevel(mMinLogLevel));
+        log(LOG_DEBUG, "MinLogLevel: %s", LogTarget::strLevel(mCoreLogger->mMinLogLevel));
         switch (mMultipleActionsBehaviour)
         {
         case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
@@ -694,8 +647,7 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
             log(LOG_DEBUG, "MultipleActionsBehaviour: none");
             break;
 
-        default:
-            ;
+        case MULTIPLE_ACTIONS_BEHAVIOUR__COUNT: break; // just a counter
         }
         log(LOG_DEBUG, "AllowGrabLocks: %s",       mAllowGrabLocks       ? "true" : "false");
         log(LOG_DEBUG, "AllowGrabBaseSpecial: %s", mAllowGrabBaseSpecial ? "true" : "false");
@@ -850,12 +802,12 @@ void Core::saveConfig()
 
         if (!strcmp(action->type(), CommandAction::id()))
         {
-            const CommandAction *commandAction = dynamic_cast<const CommandAction *>(action);
+            auto commandAction = static_cast<const CommandAction*>(action);
             settings.setValue(ExecKey, QVariant(QStringList() << commandAction->command() += commandAction->args()));
         }
         else if (!strcmp(action->type(), MethodAction::id()))
         {
-            const MethodAction *methodAction = dynamic_cast<const MethodAction *>(action);
+            auto methodAction = static_cast<const MethodAction*>(action);
             settings.setValue(serviceKey,   methodAction->service());
             settings.setValue(pathKey,      methodAction->path().path());
             settings.setValue(interfaceKey, methodAction->interface());
@@ -863,7 +815,7 @@ void Core::saveConfig()
         }
         else if (!strcmp(action->type(), ClientAction::id()))
         {
-            const ClientAction *clientAction = dynamic_cast<const ClientAction *>(action);
+            auto clientAction = static_cast<const ClientAction*>(action);
             settings.setValue(pathKey,  clientAction->path().path());
         }
 
@@ -875,28 +827,6 @@ void Core::unixSignalHandler(int signalNumber)
 {
     log(LOG_INFO, "Signal #%d received", signalNumber);
     qApp->quit();
-}
-
-void Core::log(int level, const char *format, ...) const
-{
-    if (level > mMinLogLevel)
-    {
-        return;
-    }
-
-    va_list ap;
-    va_start(ap, format);
-    if (mUseSyslog)
-    {
-        vsyslog(LOG_MAKEPRI(LOG_USER, level), format, ap);
-    }
-    else
-    {
-        fprintf(stderr, "[%s] ", strLevel(level));
-        vfprintf(stderr, format, ap);
-        fprintf(stderr, "\n");
-    }
-    va_end(ap);
 }
 
 int Core::x11ErrorHandler(Display */*display*/, XErrorEvent *errorEvent)
@@ -1023,8 +953,6 @@ void Core::runEventLoop(Window rootWindow)
     {
         XEvent event;
         bool keyReleaseExpected = false;
-        const QString superLeft = QString::fromUtf8(XKeysymToString(XK_Super_L));
-        const QString superRight = QString::fromUtf8(XKeysymToString(XK_Super_R));
         QSet<unsigned int> allModifiers;
         unsigned int allShifts = ShiftMask | ControlMask | AltMask | MetaMask | Level3Mask | Level5Mask;
         unsigned int ignoreMask = 0xff ^ allShifts;
@@ -1045,10 +973,12 @@ void Core::runEventLoop(Window rootWindow)
             if ((event.type == KeyRelease) && !keyReleaseExpected)
             {
                 // pop event from the x11 queue and do nothing
+                log(LOG_DEBUG, "Ignored KeyRelease 1 -> %08x %08x", event.xkey.state, event.xkey.keycode);
                 XNextEvent(mDisplay, &event);
+                log(LOG_DEBUG, "Ignored KeyRelease 2 -> %08x %08x", event.xkey.state, event.xkey.keycode);
                 continue;
             }
-            keyReleaseExpected = false; // Close time window for accepting meta keys.
+            keyReleaseExpected = false; // initialize for next event
 
             if (((event.type == KeyPress) || (event.type == KeyRelease)) && mDataMutex.tryLock(0))
             {
@@ -1056,6 +986,7 @@ void Core::runEventLoop(Window rootWindow)
 
                 // pop event from the x11 queue and process it
                 XNextEvent(mDisplay, &event);
+                log(LOG_DEBUG, "Handling %s -> %08x %08x", event.type == KeyPress ? "KeyPress" : "KeyRelease", event.xkey.state, event.xkey.keycode);
 
                 if (mGrabbingShortcut)
                 {
@@ -1240,364 +1171,363 @@ void Core::runEventLoop(Window rootWindow)
                 }
                 else
                 {
-                    if (event.type == KeyRelease)
-                    {
-                        event.xkey.state &= ~allShifts; // Modifier keys must not use shift states.
-                    }
-
-                    X11Shortcut shortcutKey = qMakePair(static_cast<KeyCode>(event.xkey.keycode), event.xkey.state & allShifts);
-                    ShortcutByX11::const_iterator shortcutIt = mShortcutByX11.constFind(shortcutKey);
-                    if (shortcutIt == mShortcutByX11.constEnd())
-                    {
-                        continue;
-                    }
-                    const QString& shortcut = shortcutIt.value();
-
-                    if (event.type == KeyPress)
-                    {
-                        if ((shortcut == superLeft) || (shortcut == superRight))
-                        {
-                            keyReleaseExpected = true;
-                            continue;
-                        }
-                        log(LOG_DEBUG, "KeyPress %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
-                    }
-                    else
-                    {
-                        log(LOG_DEBUG, "KeyRelease %08x %08x %s", event.xkey.state & allShifts, event.xkey.keycode, qPrintable(shortcut));
-                    }
-
-                    IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
-                    if (idsByShortcut != mIdsByShortcut.end())
-                    {
-                        Ids &ids = idsByShortcut.value();
-                        switch (mMultipleActionsBehaviour)
-                        {
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
-                        {
-                            Ids::iterator lastIds = ids.end();
-                            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
-                                if (mShortcutAndActionById[*idi].second->call())
-                                {
-                                    break;
-                                }
-                        }
-                        break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_LAST:
-                        {
-                            Ids::iterator firstIds = ids.begin();
-                            for (Ids::iterator idi = ids.end(); idi != firstIds;)
-                            {
-                                --idi;
-                                if (mShortcutAndActionById[*idi].second->call())
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_NONE:
-                            if (ids.size() == 1)
-                            {
-                                mShortcutAndActionById[*(ids.begin())].second->call();
-                            }
-                            break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR_ALL:
-                        {
-                            Ids::iterator lastIds = ids.end();
-                            for (Ids::iterator idi = ids.begin(); idi != lastIds; ++idi)
-                            {
-                                mShortcutAndActionById[*idi].second->call();
-                            }
-                        }
-                        break;
-
-                        case MULTIPLE_ACTIONS_BEHAVIOUR__COUNT: break; // just a counter
-                        }
-                    }
+                    updateShortcutState(event, keyReleaseExpected, allShifts);
                 }
 
             }
             else
-            // check for pending pipe requests from other thread
             {
-                if ((event.type != KeyPress) && (event.type != KeyRelease)) {
-                    XNextEvent(mDisplay, &event);
+                // check for pending pipe requests from other thread
+                handlePendingEvents(event, rootWindow, signal, allModifiers);
+            }
+        }
+    }
+}
+
+/** check for pending pipe requests from other thread */
+void Core::handlePendingEvents(XEvent& event, Window rootWindow, char& signal, const QSet<unsigned int>& allModifiers)
+{
+    if ((event.type != KeyPress) && (event.type != KeyRelease)) {
+        XNextEvent(mDisplay, &event);
+    }
+
+    pollfd fds[1];
+    fds[0].fd = mX11RequestPipe[STDIN_FILENO];
+    fds[0].events = POLLIN | POLLERR | POLLHUP;
+    if (poll(fds, 1, 0) >= 0)
+    {
+        if (fds[0].revents & POLLIN)
+        {
+            size_t X11Operation;
+            if (readX11PipeRequest(&X11Operation, sizeof(X11Operation)))
+            {
+                // pipe error
+                mX11EventLoopActive = false;
+                return;
+            }
+//                            log(LOG_DEBUG, "X11Operation: %d", X11Operation);
+
+            switch (X11Operation)
+            {
+            case X11_OP_StringToKeycode:
+            {
+                bool x11Error = false;
+                KeyCode keyCode = 0;
+                size_t length;
+                if (readX11PipeRequest(&length, sizeof(length)))
+                {
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+                if (length)
+                {
+                    QScopedArrayPointer<char> str(new char[length + 1]);
+                    str[length] = '\0';
+                    if (readX11PipeRequest(str.data(), length))
+                    {
+                        // pipe error
+                        mX11EventLoopActive = false;
+                        break;
+                    }
+                    KeySym keySym = XStringToKeysym(str.data());
+                    lockX11Error();
+                    keyCode = XKeysymToKeycode(mDisplay, keySym);
+                    x11Error = checkX11Error();
                 }
 
-                pollfd fds[1];
-                fds[0].fd = mX11RequestPipe[STDIN_FILENO];
-                fds[0].events = POLLIN | POLLERR | POLLHUP;
-                if (poll(fds, 1, 0) >= 0)
+                signal = x11Error ? 1 : 0;
+                if (writeX11PipeResponse(&signal, sizeof(signal)))
                 {
-                    if (fds[0].revents & POLLIN)
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+
+                if (!x11Error)
+                    if (writeX11PipeResponse(&keyCode, sizeof(keyCode)))
                     {
-                        size_t X11Operation;
-                        if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11Operation, sizeof(X11Operation)))
+                        // pipe error
+                        mX11EventLoopActive = false;
+                        break;
+                    }
+            }
+            break;
+
+            case X11_OP_KeycodeToString:
+            {
+                KeyCode keyCode;
+                bool x11Error = false;
+                if (readX11PipeRequest(&keyCode, sizeof(keyCode)))
+                {
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+                int keysymsPerKeycode;
+                lockX11Error();
+                KeySym *keySyms = XGetKeyboardMapping(mDisplay, keyCode, 1, &keysymsPerKeycode);
+                x11Error = checkX11Error();
+                char *str = nullptr;
+
+                if (!x11Error)
+                {
+                    KeySym keySym = 0;
+                    if ((keysymsPerKeycode >= 2) && keySyms[1] && (keySyms[0] >= XK_a) && (keySyms[0] <= XK_z))
+                    {
+                        keySym = keySyms[1];
+                    }
+                    else if (keysymsPerKeycode >= 1)
+                    {
+                        keySym = keySyms[0];
+                    }
+
+                    if (keySym)
+                    {
+                        str = XKeysymToString(keySym);
+                    }
+                }
+
+                signal = x11Error ? 1 : 0;
+                if (writeX11PipeResponse(&signal, sizeof(signal)))
+                {
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+
+                if (!x11Error)
+                {
+                    size_t length = 0;
+                    if (str)
+                    {
+                        length = strlen(str);
+                    }
+                    if (writeX11PipeResponse(&length, sizeof(length)))
+                    {
+                        // pipe error
+                        mX11EventLoopActive = false;
+                        break;
+                    }
+                    if (length)
+                    {
+                        if (writeX11PipeResponse(str, length))
                         {
-                            log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                            close(mX11ResponsePipe[STDIN_FILENO]);
+                            // pipe error
                             mX11EventLoopActive = false;
                             break;
                         }
-//                            log(LOG_DEBUG, "X11Operation: %d", X11Operation);
-
-                        switch (X11Operation)
-                        {
-                        case X11_OP_StringToKeycode:
-                        {
-                            bool x11Error = false;
-                            KeyCode keyCode = 0;
-                            size_t length;
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &length, sizeof(length)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                            if (length)
-                            {
-                                QScopedArrayPointer<char> str(new char[length + 1]);
-                                str[length] = '\0';
-                                if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], str.data(), length))
-                                {
-                                    log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                    close(mX11ResponsePipe[STDIN_FILENO]);
-                                    mX11EventLoopActive = false;
-                                    break;
-                                }
-                                KeySym keySym = XStringToKeysym(str.data());
-                                lockX11Error();
-                                keyCode = XKeysymToKeycode(mDisplay, keySym);
-                                x11Error = checkX11Error();
-                            }
-
-                            signal = x11Error ? 1 : 0;
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-
-                            if (!x11Error)
-                                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &keyCode, sizeof(keyCode)))
-                                {
-                                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                    close(mX11RequestPipe[STDIN_FILENO]);
-                                    mX11EventLoopActive = false;
-                                    break;
-                                }
-                        }
-                        break;
-
-                        case X11_OP_KeycodeToString:
-                        {
-                            KeyCode keyCode;
-                            bool x11Error = false;
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &keyCode, sizeof(keyCode)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                            int keysymsPerKeycode;
-                            lockX11Error();
-                            KeySym *keySyms = XGetKeyboardMapping(mDisplay, keyCode, 1, &keysymsPerKeycode);
-                            x11Error = checkX11Error();
-                            char *str = nullptr;
-
-                            if (!x11Error)
-                            {
-                                KeySym keySym = 0;
-                                if ((keysymsPerKeycode >= 2) && keySyms[1] && (keySyms[0] >= XK_a) && (keySyms[0] <= XK_z))
-                                {
-                                    keySym = keySyms[1];
-                                }
-                                else if (keysymsPerKeycode >= 1)
-                                {
-                                    keySym = keySyms[0];
-                                }
-
-                                if (keySym)
-                                {
-                                    str = XKeysymToString(keySym);
-                                }
-                            }
-
-                            signal = x11Error ? 1 : 0;
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-
-                            if (!x11Error)
-                            {
-                                size_t length = 0;
-                                if (str)
-                                {
-                                    length = strlen(str);
-                                }
-                                if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &length, sizeof(length)))
-                                {
-                                    log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                    close(mX11RequestPipe[STDIN_FILENO]);
-                                    mX11EventLoopActive = false;
-                                    break;
-                                }
-                                if (length)
-                                {
-                                    if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], str, length))
-                                    {
-                                        log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                        close(mX11RequestPipe[STDIN_FILENO]);
-                                        mX11EventLoopActive = false;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        break;
-
-                        case X11_OP_XGrabKey:
-                        {
-                            X11Shortcut X11shortcut;
-                            bool x11Error = false;
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.first, sizeof(X11shortcut.first)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.second, sizeof(X11shortcut.second)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-
-                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.cend();
-                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.cbegin(); modifiers != lastAllModifiers; ++modifiers)
-                            {
-                                lockX11Error();
-                                XGrabKey(mDisplay, X11shortcut.first, X11shortcut.second | *modifiers, rootWindow, False, GrabModeAsync, GrabModeAsync);
-                                bool x11e = checkX11Error();
-                                if (x11e)
-                                {
-                                    log(LOG_DEBUG, "XGrabKey: %02x + %02x", X11shortcut.first, X11shortcut.second | *modifiers);
-                                }
-                                x11Error |= x11e;
-                            }
-
-                            signal = x11Error ? 1 : 0;
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                        }
-                        break;
-
-                        case X11_OP_XUngrabKey:
-                        {
-                            X11Shortcut X11shortcut;
-                            bool x11Error = false;
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.first, sizeof(X11shortcut.first)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                            if (error_t error = readAll(mX11RequestPipe[STDIN_FILENO], &X11shortcut.second, sizeof(X11shortcut.second)))
-                            {
-                                log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
-                                close(mX11ResponsePipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-
-                            lockX11Error();
-                            QSet<unsigned int>::const_iterator lastAllModifiers = allModifiers.cend();
-                            for (QSet<unsigned int>::const_iterator modifiers = allModifiers.cbegin(); modifiers != lastAllModifiers; ++modifiers)
-                            {
-                                XUngrabKey(mDisplay, X11shortcut.first, X11shortcut.second | *modifiers, rootWindow);
-                            }
-                            x11Error = checkX11Error();
-
-                            signal = x11Error ? 1 : 0;
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                        }
-                        break;
-
-                        case X11_OP_XGrabKeyboard:
-                        {
-                            lockX11Error();
-                            int result = XGrabKeyboard(mDisplay, rootWindow, False, GrabModeAsync, GrabModeAsync, CurrentTime);
-                            bool x11Error = checkX11Error();
-                            if (!result && x11Error)
-                            {
-                                result = -1;
-                            }
-
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &result, sizeof(result)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-                            mDataMutex.lock();
-                            mGrabbingShortcut = true;
-                            mDataMutex.unlock();
-                        }
-                        break;
-
-                        case X11_OP_XUngrabKeyboard:
-                        {
-                            lockX11Error();
-                            XUngrabKeyboard(mDisplay, CurrentTime);
-                            bool x11Error = checkX11Error();
-
-                            signal = x11Error ? 1 : 0;
-                            if (error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], &signal, sizeof(signal)))
-                            {
-                                log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
-                                close(mX11RequestPipe[STDIN_FILENO]);
-                                mX11EventLoopActive = false;
-                                break;
-                            }
-
-                            mDataMutex.lock();
-                            mGrabbingShortcut = false;
-                            mDataMutex.unlock();
-                        }
-                        break;
-                        } // end of switch-case
-
                     }
                 }
             }
+            break;
+
+            case X11_OP_XGrabKey:
+            {
+                X11Shortcut X11shortcut;
+                bool x11Error = false;
+                if (readX11PipeRequest(&X11shortcut.first, sizeof(X11shortcut.first)))
+                {
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+                if (readX11PipeRequest(&X11shortcut.second, sizeof(X11shortcut.second)))
+                {
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+
+                for (auto modifier : qAsConst(allModifiers))
+                {
+                    lockX11Error();
+                    XGrabKey(mDisplay, X11shortcut.first, X11shortcut.second | modifier, rootWindow, False, GrabModeAsync, GrabModeAsync);
+                    bool x11e = checkX11Error();
+                    if (x11e)
+                    {
+                        log(LOG_DEBUG, "XGrabKey: %02x + %02x", X11shortcut.first, X11shortcut.second | modifier);
+                    }
+                    x11Error |= x11e;
+                }
+
+                signal = x11Error ? 1 : 0;
+                if (writeX11PipeResponse(&signal, sizeof(signal)))
+                {
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+            }
+            break;
+
+            case X11_OP_XUngrabKey:
+            {
+                X11Shortcut X11shortcut;
+                bool x11Error = false;
+                if (readX11PipeRequest(&X11shortcut.first, sizeof(X11shortcut.first)))
+                {
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+                if (readX11PipeRequest(&X11shortcut.second, sizeof(X11shortcut.second)))
+                {
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+
+                lockX11Error();
+                for (auto modifier : qAsConst(allModifiers))
+                {
+                    XUngrabKey(mDisplay, X11shortcut.first, X11shortcut.second | modifier, rootWindow);
+                }
+                x11Error = checkX11Error();
+
+                signal = x11Error ? 1 : 0;
+                if (writeX11PipeResponse(&signal, sizeof(signal)))
+                {
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+            }
+            break;
+
+            case X11_OP_XGrabKeyboard:
+            {
+                lockX11Error();
+                int result = XGrabKeyboard(mDisplay, rootWindow, False, GrabModeAsync, GrabModeAsync, CurrentTime);
+                bool x11Error = checkX11Error();
+                if (!result && x11Error)
+                {
+                    result = -1;
+                }
+
+                if (writeX11PipeResponse(&result, sizeof(result))) {
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+
+                mDataMutex.lock();
+                mGrabbingShortcut = true;
+                mDataMutex.unlock();
+            }
+            break;
+
+            case X11_OP_XUngrabKeyboard:
+            {
+                lockX11Error();
+                XUngrabKeyboard(mDisplay, CurrentTime);
+                bool x11Error = checkX11Error();
+
+                signal = x11Error ? 1 : 0;
+                if (writeX11PipeResponse(&signal, sizeof(signal))) {
+                    // pipe error
+                    mX11EventLoopActive = false;
+                    break;
+                }
+
+                mDataMutex.lock();
+                mGrabbingShortcut = false;
+                mDataMutex.unlock();
+            }
+            break;
+            } // end of switch-case
+
         }
+    }
+}
+
+void Core::updateShortcutState(XEvent& event, bool& keyReleaseExpected, unsigned int allShifts)
+{
+    if (event.type == KeyRelease)
+    {
+        log(LOG_DEBUG, "KeyRelease 1 -> %08x %08x", event.xkey.state, event.xkey.keycode);
+        event.xkey.state &= ~allShifts; // Modifier keys must not use shift states.
+        log(LOG_DEBUG, "KeyRelease 2 -> %08x %08x", event.xkey.state, event.xkey.keycode);
+    }
+
+    X11Shortcut shortcutKey = qMakePair(static_cast<KeyCode>(event.xkey.keycode), event.xkey.state & allShifts);
+    ShortcutByX11::const_iterator shortcutIt = mShortcutByX11.constFind(shortcutKey);
+    if (shortcutIt == mShortcutByX11.constEnd())
+    {
+        return;
+    }
+
+    const QString& shortcut = shortcutIt.value();
+    if (event.type == KeyPress)
+    {
+        log(LOG_DEBUG, "KeyPress %08x %08x %s ", event.xkey.state, event.xkey.keycode, qPrintable(shortcut));
+        if ((shortcut == superLeft) || (shortcut == superRight))
+        {
+            keyReleaseExpected = true;
+            return;
+        }
+    }
+    else
+    {
+        log(LOG_DEBUG, "KeyRelease 3 -> %08x %08x %s", event.xkey.state, event.xkey.keycode, qPrintable(shortcut));
+    }
+
+    IdsByShortcut::iterator idsByShortcut = mIdsByShortcut.find(shortcut);
+    if (idsByShortcut != mIdsByShortcut.end())
+    {
+        this->shortcut(idsByShortcut.value());
+    }
+}
+
+void Core::shortcut(const Ids& ids) const
+{
+    switch (mMultipleActionsBehaviour)
+    {
+    case MULTIPLE_ACTIONS_BEHAVIOUR_FIRST:
+    {
+        auto lastIds = ids.end();
+        for (auto idi = ids.begin(); idi != lastIds; ++idi)
+        {
+            if (mShortcutAndActionById[*idi].second->call())
+            {
+                break;
+            }
+        }
+    }
+    break;
+
+    case MULTIPLE_ACTIONS_BEHAVIOUR_LAST:
+    {
+        auto firstIds = ids.begin();
+        for (auto idi = ids.end(); idi != firstIds;)
+        {
+            --idi;
+            if (mShortcutAndActionById[*idi].second->call())
+            {
+                break;
+            }
+        }
+    }
+    break;
+
+    case MULTIPLE_ACTIONS_BEHAVIOUR_NONE:
+        if (ids.size() == 1)
+        {
+            mShortcutAndActionById[*(ids.begin())].second->call();
+        }
+        break;
+
+    case MULTIPLE_ACTIONS_BEHAVIOUR_ALL:
+    {
+        auto lastIds = ids.end();
+        for (auto idi = ids.begin(); idi != lastIds; ++idi)
+        {
+            mShortcutAndActionById[*idi].second->call();
+        }
+    }
+    break;
+
+    case MULTIPLE_ACTIONS_BEHAVIOUR__COUNT: break; // just a counter
     }
 }
 
@@ -2013,7 +1943,6 @@ QString Core::checkShortcut(const QString &shortcut, X11Shortcut &X11shortcut)
 QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortcut, const QDBusObjectPath &path, const QString &description, const QString &sender)
 {
     X11Shortcut X11shortcut;
-
     QString newShortcut = checkShortcut(shortcut, X11shortcut);
 //    if (newShortcut.isEmpty())
 //    {
@@ -2036,13 +1965,13 @@ QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortc
             mIdsByShortcut[newShortcut].insert(id);
         }
 
-        dynamic_cast<ClientAction*>(shortcutAndAction.second)->appeared(QDBusConnection::sessionBus(), sender);
+        auto action = static_cast<ClientAction*>(shortcutAndAction.second);
+        action->appeared(QDBusConnection::sessionBus(), sender);
 
         return qMakePair(newShortcut, id);
     }
 
     qulonglong id = ++mLastId;
-
     if (!sender.isEmpty() && !newShortcut.isEmpty())
     {
         newShortcut = grabOrReuseKey(X11shortcut, newShortcut);
@@ -2050,11 +1979,10 @@ QPair<QString, qulonglong> Core::addOrRegisterClientAction(const QString &shortc
     }
 
     mIdByClientPath[path] = id;
-    ClientAction *clientAction = sender.isEmpty() ? new ClientAction(this, path, description) : new ClientAction(this, QDBusConnection::sessionBus(), sender, path, description);
+    auto clientAction = sender.isEmpty() ? new ClientAction(mCoreLogger.get(), path, description) : new ClientAction(mCoreLogger.get(), QDBusConnection::sessionBus(), sender, path, description);
     mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, clientAction);
 
     log(LOG_INFO, "addClientAction shortcut:'%s' id:%llu", qPrintable(newShortcut), id);
-
     return qMakePair(newShortcut, id);
 }
 
@@ -2107,7 +2035,8 @@ qulonglong Core::registerClientAction(const QString &shortcut, const QDBusObject
 
     QMutexLocker lock(&mDataMutex);
 
-    return addOrRegisterClientAction(shortcut, path, description, QString()).second;
+    auto action = addOrRegisterClientAction(shortcut, path, description, QString());
+    return action.second;
 }
 
 void Core::addMethodAction(QPair<QString, qulonglong> &result, const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
@@ -2135,7 +2064,7 @@ void Core::addMethodAction(QPair<QString, qulonglong> &result, const QString &sh
     qulonglong id = ++mLastId;
 
     mIdsByShortcut[newShortcut].insert(id);
-    mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, new MethodAction(this, QDBusConnection::sessionBus(), service, path, interface, method, description));
+    mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, new MethodAction(mCoreLogger.get(), QDBusConnection::sessionBus(), service, path, interface, method, description));
 
     log(LOG_INFO, "addMethodAction shortcut:'%s' id:%llu", qPrintable(newShortcut), id);
 
@@ -2176,7 +2105,7 @@ void Core::addCommandAction(QPair<QString, qulonglong> &result, const QString &s
     qulonglong id = ++mLastId;
 
     mIdsByShortcut[newShortcut].insert(id);
-    mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, new CommandAction(this, command, arguments, description));
+    mShortcutAndActionById[id] = qMakePair<QString, BaseAction *>(newShortcut, new CommandAction(mCoreLogger.get(), command, arguments, description));
 
     log(LOG_INFO, "addCommandAction shortcut:'%s' id:%llu", qPrintable(newShortcut), id);
 
@@ -2287,7 +2216,7 @@ void Core::modifyMethodAction(bool &result, const qulonglong &id, const QString 
 
     bool isEnabled = action->isEnabled();
     delete action;
-    MethodAction *newAction = new MethodAction(this, QDBusConnection::sessionBus(), service, path, interface, method, description);
+    auto newAction = new MethodAction(mCoreLogger.get(), QDBusConnection::sessionBus(), service, path, interface, method, description);
     newAction->setEnabled(isEnabled);
     shortcutAndActionById.value().second = newAction;
 
@@ -2321,7 +2250,7 @@ void Core::modifyCommandAction(bool &result, const qulonglong &id, const QString
 
     bool isEnabled = action->isEnabled();
     delete action;
-    CommandAction *newAction = new CommandAction(this, command, arguments, description);
+    auto newAction = new CommandAction(mCoreLogger.get(), command, arguments, description);
     newAction->setEnabled(isEnabled);
     shortcutAndActionById.value().second = newAction;
 

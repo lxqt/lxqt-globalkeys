@@ -40,6 +40,7 @@
 
 #include "meta_types.h"
 #include "log_target.h"
+#include "pipe_utils.h"
 
 extern "C" {
 #include <X11/X.h>
@@ -49,6 +50,7 @@ extern "C" {
 #undef Bool
 }
 
+#include <unistd.h>
 
 class QTimer;
 class DaemonAdaptor;
@@ -68,16 +70,21 @@ public:
     }
 };
 
-class Core : public QThread, public LogTarget
+class Core : public QThread
 {
     Q_OBJECT
+
 public:
     Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringList &configFiles, bool multipleActionsBehaviourSet, MultipleActionsBehaviour multipleActionsBehaviour, QObject *parent = nullptr);
     ~Core() override;
 
     bool ready() const { return mReady; }
 
-    void log(int level, const char *format, ...) const override;
+    template<class... Args>
+    void log(int level, const char *format, Args&&... args) const {
+        // NOTE: If the logger is unassigned the SEGFAULT is intentional!
+        mCoreLogger->log(level, format, std::forward<Args>(args)...);
+    }
 
 signals:
     void onShortcutGrabbed();
@@ -146,6 +153,7 @@ private:
     void grabShortcut(const uint &timeout, QString &shortcut, bool &failed, bool &cancelled, bool &timedout, const QDBusMessage &message);
     void cancelShortcutGrab();
 
+    void shortcut(const Ids& ids) const;
     void shortcutGrabbed();
     void shortcutGrabTimedout();
 
@@ -171,11 +179,33 @@ private:
 
     void run() override;
     void runEventLoop(Window rootWindow);
+    void handlePendingEvents(XEvent& event, Window rootWindow, char& signal, const QSet<unsigned int>& allModifiers);
+    void updateShortcutState(XEvent& event, bool& keyReleaseExpected, unsigned int allShifts);
 
     KeyCode remoteStringToKeycode(const QString &str);
     QString remoteKeycodeToString(KeyCode keyCode);
     bool remoteXGrabKey(const X11Shortcut &X11shortcut);
     bool remoteXUngrabKey(const X11Shortcut &X11shortcut);
+
+    template<class T>
+    error_t readX11PipeRequest(T* ptr, size_t len) {
+        error_t error = readAll(mX11RequestPipe[STDIN_FILENO], ptr, len);
+        if (error) {
+            log(LOG_CRIT, "Cannot read from X11 request pipe: %s", strerror(error));
+            close(mX11ResponsePipe[STDIN_FILENO]);
+        }
+        return error;
+    }
+
+    template<class T>
+    error_t writeX11PipeResponse(T* ptr, size_t len) {
+        error_t error = writeAll(mX11ResponsePipe[STDOUT_FILENO], ptr, len);
+        if (error) {
+            log(LOG_CRIT, "Cannot write to X11 response pipe: %s", strerror(error));
+            close(mX11RequestPipe[STDIN_FILENO]);
+        }
+        return error;
+    }
 
     QString grabOrReuseKey(const X11Shortcut &X11shortcut, const QString &shortcut);
     QString checkShortcut(const QString &shortcut, X11Shortcut &X11shortcut);
@@ -396,10 +426,9 @@ private:
     bool waitForX11Error(int level, uint timeout);
 
 private:
-    bool mReady;
-    bool mUseSyslog;
-    int mMinLogLevel;
+    std::unique_ptr<LogTarget> mCoreLogger;
 
+    bool mReady;
     int mX11ErrorPipe[2];
     int mX11RequestPipe[2];
     int mX11ResponsePipe[2];
@@ -433,6 +462,9 @@ private:
     const unsigned int MetaMask   = Mod4Mask;
     const unsigned int Level3Mask = Mod5Mask; // note: mask swapped
     const unsigned int Level5Mask = Mod3Mask; // note: mask swapped
+
+    const QString superLeft  = QString::fromUtf8(XKeysymToString(XK_Super_L));
+    const QString superRight = QString::fromUtf8(XKeysymToString(XK_Super_R));
 
     MultipleActionsBehaviour mMultipleActionsBehaviour;
 

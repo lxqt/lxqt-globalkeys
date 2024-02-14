@@ -26,12 +26,32 @@
  * END_COMMON_COPYRIGHT_HEADER */
 
 #include "log_target.h"
+#include <cstdio>
 
-
-LogTarget::LogTarget()
+LogTarget::LogTarget(int minLogLevel, bool useSyslog)
 {
+    mMinLogLevel = minLogLevel;
+    mUseSyslog = useSyslog;
 }
 
-LogTarget::~LogTarget()
+void LogTarget::log(int level, const char *format, ...)
 {
+    if (level > mMinLogLevel)
+    {
+        return;
+    }
+
+    va_list ap;
+    va_start(ap, format);
+    if (mUseSyslog)
+    {
+        vsyslog(LOG_MAKEPRI(LOG_USER, level), format, ap);
+    }
+    else
+    {
+        fprintf(stderr, "[%s] ", strLevel(level));
+        vfprintf(stderr, format, ap);
+        fprintf(stderr, "\n");
+    }
+    va_end(ap);
 }
