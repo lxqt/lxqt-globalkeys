@@ -174,7 +174,7 @@ target_include_directories(${PROJECT_NAME}
 
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE
-        "SHARED_EXPORT=Q_DECL_EXPORT"
+        "LXQT_GLOBALKEYS_EXPORT=Q_DECL_EXPORT"
 )
 
 export(TARGETS ${PROJECT_NAME} FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-targets.cmake")

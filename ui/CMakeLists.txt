@@ -147,9 +147,11 @@ target_include_directories(${PROJECT_NAME}
     INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/include/${PROJECT_NAME}>"
 )
 
+# NOTE: we need a different export macro than base `lxqt-globalkeys` library.
+# We import symbols from base library and export our UI-related symbols
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE
-        "SHARED_EXPORT=Q_DECL_EXPORT"
+        "LXQT_GLOBALKEYS_UI_EXPORT=Q_DECL_EXPORT"
 )
 
 export(TARGETS ${PROJECT_NAME} APPEND FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-targets.cmake")
