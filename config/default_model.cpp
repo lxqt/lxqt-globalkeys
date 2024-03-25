@@ -76,19 +76,19 @@ QVariant DefaultModel::data(const QModelIndex &index, int role) const
             switch (index.column())
             {
             case 0:
-                return mContent.keys()[index.row()];
+                return std::next(mContent.begin(), index.row()).key();
 
             case 1:
-                return mContent[mContent.keys()[index.row()]].shortcut;
+                return std::next(mContent.begin(), index.row())->shortcut;
 
             case 2:
-                return mContent[mContent.keys()[index.row()]].description;
+                return std::next(mContent.begin(), index.row())->description;
 
             case 3:
-                return mVerboseType[mContent[mContent.keys()[index.row()]].type];
+                return mVerboseType[std::next(mContent.begin(), index.row())->type];
 
             case 4:
-                return mContent[mContent.keys()[index.row()]].info;
+                return std::next(mContent.begin(), index.row())->info;
             }
         break;
 
@@ -99,7 +99,7 @@ QVariant DefaultModel::data(const QModelIndex &index, int role) const
     {
         if ((index.row() >= 0) && (index.row() < rowCount()))
         {
-            qulonglong id = mContent.keys()[index.row()];
+            qulonglong id = std::next(mContent.begin(), index.row()).key();
             bool multiple = (index.column() == 1) && (mShortcuts[mContent[id].shortcut].size() > 1);
             bool inactive = (mContent[id].type == QLatin1String("client")) && (mActions->getClientActionSender(id).isEmpty());
             if (multiple || inactive)
@@ -109,7 +109,7 @@ QVariant DefaultModel::data(const QModelIndex &index, int role) const
         break;
 
     case Qt::ForegroundRole:
-        if (!mContent[mContent.keys()[index.row()]].enabled)
+        if (!std::next(mContent.begin(), index.row())->enabled)
         {
             return mGrayedOutColour;
         }
@@ -118,7 +118,7 @@ QVariant DefaultModel::data(const QModelIndex &index, int role) const
     case Qt::CheckStateRole:
         if ((index.row() >= 0) && (index.row() < rowCount()) && (index.column() == 0))
         {
-            return mContent[mContent.keys()[index.row()]].enabled ? Qt::Checked : Qt::Unchecked;
+            return std::next(mContent.begin(), index.row())->enabled ? Qt::Checked : Qt::Unchecked;
         }
         break;
 
@@ -187,7 +187,7 @@ qulonglong DefaultModel::id(const QModelIndex &index) const
 {
     if ((index.row() >= 0) && (index.row() < rowCount()))
     {
-        return mContent.keys()[index.row()];
+        return std::next(mContent.begin(), index.row()).key();
     }
     return 0ull;
 }
@@ -208,7 +208,7 @@ void DefaultModel::daemonAppeared()
 
     beginInsertRows(QModelIndex(), 0, allIds.size() - 1);
 
-    for(qulonglong id : qAsConst(allIds))
+    for(qulonglong id : std::as_const(allIds))
     {
         mContent[id] = mActions->actionById(id).second;
         mShortcuts[mContent[id].shortcut].insert(id);
@@ -221,7 +221,7 @@ void DefaultModel::actionAdded(qulonglong id)
 {
     if (!mContent.contains(id))
     {
-        QPair<bool, GeneralActionInfo> result = mActions->actionById(id);
+        std::pair<bool, GeneralActionInfo> result = mActions->actionById(id);
         if (result.first)
         {
             QList<qulonglong> keys = mContent.keys();
@@ -235,7 +235,7 @@ void DefaultModel::actionAdded(qulonglong id)
             endInsertRows();
 
             keys = mContent.keys();
-            for(qulonglong siblingId : qAsConst(mShortcuts[mContent[id].shortcut]))
+            for(qulonglong siblingId : std::as_const(mShortcuts[mContent[id].shortcut]))
             {
                 if (id != siblingId)
                 {
@@ -264,7 +264,7 @@ void DefaultModel::actionModified(qulonglong id)
 {
     if (mContent.contains(id))
     {
-        QPair<bool, GeneralActionInfo> result = mActions->actionById(id);
+        std::pair<bool, GeneralActionInfo> result = mActions->actionById(id);
         if (result.first)
         {
             QList<qulonglong> keys = mContent.keys();
@@ -274,12 +274,12 @@ void DefaultModel::actionModified(qulonglong id)
             {
                 mShortcuts[result.second.shortcut].insert(id);
                 mShortcuts[mContent[id].shortcut].remove(id);
-                for(qulonglong siblingId : qAsConst(mShortcuts[mContent[id].shortcut]))
+                for(qulonglong siblingId : std::as_const(mShortcuts[mContent[id].shortcut]))
                 {
                     int siblingRow = std::lower_bound(keys.constBegin(), keys.constEnd(), siblingId) - keys.constBegin();
                     emit dataChanged(index(siblingRow, 1), index(siblingRow, 1));
                 }
-                for(qulonglong siblingId : qAsConst(mShortcuts[result.second.shortcut]))
+                for(qulonglong siblingId : std::as_const(mShortcuts[result.second.shortcut]))
                 {
                     int siblingRow = std::lower_bound(keys.constBegin(), keys.constEnd(), siblingId) - keys.constBegin();
                     emit dataChanged(index(siblingRow, 1), index(siblingRow, 1));
@@ -327,7 +327,7 @@ void DefaultModel::actionRemoved(qulonglong id)
 
         endRemoveRows();
 
-        for(qulonglong siblingId : qAsConst(mShortcuts[shortcut]))
+        for(qulonglong siblingId : std::as_const(mShortcuts[shortcut]))
         {
             int siblingRow = std::lower_bound(keys.constBegin(), keys.constEnd(), siblingId) - keys.constBegin();
             emit dataChanged(index(siblingRow, 1), index(siblingRow, 1));

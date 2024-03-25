@@ -159,14 +159,14 @@ QList<qulonglong> Actions::allActionIds() const
     return mGeneralActionInfo.keys();
 }
 
-QPair<bool, GeneralActionInfo> Actions::actionById(qulonglong id) const
+std::pair<bool, GeneralActionInfo> Actions::actionById(qulonglong id) const
 {
     GeneralActionInfos::const_iterator I = mGeneralActionInfo.constFind(id);
     if (I == mGeneralActionInfo.constEnd())
     {
-        return qMakePair(false, GeneralActionInfo());
+        return std::make_pair(false, GeneralActionInfo());
     }
-    return qMakePair(true, I.value());
+    return std::make_pair(true, I.value());
 }
 
 QList<qulonglong> Actions::allClientActionIds() const
@@ -174,14 +174,14 @@ QList<qulonglong> Actions::allClientActionIds() const
     return mClientActionInfo.keys();
 }
 
-QPair<bool, ClientActionInfo> Actions::clientActionInfoById(qulonglong id) const
+std::pair<bool, ClientActionInfo> Actions::clientActionInfoById(qulonglong id) const
 {
     ClientActionInfos::const_iterator I = mClientActionInfo.constFind(id);
     if (I == mClientActionInfo.constEnd())
     {
-        return qMakePair(false, ClientActionInfo());
+        return std::make_pair(false, ClientActionInfo());
     }
-    return qMakePair(true, I.value());
+    return std::make_pair(true, I.value());
 }
 
 QList<qulonglong> Actions::allMethodActionIds() const
@@ -189,14 +189,14 @@ QList<qulonglong> Actions::allMethodActionIds() const
     return mMethodActionInfo.keys();
 }
 
-QPair<bool, MethodActionInfo> Actions::methodActionInfoById(qulonglong id) const
+std::pair<bool, MethodActionInfo> Actions::methodActionInfoById(qulonglong id) const
 {
     MethodActionInfos::const_iterator I = mMethodActionInfo.constFind(id);
     if (I == mMethodActionInfo.constEnd())
     {
-        return qMakePair(false, MethodActionInfo());
+        return std::make_pair(false, MethodActionInfo());
     }
-    return qMakePair(true, I.value());
+    return std::make_pair(true, I.value());
 }
 
 QList<qulonglong> Actions::allCommandActionIds() const
@@ -204,14 +204,14 @@ QList<qulonglong> Actions::allCommandActionIds() const
     return mCommandActionInfo.keys();
 }
 
-QPair<bool, CommandActionInfo> Actions::commandActionInfoById(qulonglong id) const
+std::pair<bool, CommandActionInfo> Actions::commandActionInfoById(qulonglong id) const
 {
     CommandActionInfos::const_iterator I = mCommandActionInfo.constFind(id);
     if (I == mCommandActionInfo.constEnd())
     {
-        return qMakePair(false, CommandActionInfo());
+        return std::make_pair(false, CommandActionInfo());
     }
-    return qMakePair(true, I.value());
+    return std::make_pair(true, I.value());
 }
 
 MultipleActionsBehaviour Actions::multipleActionsBehaviour() const
@@ -486,28 +486,28 @@ uint Actions::getMultipleActionsBehaviour()
     return reply.argumentAt<0>();
 }
 
-QPair<QString, qulonglong> Actions::addMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
+std::pair<QString, qulonglong> Actions::addMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description)
 {
     QDBusPendingReply<QString, qulonglong> reply = mDaemonProxy->addMethodAction(shortcut, service, path, interface, method, description);
     reply.waitForFinished();
     if (reply.isError())
     {
-        return qMakePair<QString, qulonglong>(QString(), 0ull);
+        return std::make_pair(QString(), 0ull);
     }
 
-    return qMakePair<QString, qulonglong>(reply.argumentAt<0>(), reply.argumentAt<1>());
+    return std::make_pair(reply.argumentAt<0>(), reply.argumentAt<1>());
 }
 
-QPair<QString, qulonglong> Actions::addCommandAction(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
+std::pair<QString, qulonglong> Actions::addCommandAction(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description)
 {
     QDBusPendingReply<QString, qulonglong> reply = mDaemonProxy->addCommandAction(shortcut, command, arguments, description);
     reply.waitForFinished();
     if (reply.isError())
     {
-        return qMakePair<QString, qulonglong>(QString(), 0ull);
+        return std::make_pair(QString(), 0ull);
     }
 
-    return qMakePair<QString, qulonglong>(reply.argumentAt<0>(), reply.argumentAt<1>());
+    return std::make_pair(reply.argumentAt<0>(), reply.argumentAt<1>());
 }
 
 bool Actions::modifyActionDescription(const qulonglong &id, const QString &description)

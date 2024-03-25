@@ -31,6 +31,7 @@
 #include "org.lxqt.global_key_shortcuts.native.h"
 
 #include <QDBusConnection>
+#include <QRegularExpression>
 
 
 namespace GlobalKeyShortcut
@@ -123,7 +124,8 @@ void ClientImpl::registrationFinished(QDBusPendingCallWatcher *watcher)
 
 Action *ClientImpl::addClientAction(const QString &shortcut, const QString &path, const QString &description, QObject *parent)
 {
-    if (!QRegExp(QStringLiteral("(/[A-Za-z0-9_]+){2,}")).exactMatch(path))
+    static const QRegularExpression regexp(QRegularExpression::anchoredPattern(QStringLiteral("(/[A-Za-z0-9_]+){2,}")));
+    if (!regexp.match(path).hasMatch())
     {
         return nullptr;
     }
@@ -301,7 +303,7 @@ void ClientImpl::grabShortcutFinished(QDBusPendingCallWatcher *call)
 }
 
 
-static QScopedPointer<Client> globalActionNativeClient;
+static std::unique_ptr<Client> globalActionNativeClient;
 
 Client *Client::instance()
 {
@@ -310,7 +312,7 @@ Client *Client::instance()
         globalActionNativeClient.reset(new Client());
     }
 
-    return globalActionNativeClient.data();
+    return globalActionNativeClient.get();
 }
 
 Client::Client()
@@ -321,7 +323,7 @@ Client::Client()
 
 Client::~Client()
 {
-    globalActionNativeClient.take();
+    globalActionNativeClient.release();
 }
 
 Action *Client::addAction(const QString &shortcut, const QString &path, const QString &description, QObject *parent) { return impl->addClientAction(shortcut, path, description, parent); }

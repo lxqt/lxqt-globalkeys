@@ -27,6 +27,8 @@
 
 #include "string_utils.h"
 
+#include <QRegularExpression>
+
 
 QString joinToString(const QStringList &list, const QString &prefix, const QString &joiner, const QString &postfix)
 {
@@ -40,12 +42,14 @@ QString joinToString(const QStringList &list, const QString &prefix, const QStri
 
 QString joinCommandLine(const QString &command, QStringList arguments)
 {
+    static const QRegularExpression multilineQuoted(QStringLiteral("[ \r\n\t\"']"));
+
     arguments.prepend(command);
     int m = arguments.length();
     for (int i = 0; i < m; ++i)
     {
         QString &item = arguments[i];
-        if (item.contains(QRegExp(QStringLiteral("[ \r\n\t\"']"))))
+        if (item.contains(multilineQuoted))
         {
             item.prepend(QLatin1Char('\'')).append(QLatin1Char('\''));
         }

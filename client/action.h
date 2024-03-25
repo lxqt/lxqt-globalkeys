@@ -40,11 +40,11 @@ namespace GlobalKeyShortcut
 class ActionImpl;
 class ClientImpl;
 
-#ifndef SHARED_EXPORT
-#define SHARED_EXPORT Q_DECL_IMPORT
+#ifndef LXQT_GLOBALKEYS_EXPORT
+#define LXQT_GLOBALKEYS_EXPORT Q_DECL_IMPORT
 #endif
 
-class SHARED_EXPORT Action : public QObject
+class LXQT_GLOBALKEYS_EXPORT Action : public QObject
 {
     Q_OBJECT
 

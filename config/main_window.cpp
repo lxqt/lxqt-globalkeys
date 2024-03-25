@@ -155,8 +155,8 @@ void MainWindow::selectionChanged(const QItemSelection &/*selected*/, const QIte
     bool enableSwap = (rows.length() == 2);
     if (enableSwap)
     {
-        QPair<bool, GeneralActionInfo> info0 = mActions->actionById(mDefaultModel->id(mSortFilterProxyModel->mapToSource(rows[0])));
-        QPair<bool, GeneralActionInfo> info1 = mActions->actionById(mDefaultModel->id(mSortFilterProxyModel->mapToSource(rows[1])));
+        std::pair<bool, GeneralActionInfo> info0 = mActions->actionById(mDefaultModel->id(mSortFilterProxyModel->mapToSource(rows[0])));
+        std::pair<bool, GeneralActionInfo> info1 = mActions->actionById(mDefaultModel->id(mSortFilterProxyModel->mapToSource(rows[1])));
         enableSwap = (info0.first && info1.first && (info0.second.shortcut == info1.second.shortcut));
     }
     swap_PB->setEnabled(enableSwap);
