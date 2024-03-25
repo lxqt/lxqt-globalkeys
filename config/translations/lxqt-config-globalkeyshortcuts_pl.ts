@@ -49,7 +49,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation>Edytuj akcję</translation>
+        <translation>Edytuj działanie</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
@@ -74,7 +74,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation>Wiadomość &amp;DBus</translation>
+        <translation>Komunikat &amp;DBus</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
@@ -142,7 +142,7 @@
     <message>
         <location filename="../main_window.ui" line="135"/>
         <source>Multiple actions behaviour:</source>
-        <translation>Zachowanie przy wielu akcjach:</translation>
+        <translation>Zachowanie przy wielu działaniach:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="143"/>
