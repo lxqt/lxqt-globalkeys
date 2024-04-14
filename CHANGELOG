@@ -1,3 +1,7 @@
+lxqt-globalkeys-2.0.0 / 2024-04-17
+===================================
+ * Ported to Qt6.
+
 lxqt-globalkeys-1.4.0 / 2023-11-05
 ===================================
  * Removed KWindowSystem as a direct dependency (`liblxqt` already brings KWindowSystem in as an INTERFACE_LINK dependency).
