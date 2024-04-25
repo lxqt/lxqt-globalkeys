@@ -424,6 +424,10 @@ Core::Core(bool useSyslog, bool minLogLevelSet, int minLogLevel, const QStringLi
             throw std::runtime_error(std::string("Cannot register service 'org.lxqt.global_key_shortcuts'"));
         }
 
+        if (QGuiApplication::platformName() == QStringLiteral("wayland"))
+        {
+            throw std::runtime_error(std::string("Cannot register globalkeys under wayland"));
+        }
 
         if ((c_error = createPipe(mX11ErrorPipe)))
         {
