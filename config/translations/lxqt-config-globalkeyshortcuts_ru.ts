@@ -21,7 +21,7 @@
     <message>
         <location filename="../default_model.cpp" line="143"/>
         <source>Id</source>
-        <translation>Id</translation>
+        <translation>ИД</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="146"/>
@@ -41,7 +41,7 @@
     <message>
         <location filename="../default_model.cpp" line="155"/>
         <source>Info</source>
-        <translation>Информация</translation>
+        <translation>Сведения</translation>
     </message>
 </context>
 <context>
@@ -160,7 +160,7 @@
         <location filename="../main_window.ui" line="153"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation>Ни одного</translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="158"/>
