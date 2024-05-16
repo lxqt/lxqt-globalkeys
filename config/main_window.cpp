@@ -84,15 +84,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(mActions, &Actions::daemonAppeared,                  this, &MainWindow::daemonAppeared);
     connect(mActions, &Actions::multipleActionsBehaviourChanged, this, &MainWindow::multipleActionsBehaviourChanged);
 
-    // Show info under wayland
-    if (QGuiApplication::platformName() == QLatin1String("wayland"))
-    {
-    QMessageBox::warning( this
-    , tr( "Platform unsupported" )
-    , tr( "LXQt globalkeys are currently unsupported under wayland.\n\nGlobal shortcuts can be configured in the settings of the compositor instead." ));
-    exit (0);
-    }
-
     // restore/remember win size
     // FIXME: Change the code structure so that the config file can be obtained from one place.
     QSettings *config = new QSettings(QStringLiteral("lxqt"), QStringLiteral("globalkeyshortcuts"), this);
