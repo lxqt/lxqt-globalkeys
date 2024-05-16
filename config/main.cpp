@@ -28,6 +28,7 @@
 #include <LXQt/SingleApplication>
 
 #include <QCommandLineParser>
+#include <QMessageBox>
 #include "main_window.h"
 
 int main(int argc, char *argv[])
@@ -43,6 +44,14 @@ int main(int argc, char *argv[])
     parser.addVersionOption();
     parser.addHelpOption();
     parser.process(a);
+    // Show message under wayland
+    if (QGuiApplication::platformName() == QLatin1String("wayland"))
+    {
+        QMessageBox::warning(nullptr,
+            QObject::tr("Platform unsupported"),
+            QObject::tr("LXQt globalkeys are currently unsupported under wayland.\n\nGlobal shortcuts can be configured in the settings of the compositor instead."));
+        return 0;
+    }
 
     MainWindow w;
     a.setActivationWindow(&w);
