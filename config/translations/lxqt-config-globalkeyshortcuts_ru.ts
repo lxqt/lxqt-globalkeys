@@ -191,4 +191,19 @@ Do you want to proceed?</source>
 Вы хотите продолжить?</translation>
     </message>
 </context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../main.cpp" line="51"/>
+        <source>Platform unsupported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="52"/>
+        <source>LXQt globalkeys are currently unsupported under wayland.
+
+Global shortcuts can be configured in the settings of the compositor instead.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>
