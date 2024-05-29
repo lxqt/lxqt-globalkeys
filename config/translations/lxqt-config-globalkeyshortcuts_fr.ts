@@ -189,7 +189,7 @@
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
         <translation>Vos raccourcis définis seront supprimés.
-Voulez-vous procéder&#x202f;?</translation>
+Voulez-vous procéder ?</translation>
     </message>
 </context>
 <context>
@@ -197,14 +197,16 @@ Voulez-vous procéder&#x202f;?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Plateforme non prise en charge</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>LXQT GlobalKeys n&apos;est actuellement pas pris en charge dans Wayland.
+
+Les raccourcis globaux peuvent être configurés dans les paramètres du compositeur.</translation>
     </message>
 </context>
 </TS>

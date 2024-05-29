@@ -196,14 +196,16 @@ Devam etmek istiyor musunuz?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Platform desteklenmiyor</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>LXQt evrensel tuşlar şu anda wayland altında desteklenmemektedir.
+
+Bunun yerine evrensel kısayollar kompozitörün ayarlarından yapılandırılabilir.</translation>
     </message>
 </context>
 </TS>

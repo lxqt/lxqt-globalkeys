@@ -196,14 +196,16 @@ Weet u zeker dat u wilt doorgaan?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet-ondersteund systeem</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>Globale sneltoetsen op Wayland worden momenteel niet door LXQt ondersteund.
+
+Stel deze in in de instellingen van de vensterbeheerder.</translation>
     </message>
 </context>
 </TS>
