@@ -196,14 +196,16 @@ Kas sa soovid jätkata?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>See platvorm ei ole toetatud</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>LXQt globalkeys ei ole hetkel Wayland&apos;i kasutamisel toetatud.
+
+Selle asemel saad üldisi kiirklahve seadistada komposiitori eelistustes.</translation>
     </message>
 </context>
 </TS>

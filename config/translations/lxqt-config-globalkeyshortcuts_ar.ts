@@ -196,14 +196,16 @@ Do you want to proceed?</source>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>المنصة غير مدعومة</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>مفاتيح LXQt العالمية غير مدعومة حاليًا ضمن Wayland.
+
+يمكن تكوين الاختصارات العامة في إعدادات المنشئ بدلاً من ذلك.</translation>
     </message>
 </context>
 </TS>
