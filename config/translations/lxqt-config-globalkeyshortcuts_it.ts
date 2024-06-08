@@ -203,9 +203,9 @@ Procedere?</translation>
         <source>LXQt globalkeys are currently unsupported under wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation>Le scorciatoia globali di LXQt attualmente non sono supportate in wayland.
+        <translation>Le scorciatoie globali di LXQt attualmente non sono supportate in Wayland.
 
-Scorciatoie globali possono essere configurati invece nelle impostazioni del compositor.</translation>
+Le scorciatoie globali possono essere configurate invece nelle impostazioni del compositor.</translation>
     </message>
 </context>
 </TS>
