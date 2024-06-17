@@ -196,14 +196,16 @@ Vil du fortsætte?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Platform ikke understøttet</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>LXQt globale genveje er i øjeblikket ikke understøttet under Wayland.
+
+Globale genveje skal i stedet defineres i indstillinger for kompositoren.</translation>
     </message>
 </context>
 </TS>
