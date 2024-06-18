@@ -205,7 +205,8 @@ Do you want to proceed?</source>
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
         <translation>LXQt 全局快捷键暂不支持 wayland 平台。
-全局快捷键可以在合成器的设置中配置。</translation>
+
+全局快捷键可以在混成器的设置中配置。</translation>
     </message>
 </context>
 </TS>
