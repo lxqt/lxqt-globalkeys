@@ -4,5 +4,6 @@ TryExec=lxqt-globalkeysd
 Exec=lxqt-globalkeysd
 OnlyShowIn=LXQt;
 X-LXQt-Module=true
+X-LXQt-X11-Only=true
 
 #TRANSLATIONS_DIR=translations
