@@ -196,7 +196,7 @@ Haluatko jatkaa?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Alusta ei ole tuettu</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>

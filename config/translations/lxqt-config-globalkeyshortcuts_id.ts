@@ -196,7 +196,7 @@ Apa anda mau melanjutkanya?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Kerangka kerja tidak didukung</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
