@@ -196,7 +196,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform unsupported</source>
-        <translation>Nepalaikoma platforma</translation>
+        <translation>Platforma nepalaikoma</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
