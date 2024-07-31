@@ -26,7 +26,7 @@
     <message>
         <location filename="../default_model.cpp" line="146"/>
         <source>Shortcut</source>
-        <translation>Tastatursnarevei</translation>
+        <translation>Tastatursnarvei</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="149"/>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation>&amp;Tastatursnarevei:</translation>
+        <translation>&amp;Tastatursnarvei:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
@@ -187,8 +187,8 @@
         <location filename="../main_window.cpp" line="192"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation>Dine egne tastatursnareveiertastatursnarvei blir tatt vekk.
-Ønsker du å fortsette?</translation>
+        <translation>Dine definerte tastatursnarveier fjernes.
+Vil du fortsette?</translation>
     </message>
 </context>
 <context>
