@@ -195,15 +195,15 @@ Do you want to proceed?</source>
     <name>QObject</name>
     <message>
         <location filename="../main.cpp" line="51"/>
-        <source>Platform unsupported</source>
+        <source>Platform Unsupported</source>
         <translation>지원되지 않는 플랫폼</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
-        <source>LXQt globalkeys are currently unsupported under wayland.
+        <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation>LXQt globalkeys는 현재 wayland에서 지원되지 않습니다.
+        <translation>LXQt globalkeys는 현재 Wayland에서 지원되지 않습니다.
 
 전역 단축키는 대신 컴포지터 설정에서 구성할 수 있습니다.</translation>
     </message>

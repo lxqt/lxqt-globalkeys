@@ -189,19 +189,19 @@
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
         <translation>Vos raccourcis définis seront supprimés.
-Voulez-vous procéder ?</translation>
+Voulez-vous procéder&#x202f;?</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <location filename="../main.cpp" line="51"/>
-        <source>Platform unsupported</source>
+        <source>Platform Unsupported</source>
         <translation>Plateforme non prise en charge</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
-        <source>LXQt globalkeys are currently unsupported under wayland.
+        <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
         <translation>LXQT GlobalKeys n&apos;est actuellement pas pris en charge dans Wayland.
