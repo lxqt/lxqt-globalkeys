@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
         QMessageBox::warning(nullptr,
             QObject::tr("Platform Unsupported"),
             QObject::tr("LXQt globalkeys are currently unsupported under Wayland.\n\nGlobal shortcuts can be configured in the settings of the compositor instead."));
-        return 1;
+        return 0;
     }
 
     MainWindow w;
