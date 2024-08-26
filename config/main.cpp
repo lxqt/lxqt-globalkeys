@@ -48,8 +48,8 @@ int main(int argc, char *argv[])
     if (QGuiApplication::platformName() == QLatin1String("wayland"))
     {
         QMessageBox::warning(nullptr,
-            QObject::tr("Platform unsupported"),
-            QObject::tr("LXQt globalkeys are currently unsupported under wayland.\n\nGlobal shortcuts can be configured in the settings of the compositor instead."));
+            QObject::tr("Platform Unsupported"),
+            QObject::tr("LXQt globalkeys are currently unsupported under Wayland.\n\nGlobal shortcuts can be configured in the settings of the compositor instead."));
         return 0;
     }
 
