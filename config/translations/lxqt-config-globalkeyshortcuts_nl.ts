@@ -196,7 +196,7 @@ Weet u zeker dat u wilt doorgaan?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation>Niet-ondersteund systeem</translation>
+        <translation>Geen ondersteund platform</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
