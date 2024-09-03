@@ -196,7 +196,7 @@ Kas sa soovid jätkata?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation>See platvorm ei ole toetatud</translation>
+        <translation>See platvorm pole toetatud</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
