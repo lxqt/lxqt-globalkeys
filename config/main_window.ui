@@ -182,6 +182,10 @@
        <property name="text">
         <string>Default</string>
        </property>
+       <property name="icon">
+        <iconset theme="edit-clear">
+        <normaloff>.</normaloff>.</iconset>
+       </property>
       </widget>
      </item>
      <item>
@@ -201,6 +205,10 @@
       <widget class="QPushButton" name="close_PB">
        <property name="text">
         <string>Close</string>
+       </property>
+       <property name="icon">
+        <iconset theme="window-close">
+        <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
