@@ -182,6 +182,10 @@
        <property name="text">
         <string>Default</string>
        </property>
+       <property name="icon">
+        <iconset theme="edit-clear">
+        <normaloff>.</normaloff>.</iconset>
+       </property>
       </widget>
      </item>
      <item>
