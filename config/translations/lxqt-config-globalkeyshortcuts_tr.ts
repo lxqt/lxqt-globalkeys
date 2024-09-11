@@ -196,7 +196,7 @@ Devam etmek istiyor musunuz?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation>Platform desteklenmiyor</translation>
+        <translation>Desteklenmeyen Platform</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
