@@ -196,7 +196,7 @@ Do you want to proceed?</source>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation>サポートされていないプラットフォームです</translation>
+        <translation>プラットフォームがサポートされていません</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
