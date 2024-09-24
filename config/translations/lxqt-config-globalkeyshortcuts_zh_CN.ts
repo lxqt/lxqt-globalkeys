@@ -197,7 +197,7 @@ Do you want to proceed?</source>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation>不支持的平台</translation>
+        <translation>平台不支持</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
