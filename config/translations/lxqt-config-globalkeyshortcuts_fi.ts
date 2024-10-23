@@ -196,14 +196,16 @@ Haluatko jatkaa?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation>Alusta ei ole tuettu</translation>
+        <translation>Alustaa ei tueta</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>LXQt:n työpöydänlaajuisia pikanäppäimiä ei vielä tueta Waylandiä käytettäessä.
+
+Työpöydänlaajuiset pikanäppäimet määritetään koostajan asetuksissa.</translation>
     </message>
 </context>
 </TS>
