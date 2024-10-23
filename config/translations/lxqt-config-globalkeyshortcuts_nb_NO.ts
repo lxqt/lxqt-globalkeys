@@ -196,7 +196,7 @@ Vil du fortsette?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation>Plattform støttes ikke</translation>
+        <translation>Plattform ikke støttet</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
