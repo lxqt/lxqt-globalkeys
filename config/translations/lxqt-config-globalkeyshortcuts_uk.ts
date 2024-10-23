@@ -174,7 +174,7 @@
         <translation>Типова</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="203"/>
+        <location filename="../main_window.ui" line="207"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
