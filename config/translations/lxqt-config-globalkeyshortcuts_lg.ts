@@ -174,7 +174,7 @@
         <translation>Zawo ebya bulijjo</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="203"/>
+        <location filename="../main_window.ui" line="207"/>
         <source>Close</source>
         <translation>Mala</translation>
     </message>
@@ -189,6 +189,21 @@
 Do you want to proceed?</source>
         <translation>Bye wetegekera bijja okugyibwawo.
 Era ŋŋende mu maaso?</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../main.cpp" line="51"/>
+        <source>Platform Unsupported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="52"/>
+        <source>LXQt globalkeys are currently unsupported under Wayland.
+
+Global shortcuts can be configured in the settings of the compositor instead.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
