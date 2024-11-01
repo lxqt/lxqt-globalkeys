@@ -196,14 +196,16 @@ Era ŋŋende mu maaso?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Tewali nkolagana ne sisitemu</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kakano LXQt tekusobozesa okukola ku nteekateeka z&apos;amapeesa nga Wayland y&apos;ekola.
+
+Enteekateeka ez&apos;amapeesa ag&apos;anguya mirimu osobola okuzikolerako w&apos;otegekera ebya puloguramu ekwanaganya ebirabikira awakolerwa.</translation>
     </message>
 </context>
 </TS>

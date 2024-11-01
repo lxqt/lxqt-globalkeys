@@ -74,7 +74,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation>&amp;DBus-beskjed</translation>
+        <translation>&amp;DBus-melding</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
