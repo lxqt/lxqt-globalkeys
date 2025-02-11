@@ -196,14 +196,16 @@ Do you want to proceed?</source>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>非支援的平台</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>LXQt 全區快速鍵目前在 Wayland 下尚未支援。
+
+可以在合成器設定中進行調整設定全區快速鍵。</translation>
     </message>
 </context>
 </TS>
