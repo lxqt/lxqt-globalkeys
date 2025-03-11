@@ -26,7 +26,7 @@
     <message>
         <location filename="../default_model.cpp" line="146"/>
         <source>Shortcut</source>
-        <translation>快捷鍵</translation>
+        <translation>快速鍵</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="149"/>
@@ -54,27 +54,27 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation>捷徑 (&amp;S)：</translation>
+        <translation>快速鍵(&amp;S)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
         <source>&amp;Description:</source>
-        <translation>描述 (&amp;D)：</translation>
+        <translation>描述(&amp;D)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation>啟用 (&amp;E)</translation>
+        <translation>已經啟用(&amp;E)</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation>命令 (&amp;C)</translation>
+        <translation>指令(&amp;C)</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation>DBus 訊息 (&amp;D)</translation>
+        <translation>&amp;DBus 訊息</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
@@ -84,27 +84,27 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation>命令 (&amp;m)：</translation>
+        <translation>指令(&amp;M)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation>服務 (&amp;e)：</translation>
+        <translation>服務(&amp;E)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation>路徑 (&amp;P)：</translation>
+        <translation>路徑(&amp;P)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation>介面 (&amp;I)：</translation>
+        <translation>介面(&amp;I)：</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
         <source>&amp;Method:</source>
-        <translation>方法 (&amp;M)：</translation>
+        <translation>方法(&amp;M)：</translation>
     </message>
 </context>
 <context>
@@ -187,7 +187,7 @@
         <location filename="../main_window.cpp" line="192"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation>您自訂的快捷鍵將被移除。
+        <translation>您自訂的快速鍵將被移除。
 確定要繼續嗎？</translation>
     </message>
 </context>
@@ -203,9 +203,9 @@ Do you want to proceed?</source>
         <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation>LXQt 全區快速鍵目前在 Wayland 下尚未支援。
+        <translation>LXQt 整體快速鍵目前在 Wayland 下尚未支援。
 
-可以在合成器設定中進行調整設定全區快速鍵。</translation>
+可以改由在合成器設定中進行設定整體快速鍵。</translation>
     </message>
 </context>
 </TS>
