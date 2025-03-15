@@ -76,6 +76,9 @@ MainWindow::MainWindow(QWidget *parent)
     mSelectionModel = new QItemSelectionModel(actions_TV->model());
     actions_TV->setSelectionModel(mSelectionModel);
 
+    actions_TV->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    actions_TV->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+
     connect(filter_LE, &QLineEdit::textChanged, mSortFilterProxyModel, &QSortFilterProxyModel::setFilterFixedString);
 
     connect(mSelectionModel, &QItemSelectionModel::selectionChanged, this, &MainWindow::selectionChanged);
