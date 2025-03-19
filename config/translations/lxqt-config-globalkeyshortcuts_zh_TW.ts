@@ -181,7 +181,7 @@
     <message>
         <location filename="../main_window.cpp" line="191"/>
         <source>Restore Default</source>
-        <translation>回復為預設值</translation>
+        <translation>還原為預設值</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="192"/>
