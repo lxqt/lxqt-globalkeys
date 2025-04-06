@@ -1,3 +1,8 @@
+lxqt-globalkeys-2.2.0 / 2025-04-17
+===================================
+ * Enabled smooth scrolling in the config GUI.
+ * Cleaned up default `globalkeyshortcuts.conf`.
+
 lxqt-globalkeys-2.1.0 / 2024-11-05
 ===================================
  * Show "unsupported" message under wayland.
