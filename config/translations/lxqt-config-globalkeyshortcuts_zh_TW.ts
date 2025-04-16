@@ -112,7 +112,7 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation>全域動作管理器</translation>
+        <translation>整體動作管理器</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="27"/>
@@ -181,7 +181,7 @@
     <message>
         <location filename="../main_window.cpp" line="191"/>
         <source>Restore Default</source>
-        <translation>回復為預設值</translation>
+        <translation>還原為預設值</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="192"/>
