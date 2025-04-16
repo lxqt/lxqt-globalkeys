@@ -179,12 +179,12 @@
         <translation>Zatvori</translation>
     </message>
     <message>
-        <location filename="../main_window.cpp" line="191"/>
+        <location filename="../main_window.cpp" line="194"/>
         <source>Restore Default</source>
         <translation>Vrati standardne postavke</translation>
     </message>
     <message>
-        <location filename="../main_window.cpp" line="192"/>
+        <location filename="../main_window.cpp" line="195"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
         <translation>Tvoji prečaci će se ukloniti.

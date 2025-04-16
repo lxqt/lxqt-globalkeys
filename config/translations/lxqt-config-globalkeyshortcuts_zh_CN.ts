@@ -180,12 +180,12 @@
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../main_window.cpp" line="191"/>
+        <location filename="../main_window.cpp" line="194"/>
         <source>Restore Default</source>
         <translation>恢复默认</translation>
     </message>
     <message>
-        <location filename="../main_window.cpp" line="192"/>
+        <location filename="../main_window.cpp" line="195"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
         <translation>您定义的快捷键将会被删除。
