@@ -196,7 +196,7 @@ Opravdu to chcete?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodporovaná platforma</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
