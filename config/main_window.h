@@ -66,6 +66,7 @@ protected slots:
 
     void on_multipleActionsBehaviour_CB_currentIndexChanged(int);
 
+    void on_actions_TV_clicked(const QModelIndex &);
     void on_actions_TV_doubleClicked(const QModelIndex &);
 
 private:

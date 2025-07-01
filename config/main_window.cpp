@@ -279,15 +279,20 @@ void MainWindow::on_default_PB_clicked()
     QGuiApplication::restoreOverrideCursor();
 }
 
+void MainWindow::on_actions_TV_clicked(const QModelIndex &index)
+{
+    if (index.column() == 0)
+    {
+        qulonglong id = mDefaultModel->id(mSortFilterProxyModel->mapToSource(index));
+        mActions->enableAction(id, !mActions->isActionEnabled(id));
+    }
+}
+
 void MainWindow::on_actions_TV_doubleClicked(const QModelIndex &index)
 {
     switch (index.column())
     {
     case 0:
-    {
-        qulonglong id = mDefaultModel->id(mSortFilterProxyModel->mapToSource(index));
-        mActions->enableAction(id, !mActions->isActionEnabled(id));
-    }
         break;
 
     default:
