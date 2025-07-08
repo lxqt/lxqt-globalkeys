@@ -142,7 +142,7 @@
     <message>
         <location filename="../main_window.ui" line="135"/>
         <source>Multiple actions behaviour:</source>
-        <translation type="unfinished"></translation>
+        <translation>Handling vid upprepade bindningar:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="143"/>
@@ -154,40 +154,41 @@
         <location filename="../main_window.ui" line="148"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sista</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="153"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="158"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alla</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="183"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Default</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="207"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="194"/>
         <source>Restore Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Återställ grundinställningar</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="195"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dina definierade kortkommandon kommer tas bort.
+Vill du fortsätta?</translation>
     </message>
 </context>
 <context>
@@ -195,14 +196,16 @@ Do you want to proceed?</source>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Plattformen saknar stöd</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>LXQt kortkommandon saknar just nu stöd i Wayland.
+
+Allmänna kortkommandon kan justeras i kompositionshanterarens inställningar.</translation>
     </message>
 </context>
 </TS>
