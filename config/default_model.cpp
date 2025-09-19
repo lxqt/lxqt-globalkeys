@@ -140,7 +140,7 @@ QVariant DefaultModel::headerData(int section, Qt::Orientation orientation, int 
             switch (section)
             {
             case 0:
-                return tr("Id");
+                return tr("ID");
 
             case 1:
                 return tr("Shortcut");
