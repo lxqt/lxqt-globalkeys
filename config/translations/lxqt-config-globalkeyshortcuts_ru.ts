@@ -20,7 +20,7 @@
     </message>
     <message>
         <location filename="../default_model.cpp" line="143"/>
-        <source>Id</source>
+        <source>ID</source>
         <translation>ИД</translation>
     </message>
     <message>
