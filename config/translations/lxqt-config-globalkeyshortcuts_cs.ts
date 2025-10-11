@@ -203,7 +203,9 @@ Opravdu to chcete?</translation>
         <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>LXQt globální klávesové zkratky jsou v tuto chvíli nepodporované pod Wayland.
+
+Namísto toho je možné jejich nastavení provádět v nastavení kompozitoru.</translation>
     </message>
 </context>
 </TS>
