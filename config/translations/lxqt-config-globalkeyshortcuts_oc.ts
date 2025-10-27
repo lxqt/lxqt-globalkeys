@@ -196,14 +196,16 @@ Volètz contunhar ?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Platafòrma incompatibla</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>Los acorchis globals de LXQt son pas preses en carga per ara amb Wayland.
+
+Podètz configurar los acorchis globals dins los paramètres del compositor a la plaça.</translation>
     </message>
 </context>
 </TS>
