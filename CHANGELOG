@@ -1,3 +1,7 @@
+lxqt-globalkeys-2.3.0 / 2025-11-05
+===================================
+ * Capitalized "Id" as "ID", updated translations, and bumped the version.
+
 lxqt-globalkeys-2.2.0 / 2025-04-17
 ===================================
  * Enabled smooth scrolling in the config GUI.
