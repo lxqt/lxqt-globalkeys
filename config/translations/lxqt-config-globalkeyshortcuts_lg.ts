@@ -196,7 +196,7 @@ Era ŋŋende mu maaso?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation>Tewali nkolagana ne sisitemu</translation>
+        <translation>Puloguramu Tezikolagana</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
