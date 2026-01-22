@@ -148,19 +148,19 @@
         <location filename="../main_window.ui" line="143"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Pertama</translation>
+        <translation>Pertama</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="148"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Terakhir</translation>
+        <translation>Terakhir</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="153"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Tidak ada</translation>
+        <translation>Tidak ada</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="158"/>
@@ -187,8 +187,8 @@
         <location filename="../main_window.cpp" line="195"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation>Pintasan yang anda tentukan akan di hapus.
-Apa anda mau melanjutkanya?</translation>
+        <translation>Pintasan yang Anda tentukan akan dihapus.
+Apakah Anda ingin melanjutkan?</translation>
     </message>
 </context>
 <context>
@@ -203,7 +203,9 @@ Apa anda mau melanjutkanya?</translation>
         <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>Globalkeys LXQt saat ini tidak didukung di bawah Wayland.
+
+Pintasan global dapat dikonfigurasi sebagai gantinya di pengaturan kompositor.</translation>
     </message>
 </context>
 </TS>
