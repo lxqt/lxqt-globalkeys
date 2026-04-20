@@ -32,7 +32,7 @@
 #include <QObject>
 #include <QDBusObjectPath>
 #include <QDBusContext>
-#include <QPair>
+#include <utility>
 
 
 class NativeAdaptor : public QObject, protected QDBusContext
@@ -53,9 +53,9 @@ public:
     void cancelShortcutGrab();
 
 signals:
-    void onAddClientAction(QPair<QString, qulonglong> &, const QString &, const QDBusObjectPath &, const QString &, const QString &);
+    void onAddClientAction(std::pair<QString, qulonglong> &, const QString &, const QDBusObjectPath &, const QString &, const QString &);
     void onModifyClientAction(qulonglong &, const QDBusObjectPath &, const QString &, const QString &);
-    void onChangeClientActionShortcut(QPair<QString, qulonglong> &, const QDBusObjectPath &, const QString &, const QString &);
+    void onChangeClientActionShortcut(std::pair<QString, qulonglong> &, const QDBusObjectPath &, const QString &, const QString &);
     void onRemoveClientAction(bool &, const QDBusObjectPath &, const QString &);
     void onDeactivateClientAction(bool &, const QDBusObjectPath &, const QString &);
     void onEnableClientAction(bool &, const QDBusObjectPath &, bool, const QString &);

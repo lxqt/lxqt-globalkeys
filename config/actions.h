@@ -34,8 +34,8 @@
 #include <QList>
 #include <QStringList>
 #include <QMap>
-#include <QPair>
 #include <QDBusObjectPath>
+#include <utility>
 
 #include "../daemon/meta_types.h"
 
@@ -64,20 +64,20 @@ public:
 
 
     QList<qulonglong> allActionIds() const;
-    QPair<bool, GeneralActionInfo> actionById(qulonglong id) const;
+    std::pair<bool, GeneralActionInfo> actionById(qulonglong id) const;
 
     QList<qulonglong> allClientActionIds() const;
-    QPair<bool, ClientActionInfo> clientActionInfoById(qulonglong id) const;
+    std::pair<bool, ClientActionInfo> clientActionInfoById(qulonglong id) const;
 
     QList<qulonglong> allMethodActionIds() const;
-    QPair<bool, MethodActionInfo> methodActionInfoById(qulonglong id) const;
+    std::pair<bool, MethodActionInfo> methodActionInfoById(qulonglong id) const;
 
     QList<qulonglong> allCommandActionIds() const;
-    QPair<bool, CommandActionInfo> commandActionInfoById(qulonglong id) const;
+    std::pair<bool, CommandActionInfo> commandActionInfoById(qulonglong id) const;
 
 
-    QPair<QString, qulonglong> addMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
-    QPair<QString, qulonglong> addCommandAction(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
+    std::pair<QString, qulonglong> addMethodAction(const QString &shortcut, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
+    std::pair<QString, qulonglong> addCommandAction(const QString &shortcut, const QString &command, const QStringList &arguments, const QString &description);
 
     bool modifyActionDescription(const qulonglong &id, const QString &description);
     bool modifyMethodAction(const qulonglong &id, const QString &service, const QDBusObjectPath &path, const QString &interface, const QString &method, const QString &description);
