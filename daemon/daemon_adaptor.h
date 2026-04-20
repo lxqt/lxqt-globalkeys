@@ -34,7 +34,7 @@
 #include <QString>
 #include <QStringList>
 #include <QDBusObjectPath>
-#include <QPair>
+#include <utility>
 
 #include "meta_types.h"
 
@@ -97,8 +97,8 @@ signals:
     void multipleActionsBehaviourChanged(uint behaviour);
 
 signals:
-    void onAddMethodAction(QPair<QString, qulonglong> &, const QString &, const QString &, const QDBusObjectPath &, const QString &, const QString &, const QString &);
-    void onAddCommandAction(QPair<QString, qulonglong> &, const QString &, const QString &, const QStringList &, const QString &);
+    void onAddMethodAction(std::pair<QString, qulonglong> &, const QString &, const QString &, const QDBusObjectPath &, const QString &, const QString &, const QString &);
+    void onAddCommandAction(std::pair<QString, qulonglong> &, const QString &, const QString &, const QStringList &, const QString &);
 
     void onModifyActionDescription(bool &, qulonglong, const QString &);
     void onModifyMethodAction(bool &, qulonglong, const QString &, const QDBusObjectPath &, const QString &, const QString &, const QString &);
@@ -119,12 +119,12 @@ signals:
     void onGetMultipleActionsBehaviour(MultipleActionsBehaviour &);
 
     void onGetAllActionIds(QList<qulonglong> &);
-    void onGetActionById(QPair<bool, GeneralActionInfo> &, qulonglong);
+    void onGetActionById(std::pair<bool, GeneralActionInfo> &, qulonglong);
     void onGetAllActions(QMap<qulonglong, GeneralActionInfo> &);
 
-    void onGetClientActionInfoById(QPair<bool, ClientActionInfo> &, qulonglong);
-    void onGetMethodActionInfoById(QPair<bool, MethodActionInfo> &, qulonglong);
-    void onGetCommandActionInfoById(QPair<bool, CommandActionInfo> &, qulonglong);
+    void onGetClientActionInfoById(std::pair<bool, ClientActionInfo> &, qulonglong);
+    void onGetMethodActionInfoById(std::pair<bool, MethodActionInfo> &, qulonglong);
+    void onGetCommandActionInfoById(std::pair<bool, CommandActionInfo> &, qulonglong);
 
     void onGrabShortcut(uint, QString &, bool &, bool &, bool &, const QDBusMessage &);
     void onCancelShortcutGrab();
