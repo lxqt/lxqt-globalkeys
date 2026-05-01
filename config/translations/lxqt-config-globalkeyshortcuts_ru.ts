@@ -187,8 +187,8 @@
         <location filename="../main_window.cpp" line="195"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation>Сочетания клавиш, созданные вами будут удалены.
-Вы хотите продолжить?</translation>
+        <translation>Сочетания клавиш, созданные вами, будут удалены.
+Хотите продолжить?</translation>
     </message>
 </context>
 <context>

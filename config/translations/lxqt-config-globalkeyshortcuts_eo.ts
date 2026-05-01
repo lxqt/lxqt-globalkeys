@@ -6,7 +6,7 @@
     <message>
         <location filename="../default_model.cpp" line="51"/>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Komando</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="52"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Redakti Ago</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
@@ -59,17 +59,17 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
         <source>&amp;Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Priskribo:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rajtigita</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Komando</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
@@ -84,7 +84,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ko&amp;mando:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Interfaco:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
