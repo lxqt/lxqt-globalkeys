@@ -136,7 +136,7 @@
     </message>
     <message>
         <location filename="../main_window.ui" line="118"/>
-        <source>Multiple actions behaviour:</source>
+        <source>Multiple actions behavior:</source>
         <translation>Comportamientu d&apos;aiciones múltiples:</translation>
     </message>
     <message>

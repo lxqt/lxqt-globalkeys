@@ -142,7 +142,7 @@
     </message>
     <message>
         <location filename="../main_window.ui" line="135"/>
-        <source>Multiple actions behaviour:</source>
+        <source>Multiple actions behavior:</source>
         <translation>动作冲突时优先执行:</translation>
     </message>
     <message>

@@ -132,7 +132,7 @@
      <item>
       <widget class="QLabel" name="multipleActionsBehaviour_L">
        <property name="text">
-        <string>Multiple actions behaviour:</string>
+        <string>Multiple actions behavior:</string>
        </property>
       </widget>
      </item>

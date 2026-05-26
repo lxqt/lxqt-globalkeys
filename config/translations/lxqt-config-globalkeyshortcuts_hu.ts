@@ -141,7 +141,7 @@
     </message>
     <message>
         <location filename="../main_window.ui" line="135"/>
-        <source>Multiple actions behaviour:</source>
+        <source>Multiple actions behavior:</source>
         <translation>Viselkedés több műveletnél:</translation>
     </message>
     <message>
