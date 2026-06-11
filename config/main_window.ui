@@ -22,14 +22,28 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QLineEdit" name="filter_LE">
-         <property name="placeholderText">
-          <string>Search</string>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                    <widget class="QLabel" name="filter_L">
+                    <property name="text">
+                        <string>&amp;Filter:</string>
+                    </property>
+                    <property name="buddy">
+                        <cstring>filter_LE</cstring>
+                    </property>
+                    </widget>
+                </item>
+                <item>
+                    <widget class="QLineEdit" name="filter_LE">
+                        <property name="placeholderText">
+                            <string>Search</string>
+                        </property>
+                        <property name="clearButtonEnabled">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </item>
+            </layout>
        </item>
        <item>
         <widget class="QTableView" name="actions_TV">
@@ -69,7 +83,7 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Add ...</string>
+          <string>&amp;Add ...</string>
          </property>
         </widget>
        </item>
@@ -79,7 +93,7 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Remove</string>
+          <string>&amp;Remove</string>
          </property>
         </widget>
        </item>
@@ -89,7 +103,7 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Modify ...</string>
+          <string>&amp;Modify ...</string>
          </property>
         </widget>
        </item>
@@ -106,7 +120,7 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Swap</string>
+          <string>&amp;Swap</string>
          </property>
         </widget>
        </item>
@@ -180,7 +194,7 @@
      <item>
       <widget class="QPushButton" name="default_PB">
        <property name="text">
-        <string>Default</string>
+        <string>&amp;Default</string>
        </property>
        <property name="icon">
         <iconset theme="edit-clear">
@@ -204,7 +218,7 @@
      <item>
       <widget class="QPushButton" name="close_PB">
        <property name="text">
-        <string>Close</string>
+        <string>&amp;Close</string>
        </property>
        <property name="icon">
         <iconset theme="window-close">
