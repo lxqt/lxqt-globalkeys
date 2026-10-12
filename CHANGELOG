@@ -1,3 +1,9 @@
+lxqt-globalkeys-2.5.0 / 2026-11-05
+===================================
+ * Used `std::pair` instead of `QPair`.
+ * Used US English in a string.
+ * Updated the address of Free Software Foundation.
+
 lxqt-globalkeys-2.4.0 / 2026-04-20
 ===================================
 * Updated translations and bumped the version.
