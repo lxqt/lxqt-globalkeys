@@ -183,8 +183,7 @@
         <string>Default</string>
        </property>
        <property name="icon">
-        <iconset theme="edit-clear">
-        <normaloff>.</normaloff>.</iconset>
+        <iconset theme="edit-clear"/>
        </property>
       </widget>
      </item>
@@ -207,8 +206,7 @@
         <string>Close</string>
        </property>
        <property name="icon">
-        <iconset theme="window-close">
-        <normaloff>.</normaloff>.</iconset>
+        <iconset theme="window-close"/>
        </property>
       </widget>
      </item>
@@ -232,16 +230,6 @@
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>476</x>
-     <y>281</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>488</x>
-     <y>260</y>
-    </hint>
-   </hints>
   </connection>
  </connections>
 </ui>
