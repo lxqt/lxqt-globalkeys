@@ -11,7 +11,7 @@
     <message>
         <location filename="../default_model.cpp" line="52"/>
         <source>DBus call</source>
-        <translation>DBus deia</translation>
+        <translation>D-Bus deia</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="53"/>
@@ -21,7 +21,7 @@
     <message>
         <location filename="../default_model.cpp" line="143"/>
         <source>ID</source>
-        <translation>id</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="146"/>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation>&amp;Zuzeneko sarbidea:</translation>
+        <translation>&amp;Lasterbidea:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
@@ -74,7 +74,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation>&amp; DBus mezua</translation>
+        <translation>&amp;D-Bus mezua</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
@@ -89,17 +89,17 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zer&amp;bitzua:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bidea:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation>&amp;Interfazea</translation>
+        <translation>&amp;Interfazea:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekintza globalen kudeatzailea</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="27"/>
@@ -137,12 +137,12 @@
     <message>
         <location filename="../main_window.ui" line="109"/>
         <source>Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>Trukatu</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="135"/>
         <source>Multiple actions behavior:</source>
-        <translation>Hainbat ekintza portaera:</translation>
+        <translation>Ekintza anitzen portaera:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="143"/>
@@ -166,7 +166,7 @@
         <location filename="../main_window.ui" line="158"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation>Denak</translation>
+        <translation>Guztiak</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="183"/>
@@ -181,13 +181,13 @@
     <message>
         <location filename="../main_window.cpp" line="194"/>
         <source>Restore Default</source>
-        <translation>Leheneratu lehenetsia</translation>
+        <translation>Berrezarri lehenetsia</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="195"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation>Definitutako lasterbideak kenduko dira.
+        <translation>Zuk definitutako lasterbideak kendu egingo dira.
 Jarraitu nahi duzu?</translation>
     </message>
 </context>
@@ -196,14 +196,16 @@ Jarraitu nahi duzu?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Plataforma ez da onartzen</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>LXQt-en tekla globalak ez dira onartzen Wayland-en.
+
+Lasterbide globalak konposatzailearen ezarpenetan konfigura daitezke.</translation>
     </message>
 </context>
 </TS>

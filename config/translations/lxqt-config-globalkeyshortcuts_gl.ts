@@ -6,12 +6,12 @@
     <message>
         <location filename="../default_model.cpp" line="51"/>
         <source>Command</source>
-        <translation>Orde</translation>
+        <translation>Comando</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="52"/>
         <source>DBus call</source>
-        <translation>Chamada a DBus</translation>
+        <translation>Chamada DBus</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="53"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation>Editar a acción</translation>
+        <translation>Editar acción</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
@@ -64,17 +64,17 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="87"/>
         <source>&amp;Enabled</source>
-        <translation>A&amp;ctivado</translation>
+        <translation>&amp;Activada</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="102"/>
         <source>&amp;Command</source>
-        <translation>&amp;Orde</translation>
+        <translation>&amp;Comando</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="109"/>
         <source>&amp;DBus message</source>
-        <translation>Mensaxe de D&amp;Bus</translation>
+        <translation>Mensaxe &amp;DBus</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="118"/>
@@ -84,7 +84,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation>O&amp;rde:</translation>
+        <translation>Co&amp;mando:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
         <source>&amp;Path:</source>
-        <translation>Ru&amp;ta:</translation>
+        <translation>&amp;Ruta:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation>Administrador de accións globais</translation>
+        <translation>Xestor de accións globais</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="27"/>
@@ -127,7 +127,7 @@
     <message>
         <location filename="../main_window.ui" line="82"/>
         <source>Remove</source>
-        <translation>Retirar</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="92"/>
@@ -142,31 +142,31 @@
     <message>
         <location filename="../main_window.ui" line="135"/>
         <source>Multiple actions behavior:</source>
-        <translation>Comportamento de accións múltiples:</translation>
+        <translation>Comportamento das accións múltiples:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="143"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Primeira</translation>
+        <translation>Primeira</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="148"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Última</translation>
+        <translation>Última</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="153"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Ningunha</translation>
+        <translation>Ningunha</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="158"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation type="unfinished">Todas</translation>
+        <translation>Todas</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="183"/>
@@ -181,14 +181,14 @@
     <message>
         <location filename="../main_window.cpp" line="194"/>
         <source>Restore Default</source>
-        <translation>Restabelecer os valores predeterminados</translation>
+        <translation>Restaurar os valores predeterminados</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="195"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation>Retiraranse os seus atallos definidos.
-Quere continuar?</translation>
+        <translation>Eliminaranse os atallos que definiches.
+Queres continuar?</translation>
     </message>
 </context>
 <context>
@@ -196,14 +196,16 @@ Quere continuar?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Plataforma non compatible</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>LXQt globalkeys non é compatible actualmente con Wayland.
+
+Podes configurar os atallos globais nos axustes do compositor.</translation>
     </message>
 </context>
 </TS>
