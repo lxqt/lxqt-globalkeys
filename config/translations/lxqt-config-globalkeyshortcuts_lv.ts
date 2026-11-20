@@ -21,12 +21,12 @@
     <message>
         <location filename="../default_model.cpp" line="143"/>
         <source>ID</source>
-        <translation>Identifikators</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="146"/>
         <source>Shortcut</source>
-        <translation>Saīsne</translation>
+        <translation>Īsinājumtaustiņš</translation>
     </message>
     <message>
         <location filename="../default_model.cpp" line="149"/>
@@ -49,12 +49,12 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="14"/>
         <source>Edit Action</source>
-        <translation>Labot darbību</translation>
+        <translation>Rediģēt darbību</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="31"/>
         <source>&amp;Shortcut:</source>
-        <translation>&amp;Saīsne:</translation>
+        <translation>Īsinājum&amp;taustiņš:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="74"/>
@@ -84,12 +84,12 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="164"/>
         <source>Co&amp;mmand:</source>
-        <translation>Komanda:</translation>
+        <translation>Ko&amp;manda:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="206"/>
         <source>S&amp;ervice:</source>
-        <translation>Serviss:</translation>
+        <translation>&amp;Pakalpojums:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="219"/>
@@ -99,12 +99,12 @@
     <message>
         <location filename="../edit_action_dialog.ui" line="232"/>
         <source>&amp;Interface:</source>
-        <translation>&amp;Saskarne:</translation>
+        <translation>Sa&amp;skarne:</translation>
     </message>
     <message>
         <location filename="../edit_action_dialog.ui" line="245"/>
         <source>&amp;Method:</source>
-        <translation>&amp;Metode:</translation>
+        <translation>M&amp;etode:</translation>
     </message>
 </context>
 <context>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Global Actions Manager</source>
-        <translation>Kopējo darbību uzraugs</translation>
+        <translation>Globālo darbību pārvaldnieks</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="27"/>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../main_window.ui" line="72"/>
         <source>Add ...</source>
-        <translation>Pievienot...</translation>
+        <translation>Pievienot ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="82"/>
@@ -132,46 +132,46 @@
     <message>
         <location filename="../main_window.ui" line="92"/>
         <source>Modify ...</source>
-        <translation>Labot...</translation>
+        <translation>Mainīt ...</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="109"/>
         <source>Swap</source>
-        <translation>Samainīt</translation>
+        <translation>Samainīt vietām</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="135"/>
         <source>Multiple actions behavior:</source>
-        <translation>Vairāku darbību rīcība:</translation>
+        <translation>Vairāku darbību uzvedība:</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="143"/>
         <source>First</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation>Pirmais</translation>
+        <translation>Pirmā</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="148"/>
         <source>Last</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation>Pēdējais</translation>
+        <translation>Pēdējā</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="153"/>
         <source>None</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation>Nevienu/nav</translation>
+        <translation>Neviena</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="158"/>
         <source>All</source>
         <comment>globalkeys/config/multipleActions</comment>
-        <translation>Visi/visus</translation>
+        <translation>Visas</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="183"/>
         <source>Default</source>
-        <translation>Noklusētais</translation>
+        <translation>Noklusējums</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="207"/>
@@ -181,14 +181,14 @@
     <message>
         <location filename="../main_window.cpp" line="194"/>
         <source>Restore Default</source>
-        <translation>Atgriezt noklusēto</translation>
+        <translation>Atjaunot noklusējumu</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="195"/>
         <source>Your defined shortcuts will be removed.
 Do you want to proceed?</source>
-        <translation>Jūsu definētie īsceļi tiks noņemti/dzēsti.
-Vēlaties turpināt?</translation>
+        <translation>Jūsu definētie īsinājumtaustiņi tiks noņemti.
+Vai vēlaties turpināt?</translation>
     </message>
 </context>
 <context>
@@ -196,14 +196,16 @@ Vēlaties turpināt?</translation>
     <message>
         <location filename="../main.cpp" line="51"/>
         <source>Platform Unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>Platforma netiek atbalstīta</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="52"/>
         <source>LXQt globalkeys are currently unsupported under Wayland.
 
 Global shortcuts can be configured in the settings of the compositor instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>LXQt globālie īsinājumtaustiņi Wayland vidē pašlaik netiek atbalstīti.
+
+Globālos īsinājumtaustiņus tā vietā var konfigurēt kompozitora iestatījumos.</translation>
     </message>
 </context>
 </TS>
