@@ -28,6 +28,7 @@
 #include "edit_action_dialog.h"
 #include "actions.h"
 
+#include <QPushButton>
 #include <QRegularExpression>
 
 EditActionDialog::EditActionDialog(Actions *actions, QWidget *parent)
@@ -35,8 +36,9 @@ EditActionDialog::EditActionDialog(Actions *actions, QWidget *parent)
     , mActions(actions)
 {
     setupUi(this);
+    buttonBox->button(QDialogButtonBox::Ok)->setText(tr("&Ok"));  // {ENTER} key doesn't trigger OK from inside the multiple command textbox
+    buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cance&l")); 
     shortcut_SS->setActions(mActions);
-
     connect(this, &EditActionDialog::accepted, this, &EditActionDialog::when_accepted);
 }
 
